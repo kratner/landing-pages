@@ -1,0 +1,13 @@
+{
+  "name": "landing-pages-testbed",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local test bed for the saved ClickFunnels landing pages (Outdoor Survival Kit, etc.)",
+  "scripts": {
+    "serve": "node server.js",
+    "diagnose": "node diagnose.js"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.0.0"
+  }
+}

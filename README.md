@@ -11,6 +11,7 @@ Portfolio of recent work by Keith Ratner.
 5. <a href="https://kratner.github.io/landing-pages/assets/FAK_STN_SF.html" target="_blank">First Aid Kit</a> — demonstrates scroll-triggered narratives
 6. <a href="https://kratner.github.io/landing-pages/assets/Survival%20Mystery%20Box.html" target="_blank">Survival Mystery Box</a> — demonstrates scroll-triggered narratives
 7. <a href="https://kratner.github.io/landing-pages/assets/TacticalBox%20-%20Yours%20FREE.html" target="_blank">TacticalBox</a>
+8. <a href="https://kratner.github.io/landing-pages/assets/Outdoor%20Survival%20Kit.html" target="_blank">Outdoor Survival Kit</a> — demonstrates scroll-triggered narratives
 
 ---
 © 2026 Keith Ratner

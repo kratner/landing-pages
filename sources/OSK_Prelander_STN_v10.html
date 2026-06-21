@@ -1,0 +1,653 @@
+<!--
+  ============================================================================
+  OSK_Prelander_STN_v10.html
+  Outdoor Survival Kit 2.0 (HT) — PRELANDER (VARIATION / "B", GSAP)
+  ============================================================================
+  Purpose : Scroll-Triggered Narrative (STN) pre-sell prelander. VARIATION arm
+            of an A/B test against OSK_Prelander_Control_v1.html.
+  Pattern : 3-act STN (CLAUDE.md > Scroll-Triggered Narratives)
+              Act 1  HOOK     — headline + the 4 survival questions reveal
+              Act 2  PINNED    — sticky stage; case "opens", tools fan in,
+                                 retail value counts $0 -> $214 on scrub
+              Act 3  CONVERT   — price slash $214 -> $39.95, CTA, scarcity
+            Followed by full 16-item grid (content parity w/ control), guarantee,
+            testimonials, FAQ, final CTA.
+  Usage   : Paste this ENTIRE block into ONE ClickFunnels Custom JS/HTML element.
+            Self-contained. GSAP + ScrollTrigger are injected via inline JS
+            (CF strips external <script src> tags), NOT a <script src> tag.
+            >>> The script ships as Base64 in the data-osk-payload attribute (see v3
+            note) and is decoded + injected by a 1×1-image onload handler, because CF
+            STRIPS and MANGLES inline <script> tags. Readable JS source lives in the
+            sidecar OSK_Prelander_STN_v10.payload.js (regenerate base64 after editing).
+  Offer   : Outdoor Survival Kit — $39.95 + $5 S&H (retail $214).
+  CTA dest: All buttons AND product images link to the order page below.
+            >>> ORDER_PAGE_URL = https://shop.mytacticalpromos.com/13488082_osk2h_ord
+
+  ROBUSTNESS (CLAUDE.md):
+    - prefers-reduced-motion  -> all content shown static, no animation.
+    - GSAP/CDN failure         -> content is visible by DEFAULT; GSAP only sets
+                                  "hidden" start states AFTER it loads, so a
+                                  blocked CDN degrades to a readable static page.
+    - Multi-instance safe       -> every query is scoped to each .osk-stn root.
+    - font-size in px (CF shrinks rem via html{font-size:62.5%}).
+
+  REVISION HISTORY
+    v1  2026-06-17  Initial build. (see REVISIONS.md) — archived in _archive/
+    v2  2026-06-17  Act 2 case image pr-photo-3195.png -> pr-photo-3210.png (3195
+                    was rendering as a missing image); added a subtle pulsing
+                    white drop-shadow glow on the case to mask transparent-PNG
+                    white edges (disabled for touch + reduced-motion). CF live-page
+                    fixes: (a) .osk-stn overflow-x:hidden -> overflow-x:clip so the
+                    section is not turned into a scroll container (overflow-x:hidden
+                    forces overflow-y:auto), which was breaking position:sticky on
+                    the Act-2 stage and letting the retail counter scroll above the
+                    viewport mid-scrub; (b) floating CTA bar relocated to
+                    document.body via JS (and restyled with a standalone .osk-fbar
+                    class + literal colors) so position:fixed escapes CF's
+                    transformed builder wrappers and actually appears.
+                    GSAP loader hardened: tries jsdelivr -> cdnjs -> unpkg (so one
+                    blocked host doesn't kill the animation) and re-runs
+                    ScrollTrigger.refresh() on window load + after a 1.5s settle so
+                    the Act-2 pin isn't measured against pre-image layout. Added
+                    opt-in console telemetry (append ?oskdebug to the URL) tracing
+                    script-exec -> boot -> init -> GSAP-load -> timeline-built, to
+                    diagnose the live CF page.
+    v3  2026-06-18  ROOT-CAUSE FIX for "no animation / GSAP never loads" on the LIVE
+                    page. DIAGNOSED IN A REAL BROWSER (headless Chrome via puppeteer
+                    against the live URL): CF's Custom JS/HTML element stores this block
+                    in <div class="elCustomJS_code" data-custom-js="…"> and injects it
+                    via innerHTML — and crucially CF (1) STRIPS every <script> tag from
+                    the injected DOM (live DOM had 0 osk <script> elements) and (2)
+                    MANGLES the script it extracts when it tries to run it (threw
+                    "Unexpected identifier 's'"). So NO inline-<script> approach works,
+                    and an earlier "clone the inert <script>" bootstrap also failed
+                    (nothing left to clone). FIX: ship the JS as BASE64 in the
+                    data-osk-payload attribute on the data-osk-boot <img>. Base64 is
+                    HTML-safe (only A-Za-z0-9+/=) so CF can't corrupt it, and a data-*
+                    attribute isn't a <script> so CF can't strip it. The 1×1-image
+                    handler (VALID GIF so onLOAD always fires; onERROR = CSP fallback)
+                    decodes the payload UTF-8-safely (atob -> Uint8Array -> TextDecoder)
+                    and injects it as a live <script>, which DOES execute and loads
+                    GSAP. Run-once via __oskStnBoot; __oskStnRan keeps file:// previews
+                    from double-running. READABLE SOURCE: sidecar
+                    OSK_Prelander_STN_v3.payload.js — edit there, then regenerate the
+                    base64 (one-liner in the sidecar header) and paste into
+                    data-osk-payload. [v3 sidecar was OSK_Prelander_STN_v3.payload.js; see v4.]
+                    VERIFIED end-to-end in a CF-faithful harness
+                    (innerHTML-inject + strip <script>): GSAP loads, 20 ScrollTriggers
+                    build, decoded payload passes node --check.
+                    LAYOUT FIXES (same-day, found by inspecting the live page in headless
+                    Chrome): (a) Act 2 pin was dead — a CF ancestor
+                    (div.container.fullContainer) has overflow-y:hidden, which hijacks
+                    position:sticky so the stage stuck to that box and scrolled ABOVE the
+                    viewport top (case/counter rendered off-screen; stage rect.top measured
+                    -1360px). Switched Act 2 from CSS sticky to GSAP ScrollTrigger pin with
+                    pinType:'fixed' (fixed escapes a non-transformed overflow ancestor);
+                    .stage lost position:sticky and .act2 lost its inline height:360vh (the
+                    pin-spacer now supplies the scroll length). Re-verified under an
+                    overflow:hidden ancestor: stage pins at rect.top:0, counter centred in
+                    viewport. (b) Floating CTA was LEFT-aligned (content hugged the left
+                    edge). Measured in headless Chrome at the misaligned moment: the bar's
+                    computed display was `block`, not `flex` — CF's reset intermittently
+                    overrides a plain `display:flex` to block on re-render, which makes
+                    `justify-content:center` inert and the inline children flow left.
+                    (Confirmed it was NOT a containing-block/transform trap: forcing the
+                    bar onto <body> did NOT recentre it; forcing `display:flex !important`
+                    moved content midpoint 199px -> 640px = exact viewport centre.) FIX:
+                    `display/justify-content/align-items/flex-wrap` + `left/right/bottom`
+                    on .osk-fbar now carry `!important` (per CLAUDE.md "CF fights your CSS,
+                    use !important"). relocateFloatbar() (init + buildTimeline + load +
+                    1.5s) is kept as defensive hardening against transformed ancestors but
+                    is NOT what fixes the centring.
+                    Also (task 1): Act 1 HOOK now uses a full-screen forest photo as a
+                    fixed background (dark gradient overlay for legibility; falls back
+                    to background-attachment:scroll on touch), matching the Control's
+                    atmosphere scene. Image is pr-photo-3221.jpg (168 KB) — chosen over
+                    the Control's pr-photo-3099.png (5.6 MB) to keep Act 1's first
+                    paint fast since this hero loads first.
+    v4  2026-06-18  ACT 2 MOTION CLIPS. The 6 floating tools that fan out of the case
+                    now play animated-WebP MOTION clips instead of static product shots.
+                    Implemented as a deferred swap: each tool <img> keeps its lightweight
+                    static product shot as the src (poster) and carries the animated clip in
+                    a data-motion attribute; swapToolMotion() (payload) swaps src->data-motion
+                    the first time Act 2 is entered (timeline scrollTrigger onEnter/onEnterBack).
+                    WHY deferred: the clips are ~1–2 MB each (~9 MB for six) — keeping them out
+                    of the initial markup means they never touch first paint and never download
+                    for visitors who don't scroll to Act 2, and because the swap lives in
+                    buildTimeline (runs only when GSAP loads AND prefers-reduced-motion is OFF),
+                    reduced-motion / no-JS / CDN-blocked visitors keep the still posters with no
+                    autoplaying motion — same visible-by-default robustness model as the rest of
+                    the file. Tool->clip map (poster / motion): knife 3082/3227, wire saw
+                    3086/3230, flashlight 3085/3226, compass 3087/3229, multi-tool card
+                    3089/3231, paracord bracelet 3090/3222. NOTE: t2 switched from the reference
+                    "fire starter" (3083) to the WIRE SAW because 3083 has no motion clip in the
+                    asset set (Prompts/ImageURLs.md). All 6 motion URLs verified animated WebP
+                    (VP8X+ANIM, 39–64 frames) and HTTP 200; all 6 posters HTTP 200. Readable
+                    source renamed to OSK_Prelander_STN_v4.payload.js; base64 regenerated.
+    v5  2026-06-18  FULL-KIT GRID images swapped to new static product photos. 11 of the
+                    16 grid tiles now use the .jpg static shots supplied for this build
+                    (grid only — Act 2 case/floating-tool clips are UNCHANGED). Map
+                    (old webp -> new jpg): knife 3082->3258, fire starter 3083->3255,
+                    tactical pen 3084->3260, flashlight 3085->3256, wire saw 3086->3261,
+                    compass 3087->3254, multi-tool card 3089->3253, paracord 3090->3259,
+                    emergency blanket 3091->3252, keychain light 3092->3257, signal whistle
+                    3094->3262. The 5 tiles with no supplied static shot keep their existing
+                    images: 7-in-1 utensil (3088), water bottle clip (3098), pocket bellow
+                    (3095), fishing tool (3096), waterproof hard-case (3097). No JS change —
+                    payload identical to v4 (sidecar copied to OSK_Prelander_STN_v5.payload.js).
+                    All 11 new jpg URLs verified HTTP 200.
+    v6  2026-06-18  (1) ACT 2 CASE IMAGE swap: the pinned-stage hero case image
+                    pr-photo-3210.png -> pr-photo-3263.png (transparent PNG of the OPEN
+                    kit, vs the prior closed case); alt updated to "Outdoor Survival Kit
+                    — open case". (2) FAQ smoothing: the <details> accordions now animate
+                    — content fade/slide-in on open (@keyframes oskFaqReveal), the +
+                    marker rotates to × on open, and the card background/border + summary
+                    color transition on hover/open. Pure CSS (no payload change), gated
+                    by prefers-reduced-motion. NOTE: native <details> hides instantly on
+                    CLOSE, so the reveal animates on OPEN only (a JS-driven height
+                    collapse would require regenerating the Base64 payload — out of scope
+                    here). (3) GRID: three of the five tiles that kept their old .webp
+                    shots in v5 now use the new transparent set — 7-in-1 utensil
+                    3088->3290, fishing tool 3096->3264, pocket bellow ("fire bellow")
+                    3095->3275. (Bottle clip 3098 + hard-case 3097 still on old shots.)
+                    Markup/CSS-only; Base64
+                    payload unchanged (sidecar copied to OSK_Prelander_STN_v6.payload.js).
+    v7  2026-06-18  TILE FRAMING refresh (no payload change; CSS-only). (1) Replaced the
+                    thick WHITE frame around the Act-2 floating tools (.tool: background:#fff
+                    + 5px padding) with a THIN GREEN border (2px rgba(52,211,94,.55)) over a
+                    faint dark backing (rgba(6,24,12,.55)) so the tools match the .pricecard/
+                    .guarantee green-on-dark look instead of reading as white cards. Added a
+                    very subtle animated outer green glow on the casebox tools (@keyframes
+                    oskToolGlow, 3.6s) — gated off for touch (@media hover:none) and
+                    prefers-reduced-motion, same as the existing case glow. (2) Replaced the
+                    white frame on the GRID product images (.card img: background:#fff + 10px
+                    padding) with a thin green border (1px rgba(52,211,94,.3), matching
+                    .pricecard) on a transparent backing + 6px padding. (3) Added a HOVER GLOW
+                    to grid cards (.card:hover: -4px lift + green border + outer green glow);
+                    the lift is neutralized under prefers-reduced-motion (glow kept), and
+                    :hover never fires on touch. Sidecar copied to OSK_Prelander_STN_v7.payload.js
+                    (identical to v6 — no JS change).
+    v7.1 2026-06-18 Replaced Waterproof Hard-Case 3097 with the new 3298 static shot
+                    (transparent PNG of the closed case).
+    v8  2026-06-19  GRID MOTION CLIPS for 3 tiles (markup-only; Base64 payload
+                    UNCHANGED, sidecar copied to OSK_Prelander_STN_v8.payload.js).
+                    The full-kit grid's fire starter, pocket bellow, and fishing
+                    tool tiles swap from static shots to animated-WebP MOTION
+                    clips, matching the Control: fire starter 3255.jpg->3307.webp,
+                    pocket bellow 3275.png->3315.webp, fishing tool 3264.png->3317.webp.
+                    Bellows clip 3315 chosen over 3314/3316/3318 and fishing 3317
+                    over 3319 by visual frame comparison (square / least 1:1 crop /
+                    smoothest, clearest product). These render in the grid's
+                    existing .card img frame (object-fit:contain, green border) like
+                    the other photo tiles. Act-2 floating-tool clips UNCHANGED. All
+                    3 verified HTTP 200 + animated WebP.
+    v9  2026-06-19  (1) GRID FILL FIX. The fire starter (3307) and fishing tool (3317)
+                    grid clips are landscape SCENE/lifestyle photos (896x504, 755x540) —
+                    not the transparent product cut-outs the other tiles use — so
+                    object-fit:contain letterboxed them (empty bands top/bottom) and they
+                    read as small / not filling the square. Added a `.card img.fill`
+                    modifier (object-fit:cover) and applied it to those two tiles so they
+                    fill the frame edge-to-edge; both products sit centered, so cover crops
+                    only decorative background. (2) GRID image swap: Water Bottle Clip &
+                    Carabiner pr-photo-3098.webp -> pr-photo-3242.webp (759x768, near-square,
+                    fills fine on default contain). HTTP 200 verified. (3) ACT 1 qstack
+                    reword to match actual kit contents (the kit has no clothing item, so
+                    the "proper clothing?" question was off-offer): now fire/warmth (fire
+                    starter + pocket bellow + emergency blanket), food (fishing tool +
+                    knife), navigation/signal (compass + whistle), family readiness; Q1
+                    clothing icon swapped to a flame. Markup/CSS-only; Base64 payload
+                    UNCHANGED (sidecar copied to OSK_Prelander_STN_v9.payload.js).
+                    (4) MOBILE VIEWPORT FIT (found on a real Samsung S24 Ultra, Chrome).
+                    Act 1's scroll-cue and Act 2's retail counter were clipped off the
+                    bottom because 100vh on mobile Chrome measures the URL-bar-HIDDEN
+                    viewport, so each section was taller than the visible area while the
+                    bar showed. Act 1 min-height 100vh -> 100dvh (visible height, grows);
+                    Act 2 .stage height 100vh -> 100svh (smallest/stable height so the pin
+                    doesn't jump when the toolbar collapses); both keep 100vh as a
+                    fallback. Added .stage padding-bottom (84px, 104px on mobile) so the
+                    centered case+counter clear the fixed .osk-fbar CTA bar that overlaps
+                    the stage bottom. Mobile-only: trimmed .act1 padding (70/60 -> 58/24)
+                    and .scrollcue margin (34 -> 18) for extra safety margin. CSS-only;
+                    payload still UNCHANGED.
+    v10 2026-06-19  ACT 2 CASE-OPENING IMAGE SEQUENCE (PAYLOAD CHANGED — sidecar
+                    OSK_Prelander_STN_v10.payload.js, base64 regenerated). The pinned Act-2
+                    case is no longer a single static shot scaled up — it now plays a 24-frame
+                    CLOSED->OPEN photo sequence (pr-photo-3322 closed .. 3345 open, ascending =
+                    closed->open per Prompts/ImageSequence.md) scrubbed in sync with the scroll.
+                    A {f} object is tweened 0->23 on a NEW timeline tween inserted at absolute
+                    position 0 (ease:none), so it overlays the existing case scale-up + tool
+                    fan-out WITHOUT shifting any other beat's timing (duration 1.4 = case is
+                    fully open as the first tools emerge from it); onUpdate swaps caseImg.src to
+                    the matching frame and reverses on scroll-up. All other Act-2 interactivity
+                    (scale pulse, tool fan-out + motion-clip swap, $0->$214 counter, captions,
+                    pin) is UNCHANGED. DEFERRED LOAD: the ~5.5 MB of frames (78 KB closed ->
+                    400 KB open) preload via preloadCaseSeq() on Act-2 entry (onEnter/onEnterBack)
+                    — same deferral as the tool motion clips — so they never touch first paint
+                    and never download for visitors who don't reach Act 2. ROBUSTNESS PARITY:
+                    setCaseFrame(0) sets the CLOSED frame at build so the case reads closed before
+                    the scrub; reduced-motion / no-GSAP / CDN-blocked visitors never run
+                    buildTimeline, so they keep the markup src = OPEN frame (3345, shows the full
+                    kit) — the prior 3263 open-case fallback is superseded by 3345. Markup case
+                    <img> gained loading="lazy" (below the fold; motion users never fetch it since
+                    build swaps src to 3322 first). All 24 frame URLs verified HTTP 200; payload
+                    node --check OK + base64 round-trip verified against the embedded attribute.
+  ============================================================================
+-->
+<section class="osk-stn" data-osk="stn">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+    .osk-stn{
+      width:100vw !important;
+      margin-left:calc(-50vw + 50%) !important;
+      margin-right:calc(-50vw + 50%) !important;
+      max-width:100vw !important;
+      padding:0 !important;
+      box-sizing:border-box;
+      font-family:'Inter',Helvetica,Arial,sans-serif !important;
+      color:#eef2e9 !important;
+      background:#06180c !important;
+      line-height:1.55;
+      /* overflow-x:hidden would force overflow-y to compute to `auto`, turning this
+         section into a scroll container and BREAKING position:sticky on .stage in CF.
+         overflow-x:clip clips horizontally WITHOUT creating a scroll container. */
+      overflow-x:hidden;   /* fallback for Safari < 16 */
+      overflow-x:clip;     /* modern: preserves sticky pinning */
+      -webkit-font-smoothing:antialiased;
+    }
+    .osk-stn *,.osk-stn *::before,.osk-stn *::after{box-sizing:border-box;}
+    .osk-stn img{max-width:100%;height:auto;display:block;}
+    .osk-stn{
+      --grn-deep:#06180c;--grn-dark:#0f3d1d;--grn:#1f7a3a;--grn-bright:#34d35e;
+      --yellow:#ffe11a;--red:#ef4a36;--ink:#eef2e9;--muted:#a9bba1;
+    }
+    .osk-stn .wrap{max-width:780px;margin:0 auto;padding:0 20px;}
+    .osk-stn .wrap-wide{max-width:1040px;margin:0 auto;padding:0 20px;}
+    .osk-stn .eyebrow{display:inline-block;color:var(--yellow) !important;font-family:'Oswald',sans-serif !important;font-weight:700;letter-spacing:2px;font-size:13px;text-transform:uppercase;margin-bottom:10px;}
+    .osk-stn h1{font-family:'Anton',sans-serif !important;font-weight:400;line-height:1.02;font-size:clamp(34px,8.5vw,72px);margin:0 0 16px !important;color:#fff !important;text-transform:uppercase;letter-spacing:.5px;}
+    .osk-stn h2{font-family:'Anton',sans-serif !important;font-weight:400;font-size:clamp(28px,6vw,52px);line-height:1.04;text-transform:uppercase;margin:0 0 10px !important;color:#fff !important;letter-spacing:.5px;}
+    .osk-stn .hl{color:var(--yellow) !important;}
+
+    /* ---- CTA ---- */
+    .osk-stn .cta{
+      display:inline-block;text-decoration:none !important;
+      background:linear-gradient(180deg,#ff5b46,#b3260f) !important;color:#fff !important;
+      font-family:'Oswald',sans-serif !important;font-weight:700;text-transform:uppercase;letter-spacing:.5px;
+      font-size:clamp(18px,3.6vw,24px);padding:18px 32px !important;border-radius:12px;
+      box-shadow:0 8px 0 #7d1a09,0 16px 28px rgba(0,0,0,.4);transition:transform .12s ease,box-shadow .12s ease;
+      max-width:560px;width:100%;border:none;cursor:pointer;
+    }
+    .osk-stn .cta:hover{transform:translateY(2px);box-shadow:0 6px 0 #7d1a09,0 12px 22px rgba(0,0,0,.4);}
+    .osk-stn .cta.grn{background:linear-gradient(180deg,#3ce06a,#1f7a3a) !important;box-shadow:0 8px 0 #14592a,0 16px 28px rgba(0,0,0,.4);}
+    .osk-stn .cta small{display:block;font-size:12px;font-weight:500;opacity:.92;margin-top:3px;text-transform:none;letter-spacing:.3px;}
+    .osk-stn .center{text-align:center;}
+    .osk-stn .mt{margin-top:24px;}
+
+    /* ---- ACT 1 — HOOK ---- */
+    /* Full-screen forest photo (parity with Control's atmosphere scene). The first
+       background layer is a dark gradient overlay that sits ON TOP of the photo so
+       the white/yellow headline + question cards stay legible. background-attachment
+       :fixed gives a subtle parallax on desktop; touch devices fall back to scroll
+       (iOS/Android choke on fixed) — see the @media(hover:none) block below. */
+    .osk-stn .act1{
+      /* 100vh on mobile Chrome (incl. Samsung S24U) measures the URL-bar-HIDDEN viewport,
+         so content overflowed the visible area while the bar was showing (scroll-cue clipped).
+         dvh = the actually-visible height, so the hero always fits. vh kept as fallback. */
+      min-height:100vh;
+      min-height:100dvh;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      padding:70px 0 60px;position:relative;
+      background-image:
+        linear-gradient(180deg,rgba(6,24,12,.82) 0%,rgba(8,38,15,.58) 45%,rgba(6,24,12,.92) 100%),
+        url('https://mtp-images.com/pr-photo-3221.jpg') !important;
+      background-size:cover !important;
+      background-position:center !important;
+      background-repeat:no-repeat !important;
+      background-attachment:fixed,fixed !important;
+    }
+    .osk-stn .act1 .sub{font-size:19px;color:#cfe0c8 !important;max-width:640px;margin:0 auto 30px;}
+    .osk-stn .qstack{list-style:none;margin:0;padding:0;max-width:560px;width:100%;}
+    .osk-stn .qstack li{
+      display:flex;align-items:center;gap:14px;
+      background:rgba(255,255,255,.05);border:1px solid rgba(52,211,94,.35);border-left:5px solid var(--grn-bright);
+      padding:13px 16px;margin:0 0 12px;border-radius:10px;font-size:16px;font-weight:600;color:#eef2e9 !important;text-align:left;
+    }
+    .osk-stn .qstack .qi{flex:0 0 auto;width:36px;height:36px;border-radius:50%;background:var(--grn-bright) !important;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(0,0,0,.3);}
+    .osk-stn .qstack .qi svg{width:20px;height:20px;stroke:#06210f;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+    .osk-stn .scrollcue{margin-top:34px;color:var(--muted) !important;font-family:'Oswald',sans-serif !important;letter-spacing:1px;font-size:13px;text-transform:uppercase;}
+    .osk-stn .scrollcue .arw{display:block;font-size:22px;margin-top:6px;color:var(--grn-bright);}
+
+    /* ---- ACT 2 — PINNED STAGE ----
+       The stage is pinned by GSAP ScrollTrigger (pinType:'fixed'), NOT CSS sticky: a CF
+       ancestor (div.container.fullContainer) has overflow-y:hidden, which hijacks
+       position:sticky so the stage stuck to that box and scrolled off-screen. The pin
+       supplies its own scroll length, so .act2 carries no manual track height. */
+    .osk-stn .act2{position:relative;}
+    .osk-stn .stage{
+      /* svh (SMALL viewport height = toolbar-shown / smallest) instead of vh: guarantees the
+         pinned content fits the always-visible area AND stays stable when the mobile toolbar
+         collapses (dvh would resize mid-pin and cause a jump). vh kept as fallback.
+         padding-bottom reserves room for the fixed .osk-fbar CTA (which overlaps the stage
+         bottom, was clipping the retail counter). */
+      height:100vh;
+      height:100svh;
+      min-height:560px;overflow:hidden;padding-bottom:84px;
+      display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
+      background:radial-gradient(120% 100% at 50% 40%,#0f3d1d 0%,#06180c 75%) !important;
+    }
+    .osk-stn .stage .scene-cap{font-family:'Oswald',sans-serif !important;font-weight:700;font-size:clamp(20px,4.5vw,34px);color:#fff !important;text-transform:uppercase;letter-spacing:.5px;max-width:680px;padding:0 20px;margin:0 0 20px;min-height:1.2em;}
+    .osk-stn .stage .scene-cap .hl{color:var(--yellow) !important;}
+    .osk-stn .casebox{position:relative;width:min(78vw,420px);}
+    .osk-stn .casebox .case{width:100%;filter:drop-shadow(0 22px 36px rgba(0,0,0,.55)) drop-shadow(0 0 6px rgba(255,255,255,.45));animation:oskCaseGlow 3.2s ease-in-out infinite;}
+    @keyframes oskCaseGlow{
+      0%,100%{filter:drop-shadow(0 22px 36px rgba(0,0,0,.55)) drop-shadow(0 0 4px rgba(255,255,255,.30));}
+      50%{filter:drop-shadow(0 22px 36px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(255,255,255,.65));}
+    }
+    /* iOS/Android choke on background-attachment:fixed — use scroll on touch */
+    @media (hover:none){.osk-stn .casebox .case,.osk-stn .tool{animation:none;}.osk-stn .act1{background-attachment:scroll,scroll !important;}}
+    @media (prefers-reduced-motion:reduce){.osk-stn .casebox .case,.osk-stn .tool{animation:none;}}
+    /* floating tool thumbs — thin green frame (matches .pricecard/.guarantee) over a faint
+       dark backing instead of the old thick white card, plus a very subtle animated outer
+       green glow (gated off for touch + reduced-motion next to the case glow above). */
+    .osk-stn .tool{position:absolute;width:clamp(64px,15vw,118px);border-radius:12px;background:rgba(6,24,12,.55);border:2px solid rgba(52,211,94,.55);padding:3px;box-shadow:0 10px 22px rgba(0,0,0,.45),0 0 6px 1px rgba(52,211,94,.25);animation:oskToolGlow 3.6s ease-in-out infinite;}
+    .osk-stn .tool img{border-radius:8px;}
+    @keyframes oskToolGlow{
+      0%,100%{box-shadow:0 10px 22px rgba(0,0,0,.45),0 0 6px 1px rgba(52,211,94,.25);}
+      50%{box-shadow:0 10px 22px rgba(0,0,0,.45),0 0 16px 3px rgba(52,211,94,.55);}
+    }
+    .osk-stn .t1{top:-6%;left:-22%;}
+    .osk-stn .t2{top:6%;right:-26%;}
+    .osk-stn .t3{top:42%;left:-32%;}
+    .osk-stn .t4{top:46%;right:-30%;}
+    .osk-stn .t5{bottom:-4%;left:-8%;}
+    .osk-stn .t6{bottom:-8%;right:-6%;}
+    /* value counter */
+    .osk-stn .counter{margin-top:26px;}
+    .osk-stn .counter .lbl{font-family:'Oswald',sans-serif !important;letter-spacing:1px;font-size:13px;text-transform:uppercase;color:var(--muted) !important;}
+    .osk-stn .counter .val{font-family:'Anton',sans-serif !important;font-size:clamp(40px,10vw,76px);color:var(--yellow) !important;line-height:1;}
+    .osk-stn .progress{position:absolute;left:0;bottom:0;height:5px;width:0%;background:var(--grn-bright);}
+
+    /* ---- ACT 3 — CONVERT ---- */
+    .osk-stn .act3{padding:64px 0;text-align:center;background:linear-gradient(180deg,#0f3d1d,#06180c) !important;}
+    .osk-stn .pricecard{background:rgba(255,255,255,.04);border:1px solid rgba(52,211,94,.3);border-radius:18px;max-width:620px;margin:0 auto;padding:34px 24px;}
+    .osk-stn .priceslash{font-family:'Anton',sans-serif !important;font-size:clamp(30px,8vw,56px);color:#ff9c8e !important;text-decoration:line-through;line-height:1;}
+    .osk-stn .pricenow{font-family:'Anton',sans-serif !important;font-size:clamp(54px,15vw,110px);color:var(--yellow) !important;line-height:.95;display:block;margin:6px 0;}
+    .osk-stn .pricesh{font-size:15px;color:#cfe0c8 !important;display:block;margin-bottom:22px;}
+
+    /* ---- FULL KIT GRID (parity) ---- */
+    .osk-stn .kit{padding:60px 0 30px;background:#06180c !important;}
+    .osk-stn .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:26px;}
+    .osk-stn .card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px;text-align:center;text-decoration:none !important;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
+    /* Hover glow: lift + green border + outer green glow (matches the brand green). The lift
+       is neutralized under prefers-reduced-motion below; :hover never fires on touch. */
+    .osk-stn .card:hover{transform:translateY(-4px);border-color:var(--grn-bright);box-shadow:0 0 0 1px rgba(52,211,94,.45),0 10px 26px rgba(0,0,0,.5),0 0 22px rgba(52,211,94,.4);}
+    .osk-stn .card:hover img{border-color:var(--grn-bright);}
+    /* Uniform square tiles so every product reads consistently (no haphazard sizes).
+       Thin green frame (matches .pricecard) instead of the old thick white card. */
+    .osk-stn .card img{width:100%;aspect-ratio:1/1;object-fit:contain;background:transparent;border:1px solid rgba(52,211,94,.3);border-radius:8px;margin:0 0 10px;padding:6px;transition:border-color .2s ease;}
+    /* Scene/lifestyle photos (vs. the transparent product cut-outs) are landscape and get
+       letterboxed by object-fit:contain (empty bands top/bottom). `fill` switches them to
+       cover so they fill the square frame edge-to-edge; the product stays centered. */
+    .osk-stn .card img.fill{object-fit:cover;}
+    .osk-stn .card .nm{font-family:'Oswald',sans-serif !important;font-weight:600;font-size:13px;color:#fff !important;line-height:1.2;min-height:2.4em;display:flex;align-items:center;justify-content:center;}
+    .osk-stn .card .ret{display:inline-block;margin-top:6px;font-size:11px;font-weight:700;color:#06180c !important;background:var(--yellow);border-radius:5px;padding:2px 8px;}
+    .osk-stn .card.bonus{border-color:var(--grn-bright);}
+
+    /* ---- Guarantee / testimonials / FAQ ---- */
+    .osk-stn .band{padding:54px 0;}
+    .osk-stn .guarantee{background:rgba(52,211,94,.07);border:2px solid var(--grn-bright);border-radius:16px;max-width:680px;margin:0 auto;padding:28px 24px;text-align:center;}
+    .osk-stn .guarantee .badge{font-family:'Anton',sans-serif !important;font-size:12px;letter-spacing:1px;color:#06180c !important;background:var(--grn-bright);display:inline-block;padding:6px 16px;border-radius:30px;text-transform:uppercase;margin-bottom:12px;}
+    .osk-stn .guarantee h3{font-family:'Oswald',sans-serif !important;font-size:24px;color:#fff !important;margin:0 0 8px;}
+    .osk-stn .guarantee p{font-size:15px;color:#cfe0c8 !important;margin:0;}
+    .osk-stn .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:24px;}
+    .osk-stn .tcard{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:20px;}
+    .osk-stn .stars{color:#f5c518;font-size:16px;letter-spacing:2px;margin-bottom:8px;}
+    .osk-stn .tcard .who{font-weight:700;font-size:14px;color:var(--grn-bright) !important;margin-bottom:6px;}
+    .osk-stn .tcard p{font-size:14px;color:#dfe7d8 !important;margin:0;}
+    .osk-stn .tcard .vbadge{display:inline-block;font-size:11px;color:var(--grn-bright) !important;font-weight:700;margin-top:10px;}
+    .osk-stn details{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;margin:0 0 10px;overflow:hidden;transition:background-color .25s ease,border-color .25s ease;}
+    .osk-stn details[open]{background:rgba(52,211,94,.06);border-color:rgba(52,211,94,.35);}
+    .osk-stn summary{cursor:pointer;list-style:none;padding:16px 18px;font-family:'Oswald',sans-serif !important;font-weight:600;font-size:16px;color:#fff !important;display:flex;justify-content:space-between;align-items:center;transition:color .2s ease;}
+    .osk-stn summary:hover{color:var(--grn-bright) !important;}
+    .osk-stn summary::-webkit-details-marker{display:none;}
+    /* Marker rotates (+ -> ×) rather than swapping glyphs, so the toggle animates.
+       Native <details> hides content instantly on close, so .ans only animates on OPEN
+       (a JS height-collapse would need a payload-rebuild — see v6 note). Both are
+       neutralized under prefers-reduced-motion below. */
+    .osk-stn summary::after{content:"+";font-size:24px;line-height:1;color:var(--grn-bright);transition:transform .28s cubic-bezier(.4,0,.2,1);transform-origin:center;}
+    .osk-stn details[open] summary::after{transform:rotate(45deg);}
+    .osk-stn details .ans{padding:0 18px 16px;font-size:15px;color:#cfe0c8 !important;}
+    .osk-stn details[open] .ans{animation:oskFaqReveal .3s ease both;}
+    @keyframes oskFaqReveal{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
+    .osk-stn .sec-head{text-align:center;}
+
+    /* ---- Floating CTA bar ----
+       Styled WITHOUT a .osk-stn ancestor selector and with literal colors (not
+       CSS vars) because the JS relocates this bar to document.body so position:fixed
+       escapes CF's transformed builder wrappers. Vars/ancestor scoping would not
+       resolve once it lives outside .osk-stn. */
+    /* display/justify/align/flex-wrap carry !important: CF's reset overrides a plain
+       display:flex to `block` on the live page (intermittently, on re-render), which
+       makes justify-content inert and the children flow to the LEFT. left/right/bottom
+       are pinned !important too so CF can't shift the fixed bar off full-width. */
+    .osk-fbar{
+      position:fixed !important;left:0 !important;right:0 !important;bottom:0 !important;z-index:2147483600;
+      background:rgba(6,24,12,.96) !important;border-top:2px solid #34d35e;
+      padding:10px 14px !important;display:flex !important;gap:12px;align-items:center !important;justify-content:center !important;flex-wrap:wrap !important;
+      transform:translateY(110%);transition:transform .35s ease;box-sizing:border-box;
+      font-family:'Inter',Helvetica,Arial,sans-serif;
+      -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
+    }
+    .osk-fbar.show{transform:translateY(0);}
+    .osk-fbar .fb-txt{font-family:'Oswald',sans-serif !important;font-weight:600;font-size:15px;color:#fff !important;}
+    .osk-fbar .fb-txt s{color:#ff9c8e !important;}
+    .osk-fbar .fb-txt b{color:#ffe11a !important;}
+    .osk-fbar a{
+      text-decoration:none !important;background:linear-gradient(180deg,#ff5b46,#b3260f) !important;color:#fff !important;
+      font-family:'Oswald',sans-serif !important;font-weight:700;text-transform:uppercase;letter-spacing:.4px;
+      padding:11px 20px !important;border-radius:9px;font-size:15px;white-space:nowrap;
+    }
+    .osk-stn .ft{background:#040f07 !important;color:#8aa183 !important;text-align:center;padding:24px 0;font-size:12px;}
+
+    /* ---- Footer ---- */
+    @media (max-width:768px){
+      .osk-stn .grid{grid-template-columns:repeat(2,1fr);}
+      .osk-stn .tgrid{grid-template-columns:1fr;}
+      .osk-stn .casebox{width:min(64vw,300px);}
+      .osk-stn .tool{width:clamp(52px,17vw,82px);}
+      .osk-stn .t1{left:-14%;}.osk-stn .t2{right:-16%;}
+      .osk-stn .t3{left:-18%;}.osk-stn .t4{right:-18%;}
+      /* tighter vertical rhythm so Act 1 (eyebrow+headline+4 cards+cue) clears a phone
+         viewport with margin to spare; extra stage bottom-clearance because the fixed CTA
+         bar can wrap to two lines on narrow screens. */
+      .osk-stn .act1{padding:58px 0 24px;}
+      .osk-stn .scrollcue{margin-top:18px;}
+      .osk-stn .stage{padding-bottom:104px;}
+    }
+    /* Reduced motion: neutralize sticky so nothing scrubs + kill FAQ transitions */
+    @media (prefers-reduced-motion:reduce){
+      .osk-stn .stage{position:relative;height:auto;min-height:0;padding:60px 0;}
+      .osk-stn .act2{min-height:0 !important;}
+      .osk-stn details[open] .ans{animation:none;}
+      .osk-stn summary::after,.osk-stn details{transition:none;}
+      /* keep the green-glow on hover, but drop the motion (lift) */
+      .osk-stn .card,.osk-stn .card img{transition:none;}
+      .osk-stn .card:hover{transform:none;}
+    }
+  </style>
+
+  <!-- =====================================================================
+       CF BASE64 BOOTSTRAP (v3) — THIS is what makes the animation run live.
+       DIAGNOSED IN A REAL BROWSER against the live URL: CF's Custom JS/HTML element
+       stores this block in <div class="elCustomJS_code" data-custom-js="…"> and injects
+       it via innerHTML — and CF (1) STRIPS every <script> tag from the injected DOM
+       (live DOM had 0 osk <script>s) and (2) MANGLES the script it extracts when it
+       tries to run it ("Unexpected identifier"). So no inline-<script> approach works.
+       FIX: the JS is shipped as BASE64 in data-osk-payload (below). Base64 is HTML-safe
+       (only A-Za-z0-9+/=) so CF can't corrupt it, and a data-* attr isn't a <script> so
+       CF can't strip it. This 1×1 image's handler decodes it UTF-8-safely
+       (atob -> Uint8Array -> TextDecoder) and injects it as a live <script>, which DOES
+       execute. The src is a VALID 1×1 GIF so onLOAD always fires; onERROR is a fallback
+       if a strict img-src CSP blocks data: URIs. Run-once via __oskStnBoot; __oskStnRan
+       keeps a file:// preview from double-running. The payload's readable source is the
+       sidecar OSK_Prelander_STN_v10.payload.js — edit there, then regenerate the base64
+       (one-liner in the sidecar header) and paste it back into data-osk-payload. -->
+  <img data-osk-boot alt="" aria-hidden="true"
+       style="position:absolute;width:1px;height:1px;opacity:0;border:0;pointer-events:none;"
+       src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+       onload="this.onload=this.onerror=null;if(!window.__oskStnRan&&!window.__oskStnBoot){window.__oskStnBoot=1;try{var b=atob(this.getAttribute('data-osk-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var code=new TextDecoder('utf-8').decode(u);var n=document.createElement('script');n.text=code;(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[OSK STN] bootstrap failed:',e&&e.message);}}"
+       onerror="this.onload=this.onerror=null;if(!window.__oskStnRan&&!window.__oskStnBoot){window.__oskStnBoot=1;try{var b=atob(this.getAttribute('data-osk-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var code=new TextDecoder('utf-8').decode(u);var n=document.createElement('script');n.text=code;(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[OSK STN] bootstrap failed:',e&&e.message);}}"
+       data-osk-payload="LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBPU0tfUHJlbGFuZGVyX1NUTl92MTAucGF5bG9hZC5qcwogICBSRUFEQUJMRSBTT1VSQ0UgZm9yIHRoZSBCYXNlNjQgYm9vdHN0cmFwIHBheWxvYWQgZW1iZWRkZWQgaW4KICAgT1NLX1ByZWxhbmRlcl9TVE5fdjEwLmh0bWwgKGF0dHJpYnV0ZSBkYXRhLW9zay1wYXlsb2FkIG9uIHRoZSBkYXRhLW9zay1ib290IDxpbWc+KS4KCiAgIFdIWSBiYXNlNjQ6IENsaWNrRnVubmVscycgQ3VzdG9tIEpTL0hUTUwgZWxlbWVudCBTVFJJUFMgPHNjcmlwdD4gdGFncyBmcm9tIHRoZQogICBwYXN0ZWQgYmxvY2sgKGNvbmZpcm1lZCBvbiB0aGUgbGl2ZSBwYWdlOiAwIG9zayA8c2NyaXB0PiBlbGVtZW50cyBpbiB0aGUgRE9NKSBBTkQKICAgbWFuZ2xlcyB0aGVpciBjb250ZW50cyB3aGVuIGl0IHRyaWVzIHRvIHJ1biB0aGVtICgiVW5leHBlY3RlZCBpZGVudGlmaWVyIikuIEJhc2U2NAogICBpbiBhIGRhdGEtKiBhdHRyaWJ1dGUgaXMgSFRNTC1zYWZlIChvbmx5IEEtWmEtejAtOSsvPSkgc28gQ0YgY2Fubm90IGNvcnJ1cHQgaXQsIGFuZAogICBpdCBpcyBub3QgYSA8c2NyaXB0PiB0YWcgc28gQ0YgY2Fubm90IHN0cmlwIGl0LiBUaGUgMcOXMS1pbWFnZSBvbmxvYWQgaGFuZGxlciBkZWNvZGVzCiAgIGl0IChVVEYtOCBzYWZlKSBhbmQgaW5qZWN0cyBpdCBhcyBhIGxpdmUgPHNjcmlwdD4sIHdoaWNoIERPRVMgZXhlY3V0ZS4KCiAgIEVESVQgSEVSRSwgdGhlbiByZWdlbmVyYXRlIHRoZSBiYXNlNjQgYW5kIHBhc3RlIGl0IGludG8gZGF0YS1vc2stcGF5bG9hZDoKICAgICBub2RlIC1lICJjb25zdCBmcz1yZXF1aXJlKCdmcycpO2NvbnNvbGUubG9nKEJ1ZmZlci5mcm9tKGZzLnJlYWRGaWxlU3luYygnT1NLX1ByZWxhbmRlcl9TVE5fdjEwLnBheWxvYWQuanMnLCd1dGY4JyksJ3V0ZjgnKS50b1N0cmluZygnYmFzZTY0JykpIgogICA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovCiAgKGZ1bmN0aW9uKCl7CiAgICAidXNlIHN0cmljdCI7CiAgICAvLyBUZWxsIHRoZSBvbmVycm9yIGJvb3RzdHJhcCAoZGF0YS1vc2stYm9vdCwgYWJvdmUpIHRoYXQgdGhlIGlubGluZSA8c2NyaXB0PgogICAgLy8gRElEIGV4ZWN1dGUgb24gaXRzIG93biwgc28gaXQgc2hvdWxkIE5PVCByZS1pbmplY3QgdXMuIFNldCBpbW1lZGlhdGVseS4KICAgIHdpbmRvdy5fX29za1N0blJhbiA9IHRydWU7CiAgICAvLyBEZWJ1ZyB0ZWxlbWV0cnkg4oCUIHNpbGVudCBieSBkZWZhdWx0OyBhcHBlbmQgP29za2RlYnVnIHRvIHRoZSBVUkwgKG9yIHNldAogICAgLy8gd2luZG93Lk9TS19ERUJVRz10cnVlKSB0byBwcmludCB0aGUgbG9hZC9idWlsZCB0cmFjZSB0byB0aGUgY29uc29sZS4gTGV0cyB1cwogICAgLy8gc2VlIG9uIHRoZSBMSVZFIENGIHBhZ2UgZXhhY3RseSB3aGVyZSB0aGUgcGlwZWxpbmUgZGllcyAoc2NyaXB0IHJhbj8gR1NBUAogICAgLy8gbG9hZGVkPyB0aW1lbGluZSBidWlsdD8pIHdpdGhvdXQgZ3Vlc3NpbmcuCiAgICB2YXIgREJHID0gKHR5cGVvZiBsb2NhdGlvbiE9PSd1bmRlZmluZWQnICYmIC9bPyZdb3NrZGVidWcvaS50ZXN0KGxvY2F0aW9uLnNlYXJjaCkpIHx8IHdpbmRvdy5PU0tfREVCVUc7CiAgICBmdW5jdGlvbiBsb2coKXsgaWYoREJHICYmIHdpbmRvdy5jb25zb2xlICYmIGNvbnNvbGUubG9nKXsgY29uc29sZS5sb2cuYXBwbHkoY29uc29sZSwgWydbT1NLIFNUTl0nXS5jb25jYXQoW10uc2xpY2UuY2FsbChhcmd1bWVudHMpKSk7IH0gfQogICAgbG9nKCdzY3JpcHQgZXhlY3V0ZWQnKTsgLy8gaWYgeW91IG5ldmVyIHNlZSB0aGlzIG9uIHRoZSBsaXZlIHBhZ2UsIENGIGRpZCBub3QgcnVuIHRoZSA8c2NyaXB0PiAoZS5nLiBpbm5lckhUTUwgaW5qZWN0KQoKICAgIC8vIFJlbG9jYXRlIHRoZSBmbG9hdGluZyBDVEEgdG8gPGJvZHk+IHNvIHBvc2l0aW9uOmZpeGVkIGlzIHJlbGF0aXZlIHRvIHRoZSBWSUVXUE9SVCwKICAgIC8vIG5vdCBDRidzIGNvbnRlbnQgY29sdW1uICh3aGljaCBpcyBjZW50cmVkICsgbWF4LXdpZHRoLCBhbmQgb24gLm9zay1zdG4gY2FycmllcyB0aGUKICAgIC8vIC01MHZ3IGZ1bGwtdmlld3BvcnQtYnJlYWtvdXQgbWFyZ2luKSDigJQgZWl0aGVyIG9mIHdoaWNoIHRocm93cyB0aGUgZml4ZWQgYmFyIG9mZi4KICAgIC8vIENhbGxlZCBmcm9tIGluaXQgQU5EIGZyb20gYnVpbGRUaW1lbGluZSArIHJlZnJlc2gsIGJlY2F1c2Ugb24gdGhlIGxpdmUgQ0YgcGFnZSB0aGUKICAgIC8vIHNpbmdsZSBpbml0KCkgcmVsb2NhdGlvbiBkaWQgbm90IHN0aWNrIChDRiByZS1yZW5kZXJzIHRoZSBjdXN0b20tSFRNTCBzdWJ0cmVlKSwgYW5kCiAgICAvLyBidWlsZFRpbWVsaW5lIGlzIGtub3duIHRvIHJ1bi4gSWRlbXBvdGVudDogb25seSBtb3ZlcyBpZiBub3QgYWxyZWFkeSBvbiA8Ym9keT4uCiAgICBmdW5jdGlvbiByZWxvY2F0ZUZsb2F0YmFyKHJvb3QpewogICAgICB2YXIgZmIgPSAocm9vdCAmJiByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWZsb2F0YmFyXScpKSB8fCBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCcub3NrLWZiYXInKTsKICAgICAgaWYoZmIgJiYgZG9jdW1lbnQuYm9keSAmJiBmYi5wYXJlbnROb2RlICE9PSBkb2N1bWVudC5ib2R5KXsgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChmYik7IGxvZygnZmxvYXRiYXIgLT4gYm9keScpOyB9CiAgICAgIHJldHVybiBmYjsKICAgIH0KCiAgICBmdW5jdGlvbiBpbml0KHJvb3QpewogICAgICBpZighcm9vdCB8fCByb290Ll9fb3NrU3RuSW5pdCkgcmV0dXJuOwogICAgICByb290Ll9fb3NrU3RuSW5pdCA9IHRydWU7CiAgICAgIGxvZygnaW5pdCcsIHJvb3QpOwoKICAgICAgdmFyIHJlZHVjZSA9IHdpbmRvdy5tYXRjaE1lZGlhICYmIHdpbmRvdy5tYXRjaE1lZGlhKCcocHJlZmVycy1yZWR1Y2VkLW1vdGlvbjogcmVkdWNlKScpLm1hdGNoZXM7CgogICAgICAvLyAtLS0tIEZsb2F0aW5nIENUQTogc2hvdyBvbmNlIEFjdCAxIGlzIHNjcm9sbGVkIHBhc3QsIGhpZGUgb3ZlciB0aGUgZm9vdGVyLgogICAgICAvLyBJbnRlcnNlY3Rpb25PYnNlcnZlciBpcyB1c2VkIChub3Qgc2Nyb2xsIG1hdGgpIHNvIGl0IHdvcmtzIHJlZ2FyZGxlc3Mgb2YKICAgICAgLy8gd2hldGhlciB0aGUgd2luZG93IG9yIGEgQ0YgaW5uZXIgY29udGFpbmVyIGlzIHRoZSBzY3JvbGxlci4KICAgICAgdmFyIGZsb2F0YmFyID0gcmVsb2NhdGVGbG9hdGJhcihyb290KTsKICAgICAgdmFyIGFjdDEgPSByb290LnF1ZXJ5U2VsZWN0b3IoJy5hY3QxJyk7CiAgICAgIHZhciBmb290ICA9IHJvb3QucXVlcnlTZWxlY3RvcignLmZ0Jyk7CiAgICAgIGlmKGZsb2F0YmFyICYmIGFjdDEpewogICAgICAgIHZhciBwYXN0SGVybyA9IGZhbHNlLCBhdEJvdHRvbSA9IGZhbHNlOwogICAgICAgIHZhciBhcHBseUZCID0gZnVuY3Rpb24oKXsgZmxvYXRiYXIuY2xhc3NMaXN0LnRvZ2dsZSgnc2hvdycsIHBhc3RIZXJvICYmICFhdEJvdHRvbSk7IH07CiAgICAgICAgaWYoJ0ludGVyc2VjdGlvbk9ic2VydmVyJyBpbiB3aW5kb3cpewogICAgICAgICAgbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKGZ1bmN0aW9uKGVzKXsKICAgICAgICAgICAgcGFzdEhlcm8gPSBlc1swXS5pbnRlcnNlY3Rpb25SYXRpbyA8IDAuMDg7ICAgLy8gQWN0IDEgbW9zdGx5IG91dCBvZiB2aWV3CiAgICAgICAgICAgIGFwcGx5RkIoKTsKICAgICAgICAgIH0sIHt0aHJlc2hvbGQ6WzAsIDAuMDgsIDAuNSwgMV19KS5vYnNlcnZlKGFjdDEpOwogICAgICAgICAgaWYoZm9vdCl7CiAgICAgICAgICAgIG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihmdW5jdGlvbihlcyl7CiAgICAgICAgICAgICAgYXRCb3R0b20gPSBlc1swXS5pc0ludGVyc2VjdGluZzsgICAgICAgICAgICAvLyBmb290ZXIgaW4gdmlldyAtPiBoaWRlCiAgICAgICAgICAgICAgYXBwbHlGQigpOwogICAgICAgICAgICB9LCB7cm9vdE1hcmdpbjonMHB4IDBweCAtMzBweCAwcHgnfSkub2JzZXJ2ZShmb290KTsKICAgICAgICAgIH0KICAgICAgICB9IGVsc2UgewogICAgICAgICAgdmFyIG9uU2Nyb2xsRmxvYXQgPSBmdW5jdGlvbigpewogICAgICAgICAgICBwYXN0SGVybyA9IGFjdDEuZ2V0Qm91bmRpbmdDbGllbnRSZWN0KCkuYm90dG9tIDwgNDA7CiAgICAgICAgICAgIGF0Qm90dG9tID0gKHdpbmRvdy5pbm5lckhlaWdodCArIHdpbmRvdy5zY3JvbGxZKSA+IChkb2N1bWVudC5kb2N1bWVudEVsZW1lbnQuc2Nyb2xsSGVpZ2h0IC0gMjAwKTsKICAgICAgICAgICAgYXBwbHlGQigpOwogICAgICAgICAgfTsKICAgICAgICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdzY3JvbGwnLCBvblNjcm9sbEZsb2F0LCB7cGFzc2l2ZTp0cnVlfSk7CiAgICAgICAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcigncmVzaXplJywgb25TY3JvbGxGbG9hdCk7CiAgICAgICAgICBvblNjcm9sbEZsb2F0KCk7CiAgICAgICAgfQogICAgICB9CgogICAgICAvLyBSZWR1Y2VkIG1vdGlvbjogbGVhdmUgZXZlcnl0aGluZyBpbiBpdHMgbmF0dXJhbCAodmlzaWJsZSkgc3RhdGUuCiAgICAgIGlmKHJlZHVjZSkgcmV0dXJuOwoKICAgICAgLy8gLS0tLSBJbmplY3QgR1NBUCArIFNjcm9sbFRyaWdnZXIgdmlhIEpTIChDRiBzdHJpcHMgPHNjcmlwdCBzcmM+KS4gLS0tLQogICAgICAvLyBUcnkgbXVsdGlwbGUgQ0ROcyBpbiBvcmRlciBzbyBhIHNpbmdsZSBibG9ja2VkIGhvc3QgKGpzZGVsaXZyIGJlaGluZCBhCiAgICAgIC8vIG5ldHdvcmsvQ1NQIGZpbHRlcikgZG9lc24ndCBraWxsIHRoZSBhbmltYXRpb24g4oCUIGZhbGwgdGhyb3VnaCB0byBjZG5qcy91bnBrZy4KICAgICAgZnVuY3Rpb24gbG9hZEZpcnN0KHVybHMpewogICAgICAgIHJldHVybiBuZXcgUHJvbWlzZShmdW5jdGlvbihyZXMscmVqKXsKICAgICAgICAgIHZhciBpPTA7CiAgICAgICAgICAoZnVuY3Rpb24gbmV4dCgpewogICAgICAgICAgICBpZihpPj11cmxzLmxlbmd0aCl7IHJlaihuZXcgRXJyb3IoJ2FsbCBDRE5zIGZhaWxlZCcpKTsgcmV0dXJuOyB9CiAgICAgICAgICAgIHZhciB1cmw9dXJsc1tpKytdOwogICAgICAgICAgICB2YXIgcz1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsgcy5zcmM9dXJsOyBzLmFzeW5jPXRydWU7CiAgICAgICAgICAgIHMub25sb2FkPWZ1bmN0aW9uKCl7IGxvZygnbG9hZGVkJywgdXJsKTsgcmVzKCk7IH07CiAgICAgICAgICAgIHMub25lcnJvcj1mdW5jdGlvbigpeyBsb2coJ0ZBSUxFRCcsIHVybCk7IG5leHQoKTsgfTsKICAgICAgICAgICAgZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzKTsKICAgICAgICAgIH0pKCk7CiAgICAgICAgfSk7CiAgICAgIH0KICAgICAgLy8gSWYgR1NBUCBpcyBzb21laG93IGFscmVhZHkgb24gdGhlIHBhZ2UsIHNraXAgc3RyYWlnaHQgdG8gYnVpbGRpbmcuCiAgICAgIGlmKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKXsgbG9nKCdnc2FwIGFscmVhZHkgcHJlc2VudCcpOyBidWlsZFRpbWVsaW5lKHJvb3QpOyByZXR1cm47IH0KICAgICAgbG9hZEZpcnN0KFsKICAgICAgICAnaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9nc2FwQDMuMTIuNS9kaXN0L2dzYXAubWluLmpzJywKICAgICAgICAnaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvZ3NhcC8zLjEyLjUvZ3NhcC5taW4uanMnLAogICAgICAgICdodHRwczovL3VucGtnLmNvbS9nc2FwQDMuMTIuNS9kaXN0L2dzYXAubWluLmpzJwogICAgICBdKQogICAgICAgIC50aGVuKGZ1bmN0aW9uKCl7IHJldHVybiBsb2FkRmlyc3QoWwogICAgICAgICAgJ2h0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZ3NhcEAzLjEyLjUvZGlzdC9TY3JvbGxUcmlnZ2VyLm1pbi5qcycsCiAgICAgICAgICAnaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvZ3NhcC8zLjEyLjUvU2Nyb2xsVHJpZ2dlci5taW4uanMnLAogICAgICAgICAgJ2h0dHBzOi8vdW5wa2cuY29tL2dzYXBAMy4xMi41L2Rpc3QvU2Nyb2xsVHJpZ2dlci5taW4uanMnCiAgICAgICAgXSk7IH0pCiAgICAgICAgLnRoZW4oZnVuY3Rpb24oKXsKICAgICAgICAgIGlmKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKXsgbG9nKCdHU0FQIHJlYWR5IC0+IGJ1aWxkaW5nIHRpbWVsaW5lJyk7IGJ1aWxkVGltZWxpbmUocm9vdCk7IH0KICAgICAgICAgIGVsc2UgeyBsb2coJ0dTQVAgc2NyaXB0cyBsb2FkZWQgYnV0IGdsb2JhbHMgbWlzc2luZycpOyB9CiAgICAgICAgfSkKICAgICAgICAuY2F0Y2goZnVuY3Rpb24oZSl7IGxvZygnR1NBUCBsb2FkIGZhaWxlZCAtPiBzdGF0aWMgZmFsbGJhY2s6JywgZSAmJiBlLm1lc3NhZ2UpOyB9KTsKICAgIH0KCiAgICBmdW5jdGlvbiBidWlsZFRpbWVsaW5lKHJvb3QpewogICAgICB2YXIgZ3NhcCA9IHdpbmRvdy5nc2FwLCBTVCA9IHdpbmRvdy5TY3JvbGxUcmlnZ2VyOwogICAgICBnc2FwLnJlZ2lzdGVyUGx1Z2luKFNUKTsKCiAgICAgIHZhciBxID0gZnVuY3Rpb24oc2VsKXsgcmV0dXJuIHJvb3QucXVlcnlTZWxlY3RvcihzZWwpOyB9OwogICAgICB2YXIgcWEgPSBmdW5jdGlvbihzZWwpeyByZXR1cm4gQXJyYXkucHJvdG90eXBlLnNsaWNlLmNhbGwocm9vdC5xdWVyeVNlbGVjdG9yQWxsKHNlbCkpOyB9OwoKICAgICAgLy8gLS0tLSBBQ1QgMTogcmV2ZWFsIGhvb2sgbGluZXMgb24gZW50cnkgLS0tLQogICAgICB2YXIgYTEgPSBxYSgnLmFjdDEtZngnKTsKICAgICAgZ3NhcC5zZXQoYTEsIHtvcGFjaXR5OjAsIHk6MjZ9KTsKICAgICAgZ3NhcC50byhhMSwge29wYWNpdHk6MSwgeTowLCBkdXJhdGlvbjouNywgc3RhZ2dlcjouMTMsIGVhc2U6J3Bvd2VyMi5vdXQnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6eyB0cmlnZ2VyOnJvb3QucXVlcnlTZWxlY3RvcignLmFjdDEnKSwgc3RhcnQ6J3RvcCA3NSUnIH19KTsKCiAgICAgIC8vIC0tLS0gQUNUIDI6IHBpbm5lZCBzY3J1YiB0aW1lbGluZSAtLS0tCiAgICAgIHZhciB0cmFjayA9IHEoJ1tkYXRhLXRyYWNrXScpOwogICAgICB2YXIgc3RhZ2UgPSBxKCdbZGF0YS1zdGFnZV0nKTsKICAgICAgdmFyIHRvb2xzID0gcWEoJ1tkYXRhLXRvb2xdJyk7CiAgICAgIHZhciBjYXNlSW1nID0gcSgnW2RhdGEtY2FzZV0nKTsKICAgICAgdmFyIGNhcCA9IHEoJ1tkYXRhLWNhcF0nKTsKICAgICAgdmFyIGNvdW50ZXJFbCA9IHEoJ1tkYXRhLWNvdW50ZXJdJyk7CiAgICAgIHZhciBwcm9ncmVzcyA9IHEoJ1tkYXRhLXByb2dyZXNzXScpOwoKICAgICAgZ3NhcC5zZXQodG9vbHMsIHtvcGFjaXR5OjAsIHNjYWxlOi4zLCB4OjAsIHk6MH0pOwogICAgICBnc2FwLnNldChjYXNlSW1nLCB7c2NhbGU6LjgyLCBvcGFjaXR5Oi44NX0pOwogICAgICBpZihjb3VudGVyRWwpIGNvdW50ZXJFbC50ZXh0Q29udGVudCA9ICckMCc7ICAvLyBzdGF0aWMvZmFsbGJhY2sga2VlcHMgdGhlIHJlYWwgJDIxNAoKICAgICAgdmFyIGNhcHRpb25zID0gWwogICAgICAgICdTbyBJIHNwZW50IDYgbW9udGhzIGJ1aWxkaW5nIHRoZSBhbnN3ZXLigKYnLAogICAgICAgICdPbmUgY29tcGFjdCwgd2F0ZXJwcm9vZiBjYXNl4oCmJywKICAgICAgICAn4oCmcGFja2VkIHdpdGggPHNwYW4gY2xhc3M9ImhsIj4xNiBzdXJ2aXZhbCB0b29sczwvc3Bhbj4nLAogICAgICAgICdPdmVyIDxzcGFuIGNsYXNzPSJobCI+NDAgYXBwbGljYXRpb25zPC9zcGFuPiBpbiB5b3VyIHBvY2tldCcsCiAgICAgICAgJ1RoYXTigJlzIDxzcGFuIGNsYXNzPSJobCI+JDIxNDwvc3Bhbj4gb2YgZ2VhciDigJQgZG9uZSByaWdodCcKICAgICAgXTsKICAgICAgZnVuY3Rpb24gc2V0Q2FwKGkpewogICAgICAgIGlmKCFjYXApIHJldHVybjsKICAgICAgICBpID0gTWF0aC5tYXgoMCwgTWF0aC5taW4oY2FwdGlvbnMubGVuZ3RoLTEsIGkpKTsKICAgICAgICBpZihjYXAuX19pICE9PSBpKXsgY2FwLl9faSA9IGk7IGNhcC5pbm5lckhUTUwgPSBjYXB0aW9uc1tpXTsgfQogICAgICB9CiAgICAgIHZhciBjb3VudGVyT2JqID0ge3Y6MH07CgogICAgICAvLyAtLS0tIEFDVCAyIGNhc2Utb3BlbmluZyBpbWFnZSBzZXF1ZW5jZSAtLS0tCiAgICAgIC8vIFRoZSBwaW5uZWQgY2FzZSBwbGF5cyBhIDI0LWZyYW1lIENMT1NFRC0+T1BFTiBwaG90byBzZXF1ZW5jZSBzY3J1YmJlZCBpbiBzeW5jIHdpdGgKICAgICAgLy8gdGhlIGNhc2Ugc2NhbGUtdXAgKyB0b29sIGZhbi1vdXQsIHNvIHRoZSBraXQgdmlzaWJseSAib3BlbnMiIGFzIHlvdSBzY3JvbGwuIEZyYW1lcwogICAgICAvLyBhcmUgcHItcGhvdG8tMzMyMiAoY2xvc2VkKSAuLiAzMzQ1IChvcGVuKSDigJQgYXNjZW5kaW5nID0gY2xvc2VkLT5vcGVuLCBwZXIKICAgICAgLy8gUHJvbXB0cy9JbWFnZVNlcXVlbmNlLm1kLiBzZXRDYXNlRnJhbWUoKSBzd2FwcyBjYXNlSW1nLnNyYyBwZXIgc2NydWIgdGljazsgdGhlIGZyYW1lcwogICAgICAvLyBhcmUgUFJFTE9BREVEIChwcmVsb2FkQ2FzZVNlcSkgb24gQWN0LTIgZW50cnkg4oCUIHNhbWUgZGVmZXJyYWwgYXMgdGhlIHRvb2wgbW90aW9uIGNsaXBzLAogICAgICAvLyBzbyB0aGUgfjUuNSBNQiBvZiBmcmFtZXMgbmV2ZXIgdG91Y2ggZmlyc3QgcGFpbnQgYW5kIG5ldmVyIGRvd25sb2FkIGZvciB2aXNpdG9ycyB3aG8KICAgICAgLy8gZG9uJ3Qgc2Nyb2xsIHRvIEFjdCAyLiBJZGVtcG90ZW50LiBUaGUgY2xvc2VkIGZyYW1lICgzMzIyLCB+NzggS0IpIGlzIHNldCBhdCBidWlsZCBzbwogICAgICAvLyB0aGUgY2FzZSByZWFkcyBjbG9zZWQgYmVmb3JlIHRoZSBzY3J1YiBzdGFydHM7IHJlZHVjZWQtbW90aW9uIC8gbm8tR1NBUCB2aXNpdG9ycyBuZXZlcgogICAgICAvLyBydW4gYnVpbGRUaW1lbGluZSwgc28gdGhleSBrZWVwIHRoZSBtYXJrdXAgc3JjIChPUEVOIGZyYW1lIDMzNDUg4oCUIHNob3dzIHRoZSBmdWxsIGtpdCkuCiAgICAgIHZhciBDQVNFX1NFUV9GSVJTVCA9IDMzMjI7ICAgLy8gY2xvc2VkCiAgICAgIHZhciBDQVNFX1NFUV9MQVNUICA9IDMzNDU7ICAgLy8gb3BlbgogICAgICB2YXIgY2FzZVNlcVVybHMgPSBbXTsKICAgICAgZm9yKHZhciBjZj1DQVNFX1NFUV9GSVJTVDsgY2Y8PUNBU0VfU0VRX0xBU1Q7IGNmKyspewogICAgICAgIGNhc2VTZXFVcmxzLnB1c2goJ2h0dHBzOi8vbXRwLWltYWdlcy5jb20vcHItcGhvdG8tJyArIGNmICsgJy5wbmcnKTsKICAgICAgfQogICAgICB2YXIgY2FzZVNlcUltZ3MgPSBbXSwgY2FzZVNlcVByZWxvYWRlZCA9IGZhbHNlOwogICAgICBmdW5jdGlvbiBwcmVsb2FkQ2FzZVNlcSgpewogICAgICAgIGlmKGNhc2VTZXFQcmVsb2FkZWQpIHJldHVybjsgY2FzZVNlcVByZWxvYWRlZCA9IHRydWU7CiAgICAgICAgY2FzZVNlcVVybHMuZm9yRWFjaChmdW5jdGlvbih1KXsgdmFyIGltID0gbmV3IEltYWdlKCk7IGltLnNyYyA9IHU7IGNhc2VTZXFJbWdzLnB1c2goaW0pOyB9KTsKICAgICAgICBsb2coJ0FjdCAyIGNhc2Utb3BlbmluZyBmcmFtZXMgcHJlbG9hZGluZyAoJyArIGNhc2VTZXFVcmxzLmxlbmd0aCArICcpJyk7CiAgICAgIH0KICAgICAgdmFyIGNhc2VTZXEgPSB7ZjowfTsKICAgICAgZnVuY3Rpb24gc2V0Q2FzZUZyYW1lKHYpewogICAgICAgIGlmKCFjYXNlSW1nKSByZXR1cm47CiAgICAgICAgdmFyIGkgPSBNYXRoLm1heCgwLCBNYXRoLm1pbihjYXNlU2VxVXJscy5sZW5ndGgtMSwgTWF0aC5yb3VuZCh2KSkpOwogICAgICAgIGlmKGNhc2VJbWcuX19mICE9PSBpKXsgY2FzZUltZy5fX2YgPSBpOyBjYXNlSW1nLnNyYyA9IGNhc2VTZXFVcmxzW2ldOyB9CiAgICAgIH0KICAgICAgc2V0Q2FzZUZyYW1lKDApOyAgLy8gR1NBUCBkcml2ZXMgZnJvbSBDTE9TRUQ7IHJlZHVjZWQtbW90aW9uIGtlZXBzIHRoZSBvcGVuIG1hcmt1cCBzcmMKCiAgICAgIC8vIFN3YXAgZWFjaCBBY3QtMiB0b29sIHRodW1ibmFpbCBmcm9tIGl0cyBsaWdodHdlaWdodCBzdGF0aWMgcG9zdGVyICh0aGUgbWFya3VwIHNyYykKICAgICAgLy8gdG8gaXRzIGFuaW1hdGVkLVdlYlAgTU9USU9OIGNsaXAgKGRhdGEtbW90aW9uKSB0aGUgRklSU1QgdGltZSBBY3QgMiBpcyBlbnRlcmVkLgogICAgICAvLyBEZWZlcnJlZCAoY2xpcHMgYXJlIE5PVCBpbiB0aGUgaW5pdGlhbCBtYXJrdXApIHNvIHRoZSB+MeKAkzIgTUItZWFjaCBjbGlwcyBuZXZlciB0b3VjaAogICAgICAvLyBmaXJzdCBwYWludCBhbmQgbmV2ZXIgZG93bmxvYWQgZm9yIHZpc2l0b3JzIHdobyBkb24ndCBzY3JvbGwgdG8gQWN0IDIuIEdhdGVkIGJlaGluZAogICAgICAvLyBidWlsZFRpbWVsaW5lICh3aGljaCBvbmx5IHJ1bnMgd2hlbiBHU0FQIGlzIHByZXNlbnQgQU5EICFyZWR1Y2VkLW1vdGlvbiksIHNvIGEKICAgICAgLy8gcmVkdWNlZC1tb3Rpb24gLyBuby1HU0FQIC8gQ0ROLWJsb2NrZWQgdmlzaXRvciBrZWVwcyB0aGUgc3RpbGwgcG9zdGVycyDigJQgbm8KICAgICAgLy8gYXV0b3BsYXlpbmcgbW90aW9uIOKAlCBtYXRjaGluZyB0aGlzIGZpbGUncyAidmlzaWJsZS1ieS1kZWZhdWx0LCBtb3Rpb24tb25seS1hZnRlci1sb2FkIgogICAgICAvLyByb2J1c3RuZXNzIG1vZGVsLiBJZGVtcG90ZW50IHZpYSBtb3Rpb25Td2FwcGVkLgogICAgICB2YXIgbW90aW9uU3dhcHBlZCA9IGZhbHNlOwogICAgICBmdW5jdGlvbiBzd2FwVG9vbE1vdGlvbigpewogICAgICAgIGlmKG1vdGlvblN3YXBwZWQpIHJldHVybjsgbW90aW9uU3dhcHBlZCA9IHRydWU7CiAgICAgICAgdG9vbHMuZm9yRWFjaChmdW5jdGlvbihhKXsKICAgICAgICAgIHZhciBpbWcgPSBhLnF1ZXJ5U2VsZWN0b3IoJ2ltZycpLCBtID0gaW1nICYmIGltZy5nZXRBdHRyaWJ1dGUoJ2RhdGEtbW90aW9uJyk7CiAgICAgICAgICBpZihpbWcgJiYgbSAmJiBpbWcuZ2V0QXR0cmlidXRlKCdzcmMnKSAhPT0gbSl7IGltZy5zcmMgPSBtOyB9CiAgICAgICAgfSk7CiAgICAgICAgbG9nKCdBY3QgMiB0b29sIG1vdGlvbiBjbGlwcyBzd2FwcGVkIGluJyk7CiAgICAgIH0KCiAgICAgIC8vIFBpbiB2aWEgU2Nyb2xsVHJpZ2dlciAocGluVHlwZTonZml4ZWQnKSBpbnN0ZWFkIG9mIENTUyBwb3NpdGlvbjpzdGlja3kuIE9uIHRoZQogICAgICAvLyBsaXZlIHBhZ2UgYSBDRiBhbmNlc3RvciAoZGl2LmNvbnRhaW5lci5mdWxsQ29udGFpbmVyKSBoYXMgb3ZlcmZsb3cteTpoaWRkZW4sIHdoaWNoCiAgICAgIC8vIG1ha2VzIElUIHRoZSBzdGlja3kgY29udGFpbmVyIOKAlCBzbyBhIHBvc2l0aW9uOnN0aWNreSBzdGFnZSBzdGlja3MgdG8gdGhhdCBib3ggYW5kCiAgICAgIC8vIHNjcm9sbHMgb2ZmLXNjcmVlbiAodGhlIGNhc2UvY291bnRlciByZW5kZXJlZCBBQk9WRSB0aGUgdmlld3BvcnQgdG9wKS4gcG9zaXRpb246CiAgICAgIC8vIGZpeGVkIGVzY2FwZXMgYSBub24tdHJhbnNmb3JtZWQgb3ZlcmZsb3cgYW5jZXN0b3IsIHNvIHRoZSBzdGFnZSBwaW5zIHRvIHRoZQogICAgICAvLyB2aWV3cG9ydCBjb3JyZWN0bHkuIFRoZSBwaW4tc3BhY2VyIHN1cHBsaWVzIHRoZSBzY3JvbGwgbGVuZ3RoIChubyBtYW51YWwgMzYwdmgKICAgICAgLy8gdHJhY2sgbmVlZGVkKSwgc28gLmFjdDIgbm8gbG9uZ2VyIGNhcnJpZXMgYW4gaW5saW5lIGhlaWdodC4KICAgICAgdmFyIHRsID0gZ3NhcC50aW1lbGluZSh7CiAgICAgICAgc2Nyb2xsVHJpZ2dlcjp7CiAgICAgICAgICB0cmlnZ2VyOiBzdGFnZSwKICAgICAgICAgIHN0YXJ0Oid0b3AgdG9wJywKICAgICAgICAgIGVuZDpmdW5jdGlvbigpeyByZXR1cm4gJys9JyArIE1hdGgucm91bmQod2luZG93LmlubmVySGVpZ2h0ICogMi42KTsgfSwKICAgICAgICAgIHNjcnViOjAuNiwKICAgICAgICAgIHBpbjogc3RhZ2UsCiAgICAgICAgICBwaW5UeXBlOidmaXhlZCcsCiAgICAgICAgICBhbnRpY2lwYXRlUGluOjEsCiAgICAgICAgICBpbnZhbGlkYXRlT25SZWZyZXNoOnRydWUsCiAgICAgICAgICAvLyBTdGFydCBmZXRjaGluZyB0aGUgY2FzZS1vcGVuaW5nIGZyYW1lcyArIG1vdGlvbiBjbGlwcyB0aGUgbW9tZW50IEFjdCAyIGlzIHJlYWNoZWQKICAgICAgICAgIC8vIChlaXRoZXIgZGlyZWN0aW9uKSwgc28gdGhleSBhcmUgZGVjb2Rpbmcgd2hpbGUgdGhlIGNhc2Ugc2NhbGVzIHVwIGFuZCBhcmUgcmVhZHkgYnkKICAgICAgICAgIC8vIHRoZSB0aW1lIHRoZSB0b29scyBmYW4gaW4g4oCUIGtlZXBzIHRoZSBzd2FwIG9mZiBmaXJzdCBwYWludCB3aXRob3V0IHN0dXR0ZXJpbmcuCiAgICAgICAgICBvbkVudGVyOmZ1bmN0aW9uKCl7IHByZWxvYWRDYXNlU2VxKCk7IHN3YXBUb29sTW90aW9uKCk7IH0sCiAgICAgICAgICBvbkVudGVyQmFjazpmdW5jdGlvbigpeyBwcmVsb2FkQ2FzZVNlcSgpOyBzd2FwVG9vbE1vdGlvbigpOyB9LAogICAgICAgICAgb25VcGRhdGU6ZnVuY3Rpb24oc2VsZil7IGlmKHByb2dyZXNzKSBwcm9ncmVzcy5zdHlsZS53aWR0aCA9IChzZWxmLnByb2dyZXNzKjEwMCkudG9GaXhlZCgxKSArICclJzsgfQogICAgICAgIH0KICAgICAgfSk7CgogICAgICB0bC50byhjYXNlSW1nLCB7c2NhbGU6MSwgb3BhY2l0eToxLCBkdXJhdGlvbjoxLCBlYXNlOidwb3dlcjIub3V0JywKICAgICAgICAgIG9uU3RhcnQ6ZnVuY3Rpb24oKXtzZXRDYXAoMCk7fSwgb25SZXZlcnNlQ29tcGxldGU6ZnVuY3Rpb24oKXtzZXRDYXAoMCk7fX0pCiAgICAgICAgLmFkZChmdW5jdGlvbigpeyBzZXRDYXAoMSk7IH0pCiAgICAgICAgLy8gdG9vbHMgZmFuIG91dCBmcm9tIHRoZSBjYXNlCiAgICAgICAgLnRvKHRvb2xzLCB7b3BhY2l0eToxLCBzY2FsZToxLCBkdXJhdGlvbjoxLjQsIHN0YWdnZXI6MC4xOCwgZWFzZTonYmFjay5vdXQoMS42KScsCiAgICAgICAgICBvblN0YXJ0OmZ1bmN0aW9uKCl7IHNldENhcCgyKTsgfX0sICc+LTAuMicpCiAgICAgICAgLnRvKGNvdW50ZXJPYmosIHt2OjIxNCwgZHVyYXRpb246MS42LCBlYXNlOidub25lJywKICAgICAgICAgIG9uU3RhcnQ6ZnVuY3Rpb24oKXsgc2V0Q2FwKDMpOyB9LAogICAgICAgICAgb25VcGRhdGU6ZnVuY3Rpb24oKXsgaWYoY291bnRlckVsKSBjb3VudGVyRWwudGV4dENvbnRlbnQgPSAnJCcgKyBNYXRoLnJvdW5kKGNvdW50ZXJPYmoudik7IH19LCAnPCcpCiAgICAgICAgLmFkZChmdW5jdGlvbigpeyBzZXRDYXAoNCk7IH0pCiAgICAgICAgLnRvKGNhc2VJbWcsIHtzY2FsZToxLjA0LCBkdXJhdGlvbjowLjYsIGVhc2U6J3Bvd2VyMS5pbk91dCd9KQogICAgICAgIC8vIENhc2Utb3BlbmluZyBmcmFtZSBzZXF1ZW5jZSAoY2xvc2VkLT5vcGVuKSBydW5zIENPTkNVUlJFTlRMWSBmcm9tIHQ9MCwgc3Bhbm5pbmcgdGhlCiAgICAgICAgLy8gc2NhbGUtdXAgYW5kIHRoZSBzdGFydCBvZiB0aGUgZmFuLW91dCwgc28gdGhlIGNhc2UgdmlzaWJseSBvcGVucyBhcyBpdCBncm93cyBhbmQgdGhlCiAgICAgICAgLy8gdG9vbHMgZW1lcmdlIGZyb20gdGhlIG9wZW5lZCBjYXNlLiBJbnNlcnRlZCBsYXN0IHdpdGggYW4gYWJzb2x1dGUgcG9zaXRpb24gKDApIHNvIGl0CiAgICAgICAgLy8gb3ZlcmxheXMgdGhlIGV4aXN0aW5nIGJlYXRzIHdpdGhvdXQgc2hpZnRpbmcgYW55IG9mIHRoZWlyIHRpbWluZy4gZWFzZTonbm9uZScgPSBldmVuCiAgICAgICAgLy8gZnJhbWUtcGVyLXNjcm9sbCBzY3J1Yjsgb25VcGRhdGUgcnVucyBpbiBib3RoIGRpcmVjdGlvbnMgKHNjcnViIHJldmVyc2VzIGl0IG9uCiAgICAgICAgLy8gc2Nyb2xsLXVwKS4gRHVyYXRpb24gMS40IGxlYXZlcyB0aGUgY2FzZSBmdWxseSBvcGVuIGFzIHRoZSBmaXJzdCB0b29scyBmYW4gb3V0LgogICAgICAgIC50byhjYXNlU2VxLCB7ZjpjYXNlU2VxVXJscy5sZW5ndGgtMSwgZHVyYXRpb246MS40LCBlYXNlOidub25lJywKICAgICAgICAgIG9uVXBkYXRlOmZ1bmN0aW9uKCl7IHNldENhc2VGcmFtZShjYXNlU2VxLmYpOyB9fSwgMCk7CgogICAgICAvLyAtLS0tIEFDVCAzOiBwcmljZSBzbGFzaCArIGNhcmQgcmV2ZWFsIC0tLS0KICAgICAgdmFyIGNvbnYgPSBxYSgnLmNvbnYtZngnKTsKICAgICAgZ3NhcC5zZXQoY29udiwge29wYWNpdHk6MCwgeTozMH0pOwogICAgICBnc2FwLnRvKGNvbnYsIHtvcGFjaXR5OjEsIHk6MCwgZHVyYXRpb246LjcsIHN0YWdnZXI6LjEyLCBlYXNlOidwb3dlcjIub3V0JywKICAgICAgICBzY3JvbGxUcmlnZ2VyOnsgdHJpZ2dlcjpyb290LnF1ZXJ5U2VsZWN0b3IoJy5hY3QzJyksIHN0YXJ0Oid0b3AgNzglJyB9fSk7CiAgICAgIHZhciBzbGFzaCA9IHEoJ1tkYXRhLXNsYXNoXScpOwogICAgICBpZihzbGFzaCl7CiAgICAgICAgZ3NhcC5mcm9tVG8oc2xhc2gsIHtjb2xvcjonI2ZmZTExYSd9LCB7Y29sb3I6JyNmZjljOGUnLCBkdXJhdGlvbjouNSwKICAgICAgICAgIHNjcm9sbFRyaWdnZXI6eyB0cmlnZ2VyOnJvb3QucXVlcnlTZWxlY3RvcignLmFjdDMnKSwgc3RhcnQ6J3RvcCA2MCUnIH19KTsKICAgICAgfQoKICAgICAgLy8gLS0tLSBLSVQgR1JJRDogYmF0Y2ggcmV2ZWFsIC0tLS0KICAgICAgdmFyIGNhcmRzID0gcWEoJ1tkYXRhLWdjYXJkXScpOwogICAgICBnc2FwLnNldChjYXJkcywge29wYWNpdHk6MCwgeToyNH0pOwogICAgICBTVC5iYXRjaChjYXJkcywgewogICAgICAgIHN0YXJ0Oid0b3AgOTAlJywKICAgICAgICBvbkVudGVyOmZ1bmN0aW9uKGJhdGNoKXsgZ3NhcC50byhiYXRjaCwge29wYWNpdHk6MSwgeTowLCBkdXJhdGlvbjouNSwgc3RhZ2dlcjouMDYsIGVhc2U6J3Bvd2VyMi5vdXQnfSk7IH0KICAgICAgfSk7CgogICAgICAvLyBSZS1hc3NlcnQgdGhlIGZsb2F0aW5nLUNUQSByZWxvY2F0aW9uIGhlcmUgdG9vOiBidWlsZFRpbWVsaW5lIGlzIGtub3duIHRvIHJ1biBvbgogICAgICAvLyB0aGUgbGl2ZSBwYWdlLCB3aGVyZWFzIGluaXQoKSdzIHNpbmdsZSByZWxvY2F0aW9uIGRpZG4ndCBzdGljayAoQ0YgcmUtcmVuZGVyKS4KICAgICAgcmVsb2NhdGVGbG9hdGJhcihyb290KTsKCiAgICAgIFNULnJlZnJlc2goKTsKICAgICAgLy8gUmUtbWVhc3VyZSBhZnRlciBsYXRlIGxheW91dCBzaGlmdHMgKGltYWdlcy93ZWJmb250cyBsb2FkIEFGVEVSIGluaXQsIHdoaWNoCiAgICAgIC8vIHdvdWxkIG90aGVyd2lzZSBsZWF2ZSB0aGUgQWN0LTIgcGluIHN0YXJ0L2VuZCBjb21wdXRlZCBhZ2FpbnN0IHRoZSB3cm9uZwogICAgICAvLyBoZWlnaHQg4oCUIGEgY2xhc3NpYyBjYXVzZSBvZiAic2NydWIgZG9lcyBub3RoaW5nIiBvbmNlIGl0IGdvZXMgbGl2ZSkuCiAgICAgIGlmKHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKXsgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ2xvYWQnLCBmdW5jdGlvbigpeyByZWxvY2F0ZUZsb2F0YmFyKHJvb3QpOyBTVC5yZWZyZXNoKCk7IH0pOyB9CiAgICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKXsgcmVsb2NhdGVGbG9hdGJhcihyb290KTsgU1QucmVmcmVzaCgpOyB9LCAxNTAwKTsKICAgICAgbG9nKCd0aW1lbGluZSBidWlsdDsgU2Nyb2xsVHJpZ2dlcnMgPScsIFNULmdldEFsbCA/IFNULmdldEFsbCgpLmxlbmd0aCA6ICc/Jyk7CiAgICB9CgogICAgZnVuY3Rpb24gYm9vdCgpewogICAgICB2YXIgcm9vdHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCcub3NrLXN0bicpOwogICAgICBsb2coJ2Jvb3Q6IC5vc2stc3RuIGZvdW5kID0nLCByb290cy5sZW5ndGgpOwogICAgICBBcnJheS5wcm90b3R5cGUuZm9yRWFjaC5jYWxsKHJvb3RzLCBmdW5jdGlvbihlbCl7IGluaXQoZWwpOyB9KTsKICAgIH0KICAgIGlmKGRvY3VtZW50LnJlYWR5U3RhdGUgPT09ICdsb2FkaW5nJyl7CiAgICAgIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBib290KTsKICAgIH0gZWxzZSB7CiAgICAgIGJvb3QoKTsKICAgIH0KICB9KSgpOwo=">
+
+  <!-- ===================== ACT 1 — HOOK ===================== -->
+  <div class="act1">
+    <div class="wrap">
+      <span class="eyebrow act1-fx">For Campers, Hikers &amp; Outdoor Enthusiasts</span>
+      <h1 class="act1-fx">When The Crisis Hits&hellip; <span class="hl">Will You Be Ready?</span></h1>
+      <p class="sub act1-fx">Survival comes down to a million &amp; one questions. Here are the ones that decide whether you make it:</p>
+      <ul class="qstack">
+        <li class="act1-fx"><span class="qi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C9 6 8 8 8 11a4 4 0 0 0 8 0c0-1-.5-2-1-3 0 0 2 1 2 4a5 5 0 0 1-10 0C7 8 12 6 12 2z"/></svg></span><span>Could you spark a fire and stay warm after dark?</span></li>
+        <li class="act1-fx"><span class="qi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 3v7a2 2 0 0 0 2 2h0a2 2 0 0 0 2-2V3"/><path d="M6 3v18"/><path d="M19 14V3a4 2.5 0 0 0-4 4v5a2 2 0 0 0 2 2h2zm0 0v7"/></svg></span><span>If the food ran out, could you catch your next meal?</span></li>
+        <li class="act1-fx"><span class="qi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span>Could you find your way out &mdash; or signal for help?</span></li>
+        <li class="act1-fx"><span class="qi"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9"/><path d="M16 3.1a4 4 0 0 1 0 7.8"/></svg></span><span>Is your family equipped to handle the unexpected?</span></li>
+      </ul>
+      <div class="scrollcue act1-fx">Keep scrolling &mdash; I built the answer<span class="arw">&#x2193;</span></div>
+    </div>
+  </div>
+
+  <!-- ===================== ACT 2 — PINNED STAGE ===================== -->
+  <!-- Tall track; .stage sticks for the duration and is scrubbed by GSAP. -->
+  <div class="act2" data-track>
+    <div class="stage" data-stage>
+      <div class="scene-cap" data-cap>So I spent 6 months building the answer&hellip;</div>
+      <div class="casebox">
+        <!-- Act-2 case. src = OPEN frame (3345) = the static / no-JS / reduced-motion fallback
+             (shows the full kit). When GSAP runs, setCaseFrame(0) swaps to the CLOSED frame
+             (3322) at build and a 24-frame closed->open sequence (3322..3345) is scrubbed in
+             sync with the scale-up + fan-out — see preloadCaseSeq / setCaseFrame in the payload.
+             loading="lazy": below the fold, so the fallback frame only fetches as it nears view
+             (motion users never fetch it — build replaces src with 3322 first). -->
+        <a href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img class="case" data-case loading="lazy" src="https://mtp-images.com/pr-photo-3345.png" alt="Outdoor Survival Kit — case opening to reveal the full kit"></a>
+        <!-- Act-2 floating tools. src = lightweight STATIC poster (first paint / no-JS / reduced-motion);
+             data-motion = animated-WebP MOTION clip the payload swaps in once Act 2 is entered (see
+             swapToolMotion in OSK_Prelander_STN_v7.payload.js). Motion clips ~1–2 MB each, so they
+             are deferred, not in the initial src. (t2 shows the WIRE SAW — the reference fire starter
+             3083 has no motion clip in the asset set.) -->
+        <a class="tool t1" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3227.webp" data-motion="https://mtp-images.com/pr-photo-3227.webp" alt="Tactical knife"></a>
+        <a class="tool t2" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3230.webp" data-motion="https://mtp-images.com/pr-photo-3230.webp" alt="Steel wire saw"></a>
+        <a class="tool t3" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3226.webp" data-motion="https://mtp-images.com/pr-photo-3226.webp" alt="Flashlight"></a>
+        <a class="tool t4" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3229.webp" data-motion="https://mtp-images.com/pr-photo-3229.webp" alt="Compass"></a>
+        <a class="tool t5" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3231.webp" data-motion="https://mtp-images.com/pr-photo-3231.webp" alt="Multi-tool card"></a>
+        <a class="tool t6" data-tool href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3222.webp" data-motion="https://mtp-images.com/pr-photo-3222.webp" alt="Paracord bracelet"></a>
+      </div>
+      <div class="counter">
+        <div class="lbl">Total retail value</div>
+        <div class="val" data-counter>$214</div>
+      </div>
+      <div class="progress" data-progress></div>
+    </div>
+  </div>
+
+  <!-- ===================== ACT 3 — CONVERT ===================== -->
+  <div class="act3">
+    <div class="wrap">
+      <span class="eyebrow conv-fx">Your Price Today</span>
+      <h2 class="conv-fx">$214 In Gear &mdash; For Pennies On The Dollar</h2>
+      <div class="pricecard conv-fx">
+        <span class="priceslash" data-slash>$214</span>
+        <span class="pricenow">$39.95</span>
+        <span class="pricesh">+ $5 S&amp;H &bull; only 100 kits at this price, then it&rsquo;s back to $214 retail</span>
+        <a class="cta" href="https://shop.mytacticalpromos.com/13488082_osk2h_ord">Claim My Kit Now<small>If the button is down, we&rsquo;re sold out</small></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FULL KIT GRID (content parity) ===================== -->
+  <div class="kit">
+    <div class="wrap-wide">
+      <div class="sec-head"><span class="eyebrow">Everything Inside</span><h2>16 Tools &bull; 40+ Applications</h2></div>
+      <div class="grid" data-grid>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3258.jpg" alt="Tactical Knife"><div class="nm">Military-Grade Tactical Knife</div><span class="ret">$39</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img class="fill" src="https://mtp-images.com/pr-photo-3307.webp" alt="Fire Starter"><div class="nm">Flint &amp; Steel Fire Starter</div><span class="ret">$26</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3260.jpg" alt="Tactical Pen"><div class="nm">Tungsten Steel Tactical Pen</div><span class="ret">$19</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3256.jpg" alt="Flashlight"><div class="nm">Mini-Tactical Flashlight</div><span class="ret">$12</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3261.jpg" alt="Wire Saw"><div class="nm">Steel Wire Saw</div><span class="ret">$10</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3254.jpg" alt="Compass"><div class="nm">Glow-In-The-Dark Compass</div><span class="ret">$15</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3290.png" alt="Survival Utensil"><div class="nm">7-in-1 Survival Utensil</div><span class="ret">$15</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3253.jpg" alt="Multi-Tool Card"><div class="nm">11-in-1 Multi-Tool Card</div><span class="ret">$15</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3259.jpg" alt="Paracord Bracelet"><div class="nm">Paracord Survival Bracelet</div><span class="ret">$10</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3252.jpg" alt="Emergency Blanket"><div class="nm">Emergency Blanket</div><span class="ret">$5</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3257.jpg" alt="Keychain Light"><div class="nm">Keychain Light</div><span class="ret">$7</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3242.webp" alt="Bottle Clip &amp; Carabiner"><div class="nm">Water Bottle Clip &amp; Carabiner</div><span class="ret">$8</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3262.jpg" alt="Signal Whistle"><div class="nm">Survival Signal Whistle</div><span class="ret">$5</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3315.webp" alt="Pocket Bellow"><div class="nm">Pocket Bellow</div><span class="ret">$5</span></a>
+        <a class="card" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img class="fill" src="https://mtp-images.com/pr-photo-3317.webp" alt="Fishing Tool"><div class="nm">Fishing Tool</div><span class="ret">$3</span></a>
+        <a class="card bonus" data-gcard href="https://shop.mytacticalpromos.com/13488082_osk2h_ord"><img src="https://mtp-images.com/pr-photo-3298.png" alt="Waterproof Hard-Case"><div class="nm">FREE Waterproof Hard-Case</div><span class="ret">$20</span></a>
+      </div>
+      <div class="center mt"><a class="cta grn" href="https://shop.mytacticalpromos.com/13488082_osk2h_ord">Yes! Send Me The Kit For $39.95<small>$214 retail &bull; + $5 S&amp;H</small></a></div>
+    </div>
+  </div>
+
+  <!-- ===================== GUARANTEE ===================== -->
+  <div class="band">
+    <div class="wrap">
+      <div class="guarantee">
+        <span class="badge">Our Survival Guarantee</span>
+        <h3>30 Days Of Risk-Free Preparedness</h3>
+        <p>Try the Outdoor Survival Kit for a full 30 days. If it&rsquo;s not everything we promised, send it back for a full refund &mdash; no questions asked.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== TESTIMONIALS ===================== -->
+  <div class="band" style="padding-top:0;">
+    <div class="wrap-wide">
+      <div class="sec-head"><h2>What Owners Are Saying</h2></div>
+      <div class="tgrid">
+        <div class="tcard"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="who">James R.</div><p>&ldquo;Chose this kit for our camping trips and it has not disappointed. The case is rugged and everything has a place.&rdquo;</p><span class="vbadge">&#10003; Verified Buyer</span></div>
+        <div class="tcard"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="who">Maria T.</div><p>&ldquo;Perfect for emergency preparedness. One in the car, one in the bug-out bag. The fire starter alone is worth it.&rdquo;</p><span class="vbadge">&#10003; Verified Buyer</span></div>
+        <div class="tcard"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="who">Dave K.</div><p>&ldquo;Top-notch gear at a price that doesn&rsquo;t make sense for them. Quality is real. Ordered two more.&rdquo;</p><span class="vbadge">&#10003; Verified Buyer</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FAQ ===================== -->
+  <div class="band" style="padding-top:0;">
+    <div class="wrap">
+      <div class="sec-head"><h2>FAQ</h2></div>
+      <details><summary>What&rsquo;s included in the kit?</summary><div class="ans">16 essential tools &mdash; tactical knife, fire starter, tactical pen, flashlight, wire saw, compass, multi-tools, paracord bracelet, emergency blanket and more &mdash; inside a free waterproof hard-case.</div></details>
+      <details><summary>Is it weather-resistant?</summary><div class="ans">Yes. The tools are built for tough conditions and the included waterproof case keeps everything bone-dry.</div></details>
+      <details><summary>How portable is it?</summary><div class="ans">Very &mdash; the whole kit fits in a backpack, glovebox, or bug-out bag.</div></details>
+      <details><summary>What if I&rsquo;m not satisfied?</summary><div class="ans">You&rsquo;re covered by a 30-day money-back guarantee. Not happy? Send it back for a full refund.</div></details>
+    </div>
+  </div>
+
+  <!-- ===================== FINAL CTA ===================== -->
+  <div class="act3" style="padding-top:30px;">
+    <div class="wrap">
+      <span class="eyebrow">Last Chance</span>
+      <h2>Grab Your Outdoor Survival Kit</h2>
+      <div class="pricecard">
+        <span class="priceslash">$214</span>
+        <span class="pricenow">$39.95</span>
+        <span class="pricesh">+ $5 S&amp;H today only &bull; 30-day money-back guarantee</span>
+        <a class="cta" href="https://shop.mytacticalpromos.com/13488082_osk2h_ord">Claim My Kit Now<small>Only 100 available at this price</small></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FLOATING CTA ===================== -->
+  <div class="osk-fbar" data-floatbar>
+    <span class="fb-txt">Outdoor Survival Kit &mdash; <s>$214</s> <b>$39.95</b></span>
+    <a href="https://shop.mytacticalpromos.com/13488082_osk2h_ord">Claim Yours &rarr;</a>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <div class="ft">
+    <div class="wrap">
+      <p>&copy; Outdoor Survival Kit. All rights reserved. &bull; 30-Day Money-Back Guarantee &bull; Secure Checkout</p>
+      <p>This page is an advertisement. Results and availability may vary.</p>
+    </div>
+  </div>
+
+</section>
