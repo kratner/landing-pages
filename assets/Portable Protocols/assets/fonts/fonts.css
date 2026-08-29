@@ -1,0 +1,65 @@
+/* ============================================================================
+   FILE: fonts.css
+   PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Portable Protocols/assets/fonts/fonts.css
+   ----------------------------------------------------------------------------
+   Self-hosted replacement for the Google Fonts CDN <link> every book/landing
+   page normally loads (fonts.googleapis.com / fonts.gstatic.com) — this
+   portable package has to run with zero network access, so the two font
+   files (Anton 400, Inter variable) are vendored locally and referenced with
+   relative paths. Latin-subset only (matches what the live pages actually
+   render — English body copy); the CJK/Cyrillic/etc. subsets Google normally
+   also serves were skipped to keep this package small.
+
+   Source (for re-fetching if a font ever needs to change):
+     https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&display=swap
+   Anton 400:     https://fonts.gstatic.com/s/anton/v27/1Ptgg87LROyAm3Kz-C8CSKlv.woff2
+   Inter (var):   https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2
+   (Inter's latin subset ships as one variable-weight file — the same URL
+   backs all five @font-face blocks below, one per weight the books use.)
+
+   REVISION HISTORY
+   - v1 (2026-08-29, Claude): Initial self-hosted font pair for the Portable
+     Protocols offline package.
+============================================================================ */
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('anton-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('inter-latin.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('inter-latin.woff2') format('woff2');
+}

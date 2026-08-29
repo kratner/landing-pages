@@ -1,0 +1,883 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_Tornado_v2.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Tornado-Response-Aftermath/1HT_Protocol_Tornado_v2.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Tornado Response & Aftermath" e-book
+     Track B #11 of 15. Built per Prompts/1HT_BuildPrompt_Book11_Tornado_v1.md,
+     following the pilot's (Severe Bleeding, v7) structural/CSS/JS template
+     wholesale. Standalone HTML page, hosted at https://1sthourprotocols.com/tornado-response/.
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via 1st Hour's ClickFunnels order
+     integration; this file assumes nothing about how that link is generated.
+
+     One of only two Track B books (with Wildfire, #15) where regional/
+     geographic framing is load-bearing content per the master list — Section
+     2 leads with the Tornado Alley framing rather than appending it, and
+     Sections 4/5/6/8 keep returning to it rather than treating it as a
+     one-off appendix.
+
+     REVISION HISTORY
+     - v2 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly (Medical
+       Disclaimer: 11 → 10). Also caught and fixed a dangling reference in
+       Section 9's Essential Items Checklist ("see the Severe Bleeding
+       cross-link") that pointed at the now-removed section.
+     - v1 (2026-08-24, Claude): Initial build. Content, illustration/cover/
+       lifestyle images (generated fresh via Creative AI Studio API, logo
+       spot-checked/corrected), medical-accuracy review (run before first
+       deploy per the build prompt's §5), and cross-link wiring all done in
+       one pass. See Books/REVISIONS.md for the full build log and
+       Books/Tornado-Response-Aftermath/MEDICAL_REVIEW_v1.md for the review.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tornado Response &amp; Aftermath — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: watch vs. warning, the safest shelter location for your home type (including a critical mobile-home evacuation callout), the minutes-long response once a warning is issued, and aftermath safety — downed power lines, gas leaks, structural hazards, and debris injuries. Framed by Tornado Alley risk geography.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Region map callout (Tornado Alley framing) ───────────────── */
+  .th-region-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:24px;
+    margin:0 0 28px;
+  }
+  .th-region-svg{width:190px;flex-shrink:0;}
+  .th-region-legend{flex:1;min-width:0;}
+  .th-region-legend h4{font-size:14px !important;letter-spacing:1px;margin-bottom:14px;}
+  .th-bl-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;}
+  .th-bl-swatch{width:18px;height:18px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .th-bl-swatch.core{background:var(--red);}
+  .th-bl-swatch.secondary{background:#f2a33b;}
+  .th-bl-swatch.dash{background:none;border:2px dashed #444;}
+  .th-bodymap-note{font-size:13.5px;color:var(--gray);margin:4px 0 0;border-top:1px solid var(--border);padding-top:14px;}
+  @media (max-width:600px){
+    .th-region-wrap{flex-direction:column;align-items:stretch;}
+    .th-region-svg{width:150px;margin:0 auto;}
+  }
+
+  /* ── Home-type shelter comparison cards ───────────────────────── */
+  .th-shelter-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin:0 0 24px;
+  }
+  @media (max-width:768px){ .th-shelter-grid{grid-template-columns:1fr;} }
+  .th-shelter-card{
+    background:var(--white);
+    border:2px solid var(--border);
+    border-radius:8px;
+    padding:18px 16px;
+  }
+  .th-shelter-card.best{border-color:#1f8a4c;}
+  .th-shelter-card.good{border-color:#f2a33b;}
+  .th-shelter-card.evac{border-color:var(--red);background:#fff3f2;}
+  .th-shelter-rank{
+    display:inline-block;
+    font-family:'Anton',sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:3px 10px;
+    border-radius:10px;
+    color:#fff;
+    margin-bottom:10px;
+  }
+  .th-shelter-card.best .th-shelter-rank{background:#1f8a4c;}
+  .th-shelter-card.good .th-shelter-rank{background:#f2a33b;color:#111;}
+  .th-shelter-card.evac .th-shelter-rank{background:var(--red);}
+  .th-shelter-card h4{font-size:15px !important;margin-bottom:8px;letter-spacing:0.5px;}
+  .th-shelter-card p{font-size:13.5px;color:var(--gray);margin-bottom:0;}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-minutes">Why the First Minutes Matter</a></li>
+      <li><a href="#where-applies">Where This Applies: Tornado Alley</a></li>
+      <li><a href="#watch-vs-warning">Watch vs. Warning</a></li>
+      <li><a href="#shelter-by-home-type">Best Shelter by Home Type</a></li>
+      <li><a href="#the-response">The Response Once a Warning Is Issued</a></li>
+      <li><a href="#aftermath-safety">Aftermath Safety</a></li>
+      <li><a href="#checking-neighbors">Checking on Neighbors</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Tornado Response &amp; Aftermath</h1>
+        <p class="lede">A warning gives you minutes, not hours. What to do with them — where to shelter by home type, the mobile-home evacuation rule that saves lives, and how to stay safe in the dangerous hour after the storm passes.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-tornado-ebook-001.pdf" id="th-download-pdf-btn" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general emergency-preparedness education. It is not a substitute for professional medical care, EMS response, a certified first aid/CPR course, or your local emergency management agency's official guidance, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately, and always follow instructions from local officials and the National Weather Service over anything in this guide. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#watch-vs-warning">Watch/Warning</a><span class="arrow">→</span>
+        <a href="#shelter-by-home-type">Shelter</a><span class="arrow">→</span>
+        <a href="#the-response">Respond</a><span class="arrow">→</span>
+        <a href="#aftermath-safety">Aftermath</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST MINUTES MATTER ═══ -->
+      <section class="th-section" id="why-first-minutes">
+        <h2>1. Why the First Minutes Matter</h2>
+        <p>A tornado warning does not give you an hour to prepare, or even ten minutes in many cases. The median lead time between a tornado warning being issued and the tornado actually arriving at a given location is typically in the range of eight to thirteen minutes — and some tornadoes, especially fast-developing or nighttime ones, give considerably less. This entire protocol is built around one fact: <strong>your shelter decision has to already be made before the warning sounds.</strong> There is no time, once the sirens start, to figure out for the first time where the safest room in your house is, or to have the conversation about whether your mobile home is safe to stay in.</p>
+        <p>That's the organizing idea behind this book. Every section that follows is written to be decided <em>now</em>, calmly, so that when a warning is issued the only thing left to do is execute — not deliberate.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Know your safe location before you ever need it. Know whether you need to evacuate before a warning is even issued (this matters most if you live in a mobile home — see Section 4). When the warning comes, you have minutes: get there, protect your head and neck, and stay put until the "all clear."
+        </div>
+      </section>
+
+      <!-- ═══ 2. WHERE THIS APPLIES: TORNADO ALLEY ═══ -->
+      <section class="th-section" id="where-applies">
+        <h2>2. Where This Applies: Tornado Alley</h2>
+        <p>Unlike some of the emergencies covered elsewhere in this library, tornado risk is not evenly distributed across the country, and this book says so plainly instead of writing as if every reader faces identical odds. Tornadoes can and do happen in nearly every state, but the frequency and intensity are concentrated in two overlapping regions:</p>
+
+        <div class="th-region-wrap">
+          <svg class="th-region-svg" viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simplified US map highlighting Tornado Alley core states in dark red across Texas, Oklahoma, Kansas, and Nebraska, and a secondary Midwest/Southeast risk zone in orange.">
+            <rect x="6" y="6" width="248" height="188" rx="10" fill="#f2f0ea" stroke="#111" stroke-width="2"/>
+            <!-- secondary zone: broad Midwest/Southeast band -->
+            <path d="M110 30 L235 30 L235 175 L150 175 L120 140 L90 90 Z" fill="#f2a33b" opacity="0.55" stroke="#111" stroke-width="1.5"/>
+            <!-- core Tornado Alley: TX/OK/KS/NE column -->
+            <path d="M95 35 L135 35 L145 150 L105 175 L70 150 Z" fill="#E21C13" stroke="#111" stroke-width="2"/>
+            <text x="130" y="10" font-family="Arial" font-size="9" fill="#444" text-anchor="middle">(simplified, not to scale)</text>
+          </svg>
+          <div class="th-region-legend">
+            <h4>Two Risk Zones, Not One National Average</h4>
+            <div class="th-bl-item"><span class="th-bl-swatch core"></span><span><strong>Core Tornado Alley — Texas, Oklahoma, Kansas, Nebraska:</strong> the highest concentration of strong tornadoes in the country, driven by warm Gulf moisture colliding with dry air off the Rockies. If you live here, tornado season (roughly March–June, with a secondary fall peak in parts of the region) is a planning priority, not a once-a-decade curiosity.</span></div>
+            <div class="th-bl-item"><span class="th-bl-swatch secondary"></span><span><strong>Secondary zone — broader Midwest and Southeast ("Dixie Alley"):</strong> the Southeast in particular sees a real and often underestimated risk, including a higher share of nighttime tornadoes (harder to see coming, harder to wake to) and tornadoes wrapped in heavy rain (harder to spot visually).</span></div>
+            <p class="th-bodymap-note">If you live outside both zones, tornadoes are still possible — every state has recorded one — but the day-to-day planning urgency in this book is written for readers in or near these regions. Check your county's historical tornado frequency with your local National Weather Service office if you're unsure where you fall.</p>
+          </div>
+        </div>
+
+        <p>This regional framing matters for practical reasons beyond statistics: building codes, storm-shelter prevalence, siren coverage, and even how seriously a "watch" is taken by neighbors all vary by how used to tornadoes a given community is. A newer resident who just moved into Tornado Alley from a region without tornadoes is at real, documented higher risk simply from not yet having internalized how fast a warning can turn into an actual tornado on the ground — this book is written to close that gap quickly.</p>
+      </section>
+
+      <!-- ═══ 3. WATCH VS. WARNING ═══ -->
+      <section class="th-section" id="watch-vs-warning">
+        <h2>3. Watch vs. Warning</h2>
+        <p>These two words get used almost interchangeably in casual conversation, and that habit gets people killed. They mean two very different things, issued by the National Weather Service, and they call for two very different responses.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Term</th><th>What it means</th><th>What you do</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Tornado Watch</strong></td><td>Conditions in your area are favorable for tornadoes to form. None has necessarily been spotted yet. Usually covers a large area for several hours.</td><td>Stay alert. Review your safe-location plan (Section 4), charge phones, bring in a portable weather radio, keep shoes and a helmet near your shelter spot. Don't go about your day assuming nothing will happen — but you don't need to shelter yet.</td></tr>
+              <tr><td><strong>Tornado Warning</strong></td><td>A tornado has been spotted by a person or indicated by radar, and is happening or imminent in your specific area. Typically covers a much smaller area for a much shorter window.</td><td><strong>Act now.</strong> Go to your safe location immediately. This is not the time to keep watching the radar on your phone from the couch — get to shelter first, then monitor from there if you can.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="th-warn">
+          <strong>The distinction that saves lives</strong>
+          A watch means "be ready." A warning means "go now." Confusing the two — treating a warning like a watch, or waiting to "see if it's real" once a warning is issued — is one of the most common and most dangerous mistakes people make in a tornado event.
+        </div>
+      </section>
+
+      <!-- ═══ 4. BEST SHELTER BY HOME TYPE ═══ -->
+      <section class="th-section" id="shelter-by-home-type">
+        <h2>4. Best Shelter by Home Type</h2>
+        <p>The right shelter location depends heavily on what kind of structure you live in — and one of those categories has a rule that is different from the rest, deliberately, because the physics of a mobile home in high wind are different from the physics of a house.</p>
+
+        <div class="th-shelter-grid">
+          <div class="th-shelter-card best">
+            <span class="th-shelter-rank">Best</span>
+            <h4>Basement</h4>
+            <p>Below ground, away from windows, under a sturdy workbench or heavy table if one is available. Put as much mass and distance between yourself and the exterior walls as you can.</p>
+          </div>
+          <div class="th-shelter-card good">
+            <span class="th-shelter-rank">Next Best</span>
+            <h4>Interior Room / Closet</h4>
+            <p>No basement? Go to a small interior room or closet on the <strong>lowest floor</strong>, with <strong>no windows</strong> — a bathroom, closet, or hallway near the center of the home. The more walls between you and the outside, the better.</p>
+          </div>
+          <div class="th-shelter-card evac">
+            <span class="th-shelter-rank">Evacuate — Do Not Shelter In Place</span>
+            <h4>Mobile Home</h4>
+            <p>No mobile home, tied down or not, is a safe place to shelter from a tornado. Leave for a sturdier structure or a designated community shelter <strong>before</strong> a warning is issued — see the callout below.</p>
+          </div>
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-tornado-shelterbyhometype-001.png" alt="1st Hour tornado shelter comparison diagram — basement (best), interior room or closet on the lowest floor with no windows (next best), and a mobile home evacuation plan (leave before the warning, never shelter in place).">
+        </figure>
+
+        <div class="th-warn">
+          <strong>Mobile homes: evacuate before the warning, regardless of tie-downs</strong>
+          This is the single highest-stakes instruction in this book. Even a properly tied-down mobile or manufactured home offers little meaningful protection against a direct tornado hit — mobile homes are disproportionately dangerous in tornadoes, accounting for a share of tornado deaths far larger than their share of housing. Tie-downs reduce the chance of the home rolling in strong straight-line wind; they do not make sheltering inside it safe once a tornado is actually bearing down. If you live in a mobile home: identify a sturdier building (a neighbor's house, a community storm shelter, a designated public building) <em>now</em>, and plan to go there as soon as a <em>watch</em> is issued for your area or conditions turn threatening — do not wait for a warning, because a warning may leave you no time left to travel. If a warning is issued and you have no time to reach that structure, get to the lowest, most interior part of the home away from windows as a last resort, but understand this is meaningfully less safe than actually evacuating, not an equivalent alternative.
+        </div>
+
+        <h3>What to do once you're in position, any home type</h3>
+        <ul>
+          <li>Get under something sturdy if available (heavy table, workbench, mattress pulled overhead).</li>
+          <li>Cover your head and neck with your arms, a helmet, blankets, or couch cushions.</li>
+          <li>Stay away from windows, glass doors, and exterior walls.</li>
+          <li>If in a multi-story building with no basement, go to the lowest floor's most interior room.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 5. THE RESPONSE ONCE A WARNING IS ISSUED ═══ -->
+      <section class="th-section" id="the-response">
+        <h2>5. The Response Once a Warning Is Issued</h2>
+        <p>This is the actual sequence, timed in minutes, not hours. Read it now so it's automatic later.</p>
+
+        <ol class="th-steps">
+          <li><strong>Get to your safe location immediately.</strong> Don't finish the show, don't step outside to look at the sky first — go directly to the location you identified in Section 4.</li>
+          <li><strong>Bring what you can grab in seconds, not minutes.</strong> Phone, shoes, a helmet if one is nearby. Do not go looking for items in another room once the warning is out.</li>
+          <li><strong>Protect your head and neck.</strong> Arms over your head at minimum; a helmet, blanket, or mattress if you have one within reach.</li>
+          <li><strong>Get low and stay away from windows.</strong> Crouch or lie flat against an interior wall, away from anything glass.</li>
+          <li><strong>Stay where you are until you're sure it's over.</strong> The loudest, most violent moments of a tornado passing near your location are usually brief — often well under a minute for any single structure — but stay in place until local officials or the National Weather Service issue an "all clear," not just because the noise has stopped.</li>
+          <li><strong>Keep a battery or hand-crank radio nearby if possible.</strong> Power and cell service often fail during or after the storm; a radio keeps you informed without depending on either.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>What not to do</strong>
+          Don't try to outrun a tornado in a vehicle if it's already close and visible near your position — see Section 8 for what to do if you're caught outside or driving. Don't open windows "to equalize pressure" — this is a persistent myth with no protective value and wastes time you don't have. Don't go outside to watch or film it.
+        </div>
+      </section>
+
+      <!-- ═══ 6. AFTERMATH SAFETY ═══ -->
+      <section class="th-section" id="aftermath-safety">
+        <h2>6. Aftermath Safety</h2>
+        <p>Once the tornado has passed, the danger doesn't end — a large share of tornado-related injuries happen during cleanup and the immediate aftermath, not the storm itself. Move carefully and treat the following as non-negotiable.</p>
+
+        <h3>Downed power lines</h3>
+        <div class="th-warn">
+          <strong>Treat every downed line as live.</strong> There is no way to visually confirm a line is de-energized, and lines can re-energize without warning as utilities restore power. Stay at least 30 feet away from any downed line and anything it's touching — including fences, puddles, or a vehicle. Don't attempt to move a line with any object, including a "non-conductive" one. Report it to your utility company and 911, and warn others away from the area until crews arrive.
+        </div>
+
+        <h3>Gas leaks</h3>
+        <p>If you smell natural gas (often described as a rotten-egg or sulfur smell) or hear a hissing sound near a gas line or appliance:</p>
+        <ul>
+          <li><strong>Do not create a spark.</strong> Don't flip light switches, don't use your phone inside the structure, don't light a match or start a vehicle near the smell.</li>
+          <li><strong>Get everyone out immediately</strong> and move to a safe distance.</li>
+          <li><strong>Report it</strong> to your gas utility and 911 from outside the affected area — let them shut it off and re-enter only once they confirm it's safe.</li>
+        </ul>
+
+        <h3>Structural hazards</h3>
+        <p>Do not re-enter a damaged structure to retrieve belongings or check on pets until it has been inspected and cleared. Walls can be unsupported, roofs can be ready to collapse, and floors can be structurally compromised in ways that aren't obvious from a quick look. Watch for broken glass, exposed nails, and unstable debris piles even outside a structure.</p>
+
+        <h3>Debris injury risk</h3>
+        <p>Cuts, punctures, and lacerations from broken glass, splintered wood, and twisted metal are extremely common in tornado aftermath — often more common than the injuries from the storm's wind itself. If you or someone nearby is bleeding significantly from debris, the technique doesn't change based on cause: direct pressure first, escalate to wound packing or a tourniquet if pressure alone isn't controlling it. See <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> for the full step-by-step — that protocol's technique applies here without modification; this book won't re-teach it.</p>
+      </section>
+
+      <!-- ═══ 7. CHECKING ON NEIGHBORS ═══ -->
+      <section class="th-section" id="checking-neighbors">
+        <h2>7. Checking on Neighbors</h2>
+        <p>Once your own household is confirmed safe, checking on neighbors — especially elderly neighbors, people with mobility limitations, and anyone you know lives alone — is one of the most practical things you can do in the immediate aftermath, and it's a standard part of most community disaster-response guidance.</p>
+        <ul>
+          <li><strong>Call out or knock rather than entering</strong> a damaged home uninvited — structural risk applies to their home just as much as yours (see Section 6).</li>
+          <li><strong>If someone doesn't answer and you have reason to believe they're home,</strong> report it to 911 or local emergency responders rather than forcing entry yourself.</li>
+          <li><strong>Share information,</strong> not just presence — if you have a working radio or cell signal and they don't, relay what you know about the storm's status and any official instructions.</li>
+          <li><strong>Don't put yourself at risk to check on others</strong> — downed lines, gas smells, and unstable structures in the area apply to this errand too.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>8. Special Situations</h2>
+
+        <h3>Apartments and multi-family buildings</h3>
+        <p>Go to the lowest floor you can reach, then to an interior hallway or room away from windows — a stairwell interior (not the stairs themselves) or an interior bathroom often works well. Avoid elevators; a power failure can trap you inside one. If your building has a designated shelter area, use it and know where it is before you need it, per Section 1's whole premise.</p>
+
+        <h3>No basement available</h3>
+        <p>This is common and it's fine — Section 4's "next best" option (a small interior room or closet on the lowest floor, no windows) is a genuinely effective shelter location, not a consolation prize. The core principle is walls and distance between you and the outside, not depth below ground specifically.</p>
+
+        <h3>Caught outside or in a vehicle</h3>
+        <p>If you're outside or driving when a warning is issued or a tornado becomes visible, get to a sturdy building immediately if one is within quick reach. If it isn't:</p>
+        <ul>
+          <li><strong>Do not try to outrun a tornado</strong> in a vehicle unless a clear escape route exists and the tornado is far away and moving in a different direction — tornadoes can change direction and speed unpredictably, and traffic/debris frequently make outrunning one impossible in practice.</li>
+          <li><strong>Get out of the vehicle</strong> if you have no viable escape route and no sturdy building nearby.</li>
+          <li><strong>Move to a low-lying area away from the vehicle</strong> — a ditch or depression in the ground — lie flat, and cover your head and neck with your arms.</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>Correcting a dangerous myth: highway overpasses are not safe shelter</strong>
+          Sheltering under a highway overpass is a widely repeated but incorrect piece of advice, and it can be more dangerous than an open ditch nearby. Wind speed actually increases as it's funneled through the narrow space under an overpass, and the structure can channel flying debris directly at anyone sheltering there — several fatalities have been documented among people who followed this advice. The correct guidance is the opposite: get away from the vehicle and the overpass, get as low as possible in open ground (a ditch or depression away from the roadway), and cover your head.
+        </div>
+
+        <h3>Evacuation routes already blocked</h3>
+        <p>If you were planning to evacuate a mobile home or unsafe structure per Section 4 but a warning is issued before you can leave, don't attempt a last-second drive through worsening conditions — get to the lowest, most interior part of the structure you're in instead, understanding it's a fallback, not an equivalent substitute for actually having left earlier.</p>
+      </section>
+
+      <!-- ═══ 9. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>9. Essential Items Checklist</h2>
+        <p>Keep these staged at or near your identified safe location — per Section 1, the whole point is not having to go looking for anything once a warning is issued.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Battery or hand-crank weather radio</strong><span class="th-cl-why"> — Section 5. Keeps you informed when power and cell service fail.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Sturdy closed-toe shoes</strong><span class="th-cl-why"> — Section 6. Debris on the floor is immediate and common after a tornado passes.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Helmets (bike or similar) for every household member</strong><span class="th-cl-why"> — Section 5. Head injury is a leading cause of tornado-related death; a helmet meaningfully reduces that risk.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Heavy blanket or mattress pre-positioned in your safe room</strong><span class="th-cl-why"> — Section 5. Extra protection for the whole body, not just the head.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Your 1st Hour trauma kit</strong><span class="th-cl-why"> — Section 6. Debris injuries after a tornado are common.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Phone with a charged battery pack</strong><span class="th-cl-why"> — Sections 5–7. For 911, checking in with family, and weather alerts.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Written family meeting point/plan</strong><span class="th-cl-why"> — Section 7. Especially important if household members are separated when a warning hits.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Mobile-home evacuation destination, decided in advance</strong><span class="th-cl-why"> — Section 4. The single most important planning item if this applies to you.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Stage these items at your safe location itself, not scattered around the house — under the basement stairs, in the interior closet, wherever your Section 4 answer is. Under real time pressure, you won't get a second trip to gather anything you forgot.
+        </div>
+      </section>
+
+      <!-- ═══ 10. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>10. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment, nor does it constitute official emergency management guidance. It is not a substitute for professional medical care, emergency medical services, a certified first aid, CPR, or Stop the Bleed course, or the instructions of local emergency management officials and the National Weather Service, all of which we strongly recommend following and, where applicable, taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call or override an official evacuation order or shelter instruction from local authorities.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/tornado-response/">1sthourprotocols.com/tornado-response</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

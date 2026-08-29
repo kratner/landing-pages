@@ -1,0 +1,829 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_BrokenBones_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Broken-Bones-Splinting/1HT_Protocol_BrokenBones_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Broken Bones & Splinting" e-book
+     Book #7 for ClickUp 86bbhrwcw. Track A #7. Standalone HTML page,
+     hosted at https://1sthourprotocols.com/broken-bones-splinting/.
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via a link surfaced through 1st Hour's
+     ClickFunnels order integration — this file assumes nothing about how
+     that link is generated.
+     Built from: Prompts/1HT_BuildPrompt_Book07_BrokenBones_v1.md, claimed in
+     1HT_BuildCoordination_v1.md §1 row 7. Book #6 (Choking / Airway
+     Obstruction) confirmed independently in progress in a separate
+     concurrent session at claim time — not touched.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly (Medical Disclaimer
+       13 → 12).
+     - v1 (2026-08-24, Claude): Initial build. Full long-form content, 13
+       numbered sections per the build prompt's §2 outline. Three numbered
+       technique sequences (arm/wrist splint, leg/ankle splint, sling
+       construction) — each re-checked for joint-above/below immobilization
+       and a circulation/sensation check both before and after splinting,
+       per the build prompt's §3 "numbered-sequence risk" warning. Section 3
+       states the "splint it as you find it" principle unambiguously, as its
+       own standalone callout section, per the same warning's
+       layperson-instinct-contradiction category. No state/Good Samaritan
+       appendix (per master list §7 "state relevance: none") — a short note
+       in Section 11 points to the pilot's full grid instead of silently
+       omitting the topic, matching Choking's §11 pattern. All three interior
+       illustrations spot-checked against the wrong-emblem logo defect
+       (confirmed present in all three, plus the cover) and fixed by
+       compositing the real el-logo-013.png icon+wordmark lockup over each
+       flat-background badge before use — see Books/REVISIONS.md for the
+       full writeup and old→new filename map.
+     - v2 (2026-08-25, Claude): Content-defect fix on the Section 4 arm-splint
+       illustration — Keith flagged that steps 3 ("Secure above the injury")
+       and 4 ("Secure below the injury") showed the pixel-identical image
+       (both already had both wraps applied). Fixed by compositing the clean,
+       unwrapped forearm/splint art from the same source image's step 2 panel
+       over step 3's second (wrist-side) wrap, so step 3 now shows only the
+       proximal wrap and step 4 correctly shows the finished two-wrap state.
+       New asset `pr-graphic-029.png`, superseding `pr-graphic-023.png` — see
+       Books/REVISIONS.md for the full writeup.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Broken Bones &amp; Splinting — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to splint a suspected broken bone in the field using kit materials or improvised alternatives, including arm, leg, and sling technique, open-fracture handling, and when to call 911 vs. self-transport.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── Short state note (no full grid — state relevance: none) ── */
+  .th-state-short{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:14.5px;
+    color:var(--gray);
+  }
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#fracture-vs-sprain">Fracture vs. Sprain</a></li>
+      <li><a href="#splint-as-found">Splint It As You Find It</a></li>
+      <li><a href="#splinting-technique">Splinting Technique by Body Part</a></li>
+      <li><a href="#open-fractures">Open Fractures</a></li>
+      <li><a href="#sling-construction">Sling Construction</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#call-911">When to Call 911 vs. Self-Transport</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-note">Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Broken Bones &amp; Splinting</h1>
+        <p class="lede">How to splint a suspected fracture in the field — with kit materials or whatever you have on hand — until the person can get real medical care.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-brokenbones-ebook-001.pdf" id="th-pdf-btn" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#fracture-vs-sprain">Recognize</a><span class="arrow">→</span>
+        <a href="#splint-as-found">Splint As Found</a><span class="arrow">→</span>
+        <a href="#splinting-technique">Splint It</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911 or Not</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>A broken bone is different from most of the emergencies in this library in one important way: it is usually not, by itself, immediately life-threatening. Nobody bleeds out from a simple fracture the way they can from a severed artery, and nobody stops breathing because a wrist is broken. That's worth saying plainly, because it changes what "the first hour" is actually for here.</p>
+        <p>What the first hour <em>is</em> for, with a suspected fracture, is three things: keeping the person comfortable, preventing the injury from getting worse (a bone end nicking a nearby nerve or blood vessel, or grinding further out of alignment with every unsupported movement), and — critically — preventing a closed fracture from becoming an open one, where the bone breaks through the skin and turns a manageable injury into a bleeding emergency. Good splinting in the first hour does all three.</p>
+        <p>This guide won't manufacture urgency that isn't there. Most fractures can wait the extra twenty minutes for EMS, or a slower drive to urgent care, without meaningfully changing the outcome — what matters is that the limb is properly stabilized before it's moved at all, and that you know the handful of situations (covered in Section 8) where a fracture actually is a "call 911 now" emergency.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Your job is not to fix the fracture or figure out exactly what's broken. Your job is to stop the injured area from moving any further than it already has — that's what a splint does — and to keep checking that you haven't cut off circulation while doing it.
+        </div>
+      </section>
+
+      <!-- ═══ 2. FRACTURE VS. SPRAIN ═══ -->
+      <section class="th-section" id="fracture-vs-sprain">
+        <h2>2. Fracture vs. Sprain</h2>
+        <p>A sprain (a stretched or torn ligament) and a fracture (a broken bone) can look almost identical in the first few minutes: swelling, bruising, pain, and an inability to put weight on or use the injured area. Even trained medical staff often can't tell the two apart without an X-ray.</p>
+        <ul>
+          <li><strong>Signs that lean toward fracture:</strong> visible deformity or an unnatural angle, a grinding or grating sensation, the limb looking noticeably shorter or bent compared to the uninjured side, or the person hearing/feeling a "snap" or "crack" at the moment of injury.</li>
+          <li><strong>Signs that could be either:</strong> swelling, bruising, pain that worsens with movement or weight-bearing, and difficulty using the limb normally.</li>
+        </ul>
+        <p>Here's the practical point, straight from the master framework this protocol is built on: <strong>it doesn't matter much which one it actually is.</strong> If you can't confidently rule out a fracture, treat it like one. Splinting an injury that turns out to be "only" a bad sprain causes essentially no harm. Failing to splint an injury that turns out to be a fracture can turn a stable injury into an unstable one. When in doubt, splint it.</p>
+      </section>
+
+      <!-- ═══ 3. SPLINT IT AS YOU FIND IT ═══ -->
+      <section class="th-section" id="splint-as-found">
+        <h2>3. Splint It As You Find It</h2>
+        <div class="th-warn">
+          <strong>Do not straighten or realign a bent limb.</strong> If a fractured arm or leg is bent at an unnatural angle, splint it in that position — angled, exactly as you found it. Do not pull, push, or attempt to straighten it back into a "normal" shape first, even though that instinct will feel strong.
+        </div>
+        <p>This is the single instruction in this book most likely to fight your instincts, so it gets said as directly as possible: an angulated (visibly bent or crooked) fracture gets splinted at the angle it's already at. Attempting to straighten it first — even gently, even with good intentions — risks turning a closed fracture into an open one, damaging a nearby nerve or blood vessel that the bone happens to be resting against safely, or causing a level of pain and additional tissue damage that far outweighs any benefit.</p>
+        <p>Three rules that apply to every splint in this book, regardless of body part:</p>
+        <ol class="th-steps">
+          <li><strong>Splint it as you find it.</strong> Support the limb in the position it's already in. Don't reposition, straighten, or "pop it back."</li>
+          <li><strong>Immobilize the joint above and below the injury.</strong> A splint that only covers the injury site itself doesn't actually stop the bone from moving — the joints on either side need to be included and held still too.</li>
+          <li><strong>Check circulation and sensation below the injury, twice.</strong> Once before you splint, and again immediately after. Section 4 explains exactly what to check and what it means if something changes.</li>
+        </ol>
+        <p>Everything in Section 4 builds on these three rules — read them once here so the technique steps make sense, then follow them exactly when you get there.</p>
+      </section>
+
+      <!-- ═══ 4. SPLINTING TECHNIQUE BY BODY PART ═══ -->
+      <section class="th-section" id="splinting-technique">
+        <h2>4. Splinting Technique by Body Part</h2>
+        <p>The mechanics of splinting are the same everywhere on the body: expose the injury (cutting away clothing with trauma shears if it's in the way, rather than pulling clothing over the injury site), pad it, support it on both sides, immobilize the joint above and below, secure it without cutting off circulation, and check that circulation before and after. Below are the two most common cases — an arm/wrist and a leg/ankle — worked through step by step.</p>
+
+        <h3>Circulation and sensation check — do this before <em>and</em> after every splint</h3>
+        <p>Before you begin, and again once the splint is fully secured, check the area farthest from the injury (fingers or toes):</p>
+        <ul>
+          <li><strong>Color</strong> — should be normal skin tone, not pale, blue, or gray.</li>
+          <li><strong>Temperature</strong> — should feel about as warm as the uninjured side.</li>
+          <li><strong>Pulse</strong> — if you know how to check one nearby (wrist, top of foot), it should be present and roughly equal to the uninjured side.</li>
+          <li><strong>Sensation and movement</strong> — the person should be able to feel a light touch and wiggle fingers or toes, even if it hurts to do so.</li>
+        </ul>
+        <div class="th-warn">
+          <strong>If any of these get worse after splinting:</strong> the splint is too tight. Loosen the securing wraps immediately — you can loosen without undoing the "splint it as you find it" positioning — and recheck. If color, warmth, pulse, or sensation still isn't right after loosening, that's now a call-911 situation regardless of how the fracture itself looks (see Section 8).
+        </div>
+
+        <h3>Arm or wrist</h3>
+        <ol class="th-steps">
+          <li><strong>Check circulation and sensation</strong> at the fingers, per the checklist above. Note what you find before you touch the splint materials.</li>
+          <li><strong>Choose a rigid support.</strong> A commercial splint from your kit is ideal. Improvised options that work well: a rolled-up magazine or newspaper, a straight stick, a sturdy piece of cardboard, or even a tightly rolled towel for a less rigid but still stabilizing option.</li>
+          <li><strong>Pad the support</strong> with cloth, gauze, or clothing anywhere it will touch skin directly, especially over the wrist and elbow.</li>
+          <li><strong>Place the support along the injured limb</strong> in the exact position you found it — do not straighten a bent arm or wrist first (Section 3). The support should extend past both the wrist joint and the elbow joint on either side of the injury.</li>
+          <li><strong>Secure it with wraps above and below the injury site</strong> — a cravat, gauze roll, strips of cloth, or tape — snug enough to hold the limb still, not tight enough to restrict blood flow. You should be able to slide a finger under each wrap with a bit of resistance.</li>
+          <li><strong>Immobilize the elbow and the wrist</strong> specifically, not just the forearm in between — this is what actually stops the fracture site from moving when the person shifts their arm.</li>
+          <li><strong>Recheck circulation and sensation</strong> at the fingers. If anything is worse than your first check, loosen the wraps and recheck again.</li>
+          <li><strong>Add a sling</strong> (Section 6) to take the weight off the arm entirely, once the splint itself is secure.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-029.png" alt="1st Hour arm splinting diagram — assess the injury without realigning it, apply a rigid support padded along the forearm, secure above the injury, then secure below the injury, then check circulation and comfort.">
+        </figure>
+
+        <h3>Leg or ankle</h3>
+        <ol class="th-steps">
+          <li><strong>Check circulation and sensation</strong> at the toes, per the checklist above.</li>
+          <li><strong>Control any bleeding first</strong> if the leg is also bleeding — see Section 5 if the fracture is open (bone visible through skin).</li>
+          <li><strong>Choose rigid supports for both sides of the leg</strong> if possible — two straight, sturdy objects (boards, thick branches, trekking poles) padded with cloth, placed along the outside and inside of the leg.</li>
+          <li><strong>Position the supports in the exact position you found the leg</strong> — do not straighten it first. The supports should extend above the knee and below the ankle, covering both joints.</li>
+          <li><strong>Secure with wraps at multiple points</strong> — above the injury, below the injury, and at each end near the joints — snug but not tight enough to restrict blood flow to the foot.</li>
+          <li><strong>Immobilize the knee and the ankle</strong> specifically, the same reasoning as the arm: the joints above and below the fracture are what actually need to stop moving.</li>
+          <li><strong>Recheck circulation and sensation</strong> at the toes. Loosen and recheck if anything has gotten worse since your first check.</li>
+          <li><strong>Do not let the person bear weight on the leg</strong>, even with the splint on, unless there is no other way to get them to safety.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-024.png" alt="1st Hour leg splinting diagram — assess and control bleeding, place rigid supports along both sides of the leg extending above the knee and below the ankle, secure with wraps, then check circulation, comfort, and sensation.">
+        </figure>
+
+        <div class="th-callout">
+          <strong>No rigid material at all?</strong>
+          You can still limit movement by binding an injured leg to the uninjured leg (with padding between them) or binding an injured arm snugly against the torso. It's less effective than a true rigid splint, but meaningfully better than leaving the limb completely unsupported.
+        </div>
+      </section>
+
+      <!-- ═══ 5. OPEN FRACTURES ═══ -->
+      <section class="th-section" id="open-fractures">
+        <h2>5. Open Fractures</h2>
+        <p>An open (compound) fracture is one where the broken bone has punctured through the skin — visible bone, or a wound deep enough that you suspect bone is exposed underneath. This is a different, more urgent situation than a closed fracture, because it's now also an open wound with a real risk of severe bleeding and infection.</p>
+        <ol class="th-steps">
+          <li><strong>Glove up if you can reach gloves quickly, but don't delay for them.</strong> Use bare hands if nothing else is available — non-latex gloves from your kit if they're within reach — then move straight to bleeding control.</li>
+          <li><strong>Treat it as a bleeding wound first.</strong> An open fracture takes priority over the splint. Apply direct pressure around the wound — see <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> for the full direct-pressure, wound-packing, and tourniquet technique if the bleeding is severe. Don't delay bleeding control to work on the splint.</li>
+          <li><strong>Do not attempt to push the bone back under the skin.</strong> This risks driving contamination deeper into the wound and causing additional damage. Leave it exactly as you found it.</li>
+          <li><strong>Cut away clothing around the wound with trauma shears if needed</strong> to see the full extent of the injury and apply a dressing cleanly — cut around the limb rather than moving it.</li>
+          <li><strong>Cover the wound</strong> with a clean trauma dressing before splinting, if the bleeding allows it — this reduces contamination without disturbing the bone's position.</li>
+          <li><strong>Splint the limb in the position you found it</strong>, using the same technique as Section 4, being careful not to apply direct pressure onto the exposed bone itself — pad and splint around it, not against it.</li>
+          <li><strong>Treat this as a higher-priority 911 call</strong> than a closed fracture — see Section 8.</li>
+        </ol>
+        <div class="th-warn">
+          <strong>Sequence matters:</strong> bleeding control, then wound covering, then splinting. An open fracture is a bleeding emergency wearing a fracture's clothing — don't let the visible bone distract from controlling the bleeding first.
+        </div>
+      </section>
+
+      <!-- ═══ 6. SLING CONSTRUCTION ═══ -->
+      <section class="th-section" id="sling-construction">
+        <h2>6. Sling Construction</h2>
+        <p>A sling supports the weight of an injured arm, wrist, or shoulder by transferring that weight to the neck and shoulder instead. It's a companion to a splint, not a replacement for one — use a sling to take the weight off an already-splinted arm, or on its own for a shoulder injury a rigid splint can't address.</p>
+        <ol class="th-steps">
+          <li><strong>Start with a triangular bandage</strong> (standard in most trauma kits) or improvise one from a large square of cloth — a bandana, a folded shirt, or a pillowcase — folded corner to corner.</li>
+          <li><strong>Position the injured arm across the chest</strong>, elbow bent at roughly a right angle, in whatever position is comfortable and doesn't force any movement of a splinted fracture.</li>
+          <li><strong>Slide the bandage underneath the arm</strong> so one point extends past the elbow and the long edge runs along the forearm, with the two remaining corners reaching up over each shoulder.</li>
+          <li><strong>Bring the lower corner up and over the shoulder</strong> on the injured side, so both corners meet at the side of the neck.</li>
+          <li><strong>Tie the two corners together</strong> at the side (not the back) of the neck, padding the knot if it presses uncomfortably.</li>
+          <li><strong>Check that the hand sits slightly higher than the elbow</strong> — this reduces swelling — and that the sling isn't so tight it restricts breathing or circulation at the neck or shoulder.</li>
+          <li><strong>Recheck circulation and sensation</strong> at the fingers one more time now that the sling is on, same as Section 4's check.</li>
+        </ol>
+        <p><strong>When to use a sling vs. a rigid splint:</strong> a sling alone is appropriate for shoulder, collarbone, and some wrist injuries where there's no significant deformity to immobilize with a rigid support. For an arm or wrist fracture with deformity, apply the rigid splint from Section 4 first, then add the sling on top to support its weight — the two work together.</p>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-025.png" alt="1st Hour arm sling diagram — fold a triangular bandage, place it around the neck and under the injured arm, then tie the ends together at the side of the neck.">
+        </figure>
+      </section>
+
+      <!-- ═══ 7. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>7. Special Situations</h2>
+
+        <h3>Pediatric splinting</h3>
+        <p>Children's bones include growth plates — softer areas near the ends of long bones where new bone growth happens — that can be injured in ways that look mild (a "sprain-like" swelling with less obvious deformity than an adult fracture) but carry a real risk of affecting future growth if not properly evaluated. Splint a suspected pediatric fracture using the same techniques in Section 4, but err toward professional evaluation even when the injury looks minor — don't assume a child's lack of dramatic deformity means it's "just a sprain."</p>
+
+        <h3>Splinting alongside other injuries</h3>
+        <p>If you're managing a fracture at the same time as a more severe injury — heavy bleeding, an airway problem, a person who's unconscious — the fracture waits. Address severe bleeding or airway issues completely first, then come back to splinting once those are stable. A properly splinted arm can wait several minutes; an uncontrolled airway or hemorrhage cannot.</p>
+      </section>
+
+      <!-- ═══ 8. WHEN TO CALL 911 VS. SELF-TRANSPORT ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>8. When to Call 911 vs. Self-Transport</h2>
+        <p>This is the first book in this library where the honest answer to "should I call 911?" is sometimes <strong>no</strong> — and it's worth saying that plainly rather than defaulting to reflexive "when in doubt, call anyway" advice that would undercut the actual point of this section. A stable, isolated limb fracture with good circulation is a real category of injury where a calm drive to urgent care is a reasonable, common choice.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Call 911</th><th>Self-transport to urgent care may be reasonable</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>No pulse, no sensation, or a cold/pale/blue limb below the injury — before or after splinting</td><td>Pulse, sensation, warmth, and color all normal below the injury after splinting</td></tr>
+              <tr><td>Open fracture (bone visible through skin)</td><td>Closed fracture — skin intact over the injury</td></tr>
+              <tr><td>Suspected spinal, pelvic, or femur (thighbone) fracture</td><td>An isolated injury to a hand, wrist, forearm, foot, or ankle</td></tr>
+              <tr><td>Severe, uncontrolled bleeding accompanying the fracture</td><td>No significant bleeding, or bleeding already fully controlled</td></tr>
+              <tr><td>The person is unable to be safely moved, or is showing signs of shock</td><td>The person is alert, stable, and can be moved and transported comfortably once splinted</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="th-warn">
+          <strong>The spine, pelvis, and femur are different.</strong> These are high-energy injuries with a real risk of major internal bleeding or spinal cord damage — always call 911 for a suspected fracture in any of these three areas, even if the person seems otherwise stable. Don't attempt to move someone with a suspected spinal injury unless there's an immediate danger (like fire) that makes staying in place more dangerous than moving them.
+        </div>
+
+        <p>If you do self-transport: splint the injury properly first per Section 4, keep it elevated if comfortable and not contraindicated, and drive calmly and directly rather than rushing — a fracture that's been properly splinted is not an emergency that benefits from speed.</p>
+      </section>
+
+      <!-- ═══ 9. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>9. Aftercare &amp; Follow-Up</h2>
+        <ul>
+          <li><strong>Keep monitoring circulation, sensation, and swelling</strong> the entire time you're waiting for EMS or driving to urgent care — a splint that was fine ten minutes ago can become too tight as swelling increases.</li>
+          <li><strong>Loosen the splint immediately</strong> if you notice numbness, tingling, color change, or worsening pain — these are all signs the splint has become too tight as swelling progressed, not signs the fracture itself is getting worse.</li>
+          <li><strong>Keep the injured area elevated</strong> above heart level where comfortable and not contraindicated by the injury location — this helps limit swelling.</li>
+          <li><strong>Expect imaging.</strong> A definitive diagnosis requires an X-ray (or sometimes a CT/MRI for complex injuries) — this is normal and expected, not a sign that your first-aid response was inadequate.</li>
+          <li><strong>Expect a cast, splint, or brace</strong> to be applied by medical staff, and follow their specific instructions for it, which supersede anything in this guide once professional care begins.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 10. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>10. Essential Items Checklist</h2>
+        <p>Everything in this protocol assumes you have some combination of these supplies, or the improvised alternatives named alongside each one.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Rigid splint or splinting material</strong><span class="th-cl-why"> — Section 4. Improvised alternative: a rolled magazine, a straight stick, sturdy cardboard.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Cravats or wide cloth wraps</strong><span class="th-cl-why"> — Section 4. Secures the splint above and below the injury. Improvised alternative: strips of a clean shirt.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Triangular bandage</strong><span class="th-cl-why"> — Section 6. Builds the sling. Improvised alternative: a bandana or folded pillowcase.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Roller gauze or elastic wrap</strong><span class="th-cl-why"> — Sections 4–5. Additional securing material and wound covering for an open fracture.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Padding material (gauze, cloth)</strong><span class="th-cl-why"> — Section 4. Placed between rigid supports and skin.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Trauma dressing</strong><span class="th-cl-why"> — Section 5. Covers an open fracture wound before splinting.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — worn before contact with any open wound, per Section 5's bleeding-control step.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Trauma shears</strong><span class="th-cl-why"> — Sections 4–5. Cuts clothing away to expose and assess the injury without moving the limb.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep splinting materials together with your bleeding-control supplies — an open fracture needs both at once, and you won't have time to gather them from two different places.
+        </div>
+      </section>
+
+      <!-- ═══ 11. GOOD SAMARITAN PROTECTIONS ═══ -->
+      <section class="th-section" id="state-note">
+        <h2>11. Good Samaritan Protections</h2>
+        <div class="th-state-short">
+          <p>This protocol doesn't carry its own state-by-state appendix — splinting technique doesn't vary by geography the way, say, tornado sheltering does, so a full 12-state breakdown here would be padding rather than useful content. The same Good Samaritan legal protections described in <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>'s Section 13 apply generally to good-faith emergency splinting assistance — see that book's full state grid for the details, since the underlying legal principle doesn't change by injury type.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 12. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>12. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information referenced in Section 11 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/broken-bones-splinting/">1sthourprotocols.com/broken-bones-splinting</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

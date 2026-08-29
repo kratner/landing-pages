@@ -1,0 +1,956 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_BurnInjury_v7.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Burn-Injury-Response/1HT_Protocol_BurnInjury_v7.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Burn Injury (Thermal, Chemical, Electrical)" e-book
+     Book #3 for ClickUp 86bbhrwcw. Track A #3. Standalone HTML page,
+     intended host: Cloudflare (stable slug /burn-injury/). NOT a CF Custom
+     HTML element — no CF-wrapper constraints apply here.
+     Built from Prompts/1HT_BuildPrompt_Book03_BurnInjury_v1.md, per its §2
+     content spine (sourced from 1HT_ProtocolsMasterList_v1.md §3) — three
+     distinct burn-mechanism sections (thermal/chemical/electrical), no
+     tourniquet section, abbreviated state appendix ("state relevance: low").
+     Structural/CSS/JS template copied wholesale from
+     Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v5.html
+     per the build prompt's instruction; content is new, not copied, except
+     Section 8 (Shock) which reuses the pilot's already-fixed v5 text almost
+     verbatim and Section 16 (Disclaimer) which reuses it verbatim.
+
+     REVISION HISTORY
+     - v7 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v6 (2026-08-24, Claude): Book #9 (Grid-Down / Extended Power Outage)
+       shipped — per Prompts/1HT_BuildPrompt_Book09_GridDown_v1.md §4/
+       Definition of done, removed the "Coming Soon" tag on this book's
+       Grid-Down cross-link card (Section 15) and restyled it "Live"
+       (green tag, matching the .th-crosslink.live pattern). Checked
+       1HT_BuildCoordination_v1.md's row for this book (Live, no
+       conflicting activity) before editing. No content changes otherwise.
+       Redeployed to /burn-injury/ — same stable slug, no URL change.
+     - v5 (2026-08-24, Claude): Book #8 (Shock Management) shipped — per
+       Prompts/1HT_BuildPrompt_Book08_Shock_v1.md §4, removed the "Coming
+       Soon" tag on this book's Shock Management cross-link card (Section
+       15) and restyled it "Live" (green tag). No content changes
+       otherwise. Redeployed to /burn-injury/ — same stable slug, no URL
+       change.
+     - v4 (2026-08-24, Claude): Fixed a logo/heading-overlap defect Keith
+       flagged on the two v3 illustrations (rule-of-palm and chemical-burn-
+       response) — the "1STHOUR" shield+wordmark lockup sat with ~zero gap
+       before the headline, so the heading's first letter visibly overlapped
+       the wordmark ("B" of "BURN SIZE:" over the "R" of "HOUR"; "C" of
+       "CHEMICAL" over the same). This is a different failure mode than the
+       wrong-emblem defect v1/v2 already fixed (see Books/REVISIONS.md) —
+       the emblem itself was correct, only its clearance from the heading
+       was not. Per this book's own access guide (1HT_CreativeAI_AccessGuide_v1.md
+       §3) and Books/REVISIONS.md's "header rebuilt as real text" precedent,
+       used the preferred fix: re-typeset the header (wordmark + heading) as
+       real HTML text (Anton font, matching this page's own font stack) via
+       the web-screenshot skill, keeping only the shield icon graphic itself
+       (cropped from the untouched, non-overlapping icon region of each
+       original image — the icon art was never defective) rather than
+       pixel-patching the AI-drawn overlap. Composited the re-typeset header
+       over each image's top band, matched background color (+ subtle grain
+       on the rule-of-palm image to match its textured-paper background),
+       left everything below the header (diagrams, callouts, red divider,
+       footer band) untouched. Re-uploaded to the Creative AI Studio library
+       under the same category-type, new sequence: pr-graphic-291-fixed-v2.png
+       → assets/1sthour-burninjury-ruleofpalm-002.png,
+       pr-graphic-293-fixed-v2.png → assets/1sthour-burninjury-chemflush-002.png.
+       Old -001 URLs left live (no delete/overwrite support in the library
+       API, and per this workspace's CDN-safety convention of never breaking
+       an existing reference). v3 moved to _archive/ per the file-versioning
+       SOP. No content/text changes — image fix only.
+     - v3 (2026-08-24, Claude): Migrated the 3 interior illustrations, cover,
+       lifestyle image, and PDF from same-origin Cloudflare Pages hosting to
+       the Creative AI Studio library (folderId set to "1st Hour Protocols"),
+       now that Keith supplied a working API key — closes the deviation this
+       book and Book #2 both hit ("no Creative AI Studio API key was
+       available this session"). New URLs:
+       pr-graphic-291-fixed.png → assets/1sthour-burninjury-ruleofpalm-001.png,
+       pr-graphic-292-fixed.png → assets/1sthour-burninjury-degrees-001.png,
+       pr-graphic-293-fixed.png → assets/1sthour-burninjury-chemflush-001.png,
+       pr-graphic-307-fixed.png (cover) → assets/1sthour-burninjury-cover-001.png,
+       pr-graphic-314.png (lifestyle) → assets/1sthour-burninjury-lifestyle-001.png,
+       PDF → ../../pdfs/1sthour-burninjury-ebook-001.pdf (supersedes
+       the same-origin /burn-injury/1sthour-burninjury-ebook-001.pdf). No
+       content changes.
+     - v2 (2026-08-24, Claude): Fixed the 1 Critical and 1 Moderate finding
+       from MEDICAL_REVIEW_v1.md (run via
+       Prompts/1HT_MedicalComplianceReviewPrompt_v1.md) BEFORE first deploy,
+       per the build prompt's §5 — not after, per this workspace's standing
+       rule. (1) CRITICAL — Section 6 (Electrical Burns), Step 5
+       self-contradicted itself: it said get any shock evaluated "even if
+       the person looks fine" and then exempted "a mild static or low-voltage
+       household jolt" from that same rule, which could talk a reader out of
+       seeking care after a real household-current shock (the exact scenario
+       the first half of the sentence warns about). Narrowed the exception
+       to genuinely trivial static discharge only. (2) MODERATE — Section
+       13's checklist cited the gloves item as "per Section 3, Step 4," but
+       Step 4 (identify the mechanism) is sequenced after Step 2 (stop the
+       burning process — the step most likely to involve first contact) and
+       only says gloves "if within reach," not "before contact." Reworded
+       Section 3 Step 2 to include the gloves-if-available line at first
+       contact, and corrected the Section 13 citation to point there.
+       Also added two missing-content items the review flagged (not
+       tiered findings, but real gaps for this book's own topic): explicit
+       "stop, drop, and roll" / smother technique for burning clothing
+       (Section 3 Step 2 and Section 4), and a non-conductive-object
+       separation technique for Section 6 when power can't be confirmed off
+       and no qualified person is present. Fixed both Minor findings too
+       (chemical flush duration tightened to "at least 20 minutes" to match
+       the more commonly cited figure and removed the tension with the
+       "longer beats stopping early" line; added a contact-lens-removal note
+       to the eye-flushing step). Did not otherwise change content. v1
+       moved to _archive/ per this workspace's file-versioning SOP
+       (archived before this edit, not after).
+     - v1 (2026-08-24, Claude): Initial build. Full long-form content per
+       the build prompt's §2 structure (16 sections). Section 8 (Shock)
+       copied from the pilot's v5 (post-fix) text — conditional/optional
+       leg elevation (6-12", spinal/leg-injury/breathing-difficulty
+       carve-out) preserved verbatim, not the pre-fix "routine default"
+       framing. Section 3's numbered sequence was written so "stop the
+       burning process" (the time-critical action) is not gated behind
+       mechanism identification — confirmed absent by the medical review
+       (see v2 entry above). Illustrations: 3 pre-generated images
+       (pr-graphic-291/292/293) spot-checked, found to have the same
+       wrong-emblem defect documented in ImageURLs.md, and fixed via direct
+       logo compositing (see Books/REVISIONS.md for the old->new filename
+       mapping) — hosted locally in Assets/ pending a Creative AI Studio API
+       key (same documented deviation as Book #2's first build session; no
+       key was available this session either).
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Burn Injury: Thermal, Chemical &amp; Electrical — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize and respond to thermal, chemical, and electrical burns in the first hour, including cooling technique, chemical flushing, electrical scene safety, shock management, and state-specific Good Samaritan guidance.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── Burn-degree comparison table ─────────────────────────────── */
+  .th-degree-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:0 0 24px;}
+  @media (max-width:700px){.th-degree-grid{grid-template-columns:1fr;}}
+  .th-degree-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-degree-card h4{font-size:14px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-degree-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Red-flag burn list ───────────────────────────────────────── */
+  .th-redflag-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 20px;}
+  @media (max-width:600px){.th-redflag-grid{grid-template-columns:1fr;}}
+  .th-redflag-grid li{list-style:none;display:flex;align-items:center;gap:10px;font-size:14.5px;font-weight:600;background:var(--white);border:1px solid var(--border);border-radius:6px;padding:10px 14px;}
+  .th-redflag-grid li::before{content:"⚠";color:var(--red);font-size:16px;flex-shrink:0;}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix cards ──────────────────────────────────── */
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#recognizing-severity">Recognizing Burn Severity</a></li>
+      <li><a href="#immediate-response">The Immediate Response Protocol</a></li>
+      <li><a href="#thermal">Thermal Burns</a></li>
+      <li><a href="#chemical">Chemical Burns</a></li>
+      <li><a href="#electrical">Electrical Burns</a></li>
+      <li><a href="#covering">Pressure Dressings &amp; Covering the Burn</a></li>
+      <li><a href="#shock">Shock Recognition &amp; Management</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#environment-demographics">Climate &amp; Demographic Notes</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Burn Injury: Thermal, Chemical &amp; Electrical</h1>
+        <p class="lede">Three different burn mechanisms, three different first responses — what to do in the first minutes after a thermal, chemical, or electrical burn, and how to tell which one you're dealing with.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-burninjury-ebook-002.pdf" id="th-pdf-link" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#recognizing-severity">Recognize</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#covering">Cover</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>A burn doesn't stop injuring tissue the instant the heat, chemical, or current is gone. Around the initial site of damage sits what burn medicine calls the <strong>zone of stasis</strong> — a ring of tissue that isn't destroyed outright but is critically low on blood flow and can die over the following hours if it isn't cooled and cared for quickly. In practical terms, that means the burn you see in the first sixty seconds is not necessarily the burn you're left with. What you do in the first few minutes measurably changes how deep and how large the injury becomes.</p>
+        <p>This is different from a bleeding emergency, where the danger is losing too much blood too fast. With a burn, the early danger is ongoing tissue damage that keeps spreading outward and downward from the original injury — and the single biggest lever you have to stop it is speed. Cooling a thermal burn, flushing a chemical burn, or getting an electrical injury properly evaluated within the first minutes can be the difference between a burn that heals on its own and one that needs a skin graft.</p>
+        <p>This guide walks through three genuinely different burn mechanisms — thermal (heat), chemical, and electrical — because they don't share one first response. Treating a chemical burn like a thermal burn (or vice versa) can make things worse. Read Section 2 first so you can tell which one you're dealing with, then jump to the section that matches.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Stop the burning process first, figure out exactly what caused it second. Every minute the burn source keeps acting on the skin — heat, chemical, or current — adds depth and size to the injury. Speed beats precision in the first sixty seconds.
+        </div>
+      </section>
+
+      <!-- ═══ 2. RECOGNIZING BURN SEVERITY ═══ -->
+      <section class="th-section" id="recognizing-severity">
+        <h2>2. Recognizing Burn Severity</h2>
+        <p>Two things determine how serious a burn is: how deep it goes (degree) and how much surface area it covers (size). A small deep burn can be more dangerous than a large shallow one, and certain locations are automatically serious regardless of size. Learn to size up all three quickly.</p>
+
+        <h3>Burn degrees</h3>
+        <div class="th-illo">
+          <img src="assets/1sthour-burninjury-degrees-001.png" alt="1st Hour burn degree comparison — 1st degree (red, no blisters), 2nd degree (blistered, moist), and 3rd degree (white or charred, dry) skin cross-sections.">
+        </div>
+        <div class="th-degree-grid">
+          <div class="th-degree-card">
+            <h4>1st Degree</h4>
+            <p>Red, painful, dry, no blisters. Affects only the outermost layer of skin. Typically from sunburn or a brief scald. Heals in 3–6 days.</p>
+          </div>
+          <div class="th-degree-card">
+            <h4>2nd Degree</h4>
+            <p>Blistered, wet-looking, and significantly more painful than a 1st-degree burn. Affects the outer layer and part of the layer beneath it. Heals in 1–3 weeks; larger ones need medical care.</p>
+          </div>
+          <div class="th-degree-card">
+            <h4>3rd Degree</h4>
+            <p>White, brown, or charred and leathery-dry — and can paradoxically hurt less than a 2nd-degree burn because nerve endings are destroyed. Always needs emergency care.</p>
+          </div>
+        </div>
+        <p class="th-note-sm"><strong>4th-degree burns</strong> extend beyond the skin into muscle, tendon, or bone. They're rare outside of severe fire, explosion, or high-voltage electrical injuries, and are always a 911 emergency — treat any burn you suspect is this deep exactly as you would a 3rd-degree burn while you wait for help.</p>
+
+        <h3>Estimating size: the rule of palm</h3>
+        <div class="th-illo">
+          <img src="assets/1sthour-burninjury-ruleofpalm-002.png" alt="1st Hour rule of palm sizing diagram — the injured person's own palm equals roughly 1% of their total body surface area.">
+        </div>
+        <p>For burns that don't cover an obvious large area, use the injured person's own palm (fingers included) as a rough ruler: <strong>one palm ≈ 1% of that person's total body surface area.</strong> A burn covering roughly three palm-widths is around 3% of body surface — useful for describing the injury accurately to a 911 dispatcher or EMS crew, who will ask.</p>
+
+        <h3>Red-flag burns — treat as an ER visit regardless of size</h3>
+        <p>Some locations and circumstances make a burn serious no matter how small it looks:</p>
+        <ul class="th-redflag-grid">
+          <li>Face</li>
+          <li>Hands or feet</li>
+          <li>Genitals or groin</li>
+          <li>Major joints (knee, elbow, shoulder)</li>
+          <li>Circumferential burns (fully around a limb)</li>
+          <li>Any suspected inhalation injury</li>
+        </ul>
+        <div class="th-warn">
+          <strong>If unsure, treat it as severe.</strong> A burn covering more than about 10% of body surface area (roughly ten palm-widths), any 3rd/4th-degree burn, any burn on a red-flag location above, or any electrical or significant chemical burn all warrant emergency care — don't wait to see if it looks better once it's cooled.
+        </div>
+      </section>
+
+      <!-- ═══ 3. IMMEDIATE RESPONSE PROTOCOL ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>3. The Immediate Response Protocol</h2>
+        <p>This sequence applies to all three burn mechanisms at a high level — Sections 4-6 give you the mechanism-specific detail once you've identified which one you're facing. Step 2 is the one thing you act on immediately, before you've necessarily figured out exactly what caused the burn.</p>
+
+        <ol class="th-steps">
+          <li><strong>Ensure the scene is safe before you approach.</strong> This matters more here than with most injuries — an active flame, a live electrical source, or a spreading chemical can injure you too. Confirm the fire is out, the power is off at the source (not just "looks off"), or the chemical isn't still spreading before you get close.</li>
+          <li><strong>Stop the burning process immediately.</strong> This is the highest-priority action and it happens before full mechanism identification. If clothing is on fire: stop, drop, and roll, or smother the flames with a blanket or coat — don't let the person run, which fans the flames. Otherwise: put out flames, pull the person clear of a chemical, or move them away from a de-energized electrical source. Use bare hands if nothing else is available, or non-latex gloves from your kit if they're within reach without delaying this step. Every additional second the source keeps acting on the skin adds depth and size to the injury.</li>
+          <li><strong>Call or have someone call 911.</strong> Any burn serious enough that you're working through this protocol is worth a call — don't wait to see how it looks once it's cooled or flushed.</li>
+          <li><strong>Now identify the mechanism</strong> — thermal, chemical, or electrical — since each has a different next step: cool it if thermal (Section 4), brush off dry chemical before flushing if chemical (Section 5), or treat as a possible internal-injury risk if electrical (Section 6).</li>
+          <li><strong>Remove jewelry, belts, watches, and tight clothing</strong> from around and near the burn before swelling starts. Once tissue swells, these become difficult to remove and can cut off circulation.</li>
+          <li><strong>Once cooled or flushed, cover the burn loosely</strong> per Section 7 — never wrap it tightly.</li>
+          <li><strong>Watch for shock and treat it per Section 8</strong> if it develops, especially with a larger or deeper burn.</li>
+          <li><strong>Keep monitoring breathing and level of consciousness</strong> until help arrives, particularly if there's any sign of inhalation injury (Section 9).</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't use ice or ice water on any burn — it can add a cold-injury on top of the burn itself. Don't apply butter, oils, toothpaste, or other home remedies — they trap heat and raise infection risk. Don't pop blisters. Don't peel away clothing that's stuck to the burn; cut around it instead.
+        </div>
+      </section>
+
+      <!-- ═══ 4. THERMAL BURNS ═══ -->
+      <section class="th-section" id="thermal">
+        <h2>4. Thermal Burns</h2>
+        <p>Thermal burns — from flame, hot liquid, steam, or contact with a hot surface — are the most common burn type, and cooling technique matters more than almost anything else you do.</p>
+        <ol class="th-steps">
+          <li><strong>If clothing is on fire, stop, drop, and roll,</strong> or smother the flames with a blanket, rug, or coat — don't let the person run, which fans the flames and makes them burn faster. This is covered in Section 3, Step 2, and matters enough to repeat here.</li>
+          <li><strong>Cool the burn with cool or lukewarm running water for 10–20 minutes.</strong> Tap water is ideal. This is the single most effective thing you can do to limit how deep the burn ultimately becomes.</li>
+          <li><strong>Never use ice or ice water.</strong> It feels like it should help, but ice constricts blood vessels in already-damaged tissue and can cause a second, cold-related injury on top of the burn.</li>
+          <li><strong>Remove jewelry, watches, and tight clothing</strong> near the burn before swelling makes that impossible.</li>
+          <li><strong>Don't pop any blisters that form.</strong> An intact blister is a natural, sterile barrier against infection.</li>
+          <li><strong>Don't apply butter, oil, toothpaste, or other home remedies.</strong> These trap heat against the skin, don't cool anything, and raise infection risk. Cool water and, once cooled, a clean non-stick dressing (Section 7) are all a thermal burn needs from you.</li>
+        </ol>
+        <div class="th-callout">
+          <strong>How long is too long?</strong>
+          If you're still actively cooling a burn after 20 minutes without relief, that's a sign it's more serious than it may have first appeared — treat it as a red-flag burn per Section 2 and get it seen.
+        </div>
+      </section>
+
+      <!-- ═══ 5. CHEMICAL BURNS ═══ -->
+      <section class="th-section" id="chemical">
+        <h2>5. Chemical Burns</h2>
+        <p>Chemical burns need a different first step than thermal ones — and getting the order wrong can make things worse.</p>
+        <div class="th-illo">
+          <img src="assets/1sthour-burninjury-chemflush-002.png" alt="1st Hour chemical burn response — step 1, brush off dry chemical powder without adding water; step 2, flush the area with plenty of clean running water.">
+        </div>
+        <ol class="th-steps">
+          <li><strong>If the chemical is a dry powder, brush it off first — before adding any water.</strong> Some dry chemicals react with water and generate additional heat or become more caustic when wetted. Use a dry cloth, gloved hand, or brush to remove as much as possible first.</li>
+          <li><strong>Then flush with large amounts of clean, running water for at least 20 minutes,</strong> longer if pain continues or the chemical is strongly acidic or alkaline — when in doubt, keep flushing rather than stopping early. Keep water flowing away from unaffected skin, not pooling on it.</li>
+          <li><strong>If the eye is involved, remove contact lenses if present and easy to do without delay,</strong> then flush continuously with clean water or saline, holding the eyelid open, and keep flushing on the way to — or while waiting for — emergency care. Eye chemical exposure is always a 911/ER situation.</li>
+          <li><strong>Remove any clothing or jewelry that has chemical on it</strong> as you flush, being careful not to spread the chemical to unaffected skin or to your own hands.</li>
+          <li><strong>Protect yourself.</strong> A chemical strong enough to burn skin can injure you through contact or fumes — use gloves and eye protection from your kit if available, and don't become a second casualty.</li>
+        </ol>
+        <div class="th-warn">
+          <strong>Know your kit's chemical burn supplies.</strong> If your kit includes a chemical burn wash or hydrogel, follow its label instructions in addition to — not instead of — water flushing. When in doubt, water for longer beats stopping early.
+        </div>
+      </section>
+
+      <!-- ═══ 6. ELECTRICAL BURNS ═══ -->
+      <section class="th-section" id="electrical">
+        <h2>6. Electrical Burns</h2>
+        <p>Electrical burns are the mechanism where scene safety is genuinely not optional, and where the visible injury can badly understate what actually happened inside the body.</p>
+        <ol class="th-steps">
+          <li><strong>Confirm the power source is off before you touch the person.</strong> Never assume — if you can't confirm the source is de-energized (breaker off, device unplugged, downed line confirmed dead by someone qualified to say so), do not touch the person or anything they're in contact with. Call 911 and the utility company if a power line is involved.</li>
+          <li><strong>If the source can't be confirmed off and no qualified person is available, only separate the person using a dry, non-conductive object</strong> — a wooden broom handle, a dry plastic or wood chair, a dry rope looped around a limb — and only if you can do it without stepping in water or touching anything metal or wet yourself. Push or pull the person away from the source; never use anything metal or damp, and never use your bare hands.</li>
+          <li><strong>Once the source is confirmed off (or the person has been safely separated from it), check breathing and responsiveness</strong> and begin CPR if needed and you're trained — electrical current can disrupt the heart's rhythm even without a visible injury.</li>
+          <li><strong>Understand that the visible burn size can dramatically understate the internal damage.</strong> Electrical current travels through the body along the path of least resistance — often nerves and blood vessels — causing injury well beyond the small entry and exit marks you can see on the skin, conceptually similar to how a gunshot wound can cause internal bleeding out of proportion to its small entry wound.</li>
+          <li><strong>Treat the visible entry and exit points as burns</strong> per Sections 4 and 7, but do not assume the visible marks represent the full extent of the injury.</li>
+          <li><strong>Get any electrical shock evaluated, even if the person "looks fine."</strong> Electrical current can cause a heart rhythm problem (arrhythmia) that isn't obvious right away. This includes household current — a shock from a wall outlet, frayed cord, or appliance is not automatically "minor" just because it didn't come from a power line. The only exception is a trivial static discharge (a doorknob zap); anything involving actual household or higher voltage should be seen by a medical professional the same day.</li>
+        </ol>
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't touch the person, a metal object they're in contact with, or standing water near them until you've confirmed the power is off. Don't assume a downed line is dead just because it's not sparking or arcing — treat every downed line as live until a utility worker confirms otherwise.
+        </div>
+      </section>
+
+      <!-- ═══ 7. PRESSURE DRESSINGS & COVERING THE BURN ═══ -->
+      <section class="th-section" id="covering">
+        <h2>7. Pressure Dressings &amp; Covering the Burn</h2>
+        <p>Once a burn has been cooled (thermal) or flushed (chemical) — or once an electrical injury's visible marks have been addressed — covering it correctly protects it while you wait for further care.</p>
+        <ul>
+          <li><strong>Use a non-stick or non-adherent dressing.</strong> Regular gauze or cloth can stick to a burn and tear the wound open again on removal. A non-stick pad, or plastic wrap loosely applied, is a better choice if that's what your kit has.</li>
+          <li><strong>Cover loosely — never wrap tightly.</strong> Burned tissue swells over the following hours. A tight wrap that fit fine at first can become a tourniquet as swelling increases, cutting off circulation.</li>
+          <li><strong>No topical home remedies under the dressing.</strong> No butter, oil, toothpaste, or ointment unless it's a product specifically included in your kit for burn care and you're following its label instructions.</li>
+          <li><strong>Check circulation beyond the dressing periodically</strong> (fingers/toes warm and pink, not cool or discolored) if the burn is on a limb, and loosen the covering if swelling makes it feel tight.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. SHOCK RECOGNITION & MANAGEMENT ═══ -->
+      <section class="th-section" id="shock">
+        <h2>8. Shock Recognition &amp; Management</h2>
+        <p>Shock is what happens when the body can't deliver enough blood and oxygen to its organs — and a severe burn is one of the causes, since a large burn can cause significant fluid loss through the damaged skin. It can develop within minutes of a major burn and is dangerous in its own right, independent of the burn itself.</p>
+
+        <h3>Signs of shock:</h3>
+        <ul>
+          <li>Pale, cool, or clammy skin</li>
+          <li>Rapid, weak pulse</li>
+          <li>Rapid, shallow breathing</li>
+          <li>Confusion, anxiety, or restlessness</li>
+          <li>Nausea or vomiting</li>
+          <li>Extreme thirst</li>
+          <li>Progressive weakness or loss of consciousness</li>
+        </ul>
+
+        <h3>What to do:</h3>
+        <ol class="th-steps">
+          <li><strong>Keep treating the burn itself</strong> — cooling, flushing, or covering as appropriate — since shock will not improve while the underlying injury goes untreated.</li>
+          <li><strong>Lay the person flat</strong> if there's no suspected spinal injury. If there's also no suspected leg injury or breathing difficulty, you may gently raise the legs about 6–12 inches — current first aid guidance notes this can help blood return to vital organs, but the effect is brief and not required, so don't delay or skip warmth and burn care to do it. Stop if it causes pain, shortness of breath, or is impractical given the injury location.</li>
+          <li><strong>Keep them warm.</strong> Cover with a blanket, jacket, or emergency blanket — but keep any blanket or covering off a freshly cooled/flushed burn area itself if it's still being cooled. Losing body heat worsens shock significantly.</li>
+          <li><strong>Do not give food or water,</strong> even if they ask for it — it can cause vomiting and complicates anesthesia if surgery is needed.</li>
+          <li><strong>Keep talking to them.</strong> Reassurance and staying conscious/responsive matters; note any change in alertness to report to EMS.</li>
+        </ol>
+      </section>
+
+      <!-- ═══ 9. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>9. Special Situations</h2>
+
+        <h3>Inhalation injury — a separate, urgent airway concern</h3>
+        <p>A skin burn and an inhalation injury are two different emergencies that often happen together, especially in a house or vehicle fire. Watch for these red flags separate from the skin burn itself, and treat any of them as a 911 emergency even if the visible skin burn looks minor:</p>
+        <ul>
+          <li>Soot around the mouth or nose</li>
+          <li>Singed nasal hair, eyebrows, or facial hair</li>
+          <li>A hoarse voice or persistent cough</li>
+          <li>Any burn that happened in an enclosed space (house, car, small room)</li>
+        </ul>
+        <p>Inhalation injury can cause airway swelling that gets worse over the following hours, sometimes well after the person seems stable — don't wait for breathing trouble to appear before calling 911 if any of the above signs are present.</p>
+
+        <h3>Pediatric burns</h3>
+        <p>The same core techniques apply — stop the burning process, cool or flush, cover — but a child's total body surface area is much smaller, so a burn that looks moderate by adult standards represents a larger percentage of a child's body and a proportionally bigger risk of shock and fluid loss. Treat burns in children with a lower threshold for calling 911.</p>
+
+        <h3>Multiple-casualty burns</h3>
+        <p>In a house fire or similar incident with more than one person burned, prioritize by severity and urgency: airway/inhalation concerns and burns on red-flag locations (Section 2) first, then largest/deepest burns, then everyone else. Get 911 dispatched immediately regardless of how triage sorts out, since a multi-casualty burn incident typically needs more than one responding unit.</p>
+      </section>
+
+      <!-- ═══ 10. CLIMATE & DEMOGRAPHIC NOTES ═══ -->
+      <section class="th-section" id="environment-demographics">
+        <h2>10. Climate &amp; Demographic Notes</h2>
+        <p>Burn risk skews differently depending on climate, though the response itself doesn't change:</p>
+        <ul>
+          <li><strong>Hot climates:</strong> Sunburn (a 1st-degree, sometimes 2nd-degree burn) and scald burns from hot pavement, playground equipment, or vehicle interiors are more common in southern and desert states, especially for children and pets. Treat sunburn covering a large area, or with blistering, using the same thermal-burn cooling guidance in Section 4.</li>
+          <li><strong>Cold climates:</strong> Space heaters, wood stoves, and fireplaces raise both thermal-burn and carbon-monoxide risk in northern states during winter months — keep heat sources away from bedding and flammable material, and never use one as a primary sole heat source in an unventilated space.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 11. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>11. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Call for any of the following, no exceptions:</strong> any burn on a red-flag location from Section 2 (face, hands, feet, genitals/groin, major joints, circumferential burns), any electrical burn, any significant chemical burn, any sign of inhalation injury, any 3rd- or 4th-degree burn, or any burn covering more than roughly 10% of body surface area.
+        </div>
+        <p>Also call for any burn in a child, an elderly person, or someone with other health conditions (diabetes, immune suppression, heart or lung disease) even if the burn itself looks moderate — the same-size burn carries more risk for these groups.</p>
+        <p>Stay on the line if you can. Dispatchers are trained to walk you through cooling, flushing, and shock management in real time and will tell you exactly what information responding units need.</p>
+      </section>
+
+      <!-- ═══ 12. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>12. Aftercare &amp; Follow-Up</h2>
+        <p>Once immediate treatment is done — or EMS has taken over — a few things matter for the days that follow.</p>
+        <ul>
+          <li><strong>Leave intact blisters alone.</strong> If a blister breaks on its own, gently clean the area and cover with a non-stick dressing rather than peeling away remaining skin.</li>
+          <li><strong>Watch for infection warning signs</strong> over the following days: increasing redness or swelling, pus or cloudy drainage, a foul odor, increasing pain instead of gradually improving pain, or fever. Any of these warrants a medical visit.</li>
+          <li><strong>Change dressings per your kit's or provider's instructions</strong> — typically once daily or whenever a dressing becomes wet or dirty, using clean technique (wash hands, use fresh sterile dressing material).</li>
+          <li><strong>Restock your kit immediately</strong> after any real use — burn dressings, gauze, and any burn gel used in a real emergency need to be replaced before the kit is trusted again.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 13. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>13. Essential Items Checklist</h2>
+        <p>Everything in this protocol assumes certain supplies are within reach when a burn happens. Run through this list before you ever need it — restock immediately after any real use, per Section 12.</p>
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Sterile non-stick dressings</strong><span class="th-cl-why"> — Section 7. Won't tear the wound open on removal like regular gauze can.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Saline or a clean water source</strong><span class="th-cl-why"> — Sections 4–5. Cooling and flushing are the single most effective first actions for thermal and chemical burns.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Burn gel or hydrogel dressing</strong><span class="th-cl-why"> — Sections 5 &amp; 7, if your kit includes one. Follow its label instructions in addition to, not instead of, water.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — worn before contact with the burn or any chemical involved, if reaching them doesn't delay stopping the burning process, per Section 3, Step 2.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Trauma shears</strong><span class="th-cl-why"> — Section 3. Cuts clothing away from a burn without peeling stuck fabric off the wound.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Emergency/space blanket</strong><span class="th-cl-why"> — Section 8. Warmth slows the progression of shock.</span></div></li>
+        </ul>
+        <div class="th-callout dark">
+          <strong>Remember: no butter, no ice, no home remedies.</strong>
+          Every item on this list does something a kitchen-cabinet remedy can't — cool or flush effectively, protect the wound without sticking to it, or manage shock. Skip the folk remedies; they cost time and can make the burn worse.
+        </div>
+      </section>
+
+      <!-- ═══ 14. STATE APPENDIX ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>14. Your State: Good Samaritan Protections</h2>
+        <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. The exact wording, what's covered, and any exceptions vary by state, and laws change over time. Burn response doesn't involve any state-specific medical technique differences, so rather than repeating a full state-by-state grid here, the short version: if you stop to help someone with a burn injury in good faith and without expecting payment, your state almost certainly has some form of legal protection in place.</p>
+        <div class="th-callout">
+          <strong>Confirm your state's specifics.</strong> This is general information, not legal advice — see the full disclaimer below. If you want the details for your specific state, the pilot Severe Bleeding &amp; Hemorrhage Control protocol includes a fuller twelve-state overview (Section 13) that applies the same way here, since Good Samaritan protection isn't specific to any one type of injury.
+        </div>
+      </section>
+
+      <!-- ═══ 15. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>15. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 14 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/burn-injury/">1sthourprotocols.com/burn-injury</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

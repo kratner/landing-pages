@@ -1,0 +1,836 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_Stroke_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Stroke-Recognition-Response/1HT_Protocol_Stroke_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Stroke Recognition & Response" e-book
+     Track A #4 for ClickUp 86bbhrwcw. Standalone HTML page, intended host:
+     Cloudflare (own route, /stroke-response/). NOT a CF Custom HTML element —
+     no CF-wrapper constraints apply here. Access/gating: buyer reaches this
+     via a link surfaced through 1st Hour's ClickFunnels order integration —
+     this file assumes nothing about how that link is generated.
+
+     Built per Prompts/1HT_BuildPrompt_Book04_Stroke_v1.md §2 — content
+     spine is FAST-test-centric (per 1HT_ProtocolsMasterList_v1.md §4), NOT
+     the pilot's bleeding-focused section list. No tourniquet/wound-packing/
+     hemorrhagic-shock content — stroke has nothing to physically treat in
+     the field, so this book is shorter and recognition-focused by design.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link section (and
+       its ToC entry); each protocol now sells as a standalone product and shouldn't
+       link to other protocols the customer may not own. Renumbered the following
+       section accordingly (15. Medical Disclaimer -> 14. Medical Disclaimer).
+     - v2 (2026-08-24, Claude): Deployed to https://1sthourprotocols.com/stroke-response/
+       (v1 archived first, per this workspace's archive-then-edit lesson).
+       Generated a 14-page PDF from the live v1 page via
+       ~/.claude/tools/book-pdf/build-pdf.js (added .th-fast-card and
+       .th-state-short to its break-inside:avoid list first, since this
+       book introduced both component classes), visually verified all 14
+       pages (no split cards/tables/checklist, table and both illustrations
+       intact), uploaded to the Creative AI Studio library as
+       1sthour-stroke-ebook-001.pdf, and added the "Download PDF" button
+       under the cover — same pattern as the pilot's v1→v2 step.
+     - v1 (2026-08-24, Claude): Initial build. Structural/CSS/JS chrome
+       copied from Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v5.html
+       wholesale (ToC, sticky/slide-in nav, scroll-spy, back-to-top, fluid
+       clamp() typography, Anton/Inter branding, disclaimer/checklist/state
+       patterns) — content is entirely new, 15 sections per the build
+       prompt's §2 (FAST test in depth, less-common signs, immediate
+       response protocol, what not to do, supporting someone while waiting,
+       stroke vs. look-alikes, special situations, climate/demographic
+       notes, when to call 911, aftercare, "What To Have Ready" checklist,
+       short state appendix, short related-protocols note, disclaimer).
+       Section 4 (Immediate Response Protocol) originally sequenced "note
+       the time" as its own step 1 ahead of a separate "call 911" step 2.
+       Two independent medical-accuracy reviews were run against that draft
+       (one inline, one via a background agent — see
+       Books/Stroke-Recognition-Response/MEDICAL_REVIEW_v1.md for both);
+       the background agent flagged that split as a Critical sequencing
+       defect (the header's own claim "nothing delays the 911 call" was
+       literally contradicted by a step in front of it), matching the
+       failure category Gunshot Wound Response's review caught for real
+       (gating hemorrhage control behind a body sweep — see
+       Books/REVISIONS.md's 2026-08-24 Gunshot Wound Response entries).
+       Fixed pre-deploy by merging "note/give the time" into the same step
+       as "call 911," so the call itself is unambiguously step 1 with
+       nothing ahead of it. Also tightened two numeric claims both reviews
+       independently flagged: the hemorrhagic-stroke proportion (was "about
+       1 in 10," corrected to "roughly 1 in 8 / about 13%") and the
+       neuron/synapse-loss statistic's attribution (was "the average
+       untreated stroke," corrected to "a typical large-vessel ischemic
+       stroke," since the cited research models that specific stroke type).
+       Section 12's checklist citations were cross-checked against actual
+       section content both before and after this fix (Book #2 shipped
+       with a phantom gloves citation — see REVISIONS.md history); all four
+       still hold up post-renumbering. No download-PDF button in this
+       version — added in v2 once the PDF pipeline runs against this live
+       page, matching the pilot's own v1→v2 pattern. Illustrations:
+       pr-graphic-341.png (FAST test 4-panel, logo-corrected from
+       pr-graphic-294.png) and pr-graphic-342.png (time-is-brain timeline,
+       logo-corrected from pr-graphic-295.png) — see Books/REVISIONS.md and
+       ImageURLs.md for the full old→new mapping, including the
+       cover/lifestyle marketing images (not embedded here).
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stroke Recognition &amp; Response — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize a stroke fast using the FAST test, what to do in the first minute, and why the exact time symptoms started matters more than almost anything else.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── FAST letter cards ─────────────────────────────────────── */
+  .th-fast-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:0 0 24px;}
+  @media (max-width:600px){.th-fast-grid{grid-template-columns:1fr;}}
+  .th-fast-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px 20px;}
+  .th-fast-card .th-fast-letter{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:34px;height:34px;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:18px;
+    border-radius:6px;
+    margin-right:8px;
+  }
+  .th-fast-card h3{display:inline;font-size:18px !important;vertical-align:middle;}
+  .th-fast-card p{margin:10px 0 0;font-size:14.5px;}
+  .th-fast-card .th-fast-ask{color:var(--red);font-weight:700;}
+
+  /* ── What-to-have-ready checklist ────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix (short version) ──────────────────────────── */
+  .th-state-short{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin:0 0 20px;}
+  .th-state-short p{margin-bottom:0;font-size:14.5px;color:var(--gray);}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#fast-test">The FAST Test</a></li>
+      <li><a href="#less-common-signs">Less-Common Signs People Miss</a></li>
+      <li><a href="#immediate-response">The Immediate Response Protocol</a></li>
+      <li><a href="#what-not-to-do">What NOT To Do</a></li>
+      <li><a href="#supporting-while-waiting">Supporting Someone While You Wait</a></li>
+      <li><a href="#look-alikes">Stroke vs. Its Common Look-Alikes</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#climate-demographics">Climate &amp; Demographic Notes</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#ready-checklist">What To Have Ready</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Stroke Recognition &amp; Response</h1>
+        <p class="lede">Stroke has nothing to bandage and nothing to pack. The only skill that matters is recognizing it fast enough — because "time is brain," and the clock starts the moment symptoms do.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-stroke-ebook-001.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#fast-test">FAST Test</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a><span class="arrow">→</span>
+        <a href="#ready-checklist">Get Ready</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>Stroke is different from every other protocol in this library. There's no wound to pack, no bleeding to stop, nothing to physically do to the person in front of you. The entire skill this book teaches is pattern-matching a handful of symptoms fast enough to act on them — because for stroke, more than almost any other emergency, <strong>time is brain</strong>.</p>
+        <p>During an ischemic stroke — the most common type, caused by a blocked blood vessel in the brain — brain tissue that isn't a direct target of the blockage still dies at a startling rate as surrounding circulation degrades. Researchers who study stroke timing have estimated that a typical large-vessel ischemic stroke costs the brain roughly <strong>1.9 million neurons and 14 billion synapses every minute</strong> it goes untreated. Put another way: every hour of delay is estimated to age the affected brain tissue by the equivalent of roughly three and a half years.</p>
+        <p>That number matters for a practical reason, not just a dramatic one: the treatments that can actually reverse or limit stroke damage — clot-dissolving medication and mechanical clot removal — are only effective within a window measured from the moment symptoms started, not from when EMS arrives or when the person gets to a hospital. Clot-dissolving medication has historically been most effective within three to four and a half hours of symptom onset, and while newer imaging techniques can sometimes extend treatment options for some patients, no hospital can offer any of it if nobody knows when the clock started.</p>
+        <div class="th-callout">
+          <strong>The single most important number in this book</strong>
+          It's not a step, a technique, or a phone number — it's the exact time symptoms started, or the last time the person was known to be completely normal. Every section after this one exists to help you recognize that moment and act on it immediately.
+        </div>
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-342.png" alt="1st Hour time-is-brain graphic — a timeline from stroke symptom onset through 60 minutes, showing that brain cells begin dying immediately and that faster treatment produces better outcomes.">
+        </figure>
+      </section>
+
+      <!-- ═══ 2. THE FAST TEST ═══ -->
+      <section class="th-section" id="fast-test">
+        <h2>2. The FAST Test</h2>
+        <p>FAST is the standard bystander test for stroke, used by the American Heart Association and stroke centers nationwide because it's fast to run and catches the large majority of strokes. It isn't just a mnemonic to memorize — each letter is a real, specific thing to look for in a real person.</p>
+
+        <div class="th-fast-grid">
+          <div class="th-fast-card">
+            <span class="th-fast-letter">F</span><h3>Face Drooping</h3>
+            <p>Ask the person to smile. Look for one side of the face drooping, sagging, or not moving the way the other side does — an uneven smile is the classic sign. It can be subtle: a slightly lower eyelid or corner of the mouth on one side counts.</p>
+            <p class="th-fast-ask">Ask them to smile.</p>
+          </div>
+          <div class="th-fast-card">
+            <span class="th-fast-letter">A</span><h3>Arm Weakness</h3>
+            <p>Ask the person to raise both arms straight out in front of them and hold that position. Watch for one arm drifting downward, or an inability to raise one arm at all while the other works fine.</p>
+            <p class="th-fast-ask">Ask them to raise both arms.</p>
+          </div>
+          <div class="th-fast-card">
+            <span class="th-fast-letter">S</span><h3>Speech Difficulty</h3>
+            <p>Ask the person to repeat a simple sentence back to you. Listen for slurred speech, words coming out wrong, or an inability to speak or understand what you're asking at all.</p>
+            <p class="th-fast-ask">Ask them to repeat a sentence.</p>
+          </div>
+          <div class="th-fast-card">
+            <span class="th-fast-letter">T</span><h3>Time to Call 911</h3>
+            <p>The moment any one of the three signs above is present — not all three, just one — it's time to call. Don't wait to see if it resolves, and don't wait to confirm the other letters first.</p>
+            <p class="th-fast-ask">Call 911 immediately.</p>
+          </div>
+        </div>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-341.png" alt="1st Hour FAST test diagram — Face drooping (ask them to smile), Arm weakness (ask them to raise both arms), Speech difficulty (ask them to repeat a sentence), Time to call 911 immediately.">
+        </figure>
+
+        <div class="th-warn">
+          <strong>One sign is enough</strong>
+          You do not need to see all four letters of FAST to act. A single clear sign — even just facial drooping, with nothing else — is a reason to call 911 immediately. Waiting to "confirm" with more symptoms only costs time you can't get back.
+        </div>
+      </section>
+
+      <!-- ═══ 3. LESS-COMMON SIGNS PEOPLE MISS ═══ -->
+      <section class="th-section" id="less-common-signs">
+        <h2>3. Less-Common Signs People Miss</h2>
+        <p>FAST catches most strokes, but not all of them. Stroke doesn't always look like FAST — a meaningful share of strokes present first (or only) with symptoms that don't fit neatly into "face, arm, speech." Knowing these buys you the same head start FAST does, for the strokes FAST alone would miss.</p>
+        <ul>
+          <li><strong>Sudden vision loss or double vision,</strong> in one eye or both — a curtain-like loss of vision, sudden blurriness, or suddenly seeing double with no warning.</li>
+          <li><strong>Sudden, severe headache with no known cause</strong> — often described as "the worst headache of my life." This is distinct from a typical migraine, which usually builds gradually and may be familiar to the person from past episodes.</li>
+          <li><strong>Sudden loss of balance or coordination</strong> — stumbling, dizziness severe enough to affect walking, or a sudden inability to coordinate movement that wasn't there moments earlier.</li>
+          <li><strong>Sudden confusion or trouble understanding speech</strong> — this is different from the speech difficulty in FAST, which is about producing words. This is about receiving and understanding them: the person seems unable to follow what you're saying or answer a simple question, even though their own speech may sound normal.</li>
+        </ul>
+        <div class="th-callout">
+          <strong>The pattern to look for</strong>
+          Every one of these has the same shape: sudden onset, in a person who was fine moments before. That "sudden, out of nowhere" quality is what separates a stroke sign from something that's been building gradually (like a typical headache or a slowly worsening balance problem from an unrelated cause).
+        </div>
+        <p class="th-note-sm">Some stroke organizations teach an expanded version of the test that folds these two signs directly into the acronym — <strong>BE-FAST</strong> (<strong>B</strong>alance, <strong>E</strong>yes, Face, Arm, Speech, Time). Whether you learned FAST or BE-FAST, the signs and the response are the same — this book just separates them into two sections for clarity.</p>
+      </section>
+
+      <!-- ═══ 4. THE IMMEDIATE RESPONSE PROTOCOL ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>4. The Immediate Response Protocol</h2>
+        <p>This is the sequence. The moment any FAST sign or any sign from Section 3 is present, this is what happens — in this order, starting immediately. Nothing in this sequence delays the 911 call for any reason.</p>
+
+        <ol class="th-steps">
+          <li><strong>Call 911 immediately — and tell them the exact time.</strong> The instant you recognize a FAST sign or a sign from Section 3, dial. Don't pause first to finish checking every FAST letter, figure out what caused it, or see if it improves — dial first. As soon as you're connected, say "possible stroke," give the dispatcher your address or location, and tell them the exact time symptoms started (or the last time the person was known to be completely normal, if you didn't see it happen) — this is what hospitals call "last known well," and it's the number that determines treatment eligibility.</li>
+          <li><strong>While you wait for EMS, keep the person safe and calm.</strong> See Section 6 for exactly what that involves.</li>
+          <li><strong>Do not give the person food, water, or any medication</strong> — including aspirin. See Section 5 for why aspirin specifically can be actively harmful here, unlike with a heart attack.</li>
+          <li><strong>If the person loses consciousness or stops responding,</strong> reassess their breathing immediately and follow standard unresponsive-person guidance (recovery position if breathing, CPR if not and you're trained), and tell the 911 dispatcher right away — they can talk you through it in real time.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't wait to see if symptoms pass before calling. Don't drive the person yourself — see Section 5 for why. Don't spend time trying to identify the exact cause, guess whether it's "really" a stroke, or complete every step of FAST before calling — one clear sign, plus the time it started, is all 911 needs to begin acting.
+        </div>
+      </section>
+
+      <!-- ═══ 5. WHAT NOT TO DO ═══ -->
+      <section class="th-section" id="what-not-to-do">
+        <h2>5. What NOT To Do</h2>
+        <ul>
+          <li><strong>Don't give food, water, or any medication — including aspirin.</strong> With a heart attack, aspirin is often recommended because it thins the blood and can help with a clot. A stroke is different: roughly 1 in 8 strokes (about 13%) is hemorrhagic (caused by bleeding in the brain, not a blockage), and giving a blood thinner to someone having a bleed can make it significantly worse. A bystander has no way to tell which type is happening — that requires brain imaging at a hospital — so the safe rule is: no aspirin, no exceptions, let EMS and the hospital make that call.</li>
+          <li><strong>Don't let the person drive themselves, and don't have someone drive them privately instead of calling 911.</strong> EMS can begin assessment in the ambulance and alert the receiving hospital's stroke team before arrival, so the hospital is already prepared the moment the person arrives — a private vehicle loses all of that lead time, on top of the risk of a stroke symptom (like sudden weakness or vision loss) making it unsafe for the person to drive at all.</li>
+          <li><strong>Don't wait to see if symptoms pass.</strong> Symptoms that resolve on their own can still mean a transient ischemic attack (TIA) — sometimes called a "mini-stroke" — which is a real medical emergency and a strong warning sign for a larger stroke soon after, not a reason to feel relieved and skip the call. Treat resolving symptoms exactly the same as ones that don't resolve: call 911.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 6. SUPPORTING SOMEONE WHILE YOU WAIT ═══ -->
+      <section class="th-section" id="supporting-while-waiting">
+        <h2>6. Supporting Someone While You Wait</h2>
+        <p>Once the 911 call is made, your job shifts to keeping the person safe and gathering information EMS will want on arrival.</p>
+        <ul>
+          <li><strong>Keep them safe if they've fallen.</strong> Don't try to move them further than necessary — just clear the immediate area of hazards.</li>
+          <li><strong>Keep them calm.</strong> A stroke can be frightening and disorienting, especially if speech or understanding is affected. Speak calmly and reassure them help is coming, even if they can't respond normally.</li>
+          <li><strong>Note and be ready to report the exact times</strong> of symptom onset (or last known well) and of your 911 call — you already gave the first one to the dispatcher in Section 4, step 1.</li>
+          <li><strong>If you can gather it quickly without leaving the person alone,</strong> note their current medications and any known medical conditions — this helps the hospital, but never delay the 911 call or leave the person unattended to go find it.</li>
+          <li><strong>Watch for any change</strong> — improvement or worsening — and be ready to tell EMS what changed and when.</li>
+          <li><strong>Don't leave them alone if avoidable.</strong> If you must step away (to unlock a door for EMS, for example), make it brief.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 7. STROKE VS. ITS COMMON LOOK-ALIKES ═══ -->
+      <section class="th-section" id="look-alikes">
+        <h2>7. Stroke vs. Its Common Look-Alikes</h2>
+        <p>A couple of common, non-stroke conditions can produce symptoms that look a lot like a stroke to a bystander. The point of this section isn't to teach you to diagnose the difference — it's the opposite: to reassure you that calling 911 is always the right call, even if it turns out not to be a stroke.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Condition</th><th>Can look like</th><th>What to do</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Stroke</strong></td><td>Face drooping, arm weakness, speech trouble, sudden vision/balance/confusion changes</td><td>Call 911 immediately, note the time</td></tr>
+              <tr><td><strong>Low blood sugar (hypoglycemia)</strong></td><td>Confusion, weakness, slurred speech, shakiness — can closely resemble FAST signs, especially in someone with diabetes</td><td>Call 911 if unsure — don't try to self-diagnose in the moment</td></tr>
+              <tr><td><strong>Migraine with aura</strong></td><td>Temporary vision changes, numbness/tingling, and occasionally speech difficulty, usually building gradually rather than striking suddenly</td><td>Call 911 if unsure — a first-time or unusually severe episode still warrants evaluation</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="th-callout">
+          <strong>The guidance is the same either way</strong>
+          You are never expected to figure out which of these is happening. If there's any doubt, treat it as a stroke and call 911 — that's not an overreaction, it's the correct response every time this table applies. Nobody has ever been criticized for calling 911 over a low blood sugar episode that turned out not to be a stroke.
+        </div>
+      </section>
+
+      <!-- ═══ 8. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>8. Special Situations</h2>
+
+        <h3>Stroke in children</h3>
+        <p>Pediatric stroke is rare, but it happens, and it's frequently missed or diagnosed late precisely because bystanders and even some clinicians don't expect it in a child. The same FAST signs apply — don't assume a child's sudden facial asymmetry, arm weakness, or speech change is something else just because of their age. Call 911 the same way you would for an adult.</p>
+
+        <h3>Someone with pre-existing speech or mobility differences</h3>
+        <p>If the person already has speech difficulty, facial asymmetry, or limited mobility unrelated to stroke (from a prior medical condition, injury, or disability), don't dismiss new symptoms by comparing them to a "normal" baseline that was never true for them. What matters is a <strong>new, sudden change from their own baseline</strong> — a new drooping on a side that wasn't affected before, or a sudden change in speech pattern that's different from how they normally speak.</p>
+      </section>
+
+      <!-- ═══ 9. CLIMATE & DEMOGRAPHIC NOTES ═══ -->
+      <section class="th-section" id="climate-demographics">
+        <h2>9. Climate &amp; Demographic Notes</h2>
+        <p>Stroke recognition and the immediate response don't change by geography — but where you live changes how much margin you have, and that's worth planning around ahead of time rather than discovering during an actual emergency.</p>
+        <div class="th-callout">
+          <strong>Rural and long-EMS-transport areas</strong>
+          Because treatment eligibility is measured in hours from symptom onset — not just "sooner is generally better" — a longer EMS transport time eats directly into that window in a way it doesn't for most other emergencies in this library. If you live somewhere EMS response and transport to a stroke-capable hospital routinely takes longer than a metro-area average, it's worth knowing in advance which nearby hospital is actually equipped to treat a stroke, and making sure everyone in the household knows to call 911 immediately rather than waiting or attempting to drive there directly.
+        </div>
+      </section>
+
+      <!-- ═══ 10. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>10. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Short answer: immediately, every time.</strong> This is largely covered by Section 4's sequencing, but it earns its own section because it's the single most important decision point in this book.
+        </div>
+        <p>Call 911 immediately if you see:</p>
+        <ul>
+          <li>Any single FAST sign — face drooping, arm weakness, or speech difficulty — even just one, even if it seems mild.</li>
+          <li>Any of the less-common signs from Section 3 — sudden vision changes, a sudden severe headache unlike any before, sudden loss of balance, or sudden confusion.</li>
+          <li>Any suspected stroke, even if the symptoms already appear to be improving or have fully resolved by the time you're deciding whether to call.</li>
+        </ul>
+        <p>Stay on the line if you can. Give the dispatcher the exact time symptoms started (or last known well) as early in the call as possible — it's one of the first things a stroke-trained dispatcher and the responding crew will want.</p>
+      </section>
+
+      <!-- ═══ 11. AFTERCARE & FOLLOW-UP ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>11. Aftercare &amp; Follow-Up</h2>
+        <p>Once EMS has taken over, a few things are worth knowing about what happens next and why your information still matters.</p>
+        <ul>
+          <li><strong>At the hospital, time-based treatment decisions continue.</strong> Clot-dissolving medication and mechanical clot removal both have windows measured from the time you reported — this is exactly why noting and relaying that exact time in Sections 4, 6, and 10 mattered as much as it did.</li>
+          <li><strong>Keep reporting exact times and symptoms, even after EMS arrives.</strong> If anything changed while you were waiting (a new symptom, an improvement, a loss of consciousness), tell the receiving team, not just the first responders — it can affect ongoing treatment decisions.</li>
+          <li><strong>Stroke recovery is often a longer process than the emergency itself.</strong> Supporting someone through recovery may mean helping with follow-up appointments, rehabilitation therapy, and adjusting to any lasting effects — at a level this guide doesn't try to cover in depth, since it's specific to each person's outcome and best handled with their care team.</li>
+          <li><strong>It's normal to feel shaken afterward.</strong> Witnessing a stroke and having to act fast is intense even when everything goes right. Don't hesitate to talk to someone about it.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 12. WHAT TO HAVE READY ═══ -->
+      <section class="th-section" id="ready-checklist">
+        <h2>12. What To Have Ready</h2>
+        <p>This book doesn't have a supplies checklist the way the trauma-focused protocols do — there's no physical intervention to stock gear for. What actually helps is being ready to act the moment you recognize a sign, without fumbling for basics.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>A charged phone, easily reachable</strong><span class="th-cl-why"> — Section 4, step 1. The 911 call happens immediately; you can't afford to be searching for a phone or a charger.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A clock, watch, or your phone's clock</strong><span class="th-cl-why"> — Sections 1 and 4, step 1. Noting the exact time symptoms started is the single most important piece of information in this book.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>The person's medication list or known medical history, if quickly accessible</strong><span class="th-cl-why"> — Section 6. Helpful for EMS and the hospital, but never worth delaying the call or leaving the person alone to go find it.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Your address or location information</strong><span class="th-cl-why"> — Section 4, step 1. One of the first things the 911 dispatcher will need from you.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>The point of this list</strong>
+          Every item here supports one goal: making the call in Section 4 happen as fast as possible, with the information that matters most already in hand.
+        </div>
+      </section>
+
+      <!-- ═══ 13. STATE APPENDIX (SHORT) ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>13. Your State: Good Samaritan Protections</h2>
+        <div class="th-state-short">
+          <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. Recognizing a stroke and calling 911 is exactly the kind of good-faith emergency action these laws are designed to protect; you are not expected to diagnose, treat, or do anything beyond what's described in this guide. The exact wording, what's covered, and any exceptions vary by state and change over time — this is general information, not legal advice. See the full disclaimer below.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 14. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>14. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or stroke-recognition course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 13 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/stroke-response/">1sthourprotocols.com/stroke-response</a> for the current edition.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

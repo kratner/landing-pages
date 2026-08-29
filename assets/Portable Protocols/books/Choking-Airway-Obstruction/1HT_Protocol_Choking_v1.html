@@ -1,0 +1,775 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_Choking_v1.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Choking-Airway-Obstruction/1HT_Protocol_Choking_v1.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Choking / Airway Obstruction" e-book
+     Track A #6 for ClickUp 86bbhrwcw. Standalone HTML page, intended host:
+     Cloudflare (own route, /choking-airway/). NOT a CF Custom HTML element —
+     no CF-wrapper constraints apply here. Access/gating: buyer reaches this
+     via a link surfaced through 1st Hour's ClickFunnels order integration —
+     this file assumes nothing about how that link is generated.
+
+     Built per Prompts/1HT_BuildPrompt_Book06_Choking_v1.md §2 — this book
+     is deliberately SHORTER and more diagram-heavy than Books 1-5, per the
+     master list's explicit "don't pad it" instruction. It does NOT mirror
+     the pilot's 15/16-section shape; it uses a compressed 13-section spine
+     built around three distinct populations (conscious adult/child,
+     self-administered alone, infant) and two high-stakes numbered
+     sequences (Section 3 adult abdominal thrusts, Section 6 infant
+     response) that must never blend into each other.
+
+     Structural/CSS/JS chrome copied wholesale from
+     Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v7.html
+     and Books/Stroke-Recognition-Response/1HT_Protocol_Stroke_v2.html
+     (sticky/slide-in ToC, scroll-spy, back-to-top, fluid clamp() typography,
+     Anton/Inter branding, disclaimer/checklist/state-short patterns).
+     Content is entirely new.
+
+     REVISION HISTORY
+     - v1 (2026-08-24, Claude): Initial build. Claimed in
+       1HT_BuildCoordination_v1.md §1 row 6 before this file was written
+       (orchestrating session); confirmed still claimed by this session
+       before starting. Book #5 (Car Accident Trauma) confirmed
+       independently in progress under a separate concurrent session at
+       claim time — not touched. 13 sections per the build prompt's §2:
+       why the first minutes matter, recognizing true choking vs. a cough,
+       the adult abdominal-thrust (Heimlich) sequence, back blows, self-
+       administered thrusts alone, the infant response (distinct sequence,
+       explicitly no abdominal thrusts on infants), the unconscious/CPR
+       handoff, when to call 911, aftercare, a short honest "no dedicated
+       gear" checklist section, a one-paragraph Good Samaritan note (no
+       12-state grid — state relevance is "none" per the master list), no
+       Related Protocols section (Shock Management is "Not Started" in the
+       coordination ledger at build time — no cross-link invented, per
+       §1/§4's instruction), and the medical disclaimer. All 5 pre-generated
+       illustration/cover/lifestyle assets were logo-corrected before use —
+       see Books/REVISIONS.md and ImageURLs.md for the full old→new mapping
+       and fix method (this book's fixes used the same "composite the real
+       icon, rebuild the wordmark as real HTML/Anton text" pattern as prior
+       books, applied to 12 separate wrong-emblem instances across the 5
+       assets — the most of any book to date). Medical-accuracy review run
+       per Prompts/1HT_MedicalComplianceReviewPrompt_v1.md before this book's
+       first deploy — see MEDICAL_REVIEW_v1.md.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choking &amp; Airway Obstruction — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize true choking, perform abdominal thrusts and back blows on a conscious adult or child, respond to infant choking, and know exactly when to call 911.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps.infant li::before{background:var(--black);}
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── Population badges (which technique / which population) ─── */
+  .th-pop-row{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 20px;}
+  .th-pop-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:8px 16px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .th-pop-badge.no{color:var(--red);border-color:var(--red);background:#fff3f2;}
+
+  /* ── Essential items / honesty checklist ────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── State appendix (short version) ──────────────────────────── */
+  .th-state-short{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:18px 20px;margin:0 0 20px;}
+  .th-state-short p{margin-bottom:0;font-size:14.5px;color:var(--gray);}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-minutes">Why the First Few Minutes Matter</a></li>
+      <li><a href="#recognizing-choking">Recognizing True Choking</a></li>
+      <li><a href="#abdominal-thrusts">The Abdominal Thrust (Heimlich) Technique</a></li>
+      <li><a href="#back-blows">Back Blows</a></li>
+      <li><a href="#self-thrust">Self-Administered Thrusts (Alone)</a></li>
+      <li><a href="#infant-response">Infant Choking Response</a></li>
+      <li><a href="#unconscious">If They Become Unconscious</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare</a></li>
+      <li><a href="#checklist">What This Protocol Doesn't Require</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Choking &amp; Airway Obstruction</h1>
+        <p class="lede">There's almost nothing to diagnose here — just one question (can they still cough?) and a technique you need to get exactly right, for three different people it might be.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" id="th-pdf-btn" href="../../pdfs/1sthour-choking-ebook-001.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#recognizing-choking">Recognize</a><span class="arrow">→</span>
+        <a href="#abdominal-thrusts">Adult Thrusts</a><span class="arrow">→</span>
+        <a href="#infant-response">Infant Response</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST FEW MINUTES MATTER ═══ -->
+      <section class="th-section" id="why-first-minutes">
+        <h2>1. Why the First Few Minutes Matter</h2>
+        <p>A full airway obstruction is one of the fastest-moving emergencies in this library. Unlike bleeding, where you typically have minutes to work with, a person whose airway is completely blocked can lose consciousness from lack of oxygen in as little as <strong>four to six minutes</strong> — and brain injury can begin even sooner if the blockage isn't cleared. There is no "wait and see" phase here.</p>
+        <p>The good news is that this is also one of the most mechanical, learnable emergencies to respond to. Once you know the one question that tells you whether to act, and the exact hand position and motion for the population in front of you, there's very little judgment left to exercise. This book is built around getting that technique right — not around teaching you to recognize a subtle emergency, because there usually isn't anything subtle about it.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          If someone can still cough forcefully, speak, or breathe, don't intervene physically — coach them to keep coughing. The moment they can't do any of those things, act immediately using the technique for their age and situation in Sections 3, 4, or 6.
+        </div>
+      </section>
+
+      <!-- ═══ 2. RECOGNIZING TRUE CHOKING ═══ -->
+      <section class="th-section" id="recognizing-choking">
+        <h2>2. Recognizing True Choking</h2>
+        <p>The single diagnostic question this entire book hinges on: <strong>can they still speak, cough, or make sound?</strong></p>
+        <ul>
+          <li><strong>Forceful coughing, speaking, or crying (in an infant):</strong> the airway isn't fully blocked. Stay with them, encourage them to keep coughing, and do not perform back blows or thrusts — a forceful cough clears an object far more effectively than anything you can do to them, and physically intervening on a partial obstruction can push the object deeper.</li>
+          <li><strong>The universal choking sign:</strong> one or both hands clutched at the throat. This is instinctive and reliable — treat it as choking until you confirm otherwise.</li>
+          <li><strong>No sound, no air movement, weak or silent cough, or a high-pitched wheeze:</strong> this is a full or severe obstruction. Act immediately using the technique for their age (Sections 3, 4, or 6).</li>
+          <li><strong>Bluish lips or face (cyanosis):</strong> a late, serious sign that oxygen levels are dropping. Don't wait for this to appear before acting — it means you've already lost time.</li>
+        </ul>
+        <div class="th-warn">
+          <strong>If in doubt, ask</strong>
+          A simple "Are you choking?" works. If they can answer verbally, they can still move air — keep coaching them to cough. If they can only nod, nod frantically, or can't respond at all, treat it as a full obstruction and act.
+        </div>
+      </section>
+
+      <!-- ═══ 3. THE ABDOMINAL THRUST (HEIMLICH) TECHNIQUE ═══ -->
+      <section class="th-section" id="abdominal-thrusts">
+        <h2>3. The Abdominal Thrust (Heimlich) Technique</h2>
+        <div class="th-pop-row">
+          <span class="th-pop-badge">✓ Conscious adults</span>
+          <span class="th-pop-badge">✓ Conscious children over ~1 year</span>
+          <span class="th-pop-badge no">✕ Never on infants under 1 year — see Section 6</span>
+        </div>
+        <p>This is the book's single highest-stakes sequence. Read it now, before you ever need it, and re-read it once more before moving to the next section — getting the hand position and thrust direction right the first time matters more here than almost anywhere else in this library.</p>
+
+        <ol class="th-steps">
+          <li><strong>If a second person is present, have them call 911 immediately</strong> while you begin the sequence below. Don't wait to see if the first attempt works before getting that call started — see Section 8 for what to do if you're the only one there.</li>
+          <li><strong>Stand behind the person and wrap your arms around their waist.</strong> Have them lean forward slightly. For a much taller or heavier person, you can perform the technique from a stable stance without full contact around the waist, as long as your fist lands in the correct spot.</li>
+          <li><strong>Make a fist with one hand.</strong> Place the thumb side of that fist against their abdomen, slightly above the navel and clearly below the tip of the breastbone (the notch where the ribs meet in the middle of the chest).</li>
+          <li><strong>Grasp your fist with your other hand.</strong> Keep your elbows out and away from the person's ribs.</li>
+          <li><strong>Give quick, forceful thrusts inward and upward</strong> — think of the motion as trying to lift them slightly off the ground through your fist, not a straight backward push. Each thrust should be a distinct, separate motion, not a continuous squeeze.</li>
+          <li><strong>Repeat until the object is expelled or the person becomes unconscious.</strong> Current American Red Cross first-aid guidance favors alternating between 5 back blows (Section 4) and 5 abdominal thrusts, cycling between the two, rather than relying on either technique alone. If the person loses consciousness at any point, lower them to the ground immediately and move to Section 7.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/1sthour-choking-abdominalthrust-001.png" alt="1st Hour abdominal thrust technique — stand behind the person, make a fist and place it above the navel below the ribcage, then thrust sharply upward and inward.">
+        </figure>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't place your fist directly on the breastbone or ribs — that's the wrong landmark and can cause injury without clearing the airway. Don't perform a blind finger sweep of the mouth on a conscious person. Don't stop after one or two thrusts just because the person seems calmer — keep going until the object is out or they lose consciousness.
+        </div>
+      </section>
+
+      <!-- ═══ 4. BACK BLOWS ═══ -->
+      <section class="th-section" id="back-blows">
+        <h2>4. Back Blows</h2>
+        <p>Back blows are not a lesser fallback — current American Red Cross and AHA-aligned first-aid guidance recommends <strong>alternating between back blows and abdominal thrusts</strong> for a conscious adult or child, rather than relying on abdominal thrusts alone. Some choking events clear on back blows that thrusts alone wouldn't have moved, and vice versa.</p>
+        <ol class="th-steps">
+          <li><strong>Stand slightly to the side and just behind the person.</strong> Support their chest with one hand and have them lean forward so gravity helps the object come out, rather than travel further down.</li>
+          <li><strong>Use the heel of your other hand</strong> to deliver up to 5 firm, sharp blows between their shoulder blades.</li>
+          <li><strong>Check after each blow</strong> to see if the object has cleared, rather than automatically delivering all 5 before checking.</li>
+          <li><strong>If 5 back blows don't clear it, move to 5 abdominal thrusts (Section 3).</strong> Keep alternating between the two — 5 back blows, then 5 thrusts, then back to blows — until the object is out or the person becomes unconscious.</li>
+        </ol>
+        <div class="th-callout">
+          <strong>Why alternate</strong>
+          Neither technique works every time on its own. Cycling between them gives you two different mechanisms — a sharp jolt from behind, and a compressive upward push from the front — without losing time deciding which one to try.
+        </div>
+      </section>
+
+      <!-- ═══ 5. SELF-ADMINISTERED THRUSTS (ALONE) ═══ -->
+      <section class="th-section" id="self-thrust">
+        <h2>5. Self-Administered Thrusts (Alone)</h2>
+        <p>This book's reader may be the one choking, not just the responder. If you're alone and cannot speak, cough, or breathe, you can still perform an effective abdominal thrust on yourself.</p>
+        <ol class="th-steps">
+          <li><strong>Make a fist and place it above your navel, below your ribcage</strong> — the same landmark as Section 3. Grasp your fist with your other hand.</li>
+          <li><strong>Thrust inward and upward, sharply</strong>, the same direction as if someone else were doing it to you.</li>
+          <li><strong>If that doesn't work, lean over a firm, stable object</strong> — the back of a sturdy chair, a countertop edge, or a railing — and thrust your upper abdomen down and forward against the edge, in the same upward-and-inward direction.</li>
+          <li><strong>Repeat until the object clears.</strong> Don't stop after one attempt; keep cycling between your fist and the firm-object method.</li>
+        </ol>
+        <figure class="th-illo">
+          <img src="assets/1sthour-choking-selfthrust-001.png" alt="1st Hour self-administered abdominal thrust — using your own fist above the navel below the ribcage, or an alternate method of thrusting against the back of a sturdy chair.">
+        </figure>
+        <div class="th-warn">
+          <strong>Get to your phone first if you can</strong>
+          If your phone is within reach and you can still move, call 911 (or put it on speaker) before you lose the ability to talk — see Section 8. Don't waste critical seconds searching for it once you're in the middle of self-treating.
+        </div>
+      </section>
+
+      <!-- ═══ 6. INFANT CHOKING RESPONSE ═══ -->
+      <section class="th-section" id="infant-response">
+        <h2>6. Infant Choking Response</h2>
+        <div class="th-pop-row">
+          <span class="th-pop-badge">✓ Infants under about 1 year old</span>
+          <span class="th-pop-badge no">✕ No abdominal thrusts — ever, on an infant</span>
+        </div>
+        <div class="th-warn">
+          <strong>This is a completely separate technique from Section 3 — never blend the two.</strong> An infant's abdomen and internal organs are too small and too close to the surface to safely absorb an abdominal thrust; doing so risks serious internal injury. Infants get back blows and chest thrusts only.
+        </div>
+        <p>"Infant" here generally means around their first birthday or younger. Older children who can be effectively treated with the adult technique in Section 3 should get that instead. If a child's age or size is right at that boundary and you're unsure which technique fits, err toward the gentler infant technique in this section rather than the adult abdominal thrust.</p>
+
+        <ol class="th-steps infant">
+          <li><strong>Position the infant face-down along your forearm,</strong> supporting their head and jaw with your hand, with their head lower than their chest. Rest your forearm on your thigh for stability.</li>
+          <li><strong>Give up to 5 firm back blows</strong> with the heel of your other hand, between the infant's shoulder blades.</li>
+          <li><strong>If the object hasn't cleared, turn the infant face-up</strong> along your other forearm, still supporting the head and keeping it lower than the chest.</li>
+          <li><strong>Give up to 5 chest thrusts</strong> using two fingers on the center of the breastbone, just below the nipple line — the same landmark used for infant CPR compressions, but quicker and sharper.</li>
+          <li><strong>Repeat, alternating 5 back blows and 5 chest thrusts,</strong> until the object is expelled or the infant becomes unresponsive. If unresponsive, lower the infant onto a firm, flat surface and move to Section 7 — infant CPR uses this same chest-thrust landmark.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/1sthour-choking-infantresponse-001.png" alt="1st Hour infant choking response — up to 5 back blows with the infant face-down and supported on your forearm, then up to 5 chest thrusts with the infant face-up, alternating until clear.">
+        </figure>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't perform abdominal thrusts on an infant, under any circumstances. Don't perform a blind finger sweep of an infant's mouth. Don't let the head hang unsupported during back blows or chest thrusts — always support the head and jaw and keep it lower than the chest.
+        </div>
+      </section>
+
+      <!-- ═══ 7. IF THEY BECOME UNCONSCIOUS ═══ -->
+      <section class="th-section" id="unconscious">
+        <h2>7. If They Become Unconscious</h2>
+        <div class="th-warn">
+          <strong>Call 911 immediately if it hasn't already been done.</strong> By this point in a real emergency you should already have someone on the line (Section 3, step 1) — if you're alone and haven't been able to call yet, call now, before anything else in this section, or put the phone on speaker next to you while you begin.
+        </div>
+        <ol class="th-steps">
+          <li><strong>Lower them to the ground</strong> onto a firm, flat surface, supporting the head and body as they go down.</li>
+          <li><strong>Begin CPR, starting with chest compressions,</strong> if you're trained. If you're not trained, a 911 dispatcher can talk you through hands-only compressions in real time — stay on the line.</li>
+          <li><strong>Before each set of rescue breaths, look inside the mouth for a visible object</strong> and remove it only if you can see and reach it easily.</li>
+          <li><strong>Do not perform a blind finger sweep</strong> — sweeping a finger through the mouth without seeing the object first can push it further down the airway instead of clearing it.</li>
+          <li><strong>Continue CPR until the object is expelled, the person starts breathing on their own, or EMS takes over.</strong></li>
+        </ol>
+      </section>
+
+      <!-- ═══ 8. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>8. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>If a second person is present, they call 911 immediately while you begin treatment — never gated behind "try the technique first."</strong>
+        </div>
+        <p>If you're the responder and someone else is available, send them to call 911 the moment you recognize a full obstruction (Section 2), while you start back blows and abdominal thrusts right away. Don't wait to see whether the first cycle works before that call goes out.</p>
+        <p>If you're truly alone — whether you're the responder with no one else around, or you're the one choking (Section 5) — attempt several cycles of the technique first if you cannot both call and treat at the same time. If your phone is reachable and you can still move, get it on speaker before you lose the ability to talk, so a dispatcher can hear what's happening and send help even if you can't respond to them directly.</p>
+        <p>Call 911 even if the obstruction clears on its own before help arrives — see Section 9 for why a follow-up evaluation still matters.</p>
+      </section>
+
+      <!-- ═══ 9. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>9. Aftercare</h2>
+        <p>Once the airway is clear — whether or not EMS had to get involved — a few things still matter.</p>
+        <ul>
+          <li><strong>See a medical professional even after a successful clearing.</strong> Abdominal thrusts, while sometimes life-saving, carry a real (if small) risk of internal injury — a bruised or, rarely, injured organ. A follow-up evaluation is standard practice, not an overreaction.</li>
+          <li><strong>Watch for continued breathing difficulty, persistent coughing, throat pain, or trouble swallowing</strong> in the hours after the event — these can indicate residual airway irritation, a partial object still present, or an injury from the thrusts themselves, and are reasons to seek care promptly if they weren't already evaluated.</li>
+          <li><strong>Tell EMS or the treating provider exactly what was done and when</strong> — how many back blows and thrusts, whether the person lost consciousness, and for how long.</li>
+          <li><strong>It's normal to feel shaken afterward,</strong> especially if the person you helped is your own child. Don't hesitate to talk to someone about it.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 10. WHAT THIS PROTOCOL DOESN'T REQUIRE ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>10. What This Protocol Doesn't Require</h2>
+        <p>Every other book in this library opens this section with a supplies checklist. This one doesn't need one, and padding it with unrelated kit contents would be dishonest about what actually matters here: <strong>choking response uses only your hands.</strong> There's no gauze, no tourniquet, no dressing to reach for.</p>
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>A charged, reachable phone</strong><span class="th-cl-why"> — Section 8. The only piece of "equipment" this protocol actually depends on.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Knowing the landmark by feel, not just by reading</strong><span class="th-cl-why"> — Sections 3 &amp; 6. Practice finding the correct hand position on yourself or a training mannequin before you ever need it for real.</span></div></li>
+        </ul>
+        <div class="th-callout">
+          <strong>The one thing worth doing ahead of time</strong>
+          Take a certified first aid/CPR course that includes hands-on choking-response practice. Reading the hand position here is a reasonable substitute for nothing; practicing it once, even on a pillow, builds the muscle memory this book can't.
+        </div>
+      </section>
+
+      <!-- ═══ 11. STATE APPENDIX (SHORT) ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>11. Your State: Good Samaritan Protections</h2>
+        <div class="th-state-short">
+          <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. Responding to a choking emergency using the techniques in this guide is exactly the kind of good-faith action these laws are designed to protect. The exact wording, what's covered, and any exceptions vary by state and change over time — this is general information, not legal advice. See the pilot book (Severe Bleeding &amp; Hemorrhage Control) for a full state-by-state overview of the twelve most populous states, or consult a licensed attorney in your state for guidance specific to your situation.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 12. MEDICAL DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>12. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or choking-response course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 11 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/choking-airway/">1sthourprotocols.com/choking-airway</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

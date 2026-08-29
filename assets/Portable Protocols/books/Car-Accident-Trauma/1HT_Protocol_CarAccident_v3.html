@@ -1,0 +1,961 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_CarAccident_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Car-Accident-Trauma/1HT_Protocol_CarAccident_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Car Accident Trauma" e-book
+     Book #5 for ClickUp 86bbhrwcw. Track A #5. Standalone HTML page, built
+     from the pilot's (Severe Bleeding & Hemorrhage Control, v6) structure,
+     CSS, and JS wholesale per Prompts/1HT_BuildPrompt_Book05_CarAccident_v1.md.
+     Intended host: Cloudflare Pages, stable slug /car-accident-trauma/
+     (never the source file's own _v# — see ../../1HT_CloudflareHostingGuide_v1.md §3).
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via a link surfaced through 1st Hour's
+     ClickFunnels order integration — this file assumes nothing about how
+     that link is generated.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link section (and
+       its ToC entry); each protocol now sells as a standalone product and shouldn't
+       link to other protocols the customer may not own. Renumbered the following
+       section accordingly (17. Medical Disclaimer -> 16. Medical Disclaimer).
+     - v2 (2026-08-24, Claude): Book #8 (Shock Management) shipped — per
+       Prompts/1HT_BuildPrompt_Book08_Shock_v1.md §4, removed the "Coming
+       Soon" tag on this book's Shock Management cross-link card (Section
+       16) and restyled it "Live" (green tag). No content changes
+       otherwise. Redeployed to /car-accident-trauma/ — same stable slug,
+       no URL change. Also moved this file's true v1 into _archive/ for the
+       first time (this book had no _archive/ folder yet).
+     - v1 (2026-08-24, Claude): Initial build. Content builds directly on the
+       pilot's bleeding-control and shock techniques (referenced, not
+       re-taught in full — Sections 6 and 10) and focuses on what's genuinely
+       new for a roadside collision: scene safety around live traffic and
+       fire/fuel risk (Section 2), the "don't move them" default and its
+       narrow exceptions (Section 3), spinal injury red flags and manual
+       head/neck stabilization (Section 5), airbag/glass injury specifics
+       (Section 7), what to tell the 911 dispatcher (Section 8), and
+       multi-occupant triage (Section 9).
+
+       Section 4 (Immediate Response Protocol) sequencing note: the build
+       prompt's suggested step order placed the 911 call at step 5, after
+       bleeding control and spinal positioning. Deliberately reordered so
+       the call happens at step 2 (immediately after scene safety, via
+       speakerphone if alone) instead — matching the pilot's and Gunshot
+       Wound Response's own Section 3 pattern ("call or have someone call
+       911 immediately... put the phone on speaker and start treatment
+       while you talk"). This avoids gating the 911 call behind any
+       treatment step, per the build prompt's own Definition of Done
+       ("the 911 call is never gated behind anything avoidable"), while
+       still preserving the prompt's core priority requirement: severe
+       bleeding/airway control is sequenced ahead of spinal precautions,
+       matching Stop the Bleed's hemorrhage-first priority and exactly the
+       defect pattern Gunshot Wound Response's medical review caught and
+       fixed (see Books/REVISIONS.md's 2026-08-24 "Medical-review fixes
+       applied — Gunshot Wound Response, v4" entry). Re-checked this
+       section against itself twice before finalizing, per the build
+       prompt's Definition of Done.
+
+       Interior illustrations: pr-graphic-296 (scene-safety diagram) and
+       pr-graphic-297 (manual spinal stabilization hand position) both had
+       the wrong AI-invented shield emblem (split red/black shield with
+       stacked "1ST"/"HOUR" text and a plain star-of-life-style asterisk,
+       no winged-stopwatch/stethoscope/cross mark) exactly as flagged in
+       Books/REVISIONS.md's 2026-08-21 pilot entries. Fixed by the same
+       direct-compositing method (measured the wrong badge's bounding box
+       against a coordinate grid, erased it, composited the real
+       el-logo-002.png icon in its place) and uploaded to the Creative AI
+       Studio library: pr-graphic-296.png -> 1sthour-caraccident-scenesafety-001.png,
+       pr-graphic-297.png -> 1sthour-caraccident-spinalstab-001.png. A
+       second, much smaller wrong-emblem badge on the product-bag mockup
+       embedded within the scene-safety illustration itself (bottom-left,
+       on a photographic/angled bag surface) was left uncorrected — same
+       "too small/perspective, harder case" category the pilot and Book 3
+       left open for their own small badges; not attempted this session
+       per the access guide's own note that flat compositing doesn't work
+       on angled photographic surfaces without perspective warping.
+
+       Cover (pr-graphic-309.png) had 3 wrong-emblem instances (large
+       top-right badge, bag-patch badge, book-cover badge) — all 3 fixed
+       via direct compositing (flat-black fill for the two solid-black-
+       background instances, a tiled fabric-texture clone fill for the
+       bag-patch instance) and uploaded as
+       1sthour-caraccident-cover-001.png. Lifestyle image (pr-graphic-316.png)
+       spot-checked and confirmed to need no fix — no shield/emblem graphic
+       present at all (the "1ST+HOUR" mark in that image is plain text with
+       no badge), same as Book 3's lifestyle image; disclosure banner
+       ("INSTANT E-BOOK DOWNLOAD ACCESS ON ANY DEVICE") confirmed present.
+       Referenced directly at its original URL, uploaded to the library
+       under its generated filename already.
+
+       Sections 15 (state appendix) and 17 (Medical Disclaimer) use the
+       short-form pattern established by Book 3 (Burn Injury) rather than
+       the pilot's full 12-state grid, per the build prompt's §1 "state
+       relevance: low" instruction and matching Books #2-4's treatment.
+       Section 14's checklist citations were cross-checked against actual
+       section content before publishing per the build prompt's explicit
+       warning about Book #2's phantom-citation defect — no citation in
+       this book's checklist points at a section that doesn't actually
+       cover that item.
+
+       Medical-accuracy review run before this first deploy, per
+       Prompts/1HT_MedicalComplianceReviewPrompt_v1.md — see
+       Books/Car-Accident-Trauma/MEDICAL_REVIEW_v1.md. Findings fixed
+       pre-deploy; see that report and Books/REVISIONS.md for detail.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Car Accident Trauma — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: what to do in the first hour after a vehicle collision — scene safety, spinal precautions, airbag and glass injuries, multi-occupant triage, and state-specific Good Samaritan guidance.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix cards ──────────────────────────────────── */
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#scene-safety">Scene Safety First</a></li>
+      <li><a href="#dont-move-default">The "Don't Move Them" Default</a></li>
+      <li><a href="#immediate-response">The Immediate Response Protocol</a></li>
+      <li><a href="#spinal-stabilization">Spinal Injury Red Flags &amp; Manual Stabilization</a></li>
+      <li><a href="#bleeding-control">Bleeding Control — By Reference</a></li>
+      <li><a href="#airbag-glass">Airbag Deployment &amp; Broken-Glass Injuries</a></li>
+      <li><a href="#dispatcher-info">What to Tell the 911 Dispatcher</a></li>
+      <li><a href="#triage">Triaging Multiple Occupants</a></li>
+      <li><a href="#shock">Shock Recognition</a></li>
+      <li><a href="#environment-demographics">Climate &amp; Demographic Notes</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Car Accident Trauma</h1>
+        <p class="lede">What to do in the first minutes after a vehicle collision — scene safety, spinal precautions, and multi-occupant triage, built on top of the bleeding-control skills from Severe Bleeding &amp; Hemorrhage Control.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-caraccident-ebook-001.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#scene-safety">Scene Safety</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#spinal-stabilization">Stabilize</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>A vehicle collision is different from most other emergencies in this library in one specific way: the scene itself is often still dangerous when you arrive. Traffic is still moving, a damaged vehicle can leak fuel or catch fire, and the wreckage itself — broken glass, sharp metal, an unstable vehicle position — can hurt the person trying to help before it ever gets a chance to hurt anyone else. That's why this guide spends its first two sections on the scene, not the patient. Every technique in the rest of this book assumes you're not about to become the second casualty.</p>
+        <p>Once the scene is actually safe to approach, the injuries themselves are frequently ones this library already covers — severe bleeding from glass or metal, shock from blood loss or trauma. What's genuinely new here is the layer on top of those injuries: whether it's safe to move the person at all, how to protect a possible spinal injury while you work, and how to prioritize care when more than one person in the vehicle is hurt.</p>
+        <p>This guide assumes you already know — or are about to learn from <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> — how to control serious bleeding with direct pressure, packing, and a tourniquet. What follows is everything specific to a roadside collision: staying safe while you work, when moving someone is more dangerous than leaving them, and what a dispatcher needs to hear about a multi-vehicle, multi-person scene.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Scene safety comes before patient care, every time — not because the person in the vehicle doesn't matter, but because a bystander who becomes a second casualty helps no one. Once the scene is safe, the priority order is the same as anywhere else in this library: airway and severe bleeding first, everything else — including spinal precautions — second.
+        </div>
+      </section>
+
+      <!-- ═══ 2. SCENE SAFETY FIRST ═══ -->
+      <section class="th-section" id="scene-safety">
+        <h2>2. Scene Safety First</h2>
+        <p>Before you approach a crashed vehicle, take ten seconds to actually look at the scene rather than moving on instinct. A collision scene has hazards a typical medical emergency doesn't: moving traffic that may not see you, fuel or fluid leaks, a vehicle balanced unstably, and — occasionally — a vehicle that's already on fire or close to it.</p>
+
+        <ol class="th-steps">
+          <li><strong>Turn on your hazard lights</strong> the moment you stop, even before you get out of your own vehicle.</li>
+          <li><strong>Position yourself and your vehicle to protect the scene, not block traffic further.</strong> If you're driving up on the scene, park with your hazards on well back from the wreck, ideally positioned to shield it from oncoming traffic without adding to the obstruction.</li>
+          <li><strong>Place warning triangles or flares at least 100–150 feet behind the wreck</strong> if you have them — and farther still (up to 300 feet) on a highway or a curve with limited sightlines, so approaching drivers at higher speeds have real time to react.</li>
+          <li><strong>Stay out of the travel lane.</strong> Work from the shoulder, behind a barrier, or from the "safe zone" side of the vehicles whenever the wreck's position allows it. Keep your back to a clear space you can retreat into, not to traffic.</li>
+          <li><strong>Check for fire and fuel-leak signs before you get close</strong> — the smell of gasoline, visible smoke, or flame anywhere on the vehicle. If any of these are present, do not approach; see the exception in Section 3.</li>
+          <li><strong>If the scene isn't safe to enter — active fire, a vehicle in an unstable position, ongoing traffic risk you can't control — stay back, call 911, and wait for fire/rescue or police to secure it</strong> before attempting to reach anyone inside.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-caraccident-scenesafety-001.png" alt="1st Hour accident scene safety diagram — place warning triangles 100 to 150 feet behind the vehicle, stay out of the travel lane, and stand in the safe zone away from traffic.">
+        </figure>
+
+        <div class="th-warn">
+          <strong>You are not required to be a hero.</strong> If you cannot make the scene safe enough to approach without serious risk to yourself, the correct action is to call 911, stay at a safe distance, and wait for responders who have the training and equipment for that specific hazard. This is not a failure to help — it's the same "don't create a second casualty" principle this whole section is built around.
+        </div>
+      </section>
+
+      <!-- ═══ 3. THE "DON'T MOVE THEM" DEFAULT ═══ -->
+      <section class="th-section" id="dont-move-default">
+        <h2>3. The "Don't Move Them" Default</h2>
+        <p>Once the scene is safe and you've reached the injured person, the next instinct many people have is to pull them out of the vehicle or move them to a more comfortable position. Resist that instinct. <strong>The default is to leave an injured occupant exactly where you found them and stabilize them in place</strong>, because a collision that's forceful enough to cause a serious injury is also forceful enough to injure the spine — and an undiagnosed spinal injury can become far worse, including permanent paralysis, if the neck or back is twisted, bent, or jarred during a rescue that wasn't actually necessary.</p>
+
+        <p>This default has narrow, specific exceptions — situations where the danger of staying put is clearly greater than the danger of moving someone with a possible spinal injury:</p>
+
+        <ul>
+          <li><strong>Active fire or a serious, confirmed fuel leak with fire risk</strong> — a vehicle that is burning or about to burn.</li>
+          <li><strong>The vehicle is submerged or rapidly filling with water,</strong> and the person cannot breathe where they are.</li>
+          <li><strong>There is a real, specific, and immediate risk of a second collision</strong> that you cannot prevent through scene safety measures (Section 2) — for example, the vehicle is still in a live travel lane on a blind curve and traffic cannot be stopped or warned in time.</li>
+          <li><strong>The person is not breathing and needs to be moved to a flat surface for CPR</strong> — airway and breathing take priority over spinal precautions, the same priority order used throughout this library.</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>What does NOT count as an exception:</strong> the person is in pain, the person is asking to get out, the vehicle position looks uncomfortable, you want to check them over more thoroughly, or you're not sure how badly they're hurt. None of these justify moving someone against the default. "I want to help them more" is exactly the instinct that causes well-meaning bystanders to turn a survivable spinal injury into a permanent one.
+        </div>
+
+        <p>If none of the exceptions apply, your job is to leave the person where they are, keep them as still as possible, and move directly to Section 5's manual stabilization technique while you wait for EMS — who carry the boards and collars designed to move someone with a suspected spinal injury safely.</p>
+      </section>
+
+      <!-- ═══ 4. THE IMMEDIATE RESPONSE PROTOCOL ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>4. The Immediate Response Protocol</h2>
+        <p>This is the sequence for a car accident specifically. It layers the scene-safety and spinal-precaution material from the sections above onto the same core priority order used throughout this library: a life-threatening bleed or an airway problem is addressed before anything else, including spinal precautions. Read it now, before you ever need it.</p>
+
+        <ol class="th-steps">
+          <li><strong>Confirm the scene is safe before approaching,</strong> per Section 2. If it isn't — fire, fuel leak, ongoing traffic risk — stay back and call 911 instead of entering the scene.</li>
+          <li><strong>Call or have someone call 911 immediately.</strong> Don't wait until you've assessed the person first. If you're alone, put the phone on speaker and start checking on the person while you talk to the dispatcher — see Section 8 for exactly what they'll need to know.</li>
+          <li><strong>Check responsiveness, breathing, and airway.</strong> Speak to the person and gently check if they respond. If they are not breathing, this is one of Section 3's specific exceptions to the "don't move them" default — moving them to a flat surface to begin CPR takes priority over spinal precautions. Move them as carefully as the situation allows, supporting the head and neck to limit twisting during the move itself, but do not delay starting CPR to perfect that support. If you're trained in CPR, begin it; if not, the 911 dispatcher can talk you through it in real time.</li>
+          <li><strong>If you see severe, life-threatening bleeding, control it right now.</strong> Use your bare hands if nothing else is available, or non-latex gloves from your kit if they're within reach, then apply direct pressure, packing, or a tourniquet exactly as covered in <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> — see Section 6 for what's different about a car-accident wound specifically. This step takes priority over spinal precautions; do not spend time perfecting head stabilization on someone who is bleeding out.</li>
+          <li><strong>If there's no severe bleeding and no other immediate life threat, minimize movement and support the head and neck in the position found,</strong> per Section 5's manual stabilization technique. This is where spinal precautions become the priority — after airway and severe bleeding are addressed, not before.</li>
+          <li><strong>Give the dispatcher the details from Section 8</strong> if you haven't already covered them in step 2 — number of vehicles, number of people, and their apparent condition.</li>
+          <li><strong>Monitor and reassess continuously</strong> — breathing, responsiveness, and bleeding — until EMS physically arrives and takes over.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't pull someone out of a vehicle "to be safe" unless one of Section 3's specific exceptions applies. Don't spend the first minute stabilizing the neck of someone who is bleeding severely or not breathing — fix the bigger threat first. Don't delay the 911 call to finish an assessment; call immediately and keep working while you talk.
+        </div>
+      </section>
+
+      <!-- ═══ 5. SPINAL INJURY RED FLAGS & MANUAL STABILIZATION ═══ -->
+      <section class="th-section" id="spinal-stabilization">
+        <h2>5. Spinal Injury Red Flags &amp; Manual Stabilization</h2>
+        <p>You cannot rule out a spinal injury at the roadside — that requires imaging a hospital can do. What you can do is recognize the signs that raise real suspicion, and support the head and neck in a way that minimizes further risk while you wait for EMS.</p>
+
+        <h3>Red flags that raise suspicion of a spinal injury:</h3>
+        <ul>
+          <li>The mechanism of the crash itself was forceful — a high-speed impact, a rollover, significant vehicle damage, or the person was thrown from their seat or the vehicle.</li>
+          <li>Pain in the neck or back, especially pain that's sharp or worsens with any movement.</li>
+          <li>Numbness, tingling, or a "pins and needles" sensation anywhere in the arms or legs.</li>
+          <li>Weakness or an inability to move an arm, a leg, or a hand normally.</li>
+          <li>The person reports they can't feel you touching a limb, or reports the sensation is different from the other side of their body.</li>
+          <li>Any loss of consciousness at the time of the crash, even briefly.</li>
+        </ul>
+        <p>If you observe any of these — or if you're simply unsure — treat it as a suspected spinal injury and follow the manual stabilization technique below. When in doubt, the safer assumption is always the more cautious one.</p>
+
+        <h3>Manual head and neck stabilization:</h3>
+        <ol class="th-steps">
+          <li><strong>Kneel or position yourself at the top of the person's head,</strong> facing their feet, without moving them to get there.</li>
+          <li><strong>Place a hand on each side of the head,</strong> over the ears, with your fingers spread for a stable grip.</li>
+          <li><strong>Gently support the head in the position you found it in</strong> — do not attempt to straighten, tilt, or align it to a "neutral" position if that requires moving it. The goal is to prevent further movement, not to correct the current position.</li>
+          <li><strong>Hold steady, gentle pressure</strong> — enough to resist the head moving on its own from small vibrations or the person shifting, not enough to actually restrict them if they try to move (encourage them not to, instead).</li>
+          <li><strong>Talk to the person continuously.</strong> Explain what you're doing and ask them to stay as still as possible and keep their head in place, which reduces the chance they'll move on their own.</li>
+          <li><strong>Maintain this position until EMS arrives and physically takes over</strong> — they carry a cervical collar and backboard designed to move someone with a suspected spinal injury safely, which is a different job than the manual hold you're providing.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-caraccident-spinalstab-001.png" alt="1st Hour manual head and neck stabilization diagram — use both hands on either side of the head to hold it in a neutral, still position without moving the head or neck.">
+        </figure>
+
+        <div class="th-callout">
+          <strong>If you're also treating a bleeding wound</strong>
+          A second responder holding manual stabilization while you control bleeding is the ideal setup. If you're alone, per Section 4, severe bleeding control comes first — stabilization can begin the moment the bleeding is controlled or another bystander arrives to hold pressure.
+        </div>
+      </section>
+
+      <!-- ═══ 6. BLEEDING CONTROL — BY REFERENCE ═══ -->
+      <section class="th-section" id="bleeding-control">
+        <h2>6. Bleeding Control — By Reference</h2>
+        <p>This book does not re-teach direct pressure, wound packing, or tourniquet application step by step — <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> covers the full technique in detail, and it applies here exactly as written. What's different about a car-accident wound is the context it happens in, not the technique for stopping it:</p>
+
+        <ul>
+          <li><strong>Bleeding may be hidden under clothing.</strong> A seatbelt, airbag, or impact injury can cause significant bleeding that isn't obvious at a glance — do a visual and gentle physical check for blood on clothing, pooling, or a wet/dark patch before assuming there's no serious bleeding.</li>
+          <li><strong>Expect multiple wound sites.</strong> Broken glass and torn metal frequently cause several separate lacerations rather than one clean wound — check the whole body systematically rather than stopping at the first cut you see, the same principle covered in more depth in Gunshot Wound Response's full-body-check guidance.</li>
+          <li><strong>Apply pressure without moving the person more than necessary.</strong> The Section 3 "don't move them" default still applies while you're treating a wound — you can usually reach and pack a wound, or hold direct pressure, without repositioning the person's spine. If a wound's location genuinely requires some repositioning to treat, that limited, necessary movement to stop life-threatening bleeding is justified by the same "airway and bleeding first" priority from Section 4 — but move only as much as the treatment actually requires, not more.</li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>The technique doesn't change</strong>
+          Direct pressure, packing, and tourniquet application work exactly the same way in a vehicle as anywhere else. If you haven't read <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>, do that now — everything in its Sections 3 through 6 applies here without modification.
+        </div>
+      </section>
+
+      <!-- ═══ 7. AIRBAG DEPLOYMENT & BROKEN-GLASS INJURIES ═══ -->
+      <section class="th-section" id="airbag-glass">
+        <h2>7. Airbag Deployment &amp; Broken-Glass Injuries</h2>
+        <p>Two injury sources show up in car accidents specifically and rarely anywhere else in this library: the airbag itself, and broken glass from windows or windshields.</p>
+
+        <h3>Airbag-related injuries</h3>
+        <p>A deployed airbag can cause abrasions, friction burns, and bruising on the face, chest, and forearms — usually minor, but check carefully, since the same impact that triggered the airbag can also cause more serious injury underneath a minor-looking mark. Some people also experience temporary irritation from the fine powder (cornstarch or talc-based lubricant, plus combustion byproducts) released when an airbag deploys — irritated eyes, throat, or a cough. This typically resolves on its own; treat it like any minor irritant exposure and mention it to EMS if it doesn't improve.</p>
+
+        <h3>Broken-glass injuries</h3>
+        <p>Side and rear windows are tempered glass, designed to shatter into small, relatively dull pebbles rather than large shards — these tend to cause a pattern of many small lacerations rather than one deep wound. A windshield is different: it's laminated (a layer of plastic between two layers of glass), so it typically cracks into a spiderweb pattern and stays largely intact rather than shattering — if it does break through, it can produce longer, sharper-edged cuts more like a single deep wound than a scatter of small ones. Treat every laceration using the direct-pressure technique from Section 6 either way; for the many-small-wounds pattern specifically, check the total bleeding across all of them, since several small wounds bleeding at once can add up to a significant volume of blood loss.</p>
+
+        <div class="th-warn">
+          <strong>Watch for glass still in or around the vehicle</strong> when you're reaching in to assess or assist someone — broken glass on a seat, floor, or dashboard is a real cut risk to you as the responder, not just a hazard the occupant already dealt with. Move deliberately and check where you're placing your hands and knees.
+        </div>
+      </section>
+
+      <!-- ═══ 8. WHAT TO TELL THE 911 DISPATCHER ═══ -->
+      <section class="th-section" id="dispatcher-info">
+        <h2>8. What to Tell the 911 Dispatcher</h2>
+        <div class="th-warn">
+          <strong>Call immediately — this is not a checklist to complete before you call.</strong> Call as soon as the scene is safe to approach (Section 2), then give the dispatcher what you know as you learn it. They will ask follow-up questions and can send help while you're still gathering details.
+        </div>
+        <p>A car accident dispatch benefits from a few specific pieces of information beyond the basics, since it affects how many units are sent and how they're routed:</p>
+        <ul>
+          <li><strong>Exact road position:</strong> direction of travel, the nearest mile marker, exit number, or cross-street — this is often the single most valuable piece of information you can give, since it determines how fast responders can actually find the scene.</li>
+          <li><strong>Number of vehicles involved.</strong></li>
+          <li><strong>Number of people and their apparent condition</strong> — conscious/unconscious, breathing/not breathing, visibly bleeding — for each person if there's more than one.</li>
+          <li><strong>Whether anyone is trapped</strong> inside a vehicle, which determines whether fire/rescue with extrication equipment is dispatched alongside EMS.</li>
+          <li><strong>Whether there's fire, smoke, or a fuel leak</strong> — this is safety-critical information for both the dispatcher's guidance to you and the responding units' approach.</li>
+        </ul>
+        <p>Stay on the line if you can. The dispatcher may walk you through checking on someone, applying pressure to a wound, or maintaining manual stabilization in real time, and they need ongoing updates to route the response correctly.</p>
+      </section>
+
+      <!-- ═══ 9. TRIAGING MULTIPLE OCCUPANTS ═══ -->
+      <section class="th-section" id="triage">
+        <h2>9. Triaging Multiple Occupants</h2>
+        <p>When more than one person is hurt, you have to decide who to help first. This isn't a formal triage system — that's outside a single bystander's scope and training — but a short, concrete priority order that matches how this library treats every multi-casualty scenario:</p>
+
+        <ol class="th-steps">
+          <li><strong>Unresponsive or not breathing, first.</strong> A person who isn't breathing needs immediate attention — moving them if necessary for CPR overrides the Section 3 default, per Section 4.</li>
+          <li><strong>Uncontrolled severe bleeding, second.</strong> Someone actively losing a life-threatening amount of blood is the next priority after an airway problem.</li>
+          <li><strong>Everyone else, third.</strong> Once the immediately life-threatening problems are addressed — even if only partially, such as a tourniquet applied and left in place — move to assess and support the remaining occupants, including anyone who seems uninjured but may be in shock or distress.</li>
+        </ol>
+
+        <p>If a second capable bystander is present, split up: one person per identified severe problem rather than everyone clustering around the first person found. Tell the 911 dispatcher how many people you're managing and their conditions, per Section 8 — this directly affects how many units are sent.</p>
+      </section>
+
+      <!-- ═══ 10. SHOCK RECOGNITION ═══ -->
+      <section class="th-section" id="shock">
+        <h2>10. Shock Recognition</h2>
+        <p>Shock risk after a car accident comes from the same sources this library already covers in depth — blood loss and severe trauma — so this section stays brief by design. For the full recognition and management walkthrough, see <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>'s Section 7, or Shock Management once it's published, for a deeper treatment.</p>
+
+        <h3>Watch for:</h3>
+        <ul>
+          <li>Pale, cool, or clammy skin</li>
+          <li>Rapid, weak pulse</li>
+          <li>Rapid, shallow breathing</li>
+          <li>Confusion, anxiety, or restlessness</li>
+          <li>Progressive weakness or loss of consciousness</li>
+        </ul>
+
+        <p>If you see these signs: keep bleeding controlled (it won't improve otherwise), keep the person warm, do not give food or water, and do not lay them flat or reposition them if a spinal injury is suspected per Section 5 — supporting them in the position they're already in is usually the right call in a vehicle-collision context specifically, since the Section 3 default against unnecessary movement still applies.</p>
+      </section>
+
+      <!-- ═══ 11. CLIMATE & DEMOGRAPHIC NOTES ═══ -->
+      <section class="th-section" id="environment-demographics">
+        <h2>11. Climate &amp; Demographic Notes</h2>
+        <p>A roadside collision doesn't change much by geography, but a couple of factors are worth knowing:</p>
+        <ul>
+          <li><strong>Weather-related crashes</strong> (ice, heavy rain, fog) often mean the same conditions that caused the crash also make the scene itself more dangerous to work in — reduced visibility for oncoming traffic, slick surfaces underfoot. Extend your warning-triangle distance and be more conservative about scene safety in these conditions.</li>
+          <li><strong>Rural response-time gap:</strong> a crash on a rural highway or backroad can mean a significantly longer wait for EMS and fire/rescue than the same crash in a metro area. Plan to sustain scene safety measures, bleeding control, and manual stabilization for longer than you might expect.</li>
+          <li><strong>Extreme heat or cold</strong> affects an injured person waiting for EMS the same way it does in any other outdoor emergency — see the climate notes in <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>'s Section 9 for the full guidance on warming and cooling considerations, which apply here without modification.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 12. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>12. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Short answer: immediately, every time, before you approach the vehicle if the scene isn't obviously safe.</strong> Any car accident with a visible injury — or one where you can't yet tell how badly anyone is hurt — warrants a 911 call. Don't wait to assess first.
+        </div>
+        <p>Give the dispatcher the details from Section 8 as you learn them, and stay on the line — they can guide you through scene safety, bleeding control, or manual stabilization in real time, and they need ongoing information to route the response correctly.</p>
+        <p>Do not attempt to drive an injured occupant to a hospital yourself unless a 911 dispatcher explicitly tells you to because EMS cannot reach you. Beyond the general reasons covered elsewhere in this library — you can't maintain pressure or monitor someone properly in a moving vehicle — a car-accident patient specifically may have an unstabilized spinal injury that a moving vehicle, without proper immobilization equipment, can make significantly worse.</p>
+      </section>
+
+      <!-- ═══ 13. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>13. Aftercare &amp; Follow-Up</h2>
+        <p>Once EMS has taken over, your job as a first responder is done — a few things are worth knowing for afterward.</p>
+        <ul>
+          <li><strong>Tell EMS everything you observed and did</strong> — mechanism of the crash if you saw it, how you found the person, how long you held manual stabilization, and the time any tourniquet was applied.</li>
+          <li><strong>Support uninjured occupants too.</strong> Someone who walked away without a scratch can still be in shock or significant emotional distress after a crash — stay with them, keep them warm, and don't leave them alone until someone else can.</li>
+          <li><strong>Restock your kit immediately</strong> if you used gauze, a tourniquet, or other supplies — a real emergency means those items need replacing before the kit can be trusted again.</li>
+          <li><strong>It's normal to feel shaken afterward.</strong> Responding to a crash scene is intense, especially the scene-safety decisions under time pressure. Debrief with someone, and talk to a professional if the experience stays with you.</li>
+          <li><strong>If you had bare-hand contact with blood,</strong> wash thoroughly and mention it to EMS or a doctor — a standard, low-drama thing to flag.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 14. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>14. Essential Items Checklist</h2>
+        <p>This protocol assumes the same core bleeding-control supplies as Severe Bleeding &amp; Hemorrhage Control, plus a couple of car-specific additions. Restock immediately after any real use, per Section 13.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Reflective warning triangles or road flares</strong><span class="th-cl-why"> — Section 2. Warns approaching traffic before you or anyone else steps into the travel lane.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Seatbelt cutter / window-breaker tool</strong><span class="th-cl-why"> — useful if someone is trapped by a jammed belt, though extrication itself is a job for fire/rescue per Section 2.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Commercial tourniquet (CAT-style)</strong><span class="th-cl-why"> — Section 6. For severe limb bleeding, applied exactly as in the pilot protocol.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Hemostatic gauze</strong><span class="th-cl-why"> — Section 6. For packing a deep wound.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Plain roller gauze / trauma dressing</strong><span class="th-cl-why"> — Section 6. Backup packing and dressing for multiple glass-related wounds.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — worn before contact with blood, per Section 4's immediate response steps.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Emergency/space blanket</strong><span class="th-cl-why"> — Section 10. Warmth slows the progression of shock while you wait for EMS.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Permanent marker or time-tape</strong><span class="th-cl-why"> — records the exact tourniquet application time for EMS, if one is used per Section 6.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep this kit in the vehicle itself, not just at home — a roadside collision is, by definition, an emergency you don't get to plan the location of. A kit in the trunk or glovebox is the one that's actually there when you need it.
+        </div>
+      </section>
+
+      <!-- ═══ 15. STATE APPENDIX ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>15. Your State: Good Samaritan Protections</h2>
+        <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. The exact wording, what's covered, and any exceptions vary by state, and laws change over time. Roadside collision response doesn't involve any state-specific medical technique differences, so rather than repeating a full state-by-state grid here, the short version: if you stop to help at an accident scene in good faith and without expecting payment, your state almost certainly has some form of legal protection in place — many states' Good Samaritan statutes specifically mention roadside/highway assistance as a covered scenario.</p>
+        <div class="th-callout">
+          <strong>Confirm your state's specifics.</strong> This is general information, not legal advice — see the full disclaimer below. If you want the details for your specific state, the pilot Severe Bleeding &amp; Hemorrhage Control protocol includes a fuller twelve-state overview (Section 13) that applies the same way here, since Good Samaritan protection isn't specific to any one type of injury.
+        </div>
+      </section>
+
+      <!-- ═══ 16. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>16. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 15 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/car-accident-trauma/">1sthourprotocols.com/car-accident-trauma</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

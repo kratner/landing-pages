@@ -1,0 +1,896 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_ActiveShooter_v4.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Active-Shooter-Civilian-Response/1HT_Protocol_ActiveShooter_v4.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Active Shooter — Civilian Response" e-book
+     Track B #13. Standalone HTML page, hosted at https://1sthourprotocols.com/active-shooter/
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Structural/CSS/JS machinery copied wholesale from the pilot
+     (Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v8.html)
+     per Prompts/1HT_BuildPrompt_Book13_ActiveShooter_v1.md — content and
+     disclaimer language are entirely new.
+
+     ⚠ LEGAL-FRAMING CONSTRAINT (per build prompt §0 — non-negotiable):
+     No state-by-state legal claims anywhere in this book. No state-grid
+     section. The "Fight" section describes safety/tactical behavior only,
+     never legal justification. The disclaimer in Section 10 is fresh,
+     written specifically for this book — it does NOT reuse the medical
+     Good Samaritan disclaimer template used elsewhere in this library.
+
+     REVISION HISTORY
+     - v4 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v3 (2026-08-25, Claude): Fixed a PDF pagination bug found while
+       generating this book's PDF for its first deploy — the tall portrait
+       cover image (`figure.th-illo`) is taller than one printed page at the
+       PDF tool's render viewport, and `figure.th-illo`'s break-inside:avoid
+       rule (from the shared build-pdf.js tool) pushed the whole box to a
+       fresh page rather than letting it overflow, producing a blank page 2
+       followed by a partially-cut-off page 3. Same root cause/fix pattern
+       as Nuclear Threat's (Book #10) prior fix: added a book-scoped
+       `@media print { #th-cover-img { max-height:8in !important } }` rule,
+       sized in physical inches so it's correct regardless of viewport
+       width. Regenerated PDF is 14 pages (down from 15 with the blank
+       page), verified page-by-page including the cover, the Run-Hide-Fight
+       flow diagram, and the closing disclaimer. Uploaded to the Creative AI
+       library as `1sthour-activeshooter-ebook-001.pdf`, download button
+       wired to it (also fixed a duplicate-`href`-attribute bug introduced
+       while wiring it — the button had both the placeholder `href="#"` and
+       the real URL present at once, which would have silently kept the
+       placeholder active). First live deploy for this book — content and
+       cover image otherwise unchanged from v2.
+     - v1 (2026-08-25, Claude): Initial build. Run-Hide-Fight framework per
+       DHS/FBI civilian guidance, 11 sections per the build prompt's §2
+       structure (no state appendix — skipped per master list + §0's
+       independent legal-framing reason). Interior illustration built as an
+       inline HTML/CSS decision-flow diagram rather than an AI-generated
+       image, specifically to guarantee zero weapons/violence depiction and
+       zero logo-accuracy risk by construction (see Books/REVISIONS.md for
+       the full rationale). Cover + lifestyle images generated fresh via the
+       Creative AI Studio API with no logo/text requested in the prompt,
+       real logo composited on top afterward via HTML/screenshot — applied
+       proactively from the first generation, per the access guide's
+       recommended method and this book's own build-prompt callout.
+     - v2 (2026-08-25, Claude): Cover image replaced per Keith's direct
+       review — the v1 cover (calm office-hallway + lit EXIT sign, people
+       walking normally toward it) didn't read as "active shooter" content
+       at a glance. New cover (`1sthour-activeshooter-cover-002.png`) keeps
+       the same non-sensational, no-weapons register but signals the
+       subject far more clearly: a composited "RUN · HIDE · FIGHT" kicker
+       badge (the DHS/FBI framework name itself, doing signal work the
+       image alone wasn't), a regenerated base photo showing a person
+       actively directing a small group of coworkers through a lit-red
+       EXIT doorway with alert/urgent body language and a dropped notebook
+       on the floor (left-behind belongings, per the book's own "Run"
+       guidance), and the same real-logo/Anton-title compositing method as
+       v1. Picked from 16 candidates (4 prompts × 4 providers) via a
+       contact-sheet review — see Books/REVISIONS.md and ImageURLs.md for
+       the full before/after and prompt history. Only the `<img
+       id="th-cover-img">` src changed in this revision — no content
+       changes. The lifestyle marketing image (not embedded in this page)
+       was also rebuilt this session; see ImageURLs.md.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Active Shooter — Civilian Response — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: the Run-Hide-Fight civilian decision framework for an active-shooter situation, what to do when law enforcement arrives, and how to help once the scene is secured.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder / real image ─────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+
+  /* ── Run-Hide-Fight decision-flow diagram ─────────────────────── */
+  .th-rhf-flow{
+    display:flex;
+    align-items:stretch;
+    gap:10px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:24px;
+    margin:0 0 28px;
+  }
+  .th-rhf-card{
+    flex:1;
+    min-width:0;
+    border-radius:8px;
+    padding:18px 14px;
+    color:#fff;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .th-rhf-card.run{background:#1f8a4c;}
+  .th-rhf-card.hide{background:#c9821a;}
+  .th-rhf-card.fight{background:var(--red);}
+  .th-rhf-num{font-family:'Anton',sans-serif;font-size:12px;letter-spacing:2px;opacity:0.85;}
+  .th-rhf-title{font-family:'Anton',sans-serif;font-size:clamp(18px,2.4vw,24px) !important;letter-spacing:0.5px;}
+  .th-rhf-cond{font-size:12.5px;line-height:1.4;opacity:0.95;}
+  .th-rhf-arrow{
+    align-self:center;
+    color:var(--gray);
+    font-size:22px;
+    flex-shrink:0;
+  }
+  .th-rhf-note{font-size:13.5px;color:var(--gray);margin:4px 0 0;border-top:1px solid var(--border);padding-top:14px;}
+  @media (max-width:700px){
+    .th-rhf-flow{flex-direction:column;}
+    .th-rhf-arrow{transform:rotate(90deg);}
+  }
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+  @media print{
+    #th-cover-img{max-height:8in !important;width:auto !important;margin:0 auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-prep">Why Preparation Matters</a></li>
+      <li><a href="#framework">The Run-Hide-Fight Framework</a></li>
+      <li><a href="#run">Run</a></li>
+      <li><a href="#hide">Hide</a></li>
+      <li><a href="#fight">Fight</a></li>
+      <li><a href="#law-enforcement">When Law Enforcement Arrives</a></li>
+      <li><a href="#treating-wounded">Treating the Wounded Once the Scene Is Secured</a></li>
+      <li><a href="#aftermath">Psychological Aftermath</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#disclaimer">Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Active Shooter — Civilian Response</h1>
+        <p class="lede">A calm, practical decision framework for the first sixty seconds of an active-threat situation — Run, Hide, Fight, and what comes after — so panic doesn't fill the gap in the first seconds.</p>
+      </div>
+
+      <figure class="th-illo real">
+        <img id="th-cover-img" src="assets/1sthour-activeshooter-cover-002.png" alt="1st Hour Protocols Active Shooter Civilian Response cover — Run, Hide, Fight kicker badge over a photo of coworkers being directed through a lit exit doorway.">
+      </figure>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-activeshooter-ebook-001.pdf" id="th-pdf-btn" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 25, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general civilian-safety education based on publicly available DHS/FBI Run-Hide-Fight materials. It is not a substitute for professional training or law enforcement response, and it is not legal advice. In any active threat, call <strong>911</strong> the moment it is safe to do so. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#run">Run</a><span class="arrow">→</span>
+        <a href="#hide">Hide</a><span class="arrow">→</span>
+        <a href="#fight">Fight</a><span class="arrow">→</span>
+        <a href="#law-enforcement">Law Enforcement</a>
+      </div>
+
+      <!-- ═══ 1. WHY PREPARATION MATTERS ═══ -->
+      <section class="th-section" id="why-prep">
+        <h2>1. Why Preparation Matters</h2>
+        <p>This book isn't here to help you predict when or where an active-shooter situation might happen. Nobody can do that with any reliability, and trying to is a poor use of your attention. What this book actually does is much narrower and much more useful: it gives you a decision framework you can recall instantly, under stress, so that the first few seconds after you realize something is wrong aren't spent freezing or improvising from scratch.</p>
+        <p>Acute stress does something specific and well-documented to decision-making: it narrows attention, slows deliberate thought, and pushes people toward whatever response is already loaded and ready — including, for a meaningful number of people, no response at all. Public safety researchers call this the "freeze" response, and it's one of the most consistently observed reactions in real incidents, not a sign of cowardice or poor character. The single most effective countermeasure isn't bravery — it's rehearsal. A framework you've already thought through, even briefly, gives your brain something to reach for instead of nothing.</p>
+        <p>The framework in this book — <strong>Run, Hide, Fight</strong> — comes from the U.S. Department of Homeland Security and is echoed in FBI civilian-preparedness guidance. It was built specifically for ordinary people in ordinary buildings: offices, schools, retail spaces, places of worship. It is not tactical or operator training, and this book doesn't try to make it into that. It's a decision order — what to consider first, second, and only as a last resort — not a set of equally weighted options.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          You will not have time to think through options from scratch in the moment. The value of this framework is entirely in having thought about it beforehand, so that recognizing the situation and choosing a response happen almost as one step.
+        </div>
+      </section>
+
+      <!-- ═══ 2. THE RUN-HIDE-FIGHT FRAMEWORK ═══ -->
+      <section class="th-section" id="framework">
+        <h2>2. The Run-Hide-Fight Framework</h2>
+        <p>Run, Hide, and Fight are not three equally good options to pick from — they're a decision sequence, evaluated roughly in that order, based on what's actually possible in your specific situation at that moment. The large majority of real incidents resolve at Run or Hide. Fight is a genuine last resort, not a first instinct to reach for, and this book treats it that way throughout.</p>
+
+        <div class="th-rhf-flow">
+          <div class="th-rhf-card run">
+            <div class="th-rhf-num">STEP 1</div>
+            <div class="th-rhf-title">Run</div>
+            <div class="th-rhf-cond">If there's a clear, safe path out — take it. This is the right answer most of the time.</div>
+          </div>
+          <div class="th-rhf-arrow">→</div>
+          <div class="th-rhf-card hide">
+            <div class="th-rhf-num">STEP 2</div>
+            <div class="th-rhf-title">Hide</div>
+            <div class="th-rhf-cond">If evacuation isn't safe — find or make a secure space and stay silent.</div>
+          </div>
+          <div class="th-rhf-arrow">→</div>
+          <div class="th-rhf-card fight">
+            <div class="th-rhf-num">LAST RESORT</div>
+            <div class="th-rhf-title">Fight</div>
+            <div class="th-rhf-cond">Only if neither is possible and you are in imminent danger.</div>
+          </div>
+        </div>
+        <p class="th-rhf-note" style="margin-bottom:24px;">This is a decision order, not a menu. Ask "can I run safely?" first. If not, ask "can I hide securely?" next. Fight is what's left when the answer to both is genuinely no — see Section 5 for exactly what that means and doesn't mean.</p>
+
+        <p>A few things worth understanding about how this decision actually plays out in real time:</p>
+        <ul>
+          <li><strong>The right answer can change as the situation develops.</strong> You might start by hiding and later find a safe moment to run. You might start moving to run and have to pivot to hiding if your path closes off. The framework isn't a one-time choice — it's a lens you keep applying as things change.</li>
+          <li><strong>Different people in the same room can reasonably make different choices.</strong> Someone near a clear exit and someone across the room near a lockable door aren't necessarily facing the same decision. Don't assume everyone should do what you're doing.</li>
+          <li><strong>You don't need certainty to act.</strong> Waiting for full information before moving is itself a choice, and often the worse one. Act on the best read of the situation you can get quickly.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 3. RUN ═══ -->
+      <section class="th-section" id="run">
+        <h2>3. Run</h2>
+        <p>If you can get out safely, get out. Evacuation is the option that removes you from danger fastest and most completely, and it's the right call whenever it's genuinely available to you.</p>
+
+        <ol class="th-steps">
+          <li><strong>Leave everything behind.</strong> Your bag, your laptop, your coat — none of it matters. Every second spent gathering belongings is a second of exposure you didn't need to accept.</li>
+          <li><strong>Know more than one way out.</strong> Whenever you're in an unfamiliar building — a venue, a store, a new office — it costs almost nothing to notice where the exits are, not just the door you walked in through. That habit is the entire value of this section; it's what makes "run" a real option instead of a hope.</li>
+          <li><strong>Keep your hands visible and empty as you move.</strong> This matters twice: it helps you move faster without fumbling for objects, and it helps anyone else you encounter — especially arriving law enforcement, covered in Section 6 — immediately recognize you as not a threat.</li>
+          <li><strong>Help others evacuate only if it doesn't slow you down.</strong> Encouraging people near you to come along is reasonable. Stopping to physically assist someone who is not moving, at the cost of your own ability to get out, is a judgment call this book won't make for you — but understand that hesitating here has a real cost.</li>
+          <li><strong>Don't let the crowd's direction override your own read of the situation.</strong> People tend to move where others are moving. If you have a clear reason to believe a different direction is safer, trust that over the herd.</li>
+          <li><strong>Call 911 once you're safe — not while you're still moving, if you can avoid it.</strong> A call made while running is often garbled, drops important details, and slows you down. Get to safety first, then call and give dispatchers a clear, calm account: your location, the threat's last known location and description if you have it, and how many people are with you.</li>
+        </ol>
+
+        <div class="th-callout">
+          <strong>What to tell 911</strong>
+          Your specific location (address, floor, room number if known) &middot; the shooter's last known location, direction of movement, and description if you saw them &middot; number of potential shooters, if known &middot; types of weapons, if known and safe to note &middot; number of people with you and their condition.
+        </div>
+      </section>
+
+      <!-- ═══ 4. HIDE ═══ -->
+      <section class="th-section" id="hide">
+        <h2>4. Hide</h2>
+        <p>If evacuation isn't safe — the threat is between you and every exit you know of, or you simply don't have a clear path — the next option is to hide, quickly and securely, in a way that keeps you out of sight and behind something that slows down anyone trying to get to you.</p>
+
+        <h3>Finding and securing a room</h3>
+        <ol class="th-steps">
+          <li><strong>Get out of the hallway or open area and into an enclosed room.</strong> A room with a door that locks is far better than one that doesn't; a room with no door at all is a last choice, not a real hiding spot.</li>
+          <li><strong>Lock the door if it locks. If it doesn't, barricade it.</strong> Push heavy furniture — a desk, a filing cabinet, a table — against the door. The goal is to make entry slow and loud, not silent and easy.</li>
+          <li><strong>Turn off the lights.</strong> A dark room reveals less about whether it's occupied.</li>
+          <li><strong>Silence your phone completely — including vibration, not just ringer.</strong> A buzzing phone against a desk or in a pocket is audible in a quiet room. Do this immediately, and tell others with you to do the same.</li>
+          <li><strong>Move away from the door and out of sightlines from any window.</strong> Get low, get behind solid furniture or a wall section, and stay out of direct line-of-sight from the door's window or gap, if it has one.</li>
+          <li><strong>Stay completely silent.</strong> No talking above a whisper, no answering phone calls out loud — text 911 or a contact if your area supports text-to-911, rather than speaking.</li>
+          <li><strong>Do not open the door for anyone until you're certain it's safe.</strong> Law enforcement clearing a building will identify themselves clearly and repeatedly; a shooter attempting to gain entry may claim to be someone else. If you have any doubt, don't open it — let officers use their own methods to clear the room.</li>
+        </ol>
+
+        <h3>What makes a hiding spot good or bad</h3>
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Good hiding spot</th><th>Bad hiding spot</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Interior room, away from exterior windows and glass doors</td><td>A room with large windows facing a hallway or exterior walkway</td></tr>
+              <tr><td>A door that locks, or heavy furniture available to barricade it</td><td>No door, an open cubicle area, or a door that can't be secured at all</td></tr>
+              <tr><td>Solid walls and furniture between you and the door</td><td>A dead-end space with no cover and no second way to reposition</td></tr>
+              <tr><td>Room for the group to spread out of a single sightline through the door</td><td>Everyone clustered directly in view of the doorway or window</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="th-warn">
+          <strong>Concealment isn't cover</strong>
+          Hiding behind something that blocks *sight* (a curtain, a thin partition) is not the same as hiding behind something that provides *protection* (a concrete wall, a heavy filing cabinet, a solid interior wall). When you have a choice, choose protection. When you don't, concealment plus distance is still far better than being visible in the open.
+        </div>
+      </section>
+
+      <!-- ═══ 5. FIGHT ═══ -->
+      <section class="th-section" id="fight">
+        <h2>5. Fight</h2>
+        <p>Fight is the last resort in this framework — not because it never works, but because it's only the right call when running and hiding have both genuinely stopped being options and you are in imminent danger. This section is intentionally the shortest in this book. That's not an oversight; it reflects how rarely this stage is actually reached compared to Run or Hide.</p>
+        <p>If you reach this point, the goal is narrow and specific: <strong>create an opportunity to escape, or disrupt the threat's ability to continue acting, long enough for you and others to get away.</strong> This is a survival action aimed at buying an opening, not a contest to win or a wrong to correct — keep that framing, because it's what actually keeps the response focused and effective under extreme stress.</p>
+
+        <ol class="th-steps">
+          <li><strong>Commit fully once you've decided.</strong> A half-committed action is often worse than none. If this is genuinely the only option left, act with full intent and full effort.</li>
+          <li><strong>Act as a group if others are present.</strong> Multiple people acting together to create a distraction or disruption — throwing objects, shouting to disorient, moving simultaneously from different directions — is far more likely to create the opening you need than one person acting alone.</li>
+          <li><strong>Use whatever is available to create distance or disruption.</strong> A fire extinguisher, a chair, a heavy book, scalding coffee — ordinary objects, used to interrupt the threat's ability to see clearly, move freely, or aim, buy the seconds needed to get away.</li>
+          <li><strong>The moment an opening appears, take it.</strong> The point of every action in this section is to create a gap you can escape through — not to continue engaging once that gap exists.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>What this section is not</strong>
+          This is not tactical training, and this book makes no claim about what force is legally justified in any specific situation — that varies by state and by circumstance, and this book deliberately does not address it (see Section 10). What's described here is a safety-of-last-resort action aimed at escape, described honestly as rare and difficult, not glamorized as a first option.
+        </div>
+      </section>
+
+      <!-- ═══ 6. WHEN LAW ENFORCEMENT ARRIVES ═══ -->
+      <section class="th-section" id="law-enforcement">
+        <h2>6. When Law Enforcement Arrives</h2>
+        <p>Officers responding to an active-threat call are trained to move directly toward the threat as fast as possible — their first priority is stopping the danger, not identifying who's a victim, who's a witness, and who might still be a threat. That means the first moments of contact with arriving officers are highly structured, and your job is to make their read of you as fast and unambiguous as possible.</p>
+
+        <ol class="th-steps">
+          <li><strong>Keep your hands visible and empty at all times.</strong> Raise them, open, where officers can see them clearly. Don't reach for a phone, a bag, or anything else until you've been told it's safe to.</li>
+          <li><strong>Follow instructions exactly and immediately</strong>, even if they seem repetitive, brusque, or don't match what you'd expect. Officers may need to treat everyone in the area as an unknown until the scene is fully assessed — this isn't personal.</li>
+          <li><strong>Don't stop to ask questions or explain the situation</strong> while officers are still moving toward the threat. There will be time for that once the immediate danger is addressed; slowing them down in the moment isn't the way to help.</li>
+          <li><strong>Never run toward arriving officers</strong>, even out of relief or a desire to reach safety faster. Move as instructed, and let them come to you or direct you to a specific path.</li>
+          <li><strong>Don't carry anything that could be mistaken for a weapon.</strong> Drop bags, tools, or any object in your hands before officers reach you — a raised phone or an unidentified object in a hand is exactly the kind of ambiguity that costs precious seconds in a high-stress encounter.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>Why officers may walk past injured people at first</strong>
+          This is expected and correct, not neglect. Stopping the ongoing threat is what prevents more injuries, and it's the first priority for the first officers on scene. Medical aid — including from other officers, EMS, or you — typically follows once the immediate threat is confirmed contained. Section 7 covers what that means for you specifically.
+        </div>
+      </section>
+
+      <!-- ═══ 7. TREATING THE WOUNDED ONCE THE SCENE IS SECURED ═══ -->
+      <section class="th-section" id="treating-wounded">
+        <h2>7. Treating the Wounded Once the Scene Is Secured</h2>
+        <p>The single most important rule in this section is a sequencing rule, and it comes before any technique: <strong>confirm the scene is safe — normally signaled by law enforcement — before you render aid.</strong> A rescuer who becomes a second casualty doesn't just fail to help; they add to the problem responders now have to solve. Wait for law enforcement to indicate it's safe to move and assist, unless you are already in a secured area and certain no ongoing threat remains.</p>
+
+        <p>Once the scene is confirmed safe, this book does not re-teach bleeding-control or gunshot-wound technique from scratch — two other protocols in this library cover that in depth, and the right move is to use them rather than duplicate them here:</p>
+
+        <a href="../Gunshot-Wound-Response/1HT_Protocol_GunshotWound_v7.html" class="th-crosslink live">
+          <div class="th-cl-icon">🎯</div>
+          <div>
+            <div class="th-cl-title">Gunshot Wound Response</div>
+            <div class="th-cl-sub">Entry/exit wound assessment, chest and abdominal gunshot considerations, and applying bleeding-control technique to penetrating trauma specifically.</div>
+          </div>
+          <div class="th-cl-tag">Live</div>
+        </a>
+
+        <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html" class="th-crosslink live">
+          <div class="th-cl-icon">🩸</div>
+          <div>
+            <div class="th-cl-title">Severe Bleeding &amp; Hemorrhage Control</div>
+            <div class="th-cl-sub">The foundational tourniquet and wound-packing technique referenced by the guide above.</div>
+          </div>
+          <div class="th-cl-tag">Live</div>
+        </a>
+
+        <p>What this section adds, specific to an active-threat scene:</p>
+        <ul>
+          <li><strong>Triage by severity if more than one person is hurt</strong> — the same principle covered in the bleeding-control protocols applies here: address the most immediately life-threatening bleeding first.</li>
+          <li><strong>Expect to be directed by responding officers or EMS</strong> on where it's safe to move, who to help first, and where to bring injured people for further care — follow that direction rather than improvising your own triage plan if one is being given.</li>
+          <li><strong>Preserve what you can without delaying care.</strong> If it's safe and doesn't cost meaningful time, avoid unnecessarily disturbing the scene — but a person's safety and bleeding control always take priority over evidence preservation.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. PSYCHOLOGICAL AFTERMATH ═══ -->
+      <section class="th-section" id="aftermath">
+        <h2>8. Psychological Aftermath</h2>
+        <p>A strong reaction after surviving or witnessing an active-threat event is common and expected — not a sign of weakness, and not something you're expected to simply push past. Difficulty sleeping, intrusive memories, jumpiness, irritability, and emotional numbness are all normal responses to an abnormal event, in the days and weeks that follow.</p>
+        <p>This book is a first-aid guide, not a mental-health resource, and it won't attempt to counsel you through that process here — that's a job for a trained professional, not a page in an e-book. What it will do is point you toward the kind of help that actually works:</p>
+        <ul>
+          <li><strong>Your employer's Employee Assistance Program (EAP),</strong> if you have one — most offer confidential, short-term counseling at no cost, specifically for situations like this.</li>
+          <li><strong>988 Suicide &amp; Crisis Lifeline</strong> (call or text 988) — available nationwide, 24/7, for anyone in acute distress, not only in a suicide-specific crisis.</li>
+          <li><strong>A licensed therapist experienced in trauma or critical-incident response,</strong> found through your insurance provider, a primary care referral, or a community mental health center.</li>
+          <li><strong>Children especially benefit from professional support after this kind of event</strong> — a pediatrician or school counselor can help identify the right resource for their age.</li>
+        </ul>
+        <div class="th-callout">
+          <strong>One practical note</strong>
+          It's common to feel fine immediately afterward and have a delayed reaction days or weeks later. Both patterns are normal. If a reaction is affecting sleep, work, or relationships for more than a few weeks, that's a reasonable point to seek professional support rather than waiting for it to resolve on its own.
+        </div>
+      </section>
+
+      <!-- ═══ 9. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>9. Essential Items Checklist</h2>
+        <p>Most of this protocol is behavioral, not equipment-based — Run, Hide, and Fight all depend far more on decision-making than on gear. A short list of items is still worth having within reach, mostly for the "treating the wounded" stage in Section 7 and for staying reachable during Run/Hide.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Commercial tourniquet &amp; hemostatic gauze</strong><span class="th-cl-why"> — Section 7. See Severe Bleeding &amp; Hemorrhage Control for full technique.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Fully charged phone / portable battery bank</strong><span class="th-cl-why"> — Sections 3 &amp; 4. A dead phone means no 911 call and no way to receive updates while hiding.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — Section 7, worn before contact with any blood, once the scene is confirmed safe.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>The real preparation here isn't in a bag</strong>
+          It's in knowing where your exits are before you need them (Section 3), and having actually thought through this framework once before, calmly, so it's available to you under stress.
+        </div>
+      </section>
+
+      <!-- ═══ 10. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>10. Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This content is general civilian-safety guidance based on publicly available DHS/FBI Run-Hide-Fight materials.</strong> It does not constitute medical advice, tactical training, or professional instruction, and it is not a substitute for a certified active-threat preparedness course, which we strongly recommend taking in person.</p>
+          <p><strong>This book is not legal advice, and it does not address use-of-force or self-defense law, which varies significantly by state.</strong> Nothing in Section 5 ("Fight") or anywhere else in this book should be read as a statement about what actions are legally justified, permitted, or protected in any specific situation or jurisdiction. If you have questions about what actions are legally permissible where you live, consult a licensed attorney in your state.</p>
+          <p><strong>In any active threat, call 911 (or your local emergency number) the moment it is safe to do so.</strong> Nothing in this guide should delay that call.</p>
+          <p>This book, like every title in this library, is not a substitute for professional training or emergency services. 1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 25, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/active-shooter/">1sthourprotocols.com/active-shooter</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional training or emergency services. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

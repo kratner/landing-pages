@@ -1,0 +1,884 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_GridDown_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Grid-Down-Power-Outage/1HT_Protocol_GridDown_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Grid-Down / Extended Power Outage" e-book
+     Track B #9. Built per Prompts/1HT_BuildPrompt_Book09_GridDown_v1.md.
+     Standalone HTML page, hosted at https://1sthourprotocols.com/grid-down/.
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Structural/CSS/JS shell copied wholesale from the Severe Bleeding
+     template (v7) per the build prompt's §item 4 — content is unrelated to
+     bleeding control, built fresh for a non-trauma, sustained-emergency
+     scenario per the master list §9 / build prompt §2.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly (Medical Disclaimer
+       14 → 13).
+     - v2 (2026-08-25, Claude): Ice Storm / Winter Grid Failure (Book #12)
+       shipped live at /iceover-event/ — flipped this book's Ice Storm
+       cross-link card from "Coming Soon" to "Live" and fixed its `href`,
+       which pointed at the wrong slug (`/ice-storm-winter-grid-failure/`,
+       the folder name, instead of the actual deployed slug
+       `/iceover-event/`).
+     - v1 (2026-08-24, Claude): Initial build. Content, illustrations, and
+       medical/safety review all complete before first deploy. See
+       Books/REVISIONS.md for full detail.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grid-Down / Extended Power Outage — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to get through the first 24 hours — and the days after — of an extended power outage, including generator/carbon-monoxide safety, food safety timelines, water storage, and when to shelter vs. relocate.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+
+  /* ── Food-safety timeline table ───────────────────────────────── */
+  .th-timeline-wrap{
+    display:flex;
+    gap:20px;
+    margin:0 0 28px;
+  }
+  .th-timeline-card{
+    flex:1;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:20px;
+    text-align:center;
+  }
+  .th-timeline-card h4{font-size:15px !important;letter-spacing:0.5px;margin-bottom:6px;}
+  .th-timeline-card .th-tl-hours{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(32px,5vw,44px) !important;
+    color:var(--red);
+    line-height:1;
+    margin:6px 0;
+  }
+  .th-timeline-card p{font-size:13.5px;color:var(--gray);margin:6px 0 0;}
+  @media (max-width:600px){ .th-timeline-wrap{flex-direction:column;} }
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State/climate-zone cards (condensed — not a 12-state grid) ── */
+  .th-state-short{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:20px 24px;margin:0 0 20px;}
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour (and Beyond) Matters</a></li>
+      <li><a href="#first-hour-checklist">The First-Hour Checklist</a></li>
+      <li><a href="#food-safety">Food Safety Timeline</a></li>
+      <li><a href="#water">Water Storage &amp; Purification</a></li>
+      <li><a href="#generator-safety">Generator Safety</a></li>
+      <li><a href="#heat-cold">Heat &amp; Cold Management Without Power</a></li>
+      <li><a href="#communication">Communication When Cell Towers Are Down</a></li>
+      <li><a href="#shelter-relocate">Shelter vs. Relocate</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#climate-notes">Climate &amp; Regional Notes</a></li>
+      <li><a href="#escalation">When Things Escalate</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Grid-Down / Extended Power Outage</h1>
+        <p class="lede">What to check in the first hour after the power goes out — and how to manage food, water, warmth, and communication for as long as it takes to come back on.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-griddown-ebook-001.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general emergency-preparedness education. It is not a substitute for professional medical care, your local emergency management agency's guidance, or a certified first aid/CPR course, and it is not legal advice. In any true medical emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#first-hour-checklist">First Hour</a><span class="arrow">→</span>
+        <a href="#generator-safety">Generator Safety</a><span class="arrow">→</span>
+        <a href="#shelter-relocate">Shelter vs. Relocate</a><span class="arrow">→</span>
+        <a href="#escalation">When to Get Help</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR (AND BEYOND) MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour (and Beyond) Matters</h2>
+        <p>Most of this library's protocols are built around a single acute injury — something happens, you respond in the first sixty seconds, and the outcome is largely decided soon after. A power outage is a different shape of emergency entirely. Nobody is bleeding in the first minute. The danger here is <strong>slower, quieter, and cumulative</strong> — it comes from small decisions in the first hour that compound over the following hours and days: whether you open the freezer "just to check," whether you run a generator somewhere that seems reasonable at 2 a.m., whether you assume the power will be back "any minute now" and skip basic preparation as a result.</p>
+        <p>The average U.S. power outage is resolved in a few hours. But a meaningful share run much longer — a severe storm, a grid failure, or damage to transmission infrastructure can knock out power for a day, several days, or in rare cases over a week. This protocol is written for that uncertainty: what to do in the first hour <em>assuming you don't know yet how long it will last</em>, and how to carry that first hour's decisions into a realistic multi-day posture if it comes to that.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Treat every outage, from the first minute, as if it might be a long one. The checks and habits that cost you nothing if the power comes back in twenty minutes are the same ones that prevent real danger — spoiled food, carbon monoxide poisoning, hypothermia or heat illness, a missed medical dependency — if it doesn't.
+        </div>
+      </section>
+
+      <!-- ═══ 2. THE FIRST-HOUR CHECKLIST ═══ -->
+      <section class="th-section" id="first-hour-checklist">
+        <h2>2. The First-Hour Checklist</h2>
+        <p>Work through this list as soon as you realize the power is out — before you decide it's "probably nothing." Most items take seconds and cost nothing if power returns quickly.</p>
+        <ol class="th-steps">
+          <li><strong>Check whether it's just you.</strong> Look for lit windows at neighboring homes, or check your utility's outage map on a phone (cell data often still works even when home Wi-Fi/internet is down). A single-house outage may be an internal electrical problem, not a grid event — different response, possibly urgent (a tripped main breaker, a downed line on your own property).</li>
+          <li><strong>If you smell gas or see sparking, downed lines, or damage near your home's electrical service,</strong> get everyone out immediately without operating any light switch, phone, doorbell, or anything else that could spark, and call 911 or your utility's emergency line from outside before doing anything else on this list. Do not touch a downed power line or anything it's touching, ever, for any reason.</li>
+          <li><strong>Check your main breaker panel.</strong> If only part of your home lost power, a tripped breaker or a blown fuse may be the actual cause — reset it once, and if it trips again immediately, stop and call an electrician rather than resetting repeatedly.</li>
+          <li><strong>Unplug or power down sensitive electronics</strong> (computers, TVs, routers) to protect them from a power surge when service is restored. Leave one lamp switched on so you'll notice when power returns.</li>
+          <li><strong>Check on powered medical equipment in the home</strong> — oxygen concentrators, CPAP machines, powered wheelchairs, home dialysis or infusion equipment. Confirm battery backups are active and note how much runtime is left. See Section 9 for medically-dependent household planning in depth.</li>
+          <li><strong>Check sump pumps and well pumps.</strong> A sump pump without backup power stops protecting a basement from flooding the moment the outage starts; a well pump means no running water at all until power returns or a generator is running one safely (Section 5). If flooding risk is real and you have no battery/generator backup, this may be the single most time-sensitive item on this list.</li>
+          <li><strong>Keep the refrigerator and freezer closed.</strong> Don't open them "to check" — every open door resets the clock on Section 3's hold times. Note the time the outage started so you can track it.</li>
+          <li><strong>Locate flashlights, a battery or hand-crank radio, and your phone charger/power bank</strong> before it gets dark or you need them, not after.</li>
+          <li><strong>If you have a generator, do not set it up yet</strong> without reading Section 5 in full first — this is the highest-stakes decision in this entire book.</li>
+        </ol>
+      </section>
+
+      <!-- ═══ 3. FOOD SAFETY TIMELINE ═══ -->
+      <section class="th-section" id="food-safety">
+        <h2>3. Food Safety Timeline</h2>
+        <p>Food safety during an outage comes down to time and temperature, not how the food looks or smells. Bacteria that cause foodborne illness grow fastest between 40°F and 140°F — the "danger zone" — and a warm kitchen sits well inside that range within hours of losing power.</p>
+
+        <div class="th-timeline-wrap">
+          <div class="th-timeline-card">
+            <h4>Refrigerator</h4>
+            <div class="th-tl-hours">~4 HRS</div>
+            <p>Safe hold time <strong>if the door stays closed</strong>. After that, perishables (meat, dairy, eggs, leftovers, cut produce) should be treated as unsafe unless you've confirmed the internal temperature is still 40°F or below with a thermometer.</p>
+          </div>
+          <div class="th-timeline-card">
+            <h4>Freezer (full)</h4>
+            <div class="th-tl-hours">~48 HRS</div>
+            <p>Safe hold time <strong>if the door stays closed and the freezer was full</strong>. A half-full freezer holds roughly <strong>24 hours</strong> instead — more air inside means less thermal mass to keep things cold.</p>
+          </div>
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-griddown-foodsafety-001.png" alt="1st Hour food safety timeline diagram — a closed refrigerator holds a safe temperature for about 4 hours; a closed full freezer holds for about 48 hours (24 hours if only half full).">
+        </figure>
+
+        <h3>How to tell if food is still safe</h3>
+        <ul>
+          <li><strong>Use a food thermometer, not your senses.</strong> Bacteria that cause serious illness typically don't change the taste, smell, or appearance of food — "it still looks fine" is not a safety test.</li>
+          <li><strong>Refrigerated perishables</strong> (meat, poultry, fish, eggs, milk, soft cheese, leftovers, cut fruit/vegetables) held above 40°F for more than about 2 hours total should be discarded, whether or not the outage itself lasted 2 hours — track cumulative time above 40°F, not just outage duration.</li>
+          <li><strong>Frozen food that still has ice crystals and is 40°F or below</strong> can be safely refrozen or cooked. Food that has thawed completely and sat above 40°F for more than 2 hours should be discarded.</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>When in doubt, throw it out</strong>
+          If you cannot verify a food item's temperature history and have any doubt about whether it stayed safely cold, discard it without tasting it first. Foodborne illness from contaminated food frequently shows no warning signs in taste or smell before you're already sick.
+        </div>
+
+        <p>Keep a thermometer inside both the fridge and freezer year-round (an inexpensive appliance thermometer, not the built-in digital display, which loses power along with everything else) so you have an actual reading to check against these numbers rather than a guess.</p>
+      </section>
+
+      <!-- ═══ 4. WATER STORAGE & PURIFICATION ═══ -->
+      <section class="th-section" id="water">
+        <h2>4. Water Storage &amp; Purification</h2>
+        <p>Most outages don't affect your water supply directly — but a well pump needs electricity, and municipal water systems can lose pressure or issue a boil-water notice if treatment plants or pumping stations lose power during a widespread or prolonged event. Plan for both possibilities.</p>
+
+        <h3>How much stored water is enough</h3>
+        <p>The standard planning figure is <strong>one gallon per person per day</strong>, covering drinking and basic hygiene, with a <strong>minimum three-day (72-hour) supply</strong> for a short-duration event and a <strong>two-week supply</strong> as a more resilient target if you have the storage space. A family of four planning for two weeks needs roughly 56 gallons — bulky, but a realistic target to build toward gradually rather than all at once.</p>
+        <ul>
+          <li><strong>Store it before you need it,</strong> in food-grade containers, away from direct sunlight and any chemicals or fuel. Commercially bottled water doesn't need special treatment; water you store yourself in reused containers should be rotated roughly every six months.</li>
+          <li><strong>Fill a bathtub or large containers as soon as an outage starts</strong> if you're on a well or your area is prone to pressure loss — this buys you non-potable water for flushing toilets and washing even before you touch your stored drinking water.</li>
+        </ul>
+
+        <h3>If the water supply itself is affected</h3>
+        <ol class="th-steps">
+          <li><strong>Follow any official boil-water notice exactly</strong> — check a battery-powered radio (Section 6) or your utility's alerts, since a boil-water notice specifically means the normal treatment process may have been compromised, not just that pressure is low.</li>
+          <li><strong>Boiling is the most reliable purification method available at home.</strong> Bring water to a rolling boil and hold it there for one full minute (three minutes at elevations above roughly 6,500 feet, where water boils at a lower temperature) to kill bacteria, viruses, and parasites.</li>
+          <li><strong>If boiling isn't possible,</strong> unscented liquid household chlorine bleach (6–8.25% sodium hypochlorite, no added scents, thickeners, or dyes) can disinfect water — follow the ratio and wait time printed on the product label or your local health department's guidance exactly, since concentrations vary by product.</li>
+          <li><strong>A portable water filter rated for bacteria and protozoa (look for an EPA/NSF-certified purifier rating)</strong> is a reasonable addition to a kit, but check its specific certification — many camping-style filters remove bacteria and parasites but not viruses, which matters more for surface water than typical municipal-supply contamination.</li>
+        </ol>
+      </section>
+
+      <!-- ═══ 5. GENERATOR SAFETY ═══ -->
+      <section class="th-section" id="generator-safety">
+        <h2>5. Generator Safety</h2>
+        <div class="th-warn">
+          <strong>This is the single most important section in this book.</strong> Carbon monoxide (CO) from an improperly placed portable generator is the leading cause of death in the aftermath of power outages in the United States — more people die from generator-related CO poisoning after a storm than from the storm itself in many events. CO is colorless, odorless, and tasteless. You cannot detect it forming. The only reliable protection is never creating the conditions for it to build up around you in the first place.
+        </div>
+
+        <h3>Never run a generator:</h3>
+        <ul>
+          <li><strong>Indoors, anywhere in the home</strong> — not in a basement, not in a room with the windows open, not "just for a minute."</li>
+          <li><strong>In a garage, carport, or shed — even with the door fully open.</strong> An open garage door does not ventilate a generator's exhaust fast enough; CO can still accumulate to lethal levels inside the garage and drift into the attached house.</li>
+          <li><strong>Near any window, door, or vent</strong> — including your own, and including a neighbor's, if you're close enough for exhaust to drift toward either home. CO travels through open windows and vents from outdoors and will accumulate indoors even when the generator itself is physically outside.</li>
+          <li><strong>Under any structure attached to the home,</strong> including a covered porch, breezeway, or carport that shares airflow with the house.</li>
+        </ul>
+
+        <h3>Safe placement — every time:</h3>
+        <ol class="th-steps">
+          <li><strong>Place the generator outdoors, in the open air, at least 20 feet from your home</strong> in every direction, and at least 20 feet from any neighboring structure — further if wind is blowing exhaust toward a building.</li>
+          <li><strong>Point the exhaust away from your home and any windows, doors, or vents</strong> — yours or a neighbor's.</li>
+          <li><strong>Never run it under an awning, tarp, or any covered structure</strong> even if it's freestanding and outdoors — exhaust needs to disperse into open air, not collect under a roofline.</li>
+          <li><strong>Install battery-powered or battery-backup carbon monoxide detectors inside your home</strong> — on every level, and specifically near sleeping areas — and test them before you ever need them. A CO detector is not optional equipment if you own or might ever use a generator.</li>
+          <li><strong>If a CO alarm sounds, get everyone outside into fresh air immediately</strong> and call 911 — do not go back inside to search for the source or open windows first.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-griddown-generatorsafety-001.png" alt="1st Hour generator safe-placement diagram — a portable generator placed outdoors at least 20 feet from the house, away from windows, doors, and vents; a prohibition symbol over generators shown running in a garage or inside a house.">
+        </figure>
+
+        <h3>Other generator safety basics</h3>
+        <ul>
+          <li><strong>Let the generator cool before refueling it.</strong> Gasoline spilled on a hot engine or exhaust system can ignite.</li>
+          <li><strong>Store fuel outside the living space,</strong> in approved containers, away from any ignition source.</li>
+          <li><strong>Keep the generator dry</strong> and never operate it in rain or standing water — electrocution is a real secondary risk alongside CO.</li>
+          <li><strong>If you're connecting a generator to your home's electrical system (a "backfeed" setup)</strong> rather than running extension cords directly to appliances, it must go through a properly installed transfer switch, installed by a licensed electrician, before an outage happens — an improperly connected generator can feed power back into utility lines and electrocute line workers repairing the outage, in addition to fire risk. Never attempt to backfeed a home's wiring by plugging a generator into a regular wall outlet.</li>
+        </ul>
+
+        <div class="th-callout dark">
+          <strong>If you smell exhaust or feel CO-poisoning symptoms</strong>
+          Headache, dizziness, weakness, nausea, confusion, or chest pain in anyone in or near the home while a generator is running is a medical emergency. Get everyone into fresh air immediately, call 911, and do not re-enter until the space has been checked and cleared.
+        </div>
+      </section>
+
+      <!-- ═══ 6. HEAT & COLD MANAGEMENT WITHOUT POWER ═══ -->
+      <section class="th-section" id="heat-cold">
+        <h2>6. Heat &amp; Cold Management Without Power</h2>
+        <p>Losing climate control is uncomfortable in mild weather and dangerous in extreme heat or cold, especially for infants, older adults, and anyone with a chronic medical condition. The approach differs by season, but one rule carries over directly from Section 5: <strong>any fuel-burning heat source has the exact same carbon-monoxide risk as a generator and needs the exact same never-indoors rule.</strong></p>
+
+        <h3>Staying warm without power</h3>
+        <ul>
+          <li><strong>Layer clothing and bedding</strong> rather than relying on a single heat source — trapped air insulates better than one thick layer.</li>
+          <li><strong>Close off and gather in one small room</strong> rather than heating the whole house — body heat and a closed door make a meaningful difference in a well-sealed small space.</li>
+          <li><strong>Battery-powered or rechargeable heated blankets and hand/foot warmers are safe indoor options</strong> and carry no CO risk, unlike any combustion source.</li>
+          <li><strong>Never use a gas stove or oven to heat a room, ever, for any reason</strong> — this is a leading cause of indoor CO poisoning during outages specifically because it feels like an obviously available option. Never use a charcoal or propane grill indoors, in a garage, or on an enclosed porch for the same reason as Section 5's generator rule — grills produce CO just like generators do.</li>
+          <li><strong>A fireplace or wood stove that was already a permanent, code-compliant, professionally installed fixture in the home before the outage — never one set up or improvised during one —</strong> is different from every other heat source in this list. It still needs a working CO detector nearby and a clear, unblocked flue, and it is never an excuse to bring a generator, grill, or camp stove indoors.</li>
+        </ul>
+
+        <h3>Staying cool without power</h3>
+        <ul>
+          <li><strong>Move to the lowest level of the home,</strong> where it's naturally cooler, and close blinds/curtains on sun-facing windows during the day.</li>
+          <li><strong>Battery-powered fans</strong> help even without air conditioning — moving air increases evaporative cooling from the skin.</li>
+          <li><strong>Stay hydrated and avoid exertion during the hottest part of the day.</strong> Heat illness risk climbs quickly for infants, older adults, and anyone without working AC for more than a few hours in genuinely hot weather — consider relocating to an air-conditioned public space (see Section 8) rather than waiting it out if the heat is severe.</li>
+          <li><strong>Cool, damp cloths on the neck, wrists, and forehead</strong> help manage heat stress in the meantime.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 7. COMMUNICATION WHEN CELL TOWERS ARE DOWN ═══ -->
+      <section class="th-section" id="communication">
+        <h2>7. Communication When Cell Towers Are Down</h2>
+        <p>Cell towers typically have their own battery backup, but it's usually good for only a few hours under normal load — and a widespread outage puts far more load on the towers that are still up as everyone in the area tries to use them at once. Plan for cell service to become unreliable during an extended outage, not just your home's own power.</p>
+        <ul>
+          <li><strong>Texts often get through when calls don't.</strong> A text message is a small amount of data sent once; a voice call needs a continuous connection. If calls are failing, try a text before assuming you have no signal at all.</li>
+          <li><strong>A battery or hand-crank emergency radio</strong> with NOAA weather-band reception is the most reliable way to get official information when data networks are overloaded or down — this should already be in your kit per Section 2's first-hour checklist.</li>
+          <li><strong>Agree on a check-in plan with family before an emergency happens,</strong> not during one: an out-of-area contact everyone calls/texts (an out-of-area number is often easier to reach than trying to call within the affected area directly), and a physical meeting point if home isn't reachable or safe.</li>
+          <li><strong>Conserve phone battery</strong> — lower screen brightness, close unused apps, and switch to airplane mode between check-ins to reduce the battery drain of your phone repeatedly searching for a weak signal.</li>
+          <li><strong>A car's battery and alternator can charge phones</strong> for a meaningful amount of time if you have fuel — but never run a vehicle in an enclosed garage to do this, for the exact same CO reason as Section 5.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. SHELTER VS. RELOCATE ═══ -->
+      <section class="th-section" id="shelter-relocate">
+        <h2>8. Shelter vs. Relocate</h2>
+        <p>Most outages are safest to simply wait out at home. But there's a real decision point past which staying stops being the safer option, and it's worth thinking through before you're tired, cold, or hot and making the call under pressure.</p>
+
+        <h3>Factors that push toward relocating</h3>
+        <ul>
+          <li><strong>Medical equipment dependency</strong> that can't be sustained on remaining battery/generator capacity — don't wait until a device is about to fail; move before that point, per Section 9.</li>
+          <li><strong>Extreme heat or cold</strong> that your home can no longer safely buffer, especially with infants, older adults, or anyone medically vulnerable in the household.</li>
+          <li><strong>Food and water reserves running out</strong> with no restoration timeline in sight.</li>
+          <li><strong>Structural safety concerns</strong> — storm damage, standing water, a compromised roof, or anything that makes the home itself unsafe independent of the power loss.</li>
+          <li><strong>No realistic restoration estimate</strong> from your utility, or an estimate measured in many days rather than hours.</li>
+        </ul>
+
+        <h3>If you decide to relocate</h3>
+        <ol class="th-steps">
+          <li><strong>Go to a known safe destination</strong> — a relative's home with power, a hotel, or an official shelter opened by local emergency management (check the battery radio from Section 7 for shelter locations and openings).</li>
+          <li><strong>Bring medications, medical equipment and its chargers, identification, and this book's Essential Items Checklist (Section 10)</strong> — treat it as a grab-and-go list, not just an at-home reference.</li>
+          <li><strong>Tell your out-of-area contact where you're going</strong> before you lose the ability to communicate it.</li>
+          <li><strong>Shut off water and unplug remaining electronics before leaving,</strong> the same as you would before any extended absence.</li>
+        </ol>
+      </section>
+
+      <!-- ═══ 9. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>9. Special Situations</h2>
+
+        <h3>Households with medically dependent members</h3>
+        <p>If anyone in your home depends on powered medical equipment — oxygen concentrators, CPAP/BiPAP machines, home dialysis, infusion pumps, powered mobility devices — or on medication that requires refrigeration (insulin is the most common example), plan for this specifically before an outage, not during one:</p>
+        <ul>
+          <li>Know your equipment's battery backup runtime exactly, and register with your utility's medical-priority/critical-care customer program if one exists — many utilities restore priority accounts faster and provide outage-specific notifications.</li>
+          <li>Have a plan for where to go if backup power runs out before service is restored, and don't wait until the last minute of battery life to start moving.</li>
+          <li>Refrigerated medication can typically tolerate a closed cooler with ice packs for a limited window — check the specific medication's insert or ask a pharmacist in advance for how long, since this varies by drug.</li>
+        </ul>
+
+        <h3>Households with infants or older adults</h3>
+        <p>Infants and older adults regulate body temperature less effectively than a healthy adult and dehydrate or overheat faster. Prioritize climate management (Section 6) and hydration for these household members first, and set a lower personal threshold for deciding to relocate (Section 8) rather than waiting to see how they tolerate it.</p>
+
+        <h3>Checking on neighbors</h3>
+        <p>A widespread outage affects your whole street, not just your household — a quick, safe check on elderly or medically vulnerable neighbors costs little and can catch a problem (a failed medical device, no heat/cooling, no water) before it becomes an emergency for someone without the resources to reach out themselves.</p>
+      </section>
+
+      <!-- ═══ 10. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>10. Essential Items Checklist</h2>
+        <p>Everything in this protocol assumes certain supplies are already in the home before an outage starts. Build this list out gradually if you don't have it all yet — even a partial kit is far better than none.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Battery or hand-crank emergency radio (NOAA weather-band)</strong><span class="th-cl-why"> — Section 7. Your most reliable information source when cell networks are overloaded.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Flashlights and spare batteries</strong><span class="th-cl-why"> — Section 2. Check these first, before it gets dark.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Battery-powered carbon monoxide detector</strong><span class="th-cl-why"> — Section 5. Non-negotiable if you own or might use a generator or any fuel-burning heat source.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Stored water (1 gal/person/day, 3-day minimum)</strong><span class="th-cl-why"> — Section 4. Store it before you need it.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Appliance thermometers (fridge &amp; freezer)</strong><span class="th-cl-why"> — Section 3. The only reliable way to verify food safety after an outage.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Portable phone chargers / power banks</strong><span class="th-cl-why"> — Section 7. Charge these before an outage, not during one.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Portable generator, stored fuel, and a transfer switch (if applicable)</strong><span class="th-cl-why"> — Section 5. Set up the transfer switch by a licensed electrician before an outage, never during one.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-electric water purification method (bleach or a certified filter)</strong><span class="th-cl-why"> — Section 4. Backup if boiling isn't possible.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Battery-powered fans and/or rechargeable heated blankets</strong><span class="th-cl-why"> — Section 6. Climate management with zero CO risk, unlike combustion sources.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Spare medication supply and equipment battery backups</strong><span class="th-cl-why"> — Section 9. Coordinate with your pharmacist/provider in advance, not during an outage.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep them together in one accessible location — a hall closet or garage shelf everyone in the household knows — not scattered piecemeal. In the dark, on hour one, you don't want to be searching room to room.
+        </div>
+      </section>
+
+      <!-- ═══ 11. CLIMATE & REGIONAL NOTES ═══ -->
+      <section class="th-section" id="climate-notes">
+        <h2>11. Climate &amp; Regional Notes</h2>
+        <p>Unlike most books in this library, geography genuinely changes the urgency of a grid-down event here — but by <strong>climate zone</strong>, not by a state-by-state legal grid the way Good Samaritan protections vary. A power outage in Phoenix in July and one in Minneapolis in January are both dangerous, but for opposite thermal reasons, and the same generator/CO rules apply everywhere regardless of climate.</p>
+
+        <div class="th-state-grid">
+          <div class="th-state-card">
+            <h4>Heat-Risk Regions</h4>
+            <p>Southern, Southwestern, and Gulf Coast states face the sharpest risk from losing air conditioning during summer heat — heat illness can develop within hours for infants, older adults, and anyone medically vulnerable. Set a lower personal threshold for relocating to an air-conditioned space (Section 8) in these regions during summer outages, and prioritize hydration and cooling (Section 6) immediately.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Cold-Risk Regions</h4>
+            <p>Northern, Upper Midwest, and mountain-region states face the sharpest risk from losing heat during winter — hypothermia risk climbs quickly in a home that can't hold heat, and this is exactly where the temptation to bring a generator or grill indoors "just this once" is strongest and most dangerous (Section 5). These regions should treat CO detector coverage and layering/insulation (Section 6) as higher priority, not lower, precisely because the cold makes an unsafe shortcut more tempting.</p>
+          </div>
+        </div>
+
+        <p>Whichever climate zone you're in, the practical takeaway is the same: match your preparation to your region's dominant seasonal risk, but never treat climate severity as a reason to relax the generator/CO rules in Section 5 — those apply identically everywhere, regardless of how cold or hot it is outside.</p>
+      </section>
+
+      <!-- ═══ 12. WHEN THINGS ESCALATE ═══ -->
+      <section class="th-section" id="escalation">
+        <h2>12. When Things Escalate</h2>
+        <p>Most outages resolve without incident. A smaller number turn into something more serious than "wait it out." Watch for these signs that the situation has moved past routine:</p>
+        <ul>
+          <li><strong>Structural damage to the home</strong> from the same event that caused the outage (storm, fire, flooding) that makes staying unsafe independent of the power loss itself.</li>
+          <li><strong>No realistic restoration timeline</strong> from your utility, or a timeline that keeps extending well past what your food, water, and medical-equipment reserves can cover.</li>
+          <li><strong>A medical emergency arising from the conditions</strong> — heat illness, hypothermia, a CO exposure, a medical-equipment failure. Call 911 immediately; don't wait to see if the person "shakes it off," and don't let the outage itself (blocked roads, unreachable landlines) delay that call — try every available channel (cell, text, a neighbor's working phone or radio).</li>
+          <li><strong>Signs of carbon monoxide exposure in anyone in the household</strong> — treat this as the emergency it is per Section 5's callout, every time, without waiting to "see if it passes."</li>
+        </ul>
+        <p>When in doubt about whether your situation still counts as "routine," treat it as the more serious case. The cost of an unnecessary 911 call or an unnecessary relocation is far lower than the cost of waiting too long on a genuine emergency.</p>
+      </section>
+
+      <!-- ═══ 13. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>13. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment, emergency management guidance, or legal advice. It is not a substitute for professional medical care, emergency medical services, your local emergency management agency's official guidance, or a certified first aid, CPR, or emergency-preparedness course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>Generator, carbon monoxide, and electrical safety guidance in this book reflects general best practices</strong> (consistent with CDC and Ready.gov consumer guidance) but does not replace your specific equipment's manufacturer instructions, a licensed electrician's guidance for any permanent generator connection, or your local fire code.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/grid-down/">1sthourprotocols.com/grid-down</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

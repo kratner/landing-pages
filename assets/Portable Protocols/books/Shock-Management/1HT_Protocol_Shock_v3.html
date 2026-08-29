@@ -1,0 +1,900 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_Shock_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Shock-Management/1HT_Protocol_Shock_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Shock Management" e-book. Track A #8 (final Track A
+     book). Structural/CSS/JS template copied wholesale from
+     Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v7.html
+     per Prompts/1HT_BuildPrompt_Book08_Shock_v1.md. Content is new. This book
+     is a hub: broader/deeper shock coverage than the bleeding-specific
+     treatment in the pilot's own Section 7, for readers arriving standalone
+     or via a cross-link from Burn Injury, Gunshot Wound Response, Car
+     Accident Trauma, or (once live) Choking.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly (Medical Disclaimer
+       14 → 13).
+     - v2 addendum (2026-08-25, Claude): The lifestyle image's kit-bag patch
+       (pr-graphic-319.png), noted below as a left-as-is "needs 3D warp, not
+       attempted" defect, was revisited and fixed — the patch turned out to
+       be close enough to fronto-parallel for a rotation-only composite (no
+       warp needed). Fixed via a color-thresholded mask isolating just the
+       cross shape (not a bounding box, which clipped the "1st HOUR" text on
+       the first attempt), cv2.inpaint erase, and a 9°-rotated real-logo
+       composite. Uploaded as `1sthour-shock-lifestyle-001.png`, superseding
+       `pr-graphic-319.png`. Marketing-only asset (not embedded in this book
+       page), so no `<img src>` change here. See `Books/REVISIONS.md`'s
+       2026-08-25 addendum to the Book 8 entry for full method/coordinates.
+     - v2 (2026-08-25, Claude): Keith flagged a ghosting artifact on the
+       Section 5 shock-positioning illustration's bottom-left trust-bullet
+       badge (`pr-graphic-332.png`, reused from the pilot book) — a stray
+       red vertical line sliver and a stray downward-arrow/chevron fragment
+       floating near the shield logo, leftover remnants from the original
+       AI-drawn wrong emblem that an earlier compositing pass hadn't fully
+       erased on this particular badge instance. Fixed via flat-color erase
+       (PIL) and uploaded to the Creative AI library as `pr-graphic-345.png`,
+       superseding `pr-graphic-332.png`. This book's `<img src>` updated to
+       match — same fix, same new file, as the pilot's own v9. See
+       `Books/REVISIONS.md`'s 2026-08-25 entry for the pixel-scan
+       method/coordinates.
+     - v1 (2026-08-24, Claude): Initial build. Full long-form content per the
+       build prompt's §2 structure (14 sections). Section 5 (positioning/
+       warmth/no-food-or-water) uses the pilot's already medically-reviewed
+       conditional leg-elevation framing (6-12", only if no spinal injury, no
+       leg injury, no breathing difficulty) rather than a blanket "always
+       elevate" instruction — this is the book's highest-stakes sequence.
+       Section 6 (epinephrine) framed conditionally: the standard 82-piece
+       1st Hour Trauma First Aid Kit does NOT include an epinephrine
+       auto-injector (confirmed against ../../../10 Reasons Sales
+       Page/1HT_10ReasonsSalesPage_v3.html's full kit-contents list) — the
+       section is written for "if you or the person you're helping carries
+       one," not as a guaranteed kit item. Images: reused the pilot's
+       already-corrected positioning illustration (pr-graphic-332.png, NOT
+       pr-graphic-021.png per the master-list correction flagged in
+       ImageURLs.md, and NOT pr-graphic-326.png per the build prompt's own
+       text — 332 supersedes 326 and is what the live pilot page actually
+       uses as of v7). The other 3 generated assets (pr-graphic-304 types-of-
+       shock, pr-graphic-305 epinephrine, pr-graphic-312 cover) were spot-
+       checked against el-logo-002.png/el-logo-013.png and confirmed
+       defective (plain invented "1ST HOUR" shield + heartbeat squiggle, no
+       stopwatch/stethoscope/wings) — fixed via direct pixel compositing
+       (erase + feathered blend + real logo paste) and uploaded to the
+       Creative AI library as 1sthour-shock-typesofshock-001.png,
+       1sthour-shock-epipen-001.png, and 1sthour-shock-cover-001.png. See
+       Books/REVISIONS.md for full fix methodology/coordinates. The
+       lifestyle image's kit-bag patch (pr-graphic-319.png) was originally
+       left as-is here (assumed to need 3D perspective warping) — see the
+       v2 addendum above, it was fixed 2026-08-25. Still left uncorrected:
+       4 tiny kit-item pouch badges on pr-graphic-304's bottom marketing
+       mockup row, same "too small to composite cleanly" category as prior
+       books' leftovers.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shock Management — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize and respond to shock — blood-loss, allergic/anaphylactic, cardiac, and heat-related — including positioning, warmth, epinephrine auto-injector basics, and state-specific Good Samaritan guidance.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix (short-note pattern) ──────────────────────── */
+  .th-state-short{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:20px 22px;
+    margin:0 0 20px;
+  }
+  .th-state-short p{margin-bottom:0;}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#what-is-shock">What Shock Actually Is</a></li>
+      <li><a href="#types-of-shock">Types of Shock at a Glance</a></li>
+      <li><a href="#recognizing-shock">Recognizing Shock</a></li>
+      <li><a href="#positioning-protocol">Positioning, Warmth &amp; No Food or Water</a></li>
+      <li><a href="#anaphylaxis">Anaphylactic Shock &amp; Epinephrine</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#monitoring">Monitoring &amp; Reassessment</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-appendix">Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Shock Management</h1>
+        <p class="lede">Shock isn't "being scared." It's the body failing to deliver enough blood to its own organs — and it can follow a bleed, a burn, an allergic reaction, or a heart problem just as easily. Here's how to recognize it and respond, no matter what caused it.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-shockmanagement-ebook-001.pdf" id="th-pdf-link" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#recognizing-shock">Recognize</a><span class="arrow">→</span>
+        <a href="#positioning-protocol">Position &amp; Warm</a><span class="arrow">→</span>
+        <a href="#anaphylaxis">Anaphylaxis</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>Shock is not a symptom you wait out. It's a progressive failure of the circulatory system — and left untreated, it kills on its own timeline, independent of whatever caused it in the first place. That's the single most important thing to understand about this protocol: a person can survive the bleed, the burn, or the allergic reaction that started things, and still die from the shock that followed, if it isn't recognized and managed in the same first hour.</p>
+        <p>This guide is different from most of the others in the 1st Hour library. It isn't built around one injury mechanism. Shock can follow severe bleeding, a major burn, a severe allergic reaction, a heart problem, or dangerous overheating — four very different starting points that converge on the same dangerous end state. If you found this book on its own, or clicked through from another protocol's "if shock symptoms appear" cross-link, this is the deeper treatment: what shock actually is, how to tell the types apart, and exactly what to do about it regardless of cause.</p>
+        <p>The good news is that the response doesn't require you to diagnose the cause correctly. Whether someone is in shock from blood loss, a bee sting, a heart attack, or a heat emergency, the immediate first-aid actions — positioning, warmth, getting professional help moving, and not giving food or water — are almost identical. Only one branch of this protocol (anaphylaxis, Section 6) adds a cause-specific step. Everything else in this book applies no matter which of the four types you're looking at.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          You don't need to know exactly why someone is in shock to start helping them. You need to recognize that they are, keep whatever caused it under control if you can, and support their circulation and body temperature until EMS takes over.
+        </div>
+      </section>
+
+      <!-- ═══ 2. WHAT SHOCK ACTUALLY IS ═══ -->
+      <section class="th-section" id="what-is-shock">
+        <h2>2. What Shock Actually Is</h2>
+        <p>In everyday language, "shock" means being startled or emotionally rattled. In medicine, it means something much more specific and dangerous: <strong>the body's circulatory system failing to deliver enough oxygenated blood to its organs.</strong> That's it — that's the whole definition. It has nothing to do with how someone feels emotionally, and everything to do with whether their organs are getting enough blood flow to keep functioning.</p>
+        <p>This misconception is worth correcting explicitly, because it changes how urgently people react. Someone who looks "shaken up" after a scary event is not automatically "in shock" in the medical sense, and someone who looks calm and is speaking in full sentences can absolutely be in the early stages of true circulatory shock. What matters is the body's actual blood flow and oxygen delivery — not how composed the person appears.</p>
+        <p>When organs don't get enough blood, they start to fail — first the least essential tissues, then progressively more vital ones, including eventually the brain and heart. Early on, the body compensates: the heart beats faster, blood vessels in the skin and extremities constrict to preserve flow to the core, and breathing speeds up. Those compensations are exactly why the early signs of shock look the way they do (Section 4) — and why shock can look deceptively mild right up until it doesn't.</p>
+        <div class="th-warn">
+          <strong>Why this matters practically</strong>
+          Because shock is a mechanical, physiological failure — not an emotional state — it doesn't resolve with reassurance or "calming down." It resolves only when the underlying cause is controlled and the body's circulation is supported (or, ultimately, treated in a hospital). Treating shock like a mood, rather than a medical emergency, is the single most common way people under-react to it.
+        </div>
+      </section>
+
+      <!-- ═══ 3. TYPES OF SHOCK AT A GLANCE ═══ -->
+      <section class="th-section" id="types-of-shock">
+        <h2>3. Types of Shock at a Glance</h2>
+        <p>"Shock" isn't one condition with one cause — it's an end state that several very different problems can all lead to. Knowing the broad categories helps you understand what you're looking at, even though (as Section 4 covers) the first-aid response looks nearly the same across all of them.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Type</th><th>What causes it</th><th>What's different about it</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Blood-loss (hypovolemic)</strong></td><td>Severe bleeding, or significant fluid loss from a large burn</td><td>The body simply doesn't have enough blood volume left to circulate — covered in depth in the Severe Bleeding &amp; Burn Injury protocols</td></tr>
+              <tr><td><strong>Allergic (anaphylactic)</strong></td><td>A severe allergic reaction to food, medication, an insect sting, or another trigger</td><td>Blood vessels suddenly widen and can leak fluid, and the airway can swell — the only type with a specific medication response (Section 6)</td></tr>
+              <tr><td><strong>Cardiac</strong></td><td>The heart failing to pump effectively (heart attack, severe arrhythmia, or other heart failure)</td><td>The pump itself is the problem, not the blood volume or vessel tone — chest pain, pressure, or known heart history are red flags</td></tr>
+              <tr><td><strong>Heat-related</strong></td><td>Severe overheating and dehydration (heat exhaustion progressing toward heat stroke)</td><td>Often develops more gradually, and cooling the person is an added priority alongside the standard shock response</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-shock-typesofshock-001.png" alt="1st Hour types of shock diagram — blood-loss shock, allergic (anaphylactic) shock, cardiac shock, and heat-related shock, each with its cause.">
+        </figure>
+
+        <p>You often won't know for certain which type you're dealing with, and you don't need to in order to start helping — the shared response in Sections 5 and 8 applies regardless. Use the cause, if it's obvious (a wound, a burn, a known allergy, chest pain, a hot environment), mainly to decide whether Section 6's anaphylaxis-specific step applies and what to tell the 911 dispatcher.</p>
+      </section>
+
+      <!-- ═══ 4. RECOGNIZING SHOCK ═══ -->
+      <section class="th-section" id="recognizing-shock">
+        <h2>4. Recognizing Shock</h2>
+        <p>These signs are shared across all four types in Section 3 — they're what the body does when it's compensating for inadequate blood flow, regardless of why that flow is inadequate. Learn this list as a single checklist, not four separate ones.</p>
+
+        <h3>Watch for:</h3>
+        <ul>
+          <li>Pale, cool, or clammy skin</li>
+          <li>Rapid, weak pulse</li>
+          <li>Rapid, shallow breathing</li>
+          <li>Confusion, anxiety, or restlessness</li>
+          <li>Nausea or vomiting</li>
+          <li>Extreme thirst</li>
+          <li>Progressive weakness, dizziness, or loss of consciousness</li>
+        </ul>
+
+        <p>A few signs point toward a specific type and are worth flagging separately, since they change what else you should do:</p>
+        <ul>
+          <li><strong>Hives, swelling of the face/lips/tongue, throat tightness, or difficulty breathing</strong> after a possible allergen exposure — points toward anaphylaxis (Section 6).</li>
+          <li><strong>Chest pain or pressure, pain radiating to the arm or jaw, or a known heart condition</strong> — points toward cardiac shock; this person needs 911 regardless of how mild it looks.</li>
+          <li><strong>Hot, flushed or very dry skin and confusion in a hot environment</strong> — points toward heat-related shock, where cooling becomes an added priority (Section 7).</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>When in doubt, treat it as shock.</strong> The core response in Sections 5 and 8 is low-risk to apply even if you're not certain — positioning someone comfortably, keeping them warm, and not giving them food or water doesn't hurt someone who turns out not to be in shock. Waiting to be sure before acting is the actual danger.
+        </div>
+      </section>
+
+      <!-- ═══ 5. POSITIONING, WARMTH & NO FOOD OR WATER ═══ -->
+      <section class="th-section" id="positioning-protocol">
+        <h2>5. The Positioning, Warmth &amp; No-Food-or-Water Protocol</h2>
+        <p>This is the practical core of this book — the sequence to run through for anyone showing signs of shock, regardless of cause. Read it now, in order, so it's automatic if you ever need it.</p>
+
+        <ol class="th-steps">
+          <li><strong>Call or have someone call 911 immediately</strong> if that hasn't already happened. Shock is close to an automatic "call 911" condition on its own — see Section 9. If you're alone, put the phone on speaker and keep working while you talk to the dispatcher.</li>
+          <li><strong>Keep treating whatever's causing it.</strong> Shock will not improve while the underlying problem goes unaddressed — continued bleeding, an unflushed chemical burn, or an ongoing allergic reaction all need their own treatment (see Section 7's cross-references) in parallel with the steps below, not instead of them.</li>
+          <li><strong>Lay the person flat — but check for exceptions before you consider raising the legs.</strong> Do <strong>not</strong> elevate the legs if you suspect a spinal injury, a leg injury, or if the person is having any difficulty breathing — in any of those cases, leave them flat (or in whatever position is safest and most comfortable, including sitting up if lying flat makes breathing harder) and skip straight to Step 4. If none of those apply, you may gently raise the legs about 6–12 inches; current first aid guidance notes this can help blood return to the body's core, but the effect is brief and not required, so don't delay warmth or bleeding/injury control to do it, and stop immediately if it causes pain or shortness of breath.</li>
+          <li><strong>Keep them warm.</strong> Insulate from the ground underneath them (a jacket, blanket, or even a car seat cover) as well as covering them on top — losing body heat through contact with cold ground is just as significant as losing it to open air, and worsens shock either way.</li>
+          <li><strong>Do not give food or water,</strong> even if they ask for it or seem alert enough to swallow safely. Two reasons: it can cause vomiting, which is dangerous if their level of consciousness drops, and if surgery turns out to be necessary, having eaten or had anything to drink complicates anesthesia.</li>
+          <li><strong>Loosen any tight clothing</strong> around the neck, chest, and waist to support breathing and circulation, but don't remove more clothing than necessary — you're trying to help warmth and breathing at the same time, not trade one for the other.</li>
+          <li><strong>Keep talking to them and stay close.</strong> Reassurance matters, but so does tracking their responsiveness — move to Section 8 for exactly what to monitor and how often while you wait.</li>
+          <li><strong>If they become unresponsive and are not breathing normally, begin CPR</strong> if you're trained, regardless of what caused the shock. If you're not trained, the 911 dispatcher can talk you through it in real time — say so on the call.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/pr-graphic-345.png" alt="1st Hour shock positioning diagram — if safe to do so, gently raise legs 6-12 inches, keep warm, reassure and monitor, with benefits of maintaining circulation, preventing heat loss, and stabilizing the patient.">
+        </figure>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't raise the legs if you suspect a spinal injury, a leg injury, or breathing difficulty — this is the single most common mistake in shock first aid, treating leg elevation as a universal default instead of a conditional step. Don't give food, water, or medication by mouth. Don't leave the person alone to go find supplies if you can call for help by phone or shout for someone else instead.
+        </div>
+      </section>
+
+      <!-- ═══ 6. ANAPHYLACTIC SHOCK & EPINEPHRINE ═══ -->
+      <section class="th-section" id="anaphylaxis">
+        <h2>6. Anaphylactic Shock &amp; Epinephrine Auto-Injectors</h2>
+        <p>Anaphylaxis is the one type of shock in this book with a specific medication response, and it can move from first symptoms to life-threatening within minutes — faster than most other causes of shock. Recognizing it quickly and acting without hesitation matters more here than almost anywhere else in this library.</p>
+
+        <h3>Recognizing an allergic reaction progressing toward shock:</h3>
+        <ul>
+          <li>Hives or widespread skin flushing</li>
+          <li>Swelling of the face, lips, tongue, or throat</li>
+          <li>Difficulty breathing, wheezing, or a feeling of throat tightness</li>
+          <li>Rapid pulse, dizziness, or fainting</li>
+          <li>Nausea, vomiting, or abdominal cramping following a known or suspected exposure (food, medication, insect sting, or other allergen)</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>Not every kit includes one.</strong> An epinephrine auto-injector is not part of the standard 1st Hour Trauma First Aid Kit's contents — it's a prescription item some people carry for a known severe allergy. What follows applies <strong>if you or the person you're helping has one available</strong>; if not, skip to "If no auto-injector is available" below.
+        </div>
+
+        <h3>If an epinephrine auto-injector is available:</h3>
+        <ol class="th-steps">
+          <li><strong>Call 911 first, or have someone else call while you prepare the injector.</strong> Epinephrine buys time — it does not replace emergency care.</li>
+          <li><strong>Remove the safety cap</strong> to unlock the injector, following the specific device's markings (styles vary slightly by brand).</li>
+          <li><strong>Press firmly against the outer thigh,</strong> through clothing if necessary — you don't need to expose skin first.</li>
+          <li><strong>Hold in place for several seconds</strong> to ensure the full dose is delivered, per the device's own instructions.</li>
+          <li><strong>Call 911 immediately if you haven't already, even if symptoms improve.</strong> Epinephrine can wear off before the reaction has fully resolved, and symptoms can return — sometimes worse than the first episode. Everyone who receives epinephrine needs emergency evaluation, no exceptions.</li>
+          <li><strong>Keep monitoring breathing and consciousness</strong> per Section 8 while you wait, and be ready to use a second auto-injector (if a second one is available and symptoms haven't meaningfully improved after 5 to 15 minutes) or begin CPR if breathing stops and you're trained.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-shock-epipen-001.png" alt="1st Hour epinephrine auto-injector technique — remove the safety cap, press firmly against the outer thigh, hold for several seconds.">
+        </figure>
+
+        <h3>If no auto-injector is available:</h3>
+        <p>Call 911 immediately and tell the dispatcher you suspect anaphylaxis — this is one of the clearest cases where dispatchers can help arrange the fastest possible epinephrine delivery via responding EMS. While you wait, follow the standard shock protocol in Section 5: positioning, warmth, no food or water. If the person has any difficulty breathing, keep them sitting upright rather than flat, since lying flat can make breathing harder when the airway is involved — this is one of the specific "breathing difficulty" exceptions Section 5 already tells you to watch for.</p>
+      </section>
+
+      <!-- ═══ 7. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>7. Special Situations</h2>
+
+        <h3>Pediatric shock</h3>
+        <p>Children can look stable for longer than adults because their bodies compensate more aggressively — and then decompensate much faster once that compensation fails. Don't take a child's calm appearance as reassurance the way you might with an adult; treat any of the signs in Section 4 in a child as more urgent, not less, and don't wait for the situation to look as severe as it would in an adult before calling 911.</p>
+
+        <h3>Multiple casualties</h3>
+        <p>If more than one person needs help and you're the only capable responder, prioritize by both severity and correctability: someone with an actively treatable cause (uncontrolled bleeding, an unadministered epinephrine dose) generally comes before someone already stable on the ground with warmth and positioning in place. See the Car Accident Trauma protocol's triage approach for a fuller walkthrough of this decision when several people are hurt in one incident.</p>
+
+        <h3>Shock following a specific injury</h3>
+        <p>This book covers the shock response itself in depth; it doesn't re-teach how to control the underlying cause. If shock followed one of these, the linked protocol covers what this book doesn't:</p>
+        <ul>
+          <li><strong>Severe bleeding:</strong> see <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> for tourniquet application and wound packing — keep that bleeding controlled while you run this book's Section 5.</li>
+          <li><strong>A burn:</strong> see <a href="../Burn-Injury-Response/1HT_Protocol_BurnInjury_v7.html">Burn Injury (Thermal, Chemical, Electrical)</a> for cooling, flushing, and covering technique — continue that care alongside this book's shock response.</li>
+          <li><strong>Choking that's since been cleared:</strong> see the Choking / Airway Obstruction protocol for what to watch for afterward, since a person can remain shaken and in early shock even once an airway obstruction is resolved.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. MONITORING & REASSESSMENT ═══ -->
+      <section class="th-section" id="monitoring">
+        <h2>8. Monitoring &amp; Reassessment While Waiting for EMS</h2>
+        <p>Once the Section 5 protocol is in place, your job shifts to watching for change — shock can worsen quickly, and catching that early is exactly what EMS needs to hear about on arrival.</p>
+
+        <h3>Check every few minutes:</h3>
+        <ul>
+          <li><strong>Breathing</strong> — rate and whether it's becoming more labored, shallow, or irregular.</li>
+          <li><strong>Pulse</strong> — whether it's getting faster, weaker, or harder to find at the wrist (a pulse that becomes hard to feel at the wrist but is still present at the neck is a sign of worsening shock).</li>
+          <li><strong>Level of consciousness</strong> — are they becoming more confused, less responsive to their name or a light shake of the shoulder, or harder to keep awake?</li>
+          <li><strong>Skin color and temperature</strong> — is pale/cool/clammy skin spreading or intensifying?</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>Worsening looks like:</strong> breathing becoming faster or more labored, pulse becoming weaker or harder to find, decreasing responsiveness, or skin becoming more pale, cool, or blue-tinged (especially around the lips or fingertips). If any of these change for the worse, tell the 911 dispatcher immediately if you're still on the line — it can change how the call is prioritized.
+        </div>
+
+        <p>When EMS arrives, give them a fast, specific handoff: what you believe caused it, when symptoms started, what you did (including exact times for anything like a tourniquet or an epinephrine dose), and how the person's condition has changed since you started monitoring. That last part — the trend, not just the current snapshot — is often the most clinically useful thing you can offer.</p>
+      </section>
+
+      <!-- ═══ 9. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>9. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Short answer: immediately, every time, no exceptions.</strong> Shock is not a "wait and see" condition, and it is not something to manage by driving the person to urgent care or an emergency room yourself. Any of the signs in Section 4 — even if they seem mild, even if the person insists they're fine — warrants a 911 call right away.
+        </div>
+        <p>This isn't a judgment call the way some other decisions in this library are (for example, a minor broken bone might reasonably go to urgent care instead of by ambulance). Shock is different: it can deteriorate quickly and unpredictably, EMS can begin treatment — including IV fluids, oxygen, or medication — the moment they arrive rather than after a self-driven trip to a hospital, and a person whose condition worsens en route in a personal vehicle has no one able to intervene the way a trained crew can. Call first, treat while you talk, and don't let how "not that bad" the person looks talk you out of it.</p>
+        <p>Stay on the line if you can. Dispatchers are trained to walk you through the Section 5 protocol in real time and will tell you exactly what responding units need to know — your location, what you believe caused the shock, and what you've already done.</p>
+      </section>
+
+      <!-- ═══ 10. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>10. Aftercare &amp; Follow-Up</h2>
+        <p>Once EMS has taken over, your job as a first responder is done — but a few things are worth knowing for afterward.</p>
+        <ul>
+          <li><strong>Tell EMS everything you observed and did,</strong> including the timeline of symptoms and the exact time of anything like an epinephrine dose or a tourniquet application.</li>
+          <li><strong>The underlying cause still needs its own medical follow-up.</strong> This book treats the shock response — the bleeding, burn, allergic reaction, cardiac event, or heat emergency that caused it needs to be evaluated and treated in its own right, even after the shock itself has stabilized.</li>
+          <li><strong>Restock and replace anything used,</strong> including a used epinephrine auto-injector, before the kit or the person's personal supply is trusted again.</li>
+          <li><strong>It's normal to feel shaken afterward.</strong> Responding to a shock emergency is intense, especially when it's not obvious at first how serious it is. Debrief with someone, and talk to a professional if the experience stays with you.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 11. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>11. Essential Items Checklist</h2>
+        <p>Shock management relies on fewer specialized supplies than some of this library's other protocols — mostly because the response is about positioning, warmth, and monitoring rather than a hands-on intervention. Here's what's genuinely useful to have within reach.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Emergency/space blanket</strong><span class="th-cl-why"> — Section 5. Insulates from the ground and covers the person; the single most useful item for this specific protocol.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — if you're also treating a wound, burn, or other bleeding cause alongside the shock response, per Section 7's cross-references.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A personal epinephrine auto-injector, if prescribed</strong><span class="th-cl-why"> — Section 6. Not included in the standard 1st Hour kit; this is a personal, prescription item for someone with a known severe allergy.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A phone, kept on speaker</strong><span class="th-cl-why"> — Sections 5 &amp; 9. Lets you talk to the 911 dispatcher with both hands free to manage positioning and warmth.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>What this book doesn't require</strong>
+          Unlike the bleeding-, burn-, or splinting-focused protocols in this library, shock management by itself doesn't call for gauze, tourniquets, or splinting materials — those belong to whatever caused the shock in the first place. If you're also managing that underlying cause, see that protocol's own checklist.
+        </div>
+      </section>
+
+      <!-- ═══ 12. STATE APPENDIX (short-note pattern) ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>12. Good Samaritan Protections</h2>
+        <div class="th-state-short">
+          <p>Every U.S. state has some form of Good Samaritan law protecting people who provide reasonable emergency assistance in good faith — the shock response in this book doesn't change that general picture by state, so it isn't repeated here in full. See the <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html#state-appendix">Severe Bleeding &amp; Hemorrhage Control</a> protocol's full state-by-state appendix for the twelve-state grid and the general principle that applies everywhere else. As with every book in this library, that overview is general information, not legal advice — see the disclaimer below.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 13. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>13. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 12 (and referenced from the Severe Bleeding &amp; Hemorrhage Control protocol) is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/shock-management/">1sthourprotocols.com/shock-management</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

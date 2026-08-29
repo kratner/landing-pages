@@ -1,0 +1,883 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_NuclearThreat_v4.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Nuclear-Threat-Sheltering/1HT_Protocol_NuclearThreat_v4.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Nuclear Threat / Fallout Sheltering" e-book
+     Track B #10. Built per Prompts/1HT_BuildPrompt_Book10_NuclearThreat_v1.md.
+     Standalone HTML page, intended host: Cloudflare, deployed at the stable
+     slug /nuclear-threat/ (see ../1HT_CloudflareHostingGuide_v1.md §3 — this
+     source file's own _v# is never the deployed URL).
+
+     ⚠ TONE FLAG (per master list "Two Compliance Flags" + this book's build
+     prompt): highest-sensitivity content in the library. Written throughout
+     in a calm, procedural, FEMA/Ready.gov-aligned register ("get inside,
+     stay inside, stay tuned") — no cinematic framing, no dwelling on
+     worst-case imagery. Requires its own tone/compliance read-through
+     (§5b of the build prompt) separate from the standard medical review.
+
+     REVISION HISTORY
+     - v4 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly (Medical
+       Disclaimer: 13 → 12). Also fixed a stray in-body "(Section 12)"
+       cross-reference in the "What This Book Is (and Isn't)" section that
+       pointed at the now-deleted Related Protocols section.
+     - v3 (2026-08-24, Claude): Three fixes made after v2's first deploy.
+       (1) PDF pagination bug: the shelter-quality and decontamination
+       illustrations (each a composited header + a tall portrait AI diagram,
+       1086×1728px) rendered taller than one printed page's usable height at
+       the PDF tool's default viewport width, so book-pdf/build-pdf.js's
+       shared break-inside:avoid rule couldn't find a page the whole image
+       fit on — produced a near-blank spillover page before each
+       illustration (18-page PDF). Fixed with a book-scoped
+       `@media print { .th-illo img { max-height:8in } }` rule (sized in
+       physical inches, not px, so it's correct regardless of viewport
+       width) — regenerated PDF is 15 pages, verified page-by-page, no
+       spillover. (2) Added this book's two new component classes
+       (.th-framework .card, .th-geo-note) to the shared
+       ~/.claude/tools/book-pdf/build-pdf.js break-inside:avoid list (bumped
+       to v4 there; a concurrent session added .th-timeline-card for Book #9
+       afterward, preserved cleanly — see that file's own header). (3)
+       Grid-Down (Book #9) went live (confirmed via curl + title check)
+       between this book's first deploy and this fix pass — flipped the
+       Related Protocols cross-link from "Coming Soon" to "Live" per the
+       build prompt's §4 instruction to tag based on actual current status.
+       PDF uploaded as `1sthour-nuclearthreat-ebook-001.pdf`, download button
+       repointed, redeployed.
+     - v2 (2026-08-24, Claude): Fixed the 2 Moderate + 1 Minor findings from
+       MEDICAL_REVIEW_v1.md (0 critical). M1 (Section 3 warning callout):
+       added the radiological reason for not self-evacuating by vehicle
+       alongside the traffic-hazard reason already there. M2 (Section 5,
+       fallout timing): appended an explicit "confirmed by official
+       guidance, not a timer you run yourself" clause directly onto the
+       48-72-hour sentence, rather than relying on the reader to connect it
+       to the adjacent callout. N1 (Section 3, Step 3): clarified that
+       taking cover behind/under a solid object (including a vehicle "as a
+       last resort") addresses the blast wave specifically, not radiological
+       shielding, so it doesn't read as an acceptable place to remain
+       afterward. Also ran the separate tone/compliance read-through required
+       for this book (TONE_REVIEW_v1.md) — zero tone findings, no content
+       changes from that pass. Not yet deployed as of this version (see
+       Books/REVISIONS.md for full build log).
+     - v1 (2026-08-24, Claude): Initial build. Structural/CSS/JS machinery
+       copied wholesale from Books/Severe-Bleeding-Hemorrhage-Control/
+       1HT_Protocol_SevereBleeding_v7.html per the build prompt's step 4 —
+       content and tone are entirely new. No state-grid/Good-Samaritan
+       section (doesn't apply to this topic per the master list). Cross-link
+       to Grid-Down tagged "Coming Soon" — Book #9 confirmed still
+       "In Progress" (not Live) in 1HT_BuildCoordination_v1.md at the time
+       this file was written. Two interior illustrations generated via the
+       Creative AI Studio API (calm/procedural subject matter, no logos/text
+       requested in the AI prompt itself — the real 1st Hour logo + heading
+       text were composited on afterward as real HTML/Anton-Inter text,
+       screenshotted, and pasted above each AI-generated diagram, avoiding
+       the wrong-emblem defect that hit every earlier book's illustrations
+       from the start rather than needing a later fix pass). Cover and
+       lifestyle images built the same way: AI-generated background art with
+       no logo/text requested, then the real logo + Anton title treatment
+       (cover) and an "INSTANT DIGITAL DOWNLOAD" disclosure band (lifestyle)
+       composited on top via HTML + screenshot. All 4 assets uploaded to the
+       "1st Hour Protocols" Creative AI library folder on the first pass —
+       see ImageURLs.md for URLs and filenames.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuclear Threat &amp; Fallout Sheltering — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: the calm, practical get-inside/stay-inside/stay-tuned framework for the first hours and days of a nuclear or radiological event, including shelter quality, decontamination, and food/water safety.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── Framework 3-card ──────────────────────────────────────── */
+  .th-framework{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin:0 0 24px;
+  }
+  .th-framework .card{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-top:4px solid var(--red);
+    border-radius:8px;
+    padding:18px 16px;
+  }
+  .th-framework .card .num{
+    font-family:'Anton',sans-serif;
+    color:var(--red);
+    font-size:12px;
+    letter-spacing:1.5px;
+    margin-bottom:6px;
+  }
+  .th-framework .card h4{font-size:17px !important;margin-bottom:8px;}
+  .th-framework .card p{font-size:13.5px;color:var(--gray);margin:0;}
+  @media (max-width:700px){
+    .th-framework{grid-template-columns:1fr;}
+  }
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── Short geography note card (this book skips the 12-state grid) ── */
+  .th-geo-note{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-left:4px solid var(--black);
+    border-radius:0 8px 8px 0;
+    padding:18px 20px;
+    margin:0 0 24px;
+    font-size:14.5px;
+  }
+  .th-geo-note h4{font-size:14px !important;letter-spacing:1px;margin-bottom:8px;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  /* ── Print: these 2 illustrations composite a branded header ABOVE a tall
+     portrait diagram, making the combined image taller than one printed
+     page's usable height at screen-viewport display width — without a cap
+     here, book-pdf/build-pdf.js's break-inside:avoid can't find a page the
+     whole box fits on and produces a blank spillover page. Cap in physical
+     inches (not px) so it sizes correctly regardless of the print
+     viewport's CSS pixel width. See Books/REVISIONS.md's Nuclear Threat
+     PDF-pagination-fix entry. ── */
+  @media print{
+    .th-illo img{max-height:8in !important;width:auto !important;margin:0 auto !important;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-minutes">Why the First Minutes Matter</a></li>
+      <li><a href="#framework">Get Inside, Stay Inside, Stay Tuned</a></li>
+      <li><a href="#first-10-minutes">The First 10 Minutes</a></li>
+      <li><a href="#adequate-shelter">What &ldquo;Adequate Shelter&rdquo; Means</a></li>
+      <li><a href="#fallout-timing">Fallout Timing</a></li>
+      <li><a href="#decontamination">Decontamination If Caught Outside</a></li>
+      <li><a href="#food-water">Food &amp; Water Safety</a></li>
+      <li><a href="#staying-informed">Staying Informed</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#what-this-is">What This Book Is (and Isn&rsquo;t)</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Nuclear Threat &amp; Fallout Sheltering</h1>
+        <p class="lede">Get inside. Stay inside. Stay tuned. A calm, practical guide to the first minutes, hours, and days of a nuclear or radiological event.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-nuclearthreat-ebook-001.pdf" id="th-pdf-link" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general emergency-preparedness education, adapted from public FEMA and Ready.gov guidance. It is not medical, radiological, or legal advice. Follow instructions from local officials and emergency broadcasts over anything in this guide if they differ. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#first-10-minutes">Get Inside</a><span class="arrow">→</span>
+        <a href="#fallout-timing">Stay Inside</a><span class="arrow">→</span>
+        <a href="#staying-informed">Stay Tuned</a><span class="arrow">→</span>
+        <a href="#decontamination">Decontaminate</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST MINUTES MATTER ═══ -->
+      <section class="th-section" id="why-first-minutes">
+        <h2>1. Why the First Minutes Matter</h2>
+        <p>Most of this library covers a hands-on medical technique: something you do with your hands, to a wound, in a specific sequence. This book is different. There is no bandage to apply and no bleeding to stop. The single most important thing you can do in a nuclear or radiological event is simpler than that, and it happens in the first few minutes: <strong>get inside a sturdy building and stay there.</strong></p>
+        <p>That simplicity is genuinely good news, and it is worth saying plainly and early: <strong>most people, in most locations, can meaningfully improve their own safety by taking one correct action in the first few minutes, and then continuing a straightforward routine for the following day or two.</strong> This is not a guide about surviving an unsurvivable event. It is a guide about a specific, well-understood set of hazards — blast, initial radiation, and fallout — that ordinary sheltering behavior protects against effectively, especially outside the immediate area of a detonation.</p>
+        <p>The guidance in this book follows the same framework the Department of Homeland Security, FEMA, and Ready.gov publish for the public: <strong>Get Inside. Stay Inside. Stay Tuned.</strong> Three words, in that order, cover almost everything that matters in the first hour. Everything else in this book explains what each of those three words actually means in practice.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          You do not need to understand nuclear physics to respond correctly. You need to get inside quickly, put mass and distance between yourself and the outside world, and wait for official information before you do anything else. That sequence is simple by design — it is meant to work under stress, without special training.
+        </div>
+      </section>
+
+      <!-- ═══ 2. THE FRAMEWORK ═══ -->
+      <section class="th-section" id="framework">
+        <h2>2. Get Inside, Stay Inside, Stay Tuned</h2>
+        <p>This three-part framework is the spine of this entire book. Every section that follows maps back to one of these three actions. Read this section first — everything else is detail in service of these three steps.</p>
+
+        <div class="th-framework">
+          <div class="card">
+            <div class="num">STEP 1</div>
+            <h4>Get Inside</h4>
+            <p>Move into the nearest sturdy building immediately — don&rsquo;t wait for an announcement. Go as far inside and as far below ground as you reasonably can.</p>
+          </div>
+          <div class="card">
+            <div class="num">STEP 2</div>
+            <h4>Stay Inside</h4>
+            <p>Remain sheltered, away from doors and windows, through the highest-risk window for fallout — typically at least 24 hours, longer if officials say so.</p>
+          </div>
+          <div class="card">
+            <div class="num">STEP 3</div>
+            <h4>Stay Tuned</h4>
+            <p>Monitor official emergency broadcasts for updates and instructions. Don&rsquo;t leave shelter to go looking for information — let it come to you.</p>
+          </div>
+        </div>
+
+        <p>Underneath these three steps is a simple physical idea worth knowing, because it explains why each step works: radiation exposure is reduced by <strong>time, distance, and shielding</strong>. The less time you spend exposed, the more distance and the more solid material (shielding) you put between yourself and fallout particles, the lower your dose. &ldquo;Get inside&rdquo; maximizes shielding and distance immediately. &ldquo;Stay inside&rdquo; maximizes the time factor by letting fallout radioactivity decay before you re-expose yourself. &ldquo;Stay tuned&rdquo; makes sure you act on real information instead of guesswork.</p>
+      </section>
+
+      <!-- ═══ 3. THE FIRST 10 MINUTES ═══ -->
+      <section class="th-section" id="first-10-minutes">
+        <h2>3. The First 10 Minutes</h2>
+        <p>If you see a bright flash on the horizon, feel a blast wave, or receive an official alert that a detonation has occurred or is imminent, act immediately — don&rsquo;t wait to see what happens next or to confirm details.</p>
+
+        <ol class="th-steps">
+          <li><strong>Do not look at the flash or fireball.</strong> It can cause temporary or permanent blindness at a considerable distance. Turn away and move.</li>
+          <li><strong>Get inside the nearest sturdy building right away.</strong> A multi-story brick, concrete, or masonry building is best. Don&rsquo;t waste time trying to reach a specific building across town — the nearest solid structure now is better than a better one later.</li>
+          <li><strong>If you're caught outside with no building nearby,</strong> lie flat, cover your head and exposed skin, and get behind or under anything solid (a ditch, a concrete structure, a vehicle as a last resort) until the initial blast wave passes. This step is about riding out the blast wave and flying debris — a vehicle offers little to no protection from radiation itself, so move to real shelter (Section 4) immediately afterward rather than staying put.</li>
+          <li><strong>Move away from windows, glass doors, and exterior walls</strong> as soon as you're inside. Broken glass and debris are a real injury risk in the first minutes, separate from any radiation concern.</li>
+          <li><strong>Go to the most interior, most below-grade space available</strong> — a basement is best; an interior room on the lowest floor is next. See Section 4 for exactly what makes a space &ldquo;adequate.&rdquo;</li>
+          <li><strong>If you were outside during the event, remove your outer layer of clothing before settling into your shelter space</strong> — see Section 6. This one step matters enough to do immediately, even before you've fully caught your breath.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>Don't do this</strong>
+          Don't stop to watch, film, or investigate the event. Don't get in a vehicle to try to drive to a different location — beyond traffic and road hazards, travel exposes you to fallout you'd otherwise be shielded from, and without official guidance you have no reliable way to know which direction is actually safer. Sheltering where you are is the safer default. Don't call 911 or emergency lines just to ask what to do; keep those lines open for people reporting genuine emergencies, and get your information from official broadcasts instead (Section 8).
+        </div>
+      </section>
+
+      <!-- ═══ 4. WHAT "ADEQUATE SHELTER" MEANS ═══ -->
+      <section class="th-section" id="adequate-shelter">
+        <h2>4. What &ldquo;Adequate Shelter&rdquo; Means</h2>
+        <p>Not all indoor spaces protect you equally. Two things determine how much protection a space actually gives you: how much solid <strong>mass</strong> is between you and the outside (concrete, brick, earth, dense material), and how much <strong>distance</strong> you have from exterior walls, windows, and the roof. More of both means less radiation reaches you.</p>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-402.png" alt="1st Hour shelter-quality diagram — house cross-section comparing a below-ground basement (best protection), an interior windowless room (good protection), and a room with exterior walls or windows (weakest protection), with arrows indicating distance from exterior walls and added mass.">
+        </figure>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Location</th><th>Protection level</th><th>Why</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Basement or below-ground space</strong></td><td>Best</td><td>Earth around and above you adds significant mass and puts maximum distance between you and surface fallout.</td></tr>
+              <tr><td><strong>Interior room, no windows, middle of a multi-story building</strong></td><td>Good</td><td>Surrounding rooms and floors act as shielding; no direct line to the outside.</td></tr>
+              <tr><td><strong>Room with exterior walls or windows</strong></td><td>Weak</td><td>Thin walls and glass provide little shielding and a direct path for fallout particles and debris.</td></tr>
+              <tr><td><strong>Vehicle or a thin-walled, exposed structure</strong></td><td>Last resort only</td><td>Offers minimal shielding — use only if nothing better is available, and move to something sturdier as soon as you safely can.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>In practice: if your home has a basement, that's your destination. If it doesn't, pick the room with the fewest exterior walls and no windows — an interior bathroom, closet, or hallway on the lowest floor usually wins. A large public building (school, office building, government building) with a below-ground level is also a good option if you're away from home when an event occurs.</p>
+
+        <div class="th-geo-note">
+          <h4>Urban vs. Rural Shelter Availability</h4>
+          <p>This is one of the few places in this book where where you live changes the picture, and it doesn't need a state-by-state breakdown to explain: dense urban and suburban areas generally have more large, multi-story, below-grade-capable buildings within a short walk or drive, which usually means more adequate-shelter options nearby. Rural areas more often mean a single-family home is the only realistic option — if that describes your situation, know your own home's best available space (Section 4's table) before you need it, rather than improvising in the moment.</p>
+        </div>
+      </section>
+
+      <!-- ═══ 5. FALLOUT TIMING ═══ -->
+      <section class="th-section" id="fallout-timing">
+        <h2>5. Fallout Timing</h2>
+        <p>Fallout is radioactive debris and dust that settles out of the air in the hours after a detonation, most heavily in the immediate area and areas downwind. It is most dangerous in the first several hours after it settles and becomes steadily less dangerous as time passes — radioactive material decays, meaning it loses intensity continuously and predictably.</p>
+        <p>This is the single most important timing fact in this book: <strong>the first 24 hours are the highest-risk window, and staying sheltered through that window is the highest-value action you can take after getting inside in the first place.</strong> Official guidance is generally to remain sheltered for at least 24 hours unless local authorities instruct otherwise — and if you're able to stay sheltered longer, through 48 to 72 hours, the additional drop in radioactivity provides a further, meaningful safety margin, though exactly when it's safe to leave shelter is always something confirmed by official guidance for your specific location, not a countdown you run yourself.</p>
+
+        <div class="th-callout">
+          <strong>What this means in practice</strong>
+          Don't treat &ldquo;the immediate danger has passed&rdquo; as a reason to go outside and look around. The risk drops sharply but doesn't disappear the moment the initial event is over — it continues dropping over the following day. Wait for official all-clear guidance (Section 8) rather than estimating this yourself.
+        </div>
+
+        <p>If you must briefly go outside during this window — for example, to bring in a family member who was caught outdoors, or to address an urgent, unrelated emergency like a fire — minimize the time spent outside, avoid touching surfaces unnecessarily, and decontaminate immediately on returning (Section 6).</p>
+      </section>
+
+      <!-- ═══ 6. DECONTAMINATION IF CAUGHT OUTSIDE ═══ -->
+      <section class="th-section" id="decontamination">
+        <h2>6. Decontamination If Caught Outside</h2>
+        <p>If you were outside when fallout was present, or you're not sure whether you were exposed, a short decontamination routine removes the large majority of surface contamination in a few minutes. This is simple, doesn't require special equipment, and is worth doing calmly and thoroughly rather than rushing it.</p>
+
+        <ol class="th-steps">
+          <li><strong>Remove your outer layer of clothing</strong> — coat, jacket, shoes — before you go further into your shelter space if possible. This single step removes most of the contamination that settled on you, since it mostly sits on the outer surface of clothing rather than skin.</li>
+          <li><strong>Place removed clothing in a sealed bag or container, away from people</strong> and away from the space where you'll be sheltering. Don't shake or brush it out where others are — that can spread loose particles into the air.</li>
+          <li><strong>Wash exposed skin with soap and water</strong> if it's available — a shower is ideal, but even washing exposed hands, face, and hair at a sink is meaningfully protective. Use lukewarm water and ordinary soap; you do not need to scrub hard or aggressively, and doing so can irritate or break skin, which is not helpful.</li>
+          <li><strong>Gently blow your nose and wipe your eyebrows, eyelashes, and any exposed skin</strong> with a clean, damp cloth. These areas can collect fine particles that a shower alone may not fully clear.</li>
+          <li><strong>If no water is available,</strong> use a clean cloth, wipes, or dry paper towels to carefully wipe exposed skin, working from clean areas toward more exposed ones, then wash as soon as water becomes available.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-403.png" alt="1st Hour decontamination diagram — three steps: remove outer clothing, seal it in a bag away from others, then wash exposed skin with soap and water.">
+        </figure>
+
+        <div class="th-warn">
+          <strong>What not to do</strong>
+          Don't use bleach, harsh chemicals, or aggressive scrubbing on skin — this can cause irritation without adding meaningful protection. Don't panic if you can't shower immediately; removing outer clothing and using a damp cloth on exposed skin captures most of the benefit even without running water.
+        </div>
+      </section>
+
+      <!-- ═══ 7. FOOD & WATER SAFETY ═══ -->
+      <section class="th-section" id="food-water">
+        <h2>7. Food &amp; Water Safety</h2>
+        <p>Food and water safety during a fallout event is more straightforward than people often expect, and the news here is reassuring: anything that was sealed before the event stayed protected.</p>
+        <ul>
+          <li><strong>Sealed, packaged food and beverages are safe to consume</strong> — cans, sealed bottles, and factory-sealed packaging all protect their contents from fallout contamination. Wipe the outside of a container before opening it if you're concerned dust may have settled on it.</li>
+          <li><strong>Water from a covered source (a sealed container, a covered well, most municipal indoor plumbing) is safe.</strong> Water storage containers you filled before the event remain safe as long as they stayed covered.</li>
+          <li><strong>Food or water that was left uncovered or outdoors during fallout</strong> — an open container, uncovered garden produce, an open rain barrel — should be set aside and not consumed, rather than assumed contaminated and thrown away outright. Store it separately, clearly marked, until official guidance says whether it's safe or not. Don't discard your broader food supply out of caution; the concern is specific to what was actually exposed and uncovered.</li>
+          <li><strong>When in doubt about any single item, set it aside rather than either consuming it or wasting it.</strong> Official guidance following the event will typically clarify what's safe; there is rarely a need to make an irreversible decision about food safety in the first hours.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. STAYING INFORMED ═══ -->
+      <section class="th-section" id="staying-informed">
+        <h2>8. Staying Informed</h2>
+        <p>&ldquo;Stay tuned&rdquo; is the third part of the framework, and it's an active instruction, not a passive one — it means having a working way to receive official information and actually following it, not checking in occasionally out of curiosity.</p>
+        <ul>
+          <li><strong>A battery-powered or hand-crank NOAA weather radio</strong> is the most reliable way to receive official updates if cell networks or power are down. Keep it in your kit, know where it is, and check that it works before you need it.</li>
+          <li><strong>Official emergency alerts</strong> — Wireless Emergency Alerts on your phone, local emergency broadcast stations, and instructions from local and federal officials — are the authoritative source for when it's safe to leave shelter, whether to evacuate instead, and any specific local guidance that overrides general advice like the guidance in this book.</li>
+          <li><strong>&ldquo;Stay tuned&rdquo; means don't leave shelter to go looking for information.</strong> Don't go outside to check on neighbors, assess damage, or get a better signal unless there's an immediate, unrelated emergency (like fire) that requires it. Let official information come to you through your radio or phone rather than exposing yourself to go find it.</li>
+          <li><strong>If you lose power and cell service both,</strong> the hand-crank or battery radio becomes your only reliable link — this is the specific scenario it exists for, which is why it's listed first in this section and in the checklist below.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 9. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>9. Special Situations</h2>
+
+        <h3>Someone was outside when it happened</h3>
+        <p>If a family or household member arrives at your shelter space after being outside during or after the event, have them decontaminate (Section 6) before joining the rest of the group in the main shelter space, if there's a way to do so separately — a garage, entryway, or bathroom near the entrance works well for this. This isn't about excluding them; it's a quick, considerate step that protects everyone sheltering together, them included.</p>
+
+        <h3>Medically dependent household members</h3>
+        <p>If someone in your household depends on powered medical equipment, refrigerated medication, or a regular supply of a specific medication, factor that into where and how you shelter — for example, keeping essential medication and any battery backup for equipment in or near your shelter space ahead of time, not scattered elsewhere in the home. If a medical situation becomes urgent while sheltering, that takes priority over general shelter guidance — call 911 or follow your medical provider's emergency instructions.</p>
+
+        <h3>Pets</h3>
+        <p>Bring pets into your shelter space with you if at all possible — the same get-inside logic applies to them. Keep them calm and contained (a carrier or leash helps) in an unfamiliar, possibly crowded space, and don't let them outside during the sheltering window described in Section 5.</p>
+      </section>
+
+      <!-- ═══ 10. WHAT THIS BOOK IS (AND ISN'T) ═══ -->
+      <section class="th-section" id="what-this-is">
+        <h2>10. What This Book Is (and Isn&rsquo;t)</h2>
+        <p>It's worth saying this plainly, without hedging, because it's both true and genuinely reassuring: this book covers how to get through the acute phase of a nuclear or radiological event — the first minutes, the first day, and the following two to three days of sheltering — using well-established, publicly available guidance. That acute-phase window is where the highest-value, most time-sensitive actions live, and it's the part where correct behavior makes the largest practical difference.</p>
+        <p>This book is <strong>not</strong> a guide to long-term survivalism, a doomsday-scenario manual, or a comprehensive treatment of every possible aftermath. It doesn't need to be, and stretching it to cover more than that would work against the point of it: a short, clear, actionable guide that someone can actually read, remember, and use under stress. If you want to go deeper into long-term emergency preparedness, the Grid-Down protocol covers the sustained, multi-day operational side — food, water, power, and communication — that overlaps with the later part of a fallout-sheltering scenario.</p>
+      </section>
+
+      <!-- ═══ 11. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>11. Essential Items Checklist</h2>
+        <p>The single biggest advantage in this scenario is simply already being inside, with these items already gathered, before anything happens. Run through this list now, not after an alert.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Battery-powered or hand-crank NOAA weather radio</strong><span class="th-cl-why"> — Section 8. Your link to official information if power and cell service are both down.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Stored water (at least 1 gallon per person per day, several days' supply)</strong><span class="th-cl-why"> — Section 7. Keep it covered/sealed so it stays safe.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Sealed, non-perishable food, several days' supply</strong><span class="th-cl-why"> — Section 7. Factory-sealed packaging protects contents automatically.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Flashlight and spare batteries</strong><span class="th-cl-why"> — for a below-ground or windowless shelter space, which may have no natural light.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Sealable plastic bags</strong><span class="th-cl-why"> — Section 6. For bagging outer clothing that may carry surface contamination.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Soap and a supply of clean water for washing</strong><span class="th-cl-why"> — Section 6. Core decontamination supplies.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A few days of any essential medication</strong><span class="th-cl-why"> — Section 9. Especially important for medically dependent household members.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Basic first aid kit</strong><span class="th-cl-why"> — for any unrelated injury during sheltering; see the Severe Bleeding protocol for technique.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep these together, ideally in or near whichever space in your home you identified in Section 4 as your best shelter location — not spread across the house. Under real stress, you want to walk directly to one place and have everything you need already there.
+        </div>
+      </section>
+
+      <!-- ═══ 12. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>12. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or official emergency management guidance.</p>
+          <p><strong>In any real emergency, follow instructions from local officials and emergency broadcasts</strong> ahead of anything in this guide if they differ — official, real-time guidance always takes precedence over general published material.</p>
+          <p><strong>This content is procedural preparedness guidance drawn from public FEMA and Ready.gov-style sources</strong> covering the acute phase of a nuclear or radiological event. It is not clinical medical advice, not radiological/health-physics consulting, and not a substitute for guidance from public health authorities, particularly regarding any specific medical response (such as potassium iodide use), which should only be taken on the instruction of public health officials.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/nuclear-threat/">1sthourprotocols.com/nuclear-threat</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

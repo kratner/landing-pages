@@ -1,0 +1,914 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_Wildfire_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Wildfire-Evacuation/1HT_Protocol_Wildfire_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Wildfire Evacuation" e-book
+     Track B #15 of 15 — THE LAST BOOK IN THE LIBRARY. Built per
+     Prompts/1HT_BuildPrompt_Book15_Wildfire_v1.md, following the pilot's
+     (Severe Bleeding) and Book #11's (Tornado) structural/CSS/JS template
+     wholesale. Standalone HTML page, hosted at
+     https://1sthourprotocols.com/wildfire-evacuation/.
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via 1st Hour's ClickFunnels order
+     integration; this file assumes nothing about how that link is generated.
+
+     One of only two Track B books (with Tornado, #11) where regional/
+     geographic framing is load-bearing content per the master list — Section
+     2 leads with the Western/Southwestern fire-prone-region framing rather
+     than appending it, and Sections 3/4/5/6/8 keep returning to it rather
+     than treating it as a one-off appendix.
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v2 (2026-08-25, Claude): First live deploy — this is the 15th and
+       last book, closing out the full library. Cover + lifestyle marketing
+       images rebuilt today per Keith's direct feedback (see ImageURLs.md
+       and Books/REVISIONS.md) — neither image is embedded in this page.
+       PDF generated from the live URL (16 pages, verified page-by-page, no
+       pagination defects), uploaded, download button wired to it.
+     - v1 (2026-08-25, Claude): Initial build. Content, illustration/cover/
+       lifestyle images (generated fresh via Creative AI Studio API, no
+       logo/text requested in the AI prompt — real logo composited on top
+       afterward, per Books #9-11's proactive method), medical-accuracy
+       review (run before first deploy per the build prompt's §5), and
+       cross-link wiring all done in one pass. See Books/REVISIONS.md for
+       the full build log and
+       Books/Wildfire-Evacuation/MEDICAL_REVIEW_v1.md for the review.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wildfire Evacuation — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: the Ready-Set-Go wildfire evacuation system and why waiting for 'go' is often too late, go-bag priorities specific to wildfire, home-hardening basics if time allows, driving through smoke safely, smoke inhalation first aid, and what to do if evacuation routes are already blocked. Framed by Western and Southwestern wildfire risk geography.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Region map callout (Western/Southwestern fire-prone framing) ─── */
+  .th-region-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:24px;
+    margin:0 0 28px;
+  }
+  .th-region-svg{width:190px;flex-shrink:0;}
+  .th-region-legend{flex:1;min-width:0;}
+  .th-region-legend h4{font-size:14px !important;letter-spacing:1px;margin-bottom:14px;}
+  .th-bl-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;}
+  .th-bl-swatch{width:18px;height:18px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .th-bl-swatch.core{background:var(--red);}
+  .th-bl-swatch.secondary{background:#f2a33b;}
+  .th-bl-swatch.dash{background:none;border:2px dashed #444;}
+  .th-bodymap-note{font-size:13.5px;color:var(--gray);margin:4px 0 0;border-top:1px solid var(--border);padding-top:14px;}
+  @media (max-width:600px){
+    .th-region-wrap{flex-direction:column;align-items:stretch;}
+    .th-region-svg{width:150px;margin:0 auto;}
+  }
+
+  /* ── Evacuation-level comparison cards (Ready/Set/Go) ─────────── */
+  .th-shelter-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+    margin:0 0 24px;
+  }
+  @media (max-width:768px){ .th-shelter-grid{grid-template-columns:1fr;} }
+  .th-shelter-card{
+    background:var(--white);
+    border:2px solid var(--border);
+    border-radius:8px;
+    padding:18px 16px;
+  }
+  .th-shelter-card.best{border-color:#1f8a4c;}
+  .th-shelter-card.good{border-color:#f2a33b;}
+  .th-shelter-card.evac{border-color:var(--red);background:#fff3f2;}
+  .th-shelter-rank{
+    display:inline-block;
+    font-family:'Anton',sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:3px 10px;
+    border-radius:10px;
+    color:#fff;
+    margin-bottom:10px;
+  }
+  .th-shelter-card.best .th-shelter-rank{background:#1f8a4c;}
+  .th-shelter-card.good .th-shelter-rank{background:#f2a33b;color:#111;}
+  .th-shelter-card.evac .th-shelter-rank{background:var(--red);}
+  .th-shelter-card h4{font-size:15px !important;margin-bottom:8px;letter-spacing:0.5px;}
+  .th-shelter-card p{font-size:13.5px;color:var(--gray);margin-bottom:0;}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour (and Preceding Days) Matter</a></li>
+      <li><a href="#where-applies">Where This Applies</a></li>
+      <li><a href="#evacuation-levels">The Evacuation-Level System</a></li>
+      <li><a href="#go-bag">Go-Bag Priorities for Wildfire</a></li>
+      <li><a href="#home-hardening">Home-Hardening Basics (If Time Allows)</a></li>
+      <li><a href="#driving-smoke">Driving Through Smoke / Near-Fire Conditions</a></li>
+      <li><a href="#smoke-inhalation">Smoke Inhalation First Aid</a></li>
+      <li><a href="#routes-blocked">If Evacuation Routes Are Already Blocked</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Wildfire Evacuation</h1>
+        <p class="lede">A wildfire evacuation gives you hours or days, not minutes — but waiting for the official "go" order is a documented way people run out of time anyway. The Ready-Set-Go system, go-bag priorities, and what to do if you wait too long.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-wildfire-ebook-001.pdf" id="th-download-pdf-btn" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 25, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general emergency-preparedness and first aid education. It is not a substitute for professional medical care, EMS response, a certified first aid/CPR course, or the official guidance of your local fire authority and emergency management agency, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately, and always follow evacuation orders from local officials over anything in this guide. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#evacuation-levels">Ready-Set-Go</a><span class="arrow">→</span>
+        <a href="#go-bag">Go-Bag</a><span class="arrow">→</span>
+        <a href="#smoke-inhalation">Smoke Inhalation</a><span class="arrow">→</span>
+        <a href="#routes-blocked">Routes Blocked</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR (AND PRECEDING DAYS) MATTER ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour (and the Preceding Days) Matter</h2>
+        <p>Most of the emergencies in this library give you seconds or minutes to decide. A wildfire is different, and that difference is exactly what makes it dangerous in its own way. A fast-moving wind-driven fire can go from "smoke on the horizon" to "your neighborhood is under a mandatory evacuation order" in a matter of hours — sometimes less — but it can also smolder for days before conditions shift and it turns toward your community without warning. That longer runway feels safer. It isn't. It's the reason wildfire evacuations produce a well-documented, repeating failure pattern: people who had hours of notice still end up leaving too late, driving through active fire conditions, or not leaving at all.</p>
+        <p>The problem is almost never that people don't care about their own safety. It's that "wait and see" feels like the reasonable, non-alarmist choice right up until it isn't — and by the time smoke, ash, and darkened skies make the danger undeniable, roads are congested, visibility is dropping, and the fire itself may be moving faster than evacuation traffic can move away from it. Every fatality-review report from major wildfire disasters in the last two decades tells some version of the same story: officials issued a warning or an order, and a meaningful number of people who could have left safely did not leave until conditions had already become dangerous to drive through.</p>
+        <p>This book exists to move your actual decision-making earlier — to the "watch the news, feel a little nervous, but nothing official has happened yet" phase, not the "ash is falling on the driveway" phase. Everything from here forward is built around one idea: <strong>the first hour that matters most in a wildfire evacuation is often not the hour the fire arrives — it's the hour you decide to stop waiting.</strong></p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          You will almost never regret leaving early. You can always come home to an intact house. You cannot undo a drive through smoke and flame because you waited for a formal order that arrived too late to act on safely. Decide your triggers now, in Section 3, and hold yourself to them later.
+        </div>
+      </section>
+
+      <!-- ═══ 2. WHERE THIS APPLIES ═══ -->
+      <section class="th-section" id="where-applies">
+        <h2>2. Where This Applies</h2>
+        <p>Unlike most of the scenarios in this library, wildfire evacuation is not a risk every reader in the country shares equally, and this book says so plainly rather than writing as if it were universal. Wildfire can occur almost anywhere there's vegetation and dry conditions, but the frequency, scale, and evacuation-planning urgency described in this book are concentrated in specific regions.</p>
+
+        <div class="th-region-wrap">
+          <svg class="th-region-svg" viewBox="0 0 260 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Simplified US map highlighting core Western and Southwestern wildfire-risk states — California, Oregon, Washington, Colorado, and Arizona — in dark red along the west side, and a smaller, growing secondary risk zone in the Southeast shown in orange.">
+            <rect x="6" y="6" width="248" height="188" rx="10" fill="#f2f0ea" stroke="#111" stroke-width="2"/>
+            <!-- core zone: West Coast + Southwest column -->
+            <path d="M18 22 L58 18 L64 70 L52 120 L60 165 L40 182 L20 170 L14 110 Z" fill="#E21C13" stroke="#111" stroke-width="2"/>
+            <path d="M64 70 L108 60 L118 120 L96 160 L60 165 L52 120 Z" fill="#E21C13" opacity="0.85" stroke="#111" stroke-width="1.5"/>
+            <!-- secondary zone: growing Southeast risk -->
+            <path d="M175 110 L228 100 L240 145 L205 175 L172 160 Z" fill="#f2a33b" opacity="0.6" stroke="#111" stroke-width="1.5"/>
+            <text x="130" y="14" font-family="Arial" font-size="9" fill="#444" text-anchor="middle">(simplified, not to scale)</text>
+          </svg>
+          <div class="th-region-legend">
+            <h4>A Regional Risk, Not a National Average</h4>
+            <div class="th-bl-item"><span class="th-bl-swatch core"></span><span><strong>Core risk zone — California, Oregon, Washington, Colorado, Arizona:</strong> the combination of dense wildland vegetation, prolonged dry seasons, and increasingly frequent extreme wind events has made large, fast-moving wildfires a near-annual planning concern, not an occasional news story. If you live in or near wildland areas in these states, everything in this book is written primarily for you.</span></div>
+            <div class="th-bl-item"><span class="th-bl-swatch secondary"></span><span><strong>Growing secondary risk — parts of the Southeast:</strong> longer dry spells and expanding development into wooded areas have made wildfire evacuation a real, if newer, planning concern in parts of the Southeast as well — a risk that's expanding, not one you can assume is a Western-only problem indefinitely.</span></div>
+            <p class="th-bodymap-note">If you live well outside both zones, wildfire evacuation on the scale this book describes is genuinely less likely to affect you — but the go-bag, smoke-inhalation, and "don't wait" principles in this book still apply to any fast-developing evacuation scenario, wildfire or otherwise.</p>
+          </div>
+        </div>
+
+        <p>This regional concentration matters beyond raw statistics: evacuation infrastructure (road capacity, official alert systems, community wildfire protection plans) and how seriously an evacuation notice is taken by neighbors both track how frequently a given community has actually faced a real wildfire. A newer resident who just moved into a fire-prone canyon or foothill community from a region without wildfire risk is at real, documented higher risk simply from not yet having internalized how fast conditions can change — this book is written to close that gap quickly.</p>
+      </section>
+
+      <!-- ═══ 3. THE EVACUATION-LEVEL SYSTEM ═══ -->
+      <section class="th-section" id="evacuation-levels">
+        <h2>3. The Evacuation-Level System: Ready, Set, Go</h2>
+        <p>Most fire-prone counties and states use some version of a three-level evacuation notification system, most commonly called <strong>Ready, Set, Go</strong>. The exact name and thresholds vary slightly by county and state — some use "Evacuation Watch / Evacuation Warning / Evacuation Order" instead — but the underlying three-stage structure and what you're supposed to do at each stage are consistent nationwide. Learn your specific county's terminology and sign up for its alert system now; don't wait to look it up once smoke is visible.</p>
+
+        <div class="th-shelter-grid">
+          <div class="th-shelter-card best">
+            <span class="th-shelter-rank">Ready</span>
+            <h4>Stay Alert, Prepare Now</h4>
+            <p>A wildfire is burning in the broader area but isn't an immediate threat to your specific location yet. Pack your go-bag (Section 4), review your evacuation route, load your vehicle with essentials, and stay tuned to official channels. This is not "nothing is happening" — it's your window to do everything Section 4 and 5 describe while you still have time to do it calmly.</p>
+          </div>
+          <div class="th-shelter-card good">
+            <span class="th-shelter-rank">Set</span>
+            <h4>Be Prepared to Leave at a Moment's Notice</h4>
+            <p>Conditions have escalated — the fire is closer, wind has shifted, or containment has dropped. Finish packing, load pets and family members with mobility needs first (Section 9), move your vehicle to face the exit route, and keep it fueled. Many emergency-management agencies explicitly recommend that residents with children, elderly family members, pets, livestock, or limited mobility leave now, during Set, rather than waiting for Go.</p>
+          </div>
+          <div class="th-shelter-card evac">
+            <span class="th-shelter-rank">Go — Leave Immediately</span>
+            <h4>An Evacuation Order Has Been Issued</h4>
+            <p>Leave now, by the route officials designate if one is given. This is not a suggestion and not the moment to finish one more task. Do not wait to see how bad it gets, and do not wait for a knock on the door or a personal escort — a Go order means leave under your own power, immediately.</p>
+          </div>
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-wildfire-evaclevels-001.png" alt="1st Hour Ready-Set-Go wildfire evacuation-level diagram — Ready: prepare and pack; Set: be ready to leave at a moment's notice; Go: leave immediately, do not wait.">
+        </figure>
+
+        <div class="th-warn">
+          <strong>Waiting for "Go" is often too late — don't treat it as the safe default</strong>
+          The Ready-Set-Go system is designed to give you a graduated, early warning — not to imply that Go is the first moment real action is required. By the time an official Go order reaches you, roads may already be congested with other evacuating households, visibility may already be dropping from smoke, and fire behavior can change faster than the notification system can be updated and re-issued. If you are watching fire activity, smelling smoke, seeing ash, or simply feel your gut telling you it's time — during Ready or Set, not waiting for Go — leaving early is never the wrong call. You can always return home once the danger passes. You cannot undo a drive attempted too late. Treat "Go" as the absolute latest acceptable moment to leave, never as the moment you start deciding whether to.
+        </div>
+      </section>
+
+      <!-- ═══ 4. GO-BAG PRIORITIES FOR WILDFIRE ═══ -->
+      <section class="th-section" id="go-bag">
+        <h2>4. Go-Bag Priorities for Wildfire</h2>
+        <p>A wildfire go-bag is organized less by "what's important" and more by "how fast can I grab it" — because the whole point of packing during Ready, not Set or Go, is that you shouldn't be making these decisions under time pressure. Split your priorities into two tiers now.</p>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-wildfire-gobag-001.png" alt="1st Hour wildfire go-bag priority diagram — grab-in-5-minutes items (trauma kit, documents, medications, phone, masks, pets) versus grab-if-time-allows items (clothing, food/water, irreplaceables, backup radio).">
+        </figure>
+
+        <h3>Grab in 5 minutes — pack this first, during "Ready"</h3>
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Your 1st Hour trauma kit</strong><span class="th-cl-why"> — treat it as a grab-and-go item, not something to leave behind because you're "just evacuating." Injuries and debris hazards are common during evacuation and cleanup alike.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Identification, cash, and critical documents</strong><span class="th-cl-why"> — IDs, insurance policies, passports, medical records; keep these in one folder year-round so this step takes seconds, not minutes.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Prescription medications and medical devices</strong><span class="th-cl-why"> — enough for at least several days; pharmacies in an evacuated area may be closed or inaccessible.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Phone, charger, and a battery pack</strong><span class="th-cl-why"> — for alerts, navigation, and 911 if needed en route.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>N95 or P100 masks for every household member</strong><span class="th-cl-why"> — Section 6 and 7. Smoke particulate is a real respiratory hazard well before flame is visible.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Pets and pet carriers/leashes</strong><span class="th-cl-why"> — Section 9. Not an afterthought; many delayed evacuations happen because a pet couldn't be found or contained quickly.</span></div></li>
+        </ul>
+
+        <h3>Grab if time allows — pack during "Ready," load last</h3>
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>A few days of clothing and closed-toe shoes</strong><span class="th-cl-why"> — practical necessity if the evacuation extends beyond a day.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-perishable food and water for the vehicle</strong><span class="th-cl-why"> — evacuation traffic can mean hours in a vehicle before reaching a shelter or safe area.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Irreplaceable small items</strong><span class="th-cl-why"> — photos, heirlooms, anything genuinely irreplaceable and small enough to grab without a search.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A backup battery radio</strong><span class="th-cl-why"> — cell networks can become overloaded or damaged during a major wildfire event.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>The rule that resolves any conflict</strong>
+          If choosing between finishing the "if time allows" list and actually leaving during Set instead of waiting until Go, leave. Nothing on the second list is worth delaying your own departure past the point it's safe to drive.
+        </div>
+      </section>
+
+      <!-- ═══ 5. HOME-HARDENING BASICS (IF TIME ALLOWS) ═══ -->
+      <section class="th-section" id="home-hardening">
+        <h2>5. Home-Hardening Basics (If Time Allows)</h2>
+        <div class="th-warn">
+          <strong>Read this heading literally</strong>
+          Everything in this section is conditional on one thing: you are not delaying your own evacuation to do it. If a Go order is issued, or you are already in Set and feel unsafe, none of this is worth doing. A structure can be rebuilt or repaired. Do this only during Ready, only if you have genuine time to spare, and stop the moment that stops being true.
+        </div>
+        <p>A handful of quick actions, done in the minutes before you leave — not instead of leaving — can meaningfully reduce the chance embers ignite your home while you're gone, without requiring you to stay and defend it.</p>
+        <ul>
+          <li><strong>Close all windows, doors, and vents,</strong> including attic and foundation vents if accessible quickly — this is one of the single highest-value actions, since wind-blown embers entering through vents and gaps is a leading cause of home ignition, often well before flame ever reaches the structure.</li>
+          <li><strong>Move flammable items away from the house's exterior walls</strong> — patio furniture cushions, doormats, firewood piles, propane tanks, and anything else combustible sitting within several feet of the structure.</li>
+          <li><strong>Turn on exterior lights</strong> so firefighters can see your house through smoke, and leave a light on inside as well.</li>
+          <li><strong>Shut off gas at the meter</strong> if you know how and have time — do not attempt this if it delays your departure or you're unfamiliar with your specific setup.</li>
+          <li><strong>Leave garden hoses connected and visible</strong> near the house (not in use — you should not be fighting fire yourself) in case firefighters need quick water access.</li>
+          <li><strong>Leave a door unlocked</strong> if it's reasonably secure otherwise, so emergency responders can access the interior if needed without forcing entry.</li>
+        </ul>
+        <p>None of this is a substitute for defensible space maintained year-round — clearing brush and vegetation well back from structures, maintaining roofs and gutters free of dry debris — which matters far more than anything done in the final minutes, but that's a preparedness project for a calm week, not this book's first-hour scope.</p>
+      </section>
+
+      <!-- ═══ 6. DRIVING THROUGH SMOKE / NEAR-FIRE CONDITIONS ═══ -->
+      <section class="th-section" id="driving-smoke">
+        <h2>6. Driving Through Smoke or Near-Fire Conditions</h2>
+        <p>If you've left during Ready or Set, per Section 3's guidance, you should rarely if ever need this section's guidance for genuinely dangerous conditions — that's the entire point of leaving early. It exists for the reality that evacuations don't always go as planned, and because visibility and road conditions can still be reduced even on an early, well-timed departure.</p>
+        <ol class="th-steps">
+          <li><strong>Turn on your headlights, not just running lights,</strong> even in daytime — smoke dramatically reduces visibility for other drivers seeing you, not just your own sightlines.</li>
+          <li><strong>Slow down and increase following distance.</strong> Smoke reduces visibility unpredictably and can conceal stopped traffic, debris, or emergency vehicles with very little warning.</li>
+          <li><strong>Keep windows up and close vehicle air vents,</strong> or set climate control to recirculate, to limit smoke entering the cabin.</li>
+          <li><strong>Follow official evacuation routes over your own shortcuts,</strong> even if they seem slower — officials route around road closures, downed lines, and active fire behavior you may not be able to see.</li>
+          <li><strong>Do not stop to watch, photograph, or film the fire.</strong> Every minute spent stopped is a minute of reduced buffer between you and worsening conditions, and it can block the route for others behind you.</li>
+        </ol>
+        <div class="th-warn">
+          <strong>If the vehicle itself becomes unsafe to continue in</strong>
+          If visibility drops to the point you cannot safely see the road, embers are landing on or near the vehicle, or flame becomes visible close to the roadway ahead, do not attempt to push through. Turn around if a safe route back exists; if not, look for a cleared area away from vegetation — a large parking lot, a wide road shoulder clear of brush — stay inside the vehicle with windows up and vents closed, turn on hazard lights, and call 911 to report your location. A vehicle's air is meaningfully safer than exposed ground in active fire conditions, and moving on foot through active fire and smoke introduces its own serious risks. This is a genuine last-resort scenario, not a routine contingency — the entire purpose of Sections 1 through 3 is to make sure you never reach it.
+        </div>
+      </section>
+
+      <!-- ═══ 7. SMOKE INHALATION FIRST AID ═══ -->
+      <section class="th-section" id="smoke-inhalation">
+        <h2>7. Smoke Inhalation First Aid</h2>
+        <p>Smoke inhalation is one of the most common wildfire-related health effects, and it affects people well beyond the immediate fire perimeter — heavy smoke can travel many miles and affect air quality for days after a fire has passed a given area. Most smoke exposure is mild and resolves once you're back in clean air; some is a genuine medical emergency. Knowing the difference matters.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Presentation</th><th>What it looks like</th><th>What to do</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Mild exposure</strong></td><td>Coughing, throat or eye irritation, mild headache, that clears within a short time once away from smoke</td><td>Move to clean air (indoors with windows/vents closed and, ideally, filtered air), rest, drink water. No 911 call needed unless symptoms worsen.</td></tr>
+              <tr><td><strong>Moderate exposure</strong></td><td>Persistent coughing, chest tightness, wheezing, headache that doesn't resolve quickly, symptoms in someone with asthma or a heart/lung condition</td><td>Get to clean air immediately, use prescribed rescue inhalers/medication if the person has them, monitor closely. Call a doctor or seek urgent care if symptoms don't meaningfully improve within an hour of clean air.</td></tr>
+              <tr><td><strong>Severe — call 911</strong></td><td>Difficulty breathing or shortness of breath at rest, confusion or altered mental status, bluish lips or face, chest pain, coughing up dark or black mucus, loss of consciousness</td><td><strong>Call 911 immediately.</strong> Move the person to clean air if it's safe to do so while waiting. Do not delay the call to try home remedies first.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <ol class="th-steps">
+          <li><strong>Get the person to clean air first, before anything else.</strong> Continued exposure while treating symptoms undermines any other step you take.</li>
+          <li><strong>If breathing difficulty, confusion, or bluish skin/lips appear, call 911 immediately</strong> — these are the red flags in the table above that separate a self-care situation from an emergency.</li>
+          <li><strong>Loosen tight clothing around the neck and chest</strong> to make breathing easier while waiting for help or for symptoms to improve.</li>
+          <li><strong>If the person has a known respiratory condition and a prescribed rescue inhaler or nebulizer,</strong> help them use it as directed.</li>
+          <li><strong>Monitor for shock</strong> if breathing difficulty is significant or prolonged — rapid, shallow breathing and anxiety can accompany serious smoke inhalation the same way they accompany other causes of respiratory distress. See <a href="../Shock-Management/1HT_Protocol_Shock_v3.html">Shock Management</a> for the full positioning and monitoring protocol if shock symptoms develop.</li>
+          <li><strong>Do not go back into smoke to retrieve anyone or anything</strong> once you and others are safely in clean air — treat re-entry into heavy smoke with the same seriousness as re-entering a burning structure.</li>
+        </ol>
+
+        <div class="th-callout">
+          <strong>Special caution: infants, older adults, pregnant individuals, and anyone with asthma, COPD, or heart disease</strong>
+          These groups are disproportionately affected by even moderate smoke exposure and should treat symptoms as more urgent than the general guidance above suggests — err toward calling a doctor or 911 sooner rather than waiting to see if symptoms resolve on their own.
+        </div>
+      </section>
+
+      <!-- ═══ 8. IF EVACUATION ROUTES ARE ALREADY BLOCKED ═══ -->
+      <section class="th-section" id="routes-blocked">
+        <h2>8. If Evacuation Routes Are Already Blocked</h2>
+        <div class="th-warn">
+          <strong>This section is a last resort, not a plan</strong>
+          Everything below exists for the situation this entire book is designed to help you avoid: you waited too long, or conditions changed faster than expected, and the road out is no longer a safe option. It is meaningfully less safe than evacuating early, and nothing here should be read as an equally valid alternative to leaving during Ready or Set per Section 3. If you have any usable route out, take it — this section is only for when you genuinely do not.
+        </div>
+        <p>If you find yourself unable to safely reach an evacuation route — the road is blocked by fire, gridlocked traffic with fire approaching, or downed trees/power lines with no alternate path — sheltering in place is the fallback option, not a strategy to plan around.</p>
+        <ol class="th-steps">
+          <li><strong>Choose the most defensible structure available,</strong> ideally one with cleared space around it, away from dense vegetation, wood piles, or other fuel sources — your own home if it qualifies, or the nearest sturdier building if you're already away from home.</li>
+          <li><strong>Close all doors, windows, and vents</strong> to limit smoke and ember intrusion, same as Section 5's home-hardening actions.</li>
+          <li><strong>Move to a room away from exterior walls and windows,</strong> ideally one with two ways out, and keep that room's door closed.</li>
+          <li><strong>Keep a phone charged and call 911 to report your exact location and situation</strong> — being sheltered-in-place and unable to evacuate is information responders need, both for your safety and for routing others.</li>
+          <li><strong>Keep an exterior door plan in mind at all times.</strong> Know which door you would use if the structure itself becomes untenable, and don't let yourself become trapped in a room with only one exit if you can help it.</li>
+          <li><strong>Monitor conditions and be ready to move</strong> if the immediate area becomes clearly safer to traverse, or if the structure itself becomes unsafe — sheltering in place is a moment-to-moment decision, not a commitment to stay no matter what happens next.</li>
+        </ol>
+        <p>This is genuinely dangerous territory, and no set of steps fully offsets the risk of having been caught without a clear route. The entire purpose of Sections 1 through 4 — deciding your triggers early, leaving during Ready or Set rather than waiting for Go — exists specifically so you never need this section for real.</p>
+      </section>
+
+      <!-- ═══ 9. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>9. Special Situations</h2>
+
+        <h3>Mobility-limited or medically dependent household members</h3>
+        <p>Anyone who needs more time, assistance, or specialized transport to evacuate safely — due to mobility limitations, medical equipment that depends on power, or dependence on a caregiver — should factor that extra time directly into when your household leaves, not treat it as a detail to work out once an order is issued. Per Section 3, plan for this household to leave during "Set" at the latest, not "Go," and identify in advance who will assist and what equipment (wheelchairs, oxygen, powered medical devices and their backup power) needs to come with them.</p>
+
+        <h3>Pets and livestock</h3>
+        <p>Have carriers, leashes, and a few days of food/water for pets staged with your go-bag during Ready, and know in advance which nearby shelters or hotels accept animals — looking this up while already evacuating wastes time you don't have. For livestock or large animals, identify evacuation trailers, transport arrangements, and a receiving location well before fire season, since large-animal evacuation logistics take meaningfully longer than a household's own departure and should be planned as a completely separate, earlier-triggered task.</p>
+
+        <h3>Households without a vehicle or reliable transportation</h3>
+        <p>Identify in advance whether your community's evacuation plan includes public transit, designated pickup points, or a neighbor/family arrangement, and register with local emergency services in advance if a formal assistance program exists in your area. Waiting until an evacuation order to solve this problem for the first time removes your margin entirely.</p>
+      </section>
+
+      <!-- ═══ 10. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>10. Essential Items Checklist</h2>
+        <p>Keep these staged together, ready to load, well before fire season starts in your area — per Section 4, the entire point is not having to search for anything once you're in "Ready."</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Your 1st Hour trauma kit</strong><span class="th-cl-why"> — Section 4. Grab-and-go, not a "leave it, we're just evacuating" item.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>N95 or P100 masks, one per household member</strong><span class="th-cl-why"> — Sections 6–7. Smoke particulate is a real hazard well before visible flame.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Documents folder (ID, insurance, medical records)</strong><span class="th-cl-why"> — Section 4. Keep it assembled year-round, not built during an active evacuation.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A few days of prescription medications</strong><span class="th-cl-why"> — Section 4. Pharmacies in an evacuated area may be closed or inaccessible.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Battery or hand-crank radio</strong><span class="th-cl-why"> — Section 4. Cell networks can become overloaded or damaged during a major event.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Pet carriers, leashes, and pet food</strong><span class="th-cl-why"> — Section 9. Staged with the rest of your go-bag, not searched for during an active evacuation.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Phone charger and a battery power bank</strong><span class="th-cl-why"> — Section 4. For navigation, alerts, and 911 if needed en route or if routes become blocked (Section 8).</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A written household evacuation trigger and route plan</strong><span class="th-cl-why"> — Section 3. Decided calmly in advance, not improvised under pressure.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Stage these together in one place — a hall closet by the garage door, a labeled bin in the car itself — not scattered across the house. Under real time pressure during "Set," you don't get a second trip to gather anything you forgot.
+        </div>
+      </section>
+
+      <!-- ═══ 11. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>11. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment, emergency management guidance, or legal advice. It is not a substitute for professional medical care, emergency medical services, your local fire authority and emergency management agency's official guidance, or a certified first aid, CPR, or emergency-preparedness course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call or override an official evacuation order or instruction from local authorities.</p>
+          <p><strong>The Ready-Set-Go terminology and evacuation-level guidance in Section 3 reflects common, widely-adopted regional practice</strong> but exact terminology, thresholds, and official channels vary by county and state — confirm your own local fire authority's specific system and alert sign-up in advance, rather than relying solely on the general framework described here.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 25, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/wildfire-evacuation/">1sthourprotocols.com/wildfire-evacuation</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

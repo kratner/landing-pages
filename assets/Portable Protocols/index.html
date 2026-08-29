@@ -1,0 +1,683 @@
+<!-- ============================================================================
+     FILE: index.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Portable Protocols/index.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — PORTABLE PROTOCOL LIBRARY (offline landing page)
+     Funnel: 1st Hour Trauma First Aid Kit — 13688167
+
+     Fully self-contained local copy of all 15 1st Hour Protocol e-books —
+     built so this whole "Portable Protocols" folder can be zipped, copied to
+     a phone/tablet/USB drive, and opened with zero internet access. Nothing
+     in this folder (this page, the 15 book pages, their interior
+     illustrations, the 15 PDFs, or the Anton/Inter fonts) loads from a
+     network — everything is vendored locally and referenced with relative
+     paths. Only the small "Editor's note" links inside each book (pointing
+     to 1sthourprotocols.com for future revisions) are intentionally still
+     live URLs — they're an explicit "check online for updates" affordance,
+     not something this page depends on.
+
+     Cover art (graphical link → the HTML book, opens in this same offline
+     site) and Print Edition photo-mockup art (graphical link → the local
+     PDF) are the two link types on every card, per the established Cover /
+     Print Edition asset pattern documented in ../ImageURLs.md. Brand
+     palette/type (Anton headlines, Inter body, #E21C13 red / #111111 black /
+     #F7F7F7 off-white) matches the dark marketing-shell style already
+     established in ../Upsell/*.html and Assets/1HT_BrandKit_v1.html — this
+     page is a standalone file (not a CF Custom HTML/JS element), so none of
+     that workspace's CF-wrapper-breakout or Base64-script-injection
+     workarounds apply here; it's a normal, directly-openable HTML file.
+
+     FOLDER LAYOUT
+       index.html                    — this file
+       assets/fonts/                 — self-hosted Anton + Inter (see fonts.css)
+       assets/covers/                — 15 marketing cover images (→ HTML links)
+       assets/print-editions/        — 15 print-edition photo mockups (→ PDF links)
+       assets/brand/                 — footer logo
+       pdfs/                         — all 15 e-book PDFs, original filenames
+       books/<Folder>/<File>.html    — all 15 e-books, each with its own local
+                                        assets/ subfolder for interior illustrations;
+                                        copied verbatim from ../Books/ then had every
+                                        mtp-images.com URL, the Google Fonts CDN
+                                        <link>, the top-bar logo link, and root-
+                                        relative sibling cross-links (e.g.
+                                        "/severe-bleeding/") rewritten to local
+                                        relative paths.
+
+     REVISION HISTORY
+     - v1 (2026-08-29, Claude): Initial build. Downloaded all 15 books' interior
+       illustrations (36 images), the 15 marketing cover images, 15 print-edition
+       photo mockups, 15 PDFs, and the 2 font files (Anton 400 + Inter variable,
+       latin subset only) that the books' Google Fonts CDN link normally pulls.
+       Copied the latest version of each of the 15 books from ../Books/ and
+       rewrote every external reference to a local relative path (see FOLDER
+       LAYOUT above). Built this landing page grouped into Track A (8
+       trauma-response guides) / Track B (7 emergency-prep guides), mirroring
+       the grouping already established in ../Upsell/1HT_ProtocolsUpsell_
+       LibraryBuilder_v1.payload.js's TRACK_A/TRACK_B arrays.
+
+     HOW TO VERIFY: with Wi-Fi/cellular fully OFF, open this file directly
+     (double-click, or a mobile file manager's "Open in browser") and confirm:
+     every cover image renders, clicking a cover opens that book with its own
+     illustrations rendering and its "Download PDF" button opening the local
+     PDF, clicking a print-edition thumbnail opens the local PDF directly, the
+     book's top-bar/footer logo returns to this page, and Anton/Inter render
+     (not a system-font fallback — check letterforms, not just "some font
+     loaded"). Check 480/768/968px breakpoints. Confirm folder size before
+     distributing (~165MB as of this build — mostly the 15 PDFs).
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1st Hour Protocols — Portable Library</title>
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --red-dark:#a3130c;
+    --black:#111111;
+    --black-2:#1a1a1a;
+    --gray:#444444;
+    --off:#F7F7F7;
+    --line:rgba(247,247,247,0.12);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--black);
+    color:var(--off);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    line-height:1.55;
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
+  h1,h2,h3{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.01em;
+    line-height:1.08;
+    margin:0;
+    color:var(--off);
+  }
+  p{margin:0;}
+  a{color:var(--red);text-decoration:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;}
+
+  .ppl-inner{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,40px);}
+
+  /* ---------- TOP BAR ---------- */
+  .ppl-topbar{
+    background:var(--black-2);
+    border-bottom:1px solid var(--line);
+    padding:14px clamp(16px,4vw,40px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .ppl-topbar .ppl-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px);
+    color:var(--off);
+    letter-spacing:0.5px;
+  }
+  .ppl-topbar .ppl-logo span{color:var(--red);}
+  .ppl-topbar .ppl-offline-pill{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:clamp(11px,1.4vw,12.5px);
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:#8fe39a;
+    background:rgba(31,138,76,0.15);
+    border:1px solid rgba(31,138,76,0.4);
+    padding:6px 12px;
+    border-radius:999px;
+  }
+  .ppl-topbar .ppl-offline-pill::before{content:'●';font-size:9px;color:#3ecb5a;}
+
+  /* ---------- HERO ---------- */
+  .ppl-hero{
+    background:radial-gradient(ellipse at 50% -10%, #2a0a08 0%, var(--black) 55%);
+    padding:clamp(36px,6vw,64px) 0 clamp(28px,5vw,44px);
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .ppl-kicker{
+    display:inline-block;
+    font-weight:800;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-size:clamp(11px,1.4vw,13px);
+    color:var(--red);
+    background:rgba(226,28,19,0.12);
+    border:1px solid rgba(226,28,19,0.4);
+    padding:6px 16px;
+    border-radius:999px;
+    margin-bottom:16px;
+  }
+  .ppl-hero h1{
+    font-size:clamp(30px,5.4vw,56px);
+    max-width:920px;
+    margin:0 auto;
+  }
+  .ppl-hero h1 em{font-style:normal;color:var(--red);}
+  .ppl-hero-sub{
+    max-width:680px;margin:16px auto 0;
+    font-size:clamp(15px,2vw,18px);
+    color:#cfcac2;
+  }
+  .ppl-stat-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:10px;
+    max-width:900px;margin:clamp(22px,3.5vw,30px) auto 0;
+  }
+  .ppl-stat-chip{
+    display:flex;align-items:center;gap:8px;
+    font-size:clamp(12px,1.6vw,13.5px);
+    font-weight:600;
+    color:var(--off);
+    background:rgba(247,247,247,0.06);
+    border:1px solid var(--line);
+    padding:8px 14px;
+    border-radius:999px;
+  }
+  .ppl-stat-chip svg{width:15px;height:15px;flex:none;color:var(--red);}
+
+  /* ---------- HOW-TO STRIP ---------- */
+  .ppl-howto{
+    background:var(--black-2);
+    border-bottom:1px solid var(--line);
+    padding:clamp(20px,3vw,28px) 0;
+  }
+  .ppl-howto-row{
+    display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(20px,4vw,48px);
+  }
+  .ppl-howto-item{
+    display:flex;align-items:center;gap:12px;
+    max-width:320px;
+  }
+  .ppl-howto-thumb{
+    flex:none;width:44px;height:44px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    background:rgba(226,28,19,0.12);
+    border:1px solid rgba(226,28,19,0.35);
+  }
+  .ppl-howto-thumb svg{width:22px;height:22px;color:var(--red);}
+  .ppl-howto-text strong{display:block;color:var(--off);font-size:14px;font-weight:700;margin-bottom:2px;}
+  .ppl-howto-text span{display:block;color:#b8b2a8;font-size:13px;line-height:1.4;}
+
+  /* ---------- LIBRARY SECTIONS ---------- */
+  .ppl-library{padding:clamp(40px,6vw,64px) 0;}
+  .ppl-track{margin-bottom:clamp(48px,7vw,72px);}
+  .ppl-track:last-child{margin-bottom:0;}
+  .ppl-track-head{text-align:center;max-width:720px;margin:0 auto clamp(26px,4vw,36px);}
+  .ppl-track-kicker{
+    display:inline-block;font-size:12px;font-weight:800;letter-spacing:0.12em;
+    text-transform:uppercase;color:#cfcac2;margin-bottom:8px;
+  }
+  .ppl-track-kicker.b{color:#e8b34a;}
+  .ppl-track-head h2{font-size:clamp(22px,3.6vw,32px);}
+  .ppl-track-head h2 em{font-style:normal;color:var(--red);}
+  .ppl-track.b .ppl-track-head h2 em{color:#e8b34a;}
+  .ppl-track-sub{margin-top:8px;font-size:clamp(13.5px,1.7vw,15px);color:#b8b2a8;}
+
+  .ppl-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:clamp(16px,2vw,24px);
+  }
+  @media (max-width:1023px){ .ppl-grid{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:767px){ .ppl-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:479px){ .ppl-grid{grid-template-columns:1fr;} }
+
+  .ppl-card{
+    background:var(--black-2);
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  .ppl-cover-link{display:block;position:relative;background:#000;}
+  .ppl-cover-link img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;transition:transform .2s ease;}
+  .ppl-cover-link:hover img{transform:scale(1.03);}
+  .ppl-cover-badge{
+    position:absolute;top:8px;left:8px;
+    background:rgba(17,17,17,0.8);
+    border:1px solid rgba(247,247,247,0.25);
+    color:var(--off);
+    font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;
+    padding:4px 8px;border-radius:6px;
+    display:flex;align-items:center;gap:5px;
+  }
+  .ppl-cover-badge svg{width:11px;height:11px;flex:none;}
+
+  .ppl-card-body{padding:14px 14px 16px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .ppl-card-title{font-size:15.5px;letter-spacing:0.2px;color:var(--off);line-height:1.15;}
+  .ppl-card-tagline{font-size:12.5px;color:#b8b2a8;line-height:1.45;flex:1;}
+
+  .ppl-print-row{
+    margin-top:auto;
+    display:flex;align-items:center;gap:10px;
+    border-top:1px solid var(--line);
+    padding-top:12px;
+  }
+  .ppl-print-link{
+    flex:none;width:40px;height:52px;border-radius:5px;overflow:hidden;
+    border:1px solid var(--line);background:#000;
+    display:block;
+  }
+  .ppl-print-link img{width:100%;height:100%;object-fit:cover;}
+  .ppl-print-info{flex:1;min-width:0;}
+  .ppl-print-info a{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:12px;font-weight:700;color:var(--off);
+  }
+  .ppl-print-info a svg{width:12px;height:12px;flex:none;color:var(--red);}
+  .ppl-print-info a:hover{color:var(--red);}
+  .ppl-print-info span{display:block;font-size:11px;color:#8a8478;margin-top:2px;}
+
+  /* ---------- FOOTER ---------- */
+  .ppl-footer{
+    background:var(--black-2);
+    border-top:1px solid var(--line);
+    padding:clamp(32px,5vw,44px) 0;
+    text-align:center;
+  }
+  .ppl-footer img{margin:0 auto 14px;height:28px;width:auto;}
+  .ppl-footer-disclaimer{
+    max-width:720px;margin:0 auto;
+    font-size:12px;line-height:1.6;color:#8a8478;
+  }
+  .ppl-footer-disclaimer strong{color:#b8b2a8;}
+  .ppl-footer-note{margin-top:14px;font-size:11.5px;color:#5f594e;}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="ppl-topbar">
+  <span class="ppl-logo">1ST<span>HOUR</span></span>
+  <span class="ppl-offline-pill">Offline Library</span>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<div class="ppl-hero">
+  <div class="ppl-inner">
+    <span class="ppl-kicker">Portable Protocol Library</span>
+    <h1>Your Complete Field Library. <em>No Signal Required.</em></h1>
+    <p class="ppl-hero-sub">All 15 1st Hour Protocol guides — every illustration, every PDF, every font — saved locally on this device. Nothing on this page ever calls out to the internet.</p>
+    <div class="ppl-stat-row">
+      <span class="ppl-stat-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h5"/></svg>15 Complete Guides</span>
+      <span class="ppl-stat-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/></svg>252 Pages · 201 Topics</span>
+      <span class="ppl-stat-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z"/></svg>Works With Airplane Mode On</span>
+      <span class="ppl-stat-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>HTML + Printable PDF, Every Title</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ HOW TO USE THIS LIBRARY ═══ -->
+<div class="ppl-howto">
+  <div class="ppl-inner ppl-howto-row">
+    <div class="ppl-howto-item">
+      <div class="ppl-howto-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8M8 14h5"/></svg></div>
+      <div class="ppl-howto-text"><strong>Tap a cover</strong><span>Opens the full illustrated guide, right in your browser.</span></div>
+    </div>
+    <div class="ppl-howto-item">
+      <div class="ppl-howto-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div class="ppl-howto-text"><strong>Tap a print edition</strong><span>Opens the printable PDF version of that same guide.</span></div>
+    </div>
+    <div class="ppl-howto-item">
+      <div class="ppl-howto-thumb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 3 7v6c0 5 4 8.5 9 9 5-.5 9-4 9-9V7l-9-5Z"/></svg></div>
+      <div class="ppl-howto-text"><strong>Everything stays put</strong><span>Copy this whole folder anywhere — every link still works.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LIBRARY ═══ -->
+<div class="ppl-library">
+  <div class="ppl-inner">
+
+    <!-- ───────── TRACK A — TRAUMA RESPONSE ───────── -->
+    <section class="ppl-track a">
+      <div class="ppl-track-head">
+        <span class="ppl-track-kicker">Track A · 8 Guides</span>
+        <h2>Kit-Related <em>Trauma Response</em></h2>
+        <p class="ppl-track-sub">What to do in the first sixty seconds of a medical emergency — bleeding, burns, stroke, shock, and more.</p>
+      </div>
+      <div class="ppl-grid">
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">
+            <img src="assets/covers/1sthour-severebleeding-cover-002.png" alt="Severe Bleeding &amp; Hemorrhage Control — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Severe Bleeding &amp; Hemorrhage Control</h3>
+            <p class="ppl-card-tagline">What to do in the first sixty seconds after someone starts bleeding badly — tourniquets, wound packing, and shock.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-severebleeding-ebook-004.pdf">
+                <img src="assets/print-editions/1sthour-severebleeding-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-severebleeding-ebook-004.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Gunshot-Wound-Response/1HT_Protocol_GunshotWound_v7.html">
+            <img src="assets/covers/1sthour-gunshotwound-cover-002.png" alt="Gunshot Wound Response — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Gunshot Wound Response</h3>
+            <p class="ppl-card-tagline">Entry/exit assessment, internal bleeding red flags, chest seals, and applying Book 1's techniques to gunshot wounds.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-gunshotwound-ebook-002.pdf">
+                <img src="assets/print-editions/1sthour-gunshotwound-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-gunshotwound-ebook-002.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Burn-Injury-Response/1HT_Protocol_BurnInjury_v7.html">
+            <img src="assets/covers/1sthour-burninjury-cover-003.png" alt="Burn Injury Response — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Burn Injury: Thermal, Chemical &amp; Electrical</h3>
+            <p class="ppl-card-tagline">Three burn mechanisms, three distinct first responses — degree classification, rule-of-palm, and chemical flush technique.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-burninjury-ebook-002.pdf">
+                <img src="assets/print-editions/1sthour-burninjury-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-burninjury-ebook-002.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Stroke-Recognition-Response/1HT_Protocol_Stroke_v3.html">
+            <img src="assets/covers/1sthour-stroke-cover-002.png" alt="Stroke Recognition &amp; Response — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Stroke Recognition &amp; Response</h3>
+            <p class="ppl-card-tagline">Nothing to bandage, nothing to pack — the FAST test and why "time is brain" is the entire book.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-stroke-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-stroke-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-stroke-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Car-Accident-Trauma/1HT_Protocol_CarAccident_v3.html">
+            <img src="assets/covers/1sthour-caraccident-cover-003.png" alt="Car Accident Trauma — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Car Accident Trauma</h3>
+            <p class="ppl-card-tagline">Scene safety around traffic, spinal precaution basics, and multi-victim triage in a single incident.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-caraccident-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-caraccident-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-caraccident-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Choking-Airway-Obstruction/1HT_Protocol_Choking_v1.html">
+            <img src="assets/covers/1sthour-choking-cover-003.png" alt="Choking &amp; Airway Obstruction — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Choking &amp; Airway Obstruction</h3>
+            <p class="ppl-card-tagline">One question — can they still cough? — and the exact technique for adults, kids, and infants.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-choking-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-choking-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-choking-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Broken-Bones-Splinting/1HT_Protocol_BrokenBones_v3.html">
+            <img src="assets/covers/1sthour-brokenbones-cover-002.png" alt="Broken Bones &amp; Splinting — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Broken Bones &amp; Splinting</h3>
+            <p class="ppl-card-tagline">Field-splinting technique using kit contents and improvised materials until real care is available.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-brokenbones-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-brokenbones-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-brokenbones-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Shock-Management/1HT_Protocol_Shock_v3.html">
+            <img src="assets/covers/1sthour-shock-cover-003.png" alt="Shock Management — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Shock Management</h3>
+            <p class="ppl-card-tagline">Shock as a general emergency state — from bleeding, burns, allergic reaction, or heart problems — and how to respond.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-shockmanagement-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-shock-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-shockmanagement-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ───────── TRACK B — EMERGENCY PREP ───────── -->
+    <section class="ppl-track b">
+      <div class="ppl-track-head">
+        <span class="ppl-track-kicker b">Track B · 7 Guides</span>
+        <h2>Emergency <em>Preparedness</em></h2>
+        <p class="ppl-track-sub">Sustained-emergency and disaster-response scenarios — grid failure, extreme weather, and civilian threat response.</p>
+      </div>
+      <div class="ppl-grid">
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Grid-Down-Power-Outage/1HT_Protocol_GridDown_v3.html">
+            <img src="assets/covers/1sthour-griddown-cover-003.png" alt="Grid-Down / Extended Power Outage — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Grid-Down / Extended Power Outage</h3>
+            <p class="ppl-card-tagline">The first-hour checklist plus a realistic multi-day posture for food, water, warmth, and communication.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-griddown-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-griddown-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-griddown-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Nuclear-Threat-Sheltering/1HT_Protocol_NuclearThreat_v4.html">
+            <img src="assets/covers/1sthour-nuclearthreat-cover-002.png" alt="Nuclear Threat &amp; Fallout Sheltering — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Nuclear Threat &amp; Fallout Sheltering</h3>
+            <p class="ppl-card-tagline">Get inside. Stay inside. Stay tuned. A calm, FEMA/Ready.gov-aligned guide to the first hours and days.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-nuclearthreat-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-nuclearthreat-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-nuclearthreat-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Tornado-Response-Aftermath/1HT_Protocol_Tornado_v2.html">
+            <img src="assets/covers/1sthour-tornado-cover-004.png" alt="Tornado Response &amp; Aftermath — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Tornado Response &amp; Aftermath</h3>
+            <p class="ppl-card-tagline">Shelter-by-home-type, the mobile-home evacuation rule, and staying safe in the dangerous hour after the storm.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-tornado-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-tornado-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-tornado-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Ice-Storm-Winter-Grid-Failure/1HT_Protocol_IceStorm_v3.html">
+            <img src="assets/covers/1sthour-icestorm-cover-004.png" alt="Ice Storm &amp; Winter Grid Failure — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Ice Storm &amp; Winter Grid Failure</h3>
+            <p class="ppl-card-tagline">Hypothermia and frostbite recognition, safe heat without electricity, and getting through the days that follow.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-iceover-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-icestorm-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-iceover-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Active-Shooter-Civilian-Response/1HT_Protocol_ActiveShooter_v4.html">
+            <img src="assets/covers/1sthour-activeshooter-cover-004.png" alt="Active Shooter — Civilian Response — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Active Shooter — Civilian Response</h3>
+            <p class="ppl-card-tagline">The Run-Hide-Fight decision framework, DHS/FBI-aligned and civilian-focused, for the first sixty seconds.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-activeshooter-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-activeshooter-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-activeshooter-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Home-Invasion-Intruder-Response/1HT_Protocol_HomeInvasion_v3.html">
+            <img src="assets/covers/1sthour-homeinvasion-cover-004.png" alt="Home Invasion &amp; Intruder Response — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Home Invasion &amp; Intruder Response</h3>
+            <p class="ppl-card-tagline">Secure, signal, de-escalate, defend as a last resort — a plan your family knows before anything happens.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-homeinvasion-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-homeinvasion-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-homeinvasion-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="ppl-card">
+          <a class="ppl-cover-link" href="books/Wildfire-Evacuation/1HT_Protocol_Wildfire_v3.html">
+            <img src="assets/covers/1sthour-wildfire-cover-004.png" alt="Wildfire Evacuation — read the guide">
+            <span class="ppl-cover-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h8"/></svg>Read Guide</span>
+          </a>
+          <div class="ppl-card-body">
+            <h3 class="ppl-card-title">Wildfire Evacuation</h3>
+            <p class="ppl-card-tagline">The Ready-Set-Go system, go-bag priorities, and what to do if you wait too long for the official "go" order.</p>
+            <div class="ppl-print-row">
+              <a class="ppl-print-link" href="pdfs/1sthour-wildfire-ebook-001.pdf">
+                <img src="assets/print-editions/1sthour-wildfire-printmockup-001.png" alt="">
+              </a>
+              <div class="ppl-print-info">
+                <a href="pdfs/1sthour-wildfire-ebook-001.pdf"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Print Edition</a>
+                <span>PDF · offline copy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<div class="ppl-footer">
+  <div class="ppl-inner">
+    <img src="assets/brand/el-logo-white-013.png" alt="1st Hour">
+    <p class="ppl-footer-disclaimer"><strong>Before you read further:</strong> These guides are general first aid and emergency-preparedness education. They are not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and they are not legal advice. In any true emergency, call 911 immediately. See each guide's full disclaimer at the bottom of that guide.</p>
+    <p class="ppl-footer-note">Portable Protocol Library — offline edition. Every guide, illustration, and PDF in this folder is saved locally; no internet connection is used or required.</p>
+  </div>
+</div>
+
+</body>
+</html>

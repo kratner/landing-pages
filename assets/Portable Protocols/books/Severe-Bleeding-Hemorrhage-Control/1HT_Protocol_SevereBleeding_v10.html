@@ -1,0 +1,1146 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_SevereBleeding_v10.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Severe Bleeding / Hemorrhage Control" e-book
+     Pilot book for ClickUp 86bbhrwcw. Track A #1. Standalone HTML page,
+     intended host: Cloudflare (own route, e.g. /protocols/severe-bleeding).
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via a link surfaced through 1st Hour's
+     ClickFunnels order integration (decided 2026-08-20) — this file assumes
+     nothing about how that link is generated.
+
+     REVISION HISTORY
+     - v10 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v9 (2026-08-25, Claude): Keith flagged a ghosting artifact on the
+       Section 5 shock-positioning illustration's bottom-left trust-bullet
+       badge (`pr-graphic-332.png`) — a stray red vertical line sliver (x:94-
+       103, y:952-993) and a stray downward-arrow/chevron fragment (x:131-165,
+       y:1048-1063) floating near the shield logo, leftover remnants from the
+       original AI-drawn wrong emblem that an earlier compositing pass hadn't
+       fully erased on this particular badge instance (the header/footer
+       badges on this same image were already cleaned in the 2026-08-21 fix
+       that produced 326→332; this bottom-left trust-bullet badge wasn't
+       re-checked at the time). Fixed via flat-color erase (PIL, both
+       rectangles filled with the sampled background white #fefefe — this
+       badge sits on a flat white callout box, not a photo, so no
+       feather/clone blending was needed) rather than re-compositing the
+       whole badge. Uploaded to the Creative AI library as
+       `pr-graphic-345.png`, superseding `pr-graphic-332.png` (left in the
+       library, unused, per convention). Book HTML's `<img src>` updated;
+       this is the one embedded interior illustration this pilot shares with
+       Book 8 (Shock Management) and reuses nowhere else. See
+       `Books/REVISIONS.md`'s 2026-08-25 entry for the pixel-scan method/
+       coordinates.
+     - v8 (2026-08-24, Claude): Book #8 (Shock Management) shipped — per
+       Prompts/1HT_BuildPrompt_Book08_Shock_v1.md §4, removed the "Coming
+       Soon" tag on this book's Shock Management cross-link card (Section
+       14) and restyled it "Live" (green tag). No content changes
+       otherwise. This closes out the pilot's last remaining "Coming Soon"
+       cross-link — Shock Management, Car Accident Trauma, and Gunshot
+       Wound Response are now all Live here. Redeployed to /severe-bleeding/
+       — same stable slug, no URL change.
+     - v7 (2026-08-24, Claude): Book #5 (Car Accident Trauma) shipped — per
+       Prompts/1HT_BuildPrompt_Book05_CarAccident_v1.md §4, removed the
+       "Coming Soon" tag on this book's Car Accident Trauma cross-link card
+       (Section 14) and restyled it "Live" (green tag, matching the
+       .th-crosslink.live pattern already used for the Gunshot Wound
+       Response cross-link). No content changes otherwise. Redeployed to
+       /severe-bleeding/ — same stable slug, no URL change.
+     - v6 (2026-08-24, Claude): Fixed the remaining N2 Minor finding from
+       MEDICAL_REVIEW_v1.md (M1/M2 Moderate and N1 Minor were already fixed
+       in v5; N2 was explicitly left open there, scoped to a later pass).
+       Section 4 (Applying a Tourniquet), Step 1: "...or the wound is near
+       the torso, place it as high on the limb as possible" could be misread
+       as describing a torso wound itself (which Section 5, not a
+       tourniquet, covers) rather than the intended meaning — a limb wound
+       close to where the limb meets the torso. Reworded to "...or the
+       wound is on the limb close to where it meets the torso (upper thigh,
+       upper arm), place it as high on the limb as possible," per the
+       review's recommended fix text verbatim. No other content changed.
+       This closes out every finding in MEDICAL_REVIEW_v1.md (0 critical,
+       2/2 moderate fixed, 2/2 minor fixed); the missing-content items were
+       already resolved as part of the M1/M2 fixes. Not yet redeployed to
+       Cloudflare or repackaged as a new PDF from this session (no
+       `wrangler`/deploy tooling available here) — see Books/REVISIONS.md
+       for the follow-up.
+     - v5 (2026-08-24, Claude): Fixed the 2 Moderate findings from
+       MEDICAL_REVIEW_v1.md (run via Prompts/1HT_MedicalComplianceReviewPrompt_v1.md).
+       (1) Section 7 (Shock): the "elevate legs ~12 inches" instruction was
+       framed as a routine default, which the 2024 AHA/ARC First Aid
+       Guidelines no longer support (benefit brief, not clinically
+       significant) — reframed as conditional/optional (6-12", only if no
+       spinal injury, leg injury, or breathing difficulty), matching the
+       review's recommended fix text exactly. Updated the shock-positioning
+       image's alt text to match (was inconsistent: body said "12 inches",
+       alt text said "8-12 inches"). (2) Section 12's checklist falsely
+       attributed a "gloves before contact" instruction to Section 11, which
+       never said that — no step in the book actually told the reader to
+       glove up before touching the wound. Added that instruction to
+       Section 3, Step 3 ("...or non-latex gloves from your kit if they're
+       within reach...") and corrected the checklist's citation to point at
+       Section 3. Did not touch the 2 Minor findings (image alt-text/body
+       inconsistency was resolved as a side effect of fix #1; the Section 4
+       wording ambiguity was left for a future pass) — only the 2 Moderate
+       findings were in scope for this edit, per Keith's explicit request.
+       NOTE: this v5 was created directly from what was on disk as
+       "v4" — a separate concurrent build agent (working on Book #2,
+       Gunshot Wound Response) had already deployed that v4 live before
+       this edit started (its only change was the Gunshot Wound Response
+       cross-link's "Coming Soon"→"Live" tag, described in v4's own log
+       entry below). This edit was made directly against that file rather
+       than being properly archived-then-bumped first — caught partway
+       through per this workspace's file-versioning SOP, so the archived
+       "v4" copy actually contains this entry's medical fixes already
+       baked in, not a clean pre-fix snapshot. The cross-link-only diff
+       between true v3 and v4 is preserved accurately in v4's own log entry
+       below; only the "v4 archive file's exact byte content" is not a
+       perfect intermediate snapshot. Documenting this explicitly so a
+       future audit isn't misled by the archive.
+     - v4 (2026-08-24, Claude): Book #2 (Gunshot Wound Response) shipped —
+       per 1HT_NextProtocolBuildPrompt_v1.md §4, removed the "Coming Soon"
+       tag on this book's Gunshot Wound Response cross-link card (Section 14)
+       and restyled it "Live" (green tag, matching the new
+       .th-crosslink.live pattern introduced in the Gunshot Wound Response
+       book's own CSS). No content changes otherwise. Redeployed to
+       /severe-bleeding/ — same stable slug, no URL change.
+     - v3 (2026-08-24, Claude): Keith flagged that baking the file's version
+       suffix into the public URL (v2 deployed at .../1HT_Protocol_SevereBleeding_v2.html)
+       means every future edit breaks the live link. Fixed: deployed under a
+       stable, version-free slug (https://1sthourprotocols.com/severe-bleeding/,
+       served as index.html) fully decoupled from this source file's own
+       _v# name — bump this file's version freely going forward, the public
+       URL never changes. Also fixed the 3 sibling cross-links (Shock
+       Management, Car Accident Trauma, Gunshot Wound Response) to point at
+       their future clean slugs instead of the old verbose folder/filename
+       paths. Same reasoning applied to the PDF: the Creative AI Studio
+       library forces a numeric last segment on every filename and has no
+       overwrite/delete, so that raw file URL can never be made permanent —
+       the fix is to never expose it directly; the "Download PDF" button's
+       href is the only place it appears, silently repointed on each
+       regeneration. Added a small edition/last-updated line in fine print
+       near the download button instead, as the human-readable version
+       signal. See ../1HT_CloudflareHostingGuide_v1.md.
+     - v2 (2026-08-24, Claude): Deployed pilot to Cloudflare Pages
+       (https://1sthour-protocols.pages.dev — the intended protocols.1sthour.com
+       subdomain is blocked pending DNS zone access, see Books/REVISIONS.md).
+       Generated a print-ready companion PDF from the live hosted page via a
+       new local Playwright tool (~/.claude/tools/book-pdf/), fixed page-break
+       CSS so callout boxes/state cards/illustrations don't split across PDF
+       pages, and uploaded it to the Creative AI Studio library
+       (../../pdfs/1sthour-severebleeding-ebook-001.pdf). Added a
+       "Download PDF" button under the cover per the planning doc's HTML-primary
+       + PDF-secondary decision (§4 addendum, decided 2026-08-24).
+     - v1 (2026-08-20, Claude): Initial pilot build — full long-form content,
+       sticky ToC, back-to-top, section-jump nav, state appendix (12 states),
+       cross-link to not-yet-built Shock Management protocol, illustration
+       slots marked pending (Creative AI generation not available from this
+       session — see Assets/ILLUSTRATION_PROMPTS.md). Brand colors/fonts per
+       .instructions.md (pulled from 1st Hour Brand Kit same day).
+     - 2026-08-21 (Claude): Removed <figcaption> source notes from all 4
+       interior illustrations — they cited the internal Creative AI image
+       library, which shouldn't be publicized (images are ours; no
+       verifiable external source to cite instead). Also swapped the shock
+       positioning image to pr-graphic-326.png — the prior "logo-corrected"
+       pr-graphic-323.png still had a mangled header/footer logo badge; see
+       Books/REVISIONS.md.
+     - 2026-08-21 (Claude): Keith's 4-item review. (1) All 4 interior
+       illustrations' "1STHOUR" wordmark was still AI-hand-drawn next to the
+       (already-correct) shield icon, differing in font/color per image —
+       including a defective "R" (missing its leg) on the wound-packing
+       image. Fixed by compositing the real el-logo-013.png over each
+       header lockup: pr-graphic-322→331 (bleeding comparison),
+       pr-graphic-321→330 (tourniquet), pr-graphic-327→329 (wound packing),
+       pr-graphic-326→332 (shock). (2) Added a "Where a Tourniquet Works"
+       body-map (inline SVG, no logo — sidesteps the above problem by
+       construction) to Section 5. (3) Added Section 12, "Essential Items
+       Checklist" — renumbered State Appendix/Related Protocols/Disclaimer
+       12→13/13→14/14→15 accordingly. Full writeup: Books/REVISIONS.md.
+     - 2026-08-21 (Claude): Keith flagged the wound-packing illustration's
+       header logo lockup (pr-graphic-329.png) as visually touching/cutting
+       into the "W" of "WOUND" — measured at only 6px of clearance in a
+       1254px-wide image. Fixed by re-compositing el-logo-013.png at a
+       smaller size (220px vs. the prior ~288px) in the same erased region,
+       restoring a 75px gap. Uploaded as pr-graphic-334.png (supersedes
+       pr-graphic-329.png). See Books/REVISIONS.md.
+     - 2026-08-21 (Claude): Keith flagged pr-graphic-334.png's heading block
+       as still crowding the logo, and asked to remove the kit-bag product
+       shot (top right) and shift "WOUND PACKING" + subhead + caption right
+       to fill that space. Cropped the heading/subhead/caption as one block
+       (careful to include the full width of the "severe bleeding..."
+       caption line, which starts further left than the heading itself),
+       erased both the original block position and the kit-bag region
+       (flat white — plain background both places), and pasted the block
+       shifted ~360px right. Uploaded as pr-graphic-335.png (supersedes
+       pr-graphic-334.png). See Books/REVISIONS.md.
+     - 2026-08-21 (Claude): Two more rounds on this same image. (1) Keith
+       flagged a faint gray fringe at the top-left corner of the "W" and "P"
+       — traced to a pre-existing compression-ringing artifact in the
+       original AI-generated art (a non-monotonic white→gray→white→black
+       pixel transition, present since before any of these edits, invisible
+       on curved letters but visible on flat corners); fixed by snapping
+       near-white pixels (≥240) to pure white within the heading region,
+       which eliminates the ringing without touching letterform geometry.
+       (2) Keith then flagged the logo as sitting in too much isolated
+       white space and the heading/subhead/caption block as disproportionately
+       large vertically. Fixed by uniformly scaling that whole block to 70%
+       and repositioning it much closer to the logo (was ~360px gap, now
+       ~100px). Uploaded as pr-graphic-337.png (supersedes pr-graphic-335.png).
+       See Books/REVISIONS.md.
+     - 2026-08-21 (Claude): Keith flagged the "WOUND PACKING" heading as
+       still jagged (never actually regenerated, only recomposited/rescaled
+       across all the fixes above) and asked for style consistency with the
+       bleeding-comparison illustration (pr-graphic-331.png) — logo + thin
+       divider + single-line heading, not the two-line AI-drawn block. Gave
+       up on further pixel-patching the AI-generated text; instead rebuilt
+       the entire header (logo, divider, heading, subhead, caption) as real
+       HTML using the book's actual Anton/Inter fonts, screenshotted it at
+       native resolution via the web-screenshot skill, and composited that
+       in place of the old AI-drawn header — guaranteed crisp vector text,
+       zero AI-artifact risk, and matches pr-graphic-331.png's structure and
+       proportions (scaled 1.2246× for its 1254 vs. 1024 canvas). Uploaded
+       as pr-graphic-338.png (supersedes pr-graphic-337.png). See
+       Books/REVISIONS.md.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Severe Bleeding &amp; Hemorrhage Control — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize and respond to severe bleeding in the first hour, including tourniquet use, wound packing, shock management, and state-specific Good Samaritan guidance.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Body map (tourniquet-works vs pack-instead diagram) ──────── */
+  .th-bodymap-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:24px;
+    margin:0 0 28px;
+  }
+  .th-bodymap-svg{width:150px;flex-shrink:0;}
+  .th-bodymap-legend{flex:1;min-width:0;}
+  .th-bodymap-legend h4{font-size:14px !important;letter-spacing:1px;margin-bottom:14px;}
+  .th-bl-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;}
+  .th-bl-swatch{width:18px;height:18px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .th-bl-swatch.green{background:#1f8a4c;}
+  .th-bl-swatch.red{background:var(--red);}
+  .th-bl-swatch.dash{background:none;border:2px dashed #444;}
+  .th-bodymap-note{font-size:13.5px;color:var(--gray);margin:4px 0 0;border-top:1px solid var(--border);padding-top:14px;}
+  @media (max-width:600px){
+    .th-bodymap-wrap{flex-direction:column;align-items:stretch;}
+    .th-bodymap-svg{width:120px;margin:0 auto;}
+  }
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix cards ──────────────────────────────────── */
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#recognizing-bleeding">Recognizing Severe Bleeding</a></li>
+      <li><a href="#immediate-response">The Immediate Response Protocol</a></li>
+      <li><a href="#tourniquet">Applying a Tourniquet</a></li>
+      <li><a href="#wound-packing">Wound Packing &amp; Hemostatic Gauze</a></li>
+      <li><a href="#pressure-dressing">Pressure Dressings &amp; Improvised Materials</a></li>
+      <li><a href="#shock">Recognizing &amp; Managing Shock</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#environment-demographics">Climate &amp; Demographic Notes</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Severe Bleeding &amp; Hemorrhage Control</h1>
+        <p class="lede">What to do in the first sixty seconds after someone starts bleeding badly — and everything after that, until help arrives.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-severebleeding-ebook-004.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#recognizing-bleeding">Recognize</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#tourniquet">Stabilize</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>A person with a severe arterial bleed can lose enough blood to become critical in as little as three to five minutes. Emergency medical services in most parts of the country take between seven and fourteen minutes to arrive after a 911 call is placed — longer in rural areas, longer still if roads are blocked, weather is bad, or every unit in the area is already on a call. That gap between "bleeding starts" and "professional help arrives" is the window this protocol exists for.</p>
+        <p>The uncomfortable truth that emergency medicine has settled on over the last two decades — driven largely by lessons from military trauma care and mass-casualty events — is this: <strong>uncontrolled bleeding is the single most preventable cause of death from injury.</strong> Not because it's rare, but because the fix is often simple, fast, and doesn't require a medical license. Direct pressure, a properly applied tourniquet, and a packed wound stop more deaths than any other first-aid intervention that exists.</p>
+        <p>What this guide will not do is turn you into a paramedic. What it will do is walk you through the exact sequence a first responder is trained to run through in the first sixty seconds of a bleeding emergency — the same sequence taught in the national "Stop the Bleed" campaign — so that if you're ever the only person standing between someone and a fatal bleed, you know what to do without hesitating.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          You do not need to diagnose the injury. You need to find where the bleeding is coming from and stop it — with pressure, packing, or a tourniquet — faster than the person is losing blood. Everything else is secondary to that one task.
+        </div>
+      </section>
+
+      <!-- ═══ 2. RECOGNIZING SEVERE BLEEDING ═══ -->
+      <section class="th-section" id="recognizing-bleeding">
+        <h2>2. Recognizing Severe Bleeding</h2>
+        <p>Not all bleeding needs a tourniquet. Most cuts and scrapes stop with a bandage and a few minutes of pressure. This protocol is for bleeding that will not stop on its own and will kill the person if left unaddressed. Learning to tell the difference quickly is the first skill.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Type</th><th>What it looks like</th><th>Danger level</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Arterial</strong></td><td>Bright red, spurting or pulsing in time with the heartbeat, can shoot several feet</td><td>Life-threatening within minutes — highest priority</td></tr>
+              <tr><td><strong>Venous</strong></td><td>Dark red, steady flow, pools rather than spurts</td><td>Can still be life-threatening if the wound is large or bleeding is prolonged</td></tr>
+              <tr><td><strong>Capillary</strong></td><td>Slow ooze, like a typical scrape</td><td>Rarely dangerous alone; direct pressure is almost always enough</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>In practice, you often won't have time — or the visibility — to classify the bleed precisely, and that's fine. Use this simpler rule instead, taken directly from Stop the Bleed training:</p>
+
+        <div class="th-warn">
+          <strong>Treat it as severe if:</strong>
+          Blood is spurting or pumping out of the wound &middot; a wound is soaking through clothing or a dressing faster than you can control it &middot; blood is pooling on the ground &middot; a limb has been partially or fully amputated &middot; the person is becoming pale, confused, or losing consciousness.
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/pr-graphic-331.png" alt="1st Hour bleeding type comparison diagram — arterial, venous, and capillary bleeding on a forearm, with severity and action notes for each.">
+        </figure>
+      </section>
+
+      <!-- ═══ 3. IMMEDIATE RESPONSE PROTOCOL ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>3. The Immediate Response Protocol</h2>
+        <p>This is the sequence. Read it now, before you ever need it, and it will come back to you under pressure. Every step matters, but step one — direct pressure — is the one thing you should be doing within the first five seconds, before you've even finished thinking through the rest.</p>
+
+        <ol class="th-steps">
+          <li><strong>Ensure the scene is safe.</strong> Before you approach, make sure you're not about to become a second casualty — check for traffic, fire, electrical hazards, unstable structures, or an ongoing threat. You cannot help anyone if you're also injured.</li>
+          <li><strong>Call or have someone call 911 immediately.</strong> Don't wait to see how bad it is. If you're alone, put the phone on speaker and start treatment while you talk to the dispatcher.</li>
+          <li><strong>Apply firm, direct pressure to the wound.</strong> Use your bare hands if nothing else is available (don't delay treatment to search for gloves), or non-latex gloves from your kit if they're within reach, then grab the thickest clean cloth, gauze, or dressing you can find. Press down hard and don't let up to "check" — checking releases the pressure and restarts the clock.</li>
+          <li><strong>If pressure alone isn't controlling life-threatening bleeding from a limb, apply a tourniquet.</strong> Don't wait for the wound to "get worse" first. See Section 4 for exact placement and technique.</li>
+          <li><strong>If the bleeding is from the torso, neck, or a spot a tourniquet can't reach (a "junctional" wound like the groin or armpit), pack the wound with gauze and hold continuous pressure.</strong> See Section 5.</li>
+          <li><strong>Keep the person warm and as still as possible.</strong> Losing body heat accelerates blood loss and shock. A jacket, blanket, or even a car seat cover under and over them helps.</li>
+          <li><strong>Monitor breathing and level of consciousness until help arrives.</strong> If they stop breathing and you're trained in CPR, begin it. If not, follow the 911 dispatcher's instructions — they can talk you through it in real time.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't remove an embedded object (knife, glass, rebar) — it may be plugging the wound and slowing blood loss. Don't apply a tourniquet loosely "just in case" — a loose tourniquet can make bleeding worse by restricting venous return while leaving arterial flow open. Don't waste time washing the wound — that comes later, if at all, and only from a medical provider.
+        </div>
+      </section>
+
+      <!-- ═══ 4. APPLYING A TOURNIQUET ═══ -->
+      <section class="th-section" id="tourniquet">
+        <h2>4. Applying a Tourniquet</h2>
+        <p>A tourniquet is not a last resort — it's a first-line tool for severe limb bleeding that direct pressure isn't controlling. Modern trauma medicine (and two decades of battlefield data) has thoroughly debunked the old myth that tourniquets cause routine limb loss when used correctly and removed by medical staff within a few hours. A properly applied tourniquet buys time. An improperly applied — or not applied — tourniquet costs a life.</p>
+
+        <h3>If you have a commercial tourniquet (like the one in your 1st Hour kit):</h3>
+        <ol class="th-steps">
+          <li><strong>Place it high and tight.</strong> Position the tourniquet 2–3 inches above the wound, but never directly over a joint. If you're unsure exactly where the bleeding is coming from, or the wound is on the limb close to where it meets the torso (upper thigh, upper arm), place it as high on the limb as possible — "high and tight."</li>
+          <li><strong>Pull the strap tight through the buckle.</strong> Feed the band around the limb and pull it as tight as you can before securing it through the buckle mechanism.</li>
+          <li><strong>Twist the windlass rod until bleeding stops completely.</strong> This will be uncomfortably tight — that's correct. A tourniquet tight enough to only "reduce" bleeding is too loose.</li>
+          <li><strong>Lock the windlass in place</strong> using the clip or hook built into the device, then secure the strap over it.</li>
+          <li><strong>Write down the time it was applied.</strong> Use tape, marker on skin, or your phone — EMS needs to know exactly how long the tourniquet has been on.</li>
+          <li><strong>Do not loosen or remove it</strong> once applied, even if the bleeding appears to stop. Leave that decision to EMS or a physician.</li>
+        </ol>
+
+        <h3>If you don't have a commercial tourniquet:</h3>
+        <p>An improvised tourniquet is far better than none, but it's meaningfully less reliable — the goal is still complete cessation of bleeding, not "better than nothing."</p>
+        <ol class="th-steps">
+          <li><strong>Choose a band at least 1.5–2 inches wide</strong> — a belt, a folded bandana, a strip of thick fabric. Thin materials like paracord or wire can cut into skin and tissue.</li>
+          <li><strong>Wrap it twice around the limb</strong>, 2–3 inches above the wound, and tie a single overhand knot.</li>
+          <li><strong>Place a rigid object</strong> — a stick, a pen, a sturdy tool handle — on top of the knot, then tie a second knot over it to hold it in place.</li>
+          <li><strong>Twist the rigid object</strong> like a windlass until the bleeding fully stops.</li>
+          <li><strong>Secure the rod</strong> so it can't unwind — tie the loose ends around it or tape it down.</li>
+          <li><strong>Note the time</strong> the same way you would with a commercial device.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/pr-graphic-330.png" alt="1st Hour CAT-style tourniquet application, 4 steps: position high and tight, thread and pull strap, twist the windlass, lock and time-stamp.">
+        </figure>
+
+        <div class="th-callout">
+          <strong>Pain is expected</strong>
+          A correctly applied tourniquet hurts. That's a sign it's working, not a sign to loosen it. Reassure the injured person that the pain is temporary and necessary.
+        </div>
+      </section>
+
+      <!-- ═══ 5. WOUND PACKING & HEMOSTATIC GAUZE ═══ -->
+      <section class="th-section" id="wound-packing">
+        <h2>5. Wound Packing &amp; Hemostatic Gauze</h2>
+        <p>A tourniquet only works on a limb, and only above the wound. For bleeding from the torso, neck, shoulder, groin, or anywhere else a tourniquet can't be applied, the answer is wound packing combined with direct pressure. This looks aggressive the first time you do it — you are meant to physically push material into an open wound — but it is the correct, trained technique for controlling deep bleeding.</p>
+
+        <div class="th-bodymap-wrap">
+          <svg class="th-bodymap-svg" viewBox="0 0 240 420" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Body diagram: arms and legs shown in green where a tourniquet works; torso and neck shown in red where you must pack the wound instead; the shoulders/armpits and groin marked with a dashed circle as junctional points where neither a standard tourniquet nor simple pressure alone is enough.">
+            <rect x="80" y="194" width="32" height="180" rx="14" fill="#1f8a4c" stroke="#111" stroke-width="3"/>
+            <rect x="128" y="194" width="32" height="180" rx="14" fill="#1f8a4c" stroke="#111" stroke-width="3"/>
+            <rect x="34" y="70" width="30" height="140" rx="14" fill="#1f8a4c" stroke="#111" stroke-width="3"/>
+            <rect x="176" y="70" width="30" height="140" rx="14" fill="#1f8a4c" stroke="#111" stroke-width="3"/>
+            <rect x="72" y="64" width="96" height="130" rx="16" fill="#E21C13" stroke="#111" stroke-width="3"/>
+            <rect x="110" y="50" width="20" height="14" fill="#E21C13" stroke="#111" stroke-width="3"/>
+            <circle cx="120" cy="28" r="24" fill="#ddd" stroke="#111" stroke-width="3"/>
+            <circle cx="66" cy="92" r="15" fill="none" stroke="#111" stroke-width="3" stroke-dasharray="4 3"/>
+            <circle cx="174" cy="92" r="15" fill="none" stroke="#111" stroke-width="3" stroke-dasharray="4 3"/>
+            <circle cx="120" cy="198" r="15" fill="none" stroke="#111" stroke-width="3" stroke-dasharray="4 3"/>
+          </svg>
+          <div class="th-bodymap-legend">
+            <h4>Where a Tourniquet Works — and Where It Doesn't</h4>
+            <div class="th-bl-item"><span class="th-bl-swatch green"></span><span><strong>Arms &amp; legs, above the wound, not over a joint:</strong> a tourniquet can fully encircle the limb and cut off flow — see Section 4.</span></div>
+            <div class="th-bl-item"><span class="th-bl-swatch red"></span><span><strong>Torso &amp; neck:</strong> there's nothing to wrap a band around — a tourniquet has no way to seat. Pack the wound and hold direct pressure instead (below).</span></div>
+            <div class="th-bl-item"><span class="th-bl-swatch dash"></span><span><strong>Junctional points — shoulder/armpit, groin:</strong> too close to the torso for a standard tourniquet to seat correctly. Same answer: pack + sustained pressure, or a junctional tourniquet if your kit includes one (Section 8).</span></div>
+            <p class="th-bodymap-note">Quick rule: if you can wrap a band all the way around the limb above the wound, reach for the tourniquet. Everywhere else on this map, go straight to packing.</p>
+          </div>
+        </div>
+
+        <ol class="th-steps">
+          <li><strong>Expose the wound.</strong> Cut or move clothing out of the way so you can see exactly where the bleeding is coming from.</li>
+          <li><strong>Pack the wound tightly with gauze.</strong> If you have hemostatic gauze (gauze treated with a clotting agent, standard in a 1st Hour kit), use it first. Push the gauze directly into the wound cavity, packing it in firmly — not just laying it over the top.</li>
+          <li><strong>Keep packing until the cavity is full.</strong> For a deep wound, this may take an entire roll of gauze. Use your fingers to push material as deep into the wound as the injury allows.</li>
+          <li><strong>Hold firm, continuous pressure directly over the packed wound</strong> with the palm of your hand for at least three minutes without letting up, even if your hand cramps.</li>
+          <li><strong>Once bleeding is controlled, secure the packing</strong> with a pressure bandage wrapped snugly over the top, without removing the packed gauze.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>If you don't have hemostatic gauze:</strong> Plain gauze, a clean cloth, or even a rolled-up shirt works using the exact same packing technique. The material matters less than the technique — pack deep, pack firm, hold pressure.
+        </div>
+
+        <figure class="th-illo real">
+          <img src="assets/pr-graphic-338.png" alt="1st Hour wound packing diagram — correct technique packs gauze to the base of the wound cavity; incorrect technique leaves gauze on the surface only.">
+        </figure>
+      </section>
+
+      <!-- ═══ 6. PRESSURE DRESSINGS & IMPROVISED MATERIALS ═══ -->
+      <section class="th-section" id="pressure-dressing">
+        <h2>6. Pressure Dressings &amp; Improvised Materials</h2>
+        <p>Once bleeding is under control — by direct pressure, a tourniquet, or wound packing — a pressure dressing keeps it that way while you wait for EMS, freeing your hands and stabilizing the injured person for transport.</p>
+        <ul>
+          <li><strong>Commercial pressure bandage:</strong> Wrap firmly and evenly, working from below the wound upward, tucking the end securely. It should be tight enough to maintain pressure but not so tight it cuts off circulation to the rest of the limb — check that fingers or toes below the dressing stay warm and pink.</li>
+          <li><strong>Improvised options:</strong> A folded T-shirt held in place with a belt, a scarf wrapped snugly, duct tape over a folded cloth pad. None of these are ideal, but a firm improvised dressing beats an unsecured hand pressed to a wound if you need both hands free — for example, to call 911 or assist a second casualty.</li>
+          <li><strong>Never remove a dressing to "check" the wound.</strong> If blood soaks through, add more material and pressure on top of the existing dressing rather than taking it off — removing it disturbs any clot that's started to form.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 7. SHOCK ═══ -->
+      <section class="th-section" id="shock">
+        <h2>7. Recognizing &amp; Managing Shock</h2>
+        <p>Shock is what happens when the body can't deliver enough blood and oxygen to its organs — and severe blood loss is one of the most common causes. It can develop within minutes of a major bleed and is dangerous in its own right, independent of the wound itself.</p>
+
+        <h3>Signs of shock:</h3>
+        <ul>
+          <li>Pale, cool, or clammy skin</li>
+          <li>Rapid, weak pulse</li>
+          <li>Rapid, shallow breathing</li>
+          <li>Confusion, anxiety, or restlessness</li>
+          <li>Nausea or vomiting</li>
+          <li>Extreme thirst</li>
+          <li>Progressive weakness or loss of consciousness</li>
+        </ul>
+
+        <h3>What to do:</h3>
+        <ol class="th-steps">
+          <li><strong>Keep the bleeding controlled</strong> — shock will not improve while blood loss continues, so the interventions above remain the priority.</li>
+          <li><strong>Lay the person flat</strong> if there's no suspected spinal injury. If there's also no suspected leg injury or breathing difficulty, you may gently raise the legs about 6–12 inches — current first aid guidance notes this can help blood return to vital organs, but the effect is brief and not required, so don't delay or skip warmth and bleeding control to do it. Stop if it causes pain, shortness of breath, or is impractical given the injury location.</li>
+          <li><strong>Keep them warm.</strong> Cover with a blanket, jacket, or emergency blanket. Losing body heat worsens shock significantly.</li>
+          <li><strong>Do not give food or water,</strong> even if they ask for it — it can cause vomiting and complicates anesthesia if surgery is needed.</li>
+          <li><strong>Keep talking to them.</strong> Reassurance and staying conscious/responsive matters; note any change in alertness to report to EMS.</li>
+        </ol>
+
+        <figure class="th-illo real">
+          <img src="assets/pr-graphic-345.png" alt="1st Hour shock positioning diagram — if safe to do so, gently raise legs 6-12 inches, keep warm, reassure and monitor, with benefits of maintaining circulation, preventing heat loss, and stabilizing the patient.">
+        </figure>
+      </section>
+
+      <!-- ═══ 8. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>8. Special Situations</h2>
+
+        <h3>Embedded objects</h3>
+        <p>If something is still lodged in the wound — glass, metal, wood — do not remove it. Stabilize it in place with bulky padding built up around it, and bandage over the padding without applying direct pressure to the object itself. Removing it can trigger sudden, severe bleeding the object had been partially controlling.</p>
+
+        <h3>Junctional wounds (groin, armpit, neck, shoulder)</h3>
+        <p>A standard tourniquet can't be applied here because there's no limb to encircle above the wound. Wound packing plus firm, sustained direct pressure — held longer and harder than you'd expect necessary — is the correct approach. A junctional tourniquet, if your kit includes one, is designed specifically for this and should be used per its included instructions.</p>
+
+        <h3>Multiple casualties</h3>
+        <p>If you're the only capable responder and more than one person is bleeding severely, triage by severity: treat the person with the most immediately life-threatening bleed first (typically the one spurting or pumping blood), apply a tourniquet or packing to stop that bleed as fast as possible, then move to the next. A tourniquet, once applied, largely takes care of itself — which is part of why it's prioritized over ongoing manual pressure when you have more than one casualty to manage.</p>
+
+        <h3>Bleeding in a child</h3>
+        <p>The same core techniques apply — direct pressure, packing, tourniquet if needed — but a child's total blood volume is much smaller, so a bleed that looks "moderate" by adult standards can become critical faster. Don't wait to escalate to a tourniquet if pressure alone isn't controlling it quickly.</p>
+      </section>
+
+      <!-- ═══ 9. ENVIRONMENT & DEMOGRAPHIC NOTES ═══ -->
+      <section class="th-section" id="environment-demographics">
+        <h2>9. Climate &amp; Demographic Notes</h2>
+        <p>The core response to severe bleeding doesn't change by geography — but two environmental factors change how fast complications develop, and they're worth knowing before you need them.</p>
+        <ul>
+          <li><strong>Cold climates:</strong> Blood loss and cold exposure compound each other. A drop in body temperature interferes with the body's own clotting ability, meaning bleeding can be harder to control the colder the person gets. In northern states and winter conditions, warming the person (blankets, moving them out of wind/snow contact, insulating them from cold ground) is not just comfort — it's part of bleeding control.</li>
+          <li><strong>Hot climates:</strong> Heat accelerates dehydration, which lowers blood volume and pushes a person into shock faster after blood loss. In southern and desert states, get the person into shade, loosen restrictive clothing above the injury, and treat aggressively for shock even with a smaller volume of blood lost than you might expect elsewhere.</li>
+          <li><strong>Rural response-time gap:</strong> EMS transport times in rural counties frequently run well beyond the national average. If you live outside a metro area, treat the interventions in this guide as things you may need to sustain for longer than fifteen minutes — check and reinforce dressings, keep monitoring for shock, and don't assume help is "just a few minutes out."</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 10. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>10. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Short answer: immediately, every time.</strong> Any bleeding severe enough that you're reading this section is bleeding severe enough to warrant a 911 call. Don't wait to see if your treatment is working before calling — call first, treat while you talk.
+        </div>
+        <p>Stay on the line if you can. Dispatchers are trained to walk you through bleeding control in real time and will tell you exactly what information responding units need — your location, the number of people injured, and what you've already done. If bleeding has been fully controlled and the person is stable by the time EMS is close, tell the dispatcher; it may change how the response is routed, but it does not mean you should stop calling or stop monitoring.</p>
+        <p>Do not attempt to drive a severely bleeding person to a hospital yourself unless you have been explicitly told to by a 911 dispatcher because EMS cannot reach you in time. A moving vehicle makes it far harder to maintain pressure, monitor for shock, or respond if the person loses consciousness.</p>
+      </section>
+
+      <!-- ═══ 11. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>11. Aftercare &amp; Follow-Up</h2>
+        <p>Once EMS has taken over, your job as a first responder is done — but a few things are worth knowing for afterward.</p>
+        <ul>
+          <li><strong>Tell EMS everything you did</strong> and when — tourniquet application time especially. This directly affects the injured person's treatment.</li>
+          <li><strong>Restock your kit immediately.</strong> Gauze, dressings, and a tourniquet used in a real emergency need to be replaced before the kit is trusted again.</li>
+          <li><strong>It's normal to feel shaken afterward.</strong> Responding to a severe bleeding emergency is intense even when it goes well. Debrief with someone, and don't hesitate to talk to a professional if the experience stays with you.</li>
+          <li><strong>If you used your own bare hands for direct pressure and were exposed to blood,</strong> wash thoroughly and mention it to EMS or a doctor — bloodborne exposure is a standard, low-drama thing to flag, not something to worry over silently.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 12. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>12. Essential Items Checklist</h2>
+        <p>Everything in this protocol assumes you have certain supplies within reach when the first sixty seconds start. Run through this list before you ever need it — restock immediately after any real use, per Section 11.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Commercial tourniquet (CAT-style)</strong><span class="th-cl-why"> — Section 4. The single most important item on this list.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Hemostatic gauze</strong><span class="th-cl-why"> — Section 5. Clotting-agent gauze for deep wound packing.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Plain roller gauze / trauma dressing</strong><span class="th-cl-why"> — Sections 5–6. Backup packing material and dressing padding.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Pressure/elastic wrap bandage</strong><span class="th-cl-why"> — Section 6. Secures packing and holds pressure hands-free.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — worn before contact with any blood, per Section 3's immediate response steps.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Trauma shears</strong><span class="th-cl-why"> — Section 5. Cuts clothing away to expose the wound quickly.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Permanent marker or time-tape</strong><span class="th-cl-why"> — Section 4. Records the exact tourniquet application time for EMS.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Emergency/space blanket</strong><span class="th-cl-why"> — Sections 3 &amp; 7. Warmth slows the progression of shock.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep them together in one kit, in the same place every time — not scattered across a glovebox, a hall closet, and a gym bag. Under real pressure you don't get a second chance to remember where you put the tourniquet.
+        </div>
+      </section>
+
+      <!-- ═══ 13. STATE APPENDIX ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>13. Your State: Good Samaritan Protections</h2>
+        <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. The exact wording, what's covered, and any exceptions vary by state, and laws change over time. What follows is a general overview for the twelve most populous states, not legal advice — see the full disclaimer below.</p>
+
+        <div class="th-state-grid">
+          <div class="th-state-card">
+            <h4>California</h4>
+            <p>Good Samaritan protection extends broadly to emergency care given in good faith, including non-medical bystanders. Coastal wildfire-adjacent regions also mean bleeding response sometimes overlaps with evacuation conditions — treat and transport decisions may be affected by road closures.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Texas</h4>
+            <p>Good Samaritan protection applies to good-faith emergency care without expectation of compensation. Hot, humid summers raise shock and dehydration risk after blood loss — see the heat-climate note in Section 9.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Florida</h4>
+            <p>Good Samaritan protection covers emergency assistance rendered in good faith. Hurricane-season power and EMS disruptions can extend response times well beyond normal averages in affected areas.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>New York</h4>
+            <p>Good Samaritan protection applies to good-faith emergency aid. Cold-season response in upstate and rural areas should factor in the cold-climate clotting note in Section 9.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Pennsylvania</h4>
+            <p>Good Samaritan protection covers emergency care provided in good faith and without compensation. Rural counties outside Philadelphia and Pittsburgh can see longer EMS transport times.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Illinois</h4>
+            <p>Good Samaritan protection applies broadly to good-faith emergency assistance. Winters are a factor for the cold-climate bleeding/shock interaction described in Section 9.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Ohio</h4>
+            <p>Good Samaritan protection covers those who render emergency care in good faith. A largely rural geography outside major metros means response-time planning matters here.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Georgia</h4>
+            <p>Good Samaritan protection applies to good-faith emergency aid. Hot, humid summers make the heat/shock note in Section 9 especially relevant.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>North Carolina</h4>
+            <p>Good Samaritan protection covers good-faith emergency assistance. Both coastal storm exposure and mountain-region rural response times are relevant depending on where in the state you are.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Michigan</h4>
+            <p>Good Samaritan protection applies to those providing emergency care in good faith. Cold-weather response is a real factor for much of the year — see Section 9.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>New Jersey</h4>
+            <p>Good Samaritan protection covers good-faith emergency assistance without compensation. Dense population generally means shorter average EMS response times than the national average.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Virginia</h4>
+            <p>Good Samaritan protection applies to good-faith emergency care. Response times vary sharply between the Northern Virginia/D.C. corridor and the state's more rural southern and western regions.</p>
+          </div>
+        </div>
+
+        <div class="th-callout">
+          <strong>Not in this list?</strong> All 50 states and Washington, D.C. have some version of a Good Samaritan law. If your state isn't shown here, the same general principle applies: good-faith, no-compensation emergency assistance is broadly protected — but confirm the specifics for your state, since exceptions and requirements (such as "reasonable care" standards) differ.
+        </div>
+      </section>
+
+      <!-- ═══ 14. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>14. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 13 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/severe-bleeding/">1sthourprotocols.com/severe-bleeding</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

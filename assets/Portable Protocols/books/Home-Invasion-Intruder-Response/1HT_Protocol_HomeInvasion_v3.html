@@ -1,0 +1,814 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_HomeInvasion_v3.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Home-Invasion-Intruder-Response/1HT_Protocol_HomeInvasion_v3.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Home Invasion / Intruder Response" e-book
+     ClickUp: https://app.clickup.com/t/86bbhrwcw. Track B #14.
+     Built per Prompts/1HT_BuildPrompt_Book14_HomeInvasion_v1.md.
+     Structural/CSS/JS machinery copied wholesale from
+     Books/Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v8.html
+     per that prompt's step 4 — content, tone, and disclaimer language are
+     entirely new. NOT a CF Custom HTML element — no CF-wrapper constraints.
+
+     ⚠️ LEGAL-FRAMING CONSTRAINT (§0 of the build prompt) — non-negotiable,
+     applies to every sentence in this file, not just the disclaimer:
+     - No state-by-state legal claims anywhere (no castle-doctrine grid, no
+       duty-to-retreat vs. stand-your-ground comparison, no citations).
+     - "Defend as last resort" is framed as safety/de-escalation BEHAVIOR
+       (what a person does), never as legal justification (what the law
+       permits/allows/entitles).
+     - Disclaimer (Section 9) is a fresh, short, general-safety disclaimer —
+       NOT the medical Good Samaritan template used elsewhere in this
+       library.
+     - No state-grid/Good-Samaritan appendix section — skipped entirely per
+       the master list's "state relevance: low" call plus this book's own
+       legal-framing constraint (two independent reasons to omit it).
+
+     REVISION HISTORY
+     - v3 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v2 (2026-08-25, Claude): Active Shooter — Civilian Response (Book #13)
+       shipped live at /active-shooter/ — flipped this book's Active Shooter
+       cross-link card from "Coming Soon" to "Live".
+     - v1 (2026-08-25, Claude): Initial build. Content structure, cover
+       copy, and every section reviewed against the §0 legal-framing
+       constraint before first deploy (see the separate legal-framing
+       compliance pass logged in Books/REVISIONS.md — 5b). Medical-accuracy
+       spot-check (5a) also logged there; this book has almost no clinical
+       content (a brief injury/first-aid cross-reference in Section 7's
+       aftermath section is the only place a clinical claim appears).
+       Illustration (safe-room diagram), cover, and lifestyle image
+       generated fresh via the Creative AI Studio API with no logo/text
+       requested in the AI prompt at all — real logo composited on top
+       afterward via HTML/screenshot, applied proactively from the first
+       generation (Book #9/#10/#11's proven method), keeping all imagery
+       calm/non-sensational with no weapons or violence depicted. Cross-link
+       to Active Shooter — Civilian Response tagged "Coming Soon" (Book #13
+       not yet confirmed live at write time — checked via the coordination
+       ledger and a folder-existence check, neither showed it shipped).
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Invasion &amp; Intruder Response — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to prevent, recognize, and respond to a home intruder in the first hour — prevention basics, the safe-room concept, de-escalation, and working with police once they arrive.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration placeholder ──────────────────────────────── */
+  .th-illo{
+    background:#1a1a1a;
+    color:rgba(255,255,255,0.65);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+    border:1px dashed rgba(255,255,255,0.25);
+  }
+  .th-illo-box{
+    aspect-ratio:16/10;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:24px;
+    gap:8px;
+  }
+  .th-illo-box .th-illo-icon{font-size:28px;}
+  .th-illo-box .th-illo-label{
+    font-family:'Anton',sans-serif;
+    letter-spacing:1px;
+    font-size:13px;
+    color:#fff;
+    text-transform:uppercase;
+  }
+  .th-illo figcaption{
+    background:rgba(0,0,0,0.35);
+    padding:12px 18px;
+    font-size:12.5px;
+    line-height:1.5;
+    color:rgba(255,255,255,0.7);
+    border-top:1px solid rgba(255,255,255,0.12);
+  }
+  .th-illo figcaption b{color:#fff;}
+  .th-illo.real{background:var(--white);border:1px solid var(--border);}
+  .th-illo.real img{width:100%;display:block;}
+  .th-illo.real figcaption{background:var(--offwhite);color:var(--gray);border-top:1px solid var(--border);}
+  .th-illo.real figcaption b{color:var(--black);}
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix cards (unused in this book; CSS kept for template parity) ── */
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-preparation">Why Preparation Matters</a></li>
+      <li><a href="#prevention-basics">Prevention Basics</a></li>
+      <li><a href="#immediate-response">Immediate Response</a></li>
+      <li><a href="#safe-room">The Safe-Room Concept</a></li>
+      <li><a href="#confrontation">If Confrontation Becomes Unavoidable</a></li>
+      <li><a href="#police-arrival">Working With Police When They Arrive</a></li>
+      <li><a href="#aftermath">Aftermath</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#disclaimer">Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Home Invasion &amp; Intruder Response</h1>
+        <p class="lede">Most of this protocol's value is realized before anything happens — a plan your family already knows, practiced once, so panic never fills the gap.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-homeinvasion-ebook-001.pdf" id="th-pdf-btn" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 25, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general home-safety education, not a substitute for professional security assessment, law enforcement guidance, or an attorney, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#prevention-basics">Prevent</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#safe-room">Shelter</a><span class="arrow">→</span>
+        <a href="#police-arrival">Police Arrive</a>
+      </div>
+
+      <!-- ═══ 1. WHY PREPARATION MATTERS ═══ -->
+      <section class="th-section" id="why-preparation">
+        <h2>1. Why Preparation Matters</h2>
+        <p>Most of the real value in this protocol isn't in what you'd do in the middle of a home invasion — it's in what your family already knows before one ever happens. A household that has already agreed on a safe room, already practiced getting there in the dark, and already knows who calls 911 and who gathers the kids loses far less time to confusion and panic than a household improvising all of that for the first time while it's actually happening.</p>
+        <p>That's the organizing idea behind everything in this guide: <strong>secure, signal, and shelter first</strong> — not confront. A home intruder response is fundamentally a safety-and-avoidance problem, not a combat problem. The overwhelming majority of home-invasion incidents are resolved without the resident ever coming face-to-face with the intruder at all, because the intruder leaves once an alarm sounds, lights come on, or it becomes clear someone inside is awake, on the phone with police, and not an easy target.</p>
+        <p>This guide is built around that reality. It leads with prevention — the things you do long before any of this is relevant — because that's genuinely where most of this protocol's protective value comes from. Everything after that is a calm, practiced sequence for the rare case where prevention wasn't enough: get your family together, get to a secure space, get the police on the way, and stay there until they arrive.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Your goal in a home invasion is to get every person in your household to safety and get police responding — not to control, confront, or apprehend the intruder. Everything in this protocol is built around that one priority.
+        </div>
+      </section>
+
+      <!-- ═══ 2. PREVENTION BASICS ═══ -->
+      <section class="th-section" id="prevention-basics">
+        <h2>2. Prevention Basics</h2>
+        <p>This is the one place in the 1st Hour Protocols library where "before it happens" content leads the book rather than sitting in a footnote — because for this specific scenario, prevention genuinely does more work than any in-the-moment response can. Most of what follows costs little and takes an afternoon.</p>
+
+        <h3>Exterior lighting and visibility</h3>
+        <p>Motion-activated lighting at every entry point — front door, back door, garage, side gates — removes the cover of darkness an intruder relies on to approach unnoticed. Cheap, solar or plug-in motion lights are enough; they don't need to be elaborate to be effective. Trim shrubs and bushes away from windows and doors so there's no place to stand unseen while testing a lock.</p>
+
+        <h3>Visible security signage and cameras</h3>
+        <p>A visible camera, doorbell camera, or even a security-company yard sign changes an intruder's calculation before they ever touch your door — most people looking for an easy target move on rather than risk being recorded or triggering a response. This is true whether or not the sign or camera is connected to an active monitoring service; visibility itself is the deterrent.</p>
+
+        <h3>Door and window hardware</h3>
+        <p>A cheap deadbolt, a hollow-core door, or a window latch that doesn't fully engage undoes almost everything else on this list. Prioritize: a solid-core or metal exterior door, a deadbolt with at least a 1-inch throw bolt, a strike plate secured with 3-inch screws that reach the door frame's structural stud (not just the trim), and working latches on every ground-floor and easily-reached window. These are inexpensive upgrades compared to what they prevent.</p>
+
+        <h3>Don't advertise an empty home</h3>
+        <p>Posting vacation photos or "we're out of town" updates in real time, leaving obvious signs of an empty house (uncollected packages, papers piling up, no lights ever on), and sharing your address publicly alongside travel plans all make a home a more attractive target. None of this requires becoming paranoid about your privacy — it just means keeping "nobody's home right now" from being publicly obvious.</p>
+
+        <h3>A family emergency plan, discussed out loud</h3>
+        <p>The single highest-value thing in this entire section is the one that costs nothing: sit down with everyone in the household and actually talk through the plan in Sections 3 and 4 — where the safe room is, how to get there from each bedroom, who calls 911, and what the plan is for kids who wake up scared and confused. A plan that exists only in one parent's head is not a family plan. Walk through it once, in daylight, so it isn't the first time anyone hears it during an actual event.</p>
+
+        <div class="th-callout">
+          <strong>Prevention in one sentence</strong>
+          Make your home visibly harder to enter unnoticed, and make sure everyone inside already knows the plan for the rare case that someone tries anyway.
+        </div>
+      </section>
+
+      <!-- ═══ 3. IMMEDIATE RESPONSE ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>3. Immediate Response If You Hear or See an Intruder</h2>
+        <p>If you hear breaking glass, a forced door, footsteps that shouldn't be there, or you otherwise become aware someone unauthorized is in or entering your home, the sequence below is designed to be simple enough to run on autopilot, even half-asleep and scared.</p>
+
+        <ol class="th-steps">
+          <li><strong>Get your family together quietly, if you can do so safely.</strong> If everyone is already in one part of the house, that's often the fastest path to your safe room. If gathering everyone means crossing paths with where the sound came from, prioritize getting yourself and whoever is nearest you to safety first rather than searching the house.</li>
+          <li><strong>Move to your pre-designated safe room.</strong> See Section 4 for what makes a room work and how to set one up in advance. Moving there should not require a decision in the moment — it should already be the automatic answer.</li>
+          <li><strong>Call 911 immediately and stay on the line.</strong> Do this as soon as you're somewhere you can speak, even quietly. Give the dispatcher your address first, in case the call drops, then describe what you're hearing or seeing in real time. A dispatcher who can hear what's actually happening gives responding officers a far better picture than a call that ends the moment you dial.</li>
+          <li><strong>Do not go looking for the source of the noise alone.</strong> Investigating "just to be sure" is one of the most common ways a resident ends up face-to-face with an intruder unnecessarily. If you're not certain, treat it as real and go to the safe room — checking it out yourself is not worth the risk if you're wrong.</li>
+          <li><strong>Keep your phone on you and charged before any of this happens.</strong> A dead or misplaced phone in the moment is the single most common preventable failure in this sequence — see Section 4's safe-room stocking guidance.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>Don't do this</strong>
+          Don't turn on every light in the house looking for the source of a noise — this can reveal your location without giving you any safety benefit. Don't split up to search separately. Don't assume a noise was "probably nothing" once you've already started this sequence — you can always stand down once police confirm the scene is clear, but you can't undo the time lost by second-guessing early.
+        </div>
+      </section>
+
+      <!-- ═══ 4. THE SAFE-ROOM CONCEPT ═══ -->
+      <section class="th-section" id="safe-room">
+        <h2>4. The Safe-Room Concept</h2>
+        <p>A safe room isn't a bunker — for almost every household, it's an existing bedroom or interior room that already has two things going for it: a door that locks, and no direct, predictable path an intruder would expect you to be behind. Picking one, stocking it lightly, and practicing the route to it in advance is the highest-leverage thing in this entire protocol besides the prevention steps in Section 2.</p>
+
+        <h3>What makes a room work</h3>
+        <ul>
+          <li><strong>A door that locks — ideally a real lock, not just a privacy latch.</strong> A simple portable door-security bar or brace, stored in the room itself, adds real time even against a determined attempt to force the door.</li>
+          <li><strong>A phone, always.</strong> This is non-negotiable — the room's entire purpose collapses without a way to call 911 from inside it.</li>
+          <li><strong>No obvious, single, predictable path.</strong> A room an intruder would check first (the primary bedroom, if that's the obvious guess) is a worse choice than a less obvious interior room, if your household layout gives you a choice.</li>
+          <li><strong>Away from the door and any windows the intruder could see or reach into,</strong> once you're inside — position yourselves against an interior wall, not lined up with the door itself.</li>
+        </ul>
+
+        <h3>Pre-designate it and practice the route</h3>
+        <p>Decide on the room as a family, in advance — not in the moment. Then physically walk the route from every bedroom to that room at least once, including once in the dark or with the lights off, so it's genuinely automatic rather than theoretical. This is the single most effective five minutes you can spend on this entire protocol.</p>
+
+        <h3>Keep it lightly stocked</h3>
+        <p>The room doesn't need to be turned into a bunker — a phone charger, a flashlight, and a short written list of emergency contacts (in case the person calling isn't the one who normally would) are enough. The goal is removing every reason to leave the room once you're in it.</p>
+
+        <figure class="th-illo real">
+          <img src="assets/1sthour-homeinvasion-saferoom-001.png" alt="1st Hour safe-room setup diagram — a solid-core door with a working lock, a charged phone, a flashlight, and a written emergency-contacts list, positioned away from the door and any windows.">
+        </figure>
+
+        <div class="th-callout">
+          <strong>Kids and the safe room</strong>
+          If you have children, make sure they know the safe room too — practiced, not just explained once. A child who has walked the route before is far less likely to freeze or wander during the real thing.
+        </div>
+      </section>
+
+      <!-- ═══ 5. IF CONFRONTATION BECOMES UNAVOIDABLE ═══ -->
+      <section class="th-section" id="confrontation">
+        <h2>5. If Confrontation Becomes Unavoidable</h2>
+        <p>This section covers the rare case where an intruder reaches you or your family directly, despite everything above — for example, if they're already inside the room you're in when you realize what's happening, or the safe room isn't reachable. This is genuinely the least common outcome this protocol covers, and it should stay the shortest section in this book for that reason: most situations resolve at prevention, response, or shelter, well before this point is ever reached.</p>
+
+        <p>What follows describes <strong>safety behavior, not a legal standard</strong> — this section tells you what to physically do to get your family away from danger, not what any state's law says you're permitted to do. If you have questions about what's legally permissible in your situation, that's a question for a licensed attorney in your state, not something this guide addresses (see Section 9).</p>
+
+        <ol class="th-steps">
+          <li><strong>Create distance first.</strong> If there is any path away from the intruder and toward an exit, a locked room, or help, that is always the better option than staying to confront them.</li>
+          <li><strong>Position yourself between the intruder and any family members, if you can do so safely,</strong> while still moving everyone toward an exit or a secure space rather than standing your ground in place.</li>
+          <li><strong>Use your voice.</strong> A loud, firm command to leave, combined with making clear that police are already on the way, ends a surprising number of these situations without anything further happening — many intruders are looking to avoid a confrontation just as much as you are.</li>
+          <li><strong>Only as a last resort, with every other option exhausted, act physically — with the sole intent of creating an opening to get yourself and your family to safety, not to subdue, punish, or continue engaging once that opening exists.</strong> The moment there is a path to safety, take it, rather than continuing to engage.</li>
+          <li><strong>Get to safety and call 911 the moment you're able to,</strong> even if you already had the call started before this point.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>This is a last resort, not a first option</strong>
+          Everything else in this protocol — prevention, the immediate response sequence, and the safe room — exists specifically to make this section irrelevant in the overwhelming majority of cases. Treat it that way.
+        </div>
+      </section>
+
+      <!-- ═══ 6. WORKING WITH POLICE WHEN THEY ARRIVE ═══ -->
+      <section class="th-section" id="police-arrival">
+        <h2>6. Working With Police When They Arrive</h2>
+        <p>Responding officers arriving at an active or just-resolved home invasion don't yet know who's who — treat the first minute of their arrival as its own careful sequence, separate from everything before it.</p>
+        <ul>
+          <li><strong>Keep your hands visible and empty</strong> the moment you know officers are on scene or approaching, even before they can see you.</li>
+          <li><strong>Follow instructions exactly and immediately</strong> — don't stop to explain, argue, or ask questions first. Comply first, explain once it's clear you've been identified as safe.</li>
+          <li><strong>Don't move toward officers quickly,</strong> even to greet them with relief — announce yourself verbally and let them close the distance.</li>
+          <li><strong>Don't carry anything in your hands</strong> that could be mistaken for a weapon, including a phone, if you can safely set it down first.</li>
+          <li><strong>Tell them clearly and briefly what happened and where everyone is</strong> — including whether the intruder is still on scene, if known — once you've been told it's safe to speak.</li>
+        </ul>
+        <p>This is the same standard this library uses anywhere police are arriving at an active scene — the guidance doesn't change based on what kind of incident brought them there.</p>
+      </section>
+
+      <!-- ═══ 7. AFTERMATH ═══ -->
+      <section class="th-section" id="aftermath">
+        <h2>7. Aftermath</h2>
+        <p>Once officers have confirmed the scene is secure, there's a second phase most people underestimate — securing the home again and helping everyone, especially kids, process what just happened.</p>
+
+        <h3>Securing the home</h3>
+        <ul>
+          <li><strong>Temporarily secure any forced door or window</strong> — a board, heavy tape, or a temporary brace — before you leave the area unattended, even briefly, to prevent a second entry.</li>
+          <li><strong>Change locks or rekey affected doors</strong> if there's any chance a key was compromised, taken, or copied during the incident.</li>
+          <li><strong>Photograph any damage</strong> before repairs begin — useful for both the police report and any insurance claim.</li>
+        </ul>
+
+        <h3>Emotional aftercare, especially for kids</h3>
+        <ul>
+          <li><strong>Validate the fear rather than minimizing it.</strong> "That was scary, and you did great staying in the safe room" lands better than "it's over now, don't worry about it."</li>
+          <li><strong>Keep routines as normal as possible</strong> in the days after — regular bedtimes, regular meals — which helps kids (and adults) regain a sense of stability faster than an extended disruption would.</li>
+          <li><strong>Bring in professional support if fear, sleep problems, or anxiety persist</strong> beyond the first week or two — a pediatrician, school counselor, or therapist experienced with trauma in children is a reasonable, non-alarming first call.</li>
+        </ul>
+
+        <h3>Reporting and documentation</h3>
+        <p>File a police report even if nothing was taken and no one was hurt — it creates a record that matters for insurance, for any future legal proceedings, and for local crime-pattern awareness. If anyone was physically injured during the incident, treat any bleeding or wound the same way this library's <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> protocol describes — direct pressure first, call 911 if it hasn't already been done — rather than improvising a different approach under stress.</p>
+
+        <div class="th-callout">
+          <strong>What to tell your insurance company</strong>
+          Most homeowner's and renter's policies cover forced-entry damage and stolen property — contact your provider promptly, keep the police report number, and avoid discarding damaged items until they've been documented or a claims adjuster has reviewed them.
+        </div>
+      </section>
+
+      <!-- ═══ 8. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>8. Essential Items Checklist</h2>
+        <p>This protocol leans more on preparation and hardware than on kit contents, but a few items genuinely matter — most of them belong in or near your safe room, per Section 4.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Deadbolt with a 1-inch throw bolt on every exterior door</strong><span class="th-cl-why"> — Section 2. The single highest-value hardware upgrade on this list.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Motion-activated exterior lighting</strong><span class="th-cl-why"> — Section 2. Removes the cover of darkness at every entry point.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Portable door-security bar or brace, stored in the safe room</strong><span class="th-cl-why"> — Section 4. Adds real time even against a forced-entry attempt.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>A phone charger kept permanently in the safe room</strong><span class="th-cl-why"> — Section 4. The most common preventable failure is a dead or misplaced phone.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Flashlight</strong><span class="th-cl-why"> — Section 4. For the safe room and for temporarily securing a damaged entry point afterward.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Written emergency-contacts list, kept in the safe room</strong><span class="th-cl-why"> — Section 4. In case the person calling isn't the one who normally would.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Visible camera or security signage at entry points</strong><span class="th-cl-why"> — Section 2. Deterrence value regardless of whether it's actively monitored.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Basic first-aid supplies (see the Severe Bleeding protocol's own checklist)</strong><span class="th-cl-why"> — Section 7. For treating any injury once the scene is confirmed secure.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          The hardware items are a one-time home upgrade; the safe-room items should be stocked and left in place, checked occasionally, not gathered in the moment.
+        </div>
+      </section>
+
+      <!-- ═══ 9. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>9. Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This content is general home-safety guidance.</strong> It is educational in nature and does not constitute professional security consulting, law enforcement guidance, or medical advice, and it is not a substitute for calling 911 in a real emergency.</p>
+          <p><strong>This guide is not legal advice, and it does not address use-of-force or castle-doctrine law, which varies significantly by state.</strong> Nothing in this book should be read as a statement of what any state's law permits, requires, or protects. If you have questions about what actions are legally permissible in your jurisdiction, consult a licensed attorney in your state.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p>This book, like every title in this library, is not a substitute for professional training or emergency services. 1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 25, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/home-invasion/">1sthourprotocols.com/home-invasion</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional emergency services. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>

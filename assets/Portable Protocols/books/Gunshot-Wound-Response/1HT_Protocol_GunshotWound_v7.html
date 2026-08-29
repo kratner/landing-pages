@@ -1,0 +1,1013 @@
+<!-- ============================================================================
+     FILE: 1HT_Protocol_GunshotWound_v7.html
+     PATH: Funnels/1st Hour Trauma First Aid Kit - 13688167/1stHour Protocols/Books/Gunshot-Wound-Response/1HT_Protocol_GunshotWound_v7.html
+     ----------------------------------------------------------------------------
+     1st Hour Protocols — "Gunshot Wound Response" e-book
+     Book #2 for ClickUp 86bbhrwcw. Track A #2. Standalone HTML page, built
+     from the pilot's (Severe Bleeding & Hemorrhage Control, v3) structure,
+     CSS, and JS wholesale per 1HT_NextProtocolBuildPrompt_v1.md. Intended
+     host: Cloudflare Pages, stable slug /gunshot-wound-response/ (never the
+     source file's own _v# — see ../../1HT_CloudflareHostingGuide_v1.md §3).
+     NOT a CF Custom HTML element — no CF-wrapper constraints apply here.
+     Access/gating: buyer reaches this via a link surfaced through 1st Hour's
+     ClickFunnels order integration — this file assumes nothing about how
+     that link is generated.
+
+     REVISION HISTORY
+     - v7 (2026-08-28, Claude): Removed the "Related Protocols" cross-link
+       section (and its ToC entry); each protocol now sells as a standalone
+       product and shouldn't link to other protocols the customer may not
+       own. Renumbered the following section accordingly.
+     - v6 (2026-08-24, Claude): Book #8 (Shock Management) shipped — per
+       Prompts/1HT_BuildPrompt_Book08_Shock_v1.md §4, removed the "Coming
+       Soon" tag on this book's Shock Management cross-link card (Section
+       15) and restyled it "Live" (green tag). No content changes
+       otherwise. Redeployed to /gunshot-wound-response/ — same stable
+       slug, no URL change.
+     - v5 (2026-08-24, Claude): Book #5 (Car Accident Trauma) shipped — per
+       Prompts/1HT_BuildPrompt_Book05_CarAccident_v1.md §4, removed the
+       "Coming Soon" tag on this book's Car Accident Trauma cross-link card
+       (Section 15) and restyled it "Live" (green tag). No content changes
+       otherwise. Redeployed to /gunshot-wound-response/ — same stable
+       slug, no URL change.
+     - v1 (2026-08-24, Claude): Initial build. Content builds directly on the
+       pilot's tourniquet/wound-packing techniques (referenced, not
+       re-taught in full) and focuses on what's different for penetrating
+       trauma: entry/exit wound assessment, multiple wound sites, retained
+       fragments (don't remove/probe), chest-seal application for a
+       sucking chest wound, and scene safety near an active threat. Sections
+       14 (Good Samaritan state appendix) and 16 (Medical Disclaimer) reuse
+       the pilot's text verbatim per the build prompt's §2 instruction —
+       legal facts don't vary by injury type and disclaimer sign-off is
+       still pending workspace-wide (planning doc §7).
+       Interior illustrations: pr-graphic-289 (wound-site diagram) and
+       pr-graphic-290 (chest-wound positioning) both had the wrong AI-invented
+       shield emblem (stacked "1ST"/"HOUR" text block, no winged-stopwatch/
+       stethoscope/cross mark) exactly as flagged in Books/REVISIONS.md's
+       2026-08-21 pilot entries — fixed by the same direct-compositing method
+       (erase the badge's bounding box, paste the real el-logo-013.png
+       lockup). See Books/REVISIONS.md's 2026-08-24 entry for exact crop
+       coordinates and what's still open (cover/lifestyle images — see
+       Books/REVISIONS.md).
+       PDF: generated from the live hosted URL via a newly-built
+       ~/.claude/tools/book-pdf/build-pdf.js (this workspace's original
+       Mac-based copy doesn't exist on this Windows machine; rebuilt reusing
+       the web-screenshot skill's Playwright/Chromium install). Hosted as a
+       same-origin static file in this Pages deploy
+       (/gunshot-wound-response/1sthour-gunshotwound-ebook-001.pdf) rather
+       than the Creative AI Studio library — this session had no
+       CREATIVE_AI_API_KEY, so the upload endpoint in
+       1HT_CloudflareHostingGuide_v1.md §5 wasn't reachable. This is a
+       deliberate, documented deviation from that SOP, not a skipped step —
+       see Books/REVISIONS.md's 2026-08-24 entry for the full rationale and
+       what migrating to mtp-images.com later would involve.
+     - v2 (2026-08-24, Claude): API key obtained — migrated everything the v1
+       note above flagged as a deviation. (1) The two interior illustrations
+       are now the same corrected artwork, uploaded to the Creative AI
+       Studio "1st Hour Protocols" library instead of the local same-origin
+       Assets/ files: pr-graphic-289-fixed.png -> pr-graphic-320.png,
+       pr-graphic-290-fixed.png -> pr-graphic-336.png (both
+       assets/...). (2) The PDF was re-uploaded to the same
+       library folder (still 1sthour-gunshotwound-ebook-001.pdf, now at
+       mtp-images.com instead of same-origin) and the download button
+       repointed at it. (3) The cover (pr-graphic-306.png) and lifestyle
+       (pr-graphic-313.png) images — never embedded in this page, only used
+       in marketing/upsell contexts — also got their wrong-emblem/wordmark
+       defects fixed this session and were uploaded as pr-graphic-339.png
+       and pr-graphic-340.png respectively; not referenced by this page but
+       recorded here since they're this book's asset set. Full fix method
+       and old->new mapping: Books/REVISIONS.md's 2026-08-24 entry.
+     - v3 (2026-08-24, Claude): Full copy proofread (punctuation, spelling,
+       grammar) at Keith's request, prompted by a stray leading comma
+       spotted in Section 5's step 2 (rendered as "...gauze, using..."
+       wrapping onto a new line starting with the comma). Fixes: (1)
+       Section 5 step 2 — moved "with
+       gauze" out of the bold action label so the sentence no longer starts
+       its continuation on an orphaned comma, matching every sibling step's
+       pattern; (2) Section 1 — fixed a comma splice ("...without warning,
+       there's frequently...") to a semicolon; (3) Section 1 — "most of
+       those deaths are hemorrhage" -> "are from hemorrhage" (deaths can't
+       grammatically equal a condition); (4) Section 12 — "a few things
+       matter for afterward" -> "a few things matter afterward" (dropped
+       the stray preposition). No content/medical-claim changes — copy only.
+     - v4 (2026-08-24, Claude): Applied all 6 findings from
+       MEDICAL_REVIEW_v1.md (medical-accuracy standards cross-check). (1)
+       CRITICAL — Section 3 "Immediate Response Protocol": reordered/reworded
+       steps 3–4 so direct pressure on visible severe bleeding is never
+       gated behind a full-body sweep, matching Stop the Bleed/TCCC MARCH's
+       hemorrhage-first priority and Section 1's own concurrent framing
+       (was: sweep-then-pressure; now: pressure-immediately, sweep-once-
+       controlled-or-assisted). Also folded in the M2 gloves fix into the
+       new step 3 text. (2/5) Section 8 shock leg-elevation: replaced the
+       flat, routine "elevate the legs about 12 inches" default with the
+       pilot's v5 conditional framing — optional, 6–12", explicit no-spinal/
+       no-leg-injury/no-breathing-difficulty-of-any-kind carve-out (not just
+       the Section 6 chest-wound case). (3) Section 13 checklist: corrected
+       the false "gloves — per Section 12's exposure note" citation to point
+       at Section 3, matching where the gloves instruction now actually
+       lives (mirrors the pilot's identical v5 fix). (4) Section 6 chest-seal
+       monitoring (step 5): the "burp if breathing worsens" instruction now
+       applies to any chest seal, vented or not, per Hartford
+       Consensus/TCCC tension-pneumothorax guidance, not just seals
+       "designed" to vent. (6) Section 6 chest-wound description: separated
+       simple pneumothorax (lung collapse) from the further tension-
+       pneumothorax progression (pressure on the heart/great vessels)
+       instead of presenting them as one continuous outcome, and pointed
+       forward to the step-5 monitoring as the deterioration check.
+       All fix wording taken verbatim or near-verbatim from
+       MEDICAL_REVIEW_v1.md's "Recommended fix" text. No other content
+       changed. Archived: _archive/1HT_Protocol_GunshotWound_v3.html.
+============================================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gunshot Wound Response — 1st Hour Protocols</title>
+<meta name="description" content="A 1st Hour Protocol: how to recognize and respond to gunshot wounds in the first hour — entry and exit assessment, retained fragments, chest seals, and state-specific Good Samaritan guidance.">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<style>
+  :root{
+    --red:#E21C13;
+    --black:#111111;
+    --gray:#444444;
+    --offwhite:#F7F7F7;
+    --white:#ffffff;
+    --border:#e3e0d8;
+    --maxw:820px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--offwhite);
+    color:var(--black);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:clamp(16px,1.05vw,18px) !important;
+    line-height:1.7;
+  }
+  h1,h2,h3,h4{
+    font-family:'Anton','Inter',sans-serif;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    color:var(--black);
+    line-height:1.15;
+    margin:0 0 16px;
+  }
+  h1{font-size:clamp(30px,6vw,52px) !important;}
+  h2{font-size:clamp(24px,4vw,34px) !important; color:var(--red);}
+  h3{font-size:clamp(19px,2.6vw,24px) !important;}
+  p{margin:0 0 18px;}
+  a{color:var(--red);}
+  img{max-width:100%;display:block;}
+
+  /* ── Top brand bar ─────────────────────────────────────────── */
+  .th-topbar{
+    background:var(--black);
+    padding:14px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    position:sticky;
+    top:0;
+    z-index:50;
+  }
+  .th-logo{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(18px,2.4vw,22px) !important;
+    color:var(--white);
+    text-decoration:none;
+    letter-spacing:0.5px;
+  }
+  .th-logo span{color:var(--red);}
+  .th-note-sm{font-size:13px;color:var(--gray);margin-top:8px;}
+  .th-menu-btn{
+    display:none;
+    background:none;
+    border:2px solid var(--white);
+    color:var(--white);
+    width:44px;
+    height:44px;
+    border-radius:4px;
+    font-size:20px;
+    cursor:pointer;
+  }
+  @media (max-width:968px){ .th-menu-btn{display:block;} }
+
+  /* ── Layout shell ──────────────────────────────────────────── */
+  .th-shell{
+    display:flex;
+    max-width:1240px;
+    margin:0 auto;
+    align-items:flex-start;
+  }
+  .th-toc{
+    width:280px;
+    flex-shrink:0;
+    position:sticky;
+    top:70px;
+    max-height:calc(100vh - 90px);
+    overflow-y:auto;
+    padding:32px 20px 40px;
+  }
+  .th-toc h4{
+    font-size:12px !important;
+    letter-spacing:2px;
+    color:var(--gray);
+    margin-bottom:14px;
+  }
+  .th-toc ol{list-style:none;margin:0;padding:0;counter-reset:toc;}
+  .th-toc li{counter-increment:toc;margin-bottom:2px;}
+  .th-toc a{
+    display:block;
+    padding:8px 10px;
+    border-radius:4px;
+    color:var(--black);
+    text-decoration:none;
+    font-size:14px;
+    font-weight:500;
+  }
+  .th-toc a::before{
+    content:counter(toc) ". ";
+    color:var(--red);
+    font-weight:700;
+  }
+  .th-toc a:hover, .th-toc a.active{background:rgba(226,28,19,0.08);}
+
+  @media (max-width:968px){
+    .th-toc{
+      position:fixed;
+      top:0;
+      right:-320px;
+      width:300px;
+      height:100vh;
+      max-height:100vh;
+      background:var(--white);
+      box-shadow:-8px 0 30px rgba(0,0,0,0.25);
+      transition:right 0.25s ease;
+      padding-top:80px;
+      z-index:60;
+    }
+    .th-toc.open{right:0;}
+    .th-toc-overlay{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.5);
+      z-index:55;
+    }
+    .th-toc-overlay.open{display:block;}
+  }
+
+  .th-main{
+    flex:1;
+    min-width:0;
+    padding:0 24px;
+  }
+  .th-article{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:40px 0 80px;
+  }
+
+  /* ── Cover ─────────────────────────────────────────────────── */
+  .th-cover{
+    text-align:center;
+    padding:16px 0 32px;
+    border-bottom:4px solid var(--red);
+    margin-bottom:32px;
+  }
+  .th-kicker{
+    display:inline-block;
+    background:var(--red);
+    color:var(--white);
+    font-family:'Anton',sans-serif;
+    font-size:12px !important;
+    letter-spacing:2px;
+    padding:6px 16px;
+    border-radius:3px;
+    margin-bottom:18px;
+  }
+  .th-cover p.lede{
+    font-size:clamp(17px,2vw,20px) !important;
+    color:var(--gray);
+    max-width:600px;
+    margin:0 auto 20px;
+  }
+  /* ── Disclaimer block ──────────────────────────────────────── */
+  .th-disclaimer{
+    background:var(--white);
+    border:2px solid var(--red);
+    border-radius:8px;
+    padding:20px 24px;
+    margin:0 0 36px;
+    font-size:14px;
+    color:var(--gray);
+    line-height:1.6;
+  }
+  .th-disclaimer strong{color:var(--black);}
+
+  /* ── Section jump pills ────────────────────────────────────── */
+  .th-jump{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:8px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:14px 16px;
+    margin:0 0 28px;
+    font-size:13px;
+  }
+  .th-jump strong{color:var(--gray);text-transform:uppercase;letter-spacing:1px;font-size:11px;margin-right:4px;}
+
+  /* ── Download PDF button ──────────────────────────────────────── */
+  .th-download-wrap{text-align:center;margin:0 0 24px;}
+  .th-download-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--red);
+    color:var(--white) !important;
+    text-decoration:none;
+    font-family:'Anton',sans-serif;
+    font-size:clamp(13px,1.6vw,15px) !important;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    padding:12px 22px;
+    min-height:44px;
+    border-radius:6px;
+  }
+  .th-download-btn:hover{background:#c4180f;}
+  .th-download-btn.pending{background:var(--gray);cursor:default;pointer-events:none;}
+  .th-edition-note{
+    display:block;
+    text-align:center;
+    font-size:12px;
+    color:var(--gray);
+    margin-top:8px;
+  }
+  .th-jump a{
+    background:var(--offwhite);
+    padding:5px 12px;
+    border-radius:14px;
+    text-decoration:none;
+    font-weight:600;
+    color:var(--black);
+  }
+  .th-jump a:hover{background:var(--red);color:var(--white);}
+  .th-jump .arrow{color:#ccc;}
+
+  section.th-section{
+    scroll-margin-top:56px;
+    border-top:1px solid var(--border);
+    padding-top:24px;
+    margin-bottom:8px;
+  }
+  section.th-section:first-of-type{border-top:none;padding-top:0;}
+
+  .th-steps{
+    counter-reset:step;
+    list-style:none;
+    margin:0 0 24px;
+    padding:0;
+  }
+  .th-steps li{
+    counter-increment:step;
+    position:relative;
+    padding:0 0 18px 44px;
+    margin-bottom:6px;
+  }
+  .th-steps li::before{
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:0;
+    width:30px;
+    height:30px;
+    background:var(--red);
+    color:var(--white);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Anton',sans-serif;
+    font-size:15px;
+  }
+  .th-steps li strong{display:block;margin-bottom:4px;}
+
+  .th-callout{
+    background:#fff3f2;
+    border-left:4px solid var(--red);
+    border-radius:0 6px 6px 0;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-callout.dark{background:var(--black);color:var(--white);border-left-color:var(--red);}
+  .th-callout.dark a{color:#ff8a83;}
+  .th-callout strong{display:block;margin-bottom:4px;color:var(--red);text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+  .th-callout.dark strong{color:#ff8a83;}
+
+  .th-warn{
+    background:#111111;
+    color:#fff;
+    border-radius:6px;
+    padding:16px 20px;
+    margin:0 0 24px;
+    font-size:15px;
+  }
+  .th-warn strong{color:#ffd54a;display:block;margin-bottom:4px;text-transform:uppercase;font-size:12px;letter-spacing:1px;}
+
+  /* ── Illustration ──────────────────────────────────────────── */
+  .th-illo{
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:0;
+    margin:0 0 28px;
+    overflow:hidden;
+  }
+  .th-illo img{width:100%;display:block;}
+
+  /* ── Body map (where a tourniquet works, reused pattern) ──────── */
+  .th-bodymap-wrap{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:24px;
+    margin:0 0 28px;
+  }
+  .th-bodymap-svg{width:150px;flex-shrink:0;}
+  .th-bodymap-legend{flex:1;min-width:0;}
+  .th-bodymap-legend h4{font-size:14px !important;letter-spacing:1px;margin-bottom:14px;}
+  .th-bl-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;}
+  .th-bl-swatch{width:18px;height:18px;border-radius:4px;flex-shrink:0;margin-top:2px;}
+  .th-bl-swatch.green{background:#1f8a4c;}
+  .th-bl-swatch.red{background:var(--red);}
+  .th-bl-swatch.dash{background:none;border:2px dashed #444;}
+  .th-bodymap-note{font-size:13.5px;color:var(--gray);margin:4px 0 0;border-top:1px solid var(--border);padding-top:14px;}
+  @media (max-width:600px){
+    .th-bodymap-wrap{flex-direction:column;align-items:stretch;}
+    .th-bodymap-svg{width:120px;margin:0 auto;}
+  }
+
+  /* ── Essential items checklist ────────────────────────────────── */
+  .th-checklist{
+    list-style:none;
+    margin:0 0 20px;
+    padding:0;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px 16px;
+  }
+  .th-checklist li{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    font-size:14.5px;
+    padding:12px 14px;
+    background:var(--white);
+    border:1px solid var(--border);
+    border-radius:6px;
+  }
+  .th-checklist .th-cl-box{
+    flex-shrink:0;
+    width:20px;
+    height:20px;
+    border:2px solid var(--red);
+    border-radius:4px;
+    margin-top:1px;
+  }
+  .th-checklist strong{display:block;}
+  .th-checklist .th-cl-why{font-size:12.5px;color:var(--gray);}
+  @media (max-width:600px){
+    .th-checklist{grid-template-columns:1fr;}
+  }
+
+  /* ── Table ─────────────────────────────────────────────────── */
+  .th-table-wrap{overflow-x:auto;margin:0 0 24px;}
+  table.th-table{width:100%;border-collapse:collapse;font-size:14px;background:var(--white);}
+  table.th-table th,table.th-table td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top;}
+  table.th-table th{background:var(--black);color:var(--white);font-size:12px;text-transform:uppercase;letter-spacing:0.5px;}
+
+  /* ── State appendix cards ──────────────────────────────────── */
+  .th-state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:20px;}
+  @media (max-width:600px){.th-state-grid{grid-template-columns:1fr;}}
+  .th-state-card{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:16px 18px;}
+  .th-state-card h4{font-size:15px !important;color:var(--red);margin-bottom:8px;letter-spacing:0.5px;}
+  .th-state-card p{font-size:13.5px;margin-bottom:0;color:var(--gray);}
+
+  /* ── Cross-link card ───────────────────────────────────────── */
+  .th-crosslink{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    background:var(--black);
+    color:var(--white);
+    border-radius:8px;
+    padding:18px 20px;
+    margin:0 0 28px;
+    text-decoration:none;
+  }
+  .th-crosslink .th-cl-icon{font-size:26px;flex-shrink:0;}
+  .th-crosslink .th-cl-title{font-family:'Anton',sans-serif;letter-spacing:0.5px;font-size:16px;color:#fff;margin-bottom:2px;}
+  .th-crosslink .th-cl-sub{font-size:13px;color:rgba(255,255,255,0.65);}
+  .th-crosslink .th-cl-tag{
+    margin-left:auto;
+    flex-shrink:0;
+    background:var(--red);
+    color:#fff;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+  }
+  .th-crosslink.live .th-cl-tag{background:#1f8a4c;}
+
+  /* ── Footer ────────────────────────────────────────────────── */
+  .th-footer{
+    background:var(--black);
+    color:rgba(255,255,255,0.6);
+    text-align:center;
+    padding:36px 20px 90px;
+    font-size:13px;
+  }
+  .th-footer .th-flogo{font-family:'Anton',sans-serif;color:#fff;font-size:20px;letter-spacing:0.5px;margin-bottom:8px;}
+  .th-footer .th-flogo span{color:var(--red);}
+  .th-footer .th-ftag{color:var(--red);font-weight:700;text-transform:uppercase;font-size:12px;letter-spacing:1.5px;margin-bottom:14px;}
+  .th-footer a{color:rgba(255,255,255,0.75);}
+
+  /* ── Back to top ───────────────────────────────────────────── */
+  #th-top-btn{
+    position:fixed;
+    bottom:22px;
+    right:22px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:var(--red);
+    color:#fff;
+    border:none;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(0,0,0,0.3);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 0.2s ease, transform 0.2s ease;
+    z-index:40;
+  }
+  #th-top-btn.show{opacity:1;pointer-events:auto;}
+  #th-top-btn:hover{transform:translateY(-3px);}
+
+  @media (hover:none){
+    html{scroll-behavior:auto;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .th-toc{transition:none;}
+    #th-top-btn{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ TOP BAR ═══ -->
+<div class="th-topbar">
+  <a href="../../index.html" class="th-logo">1ST<span>HOUR</span></a>
+  <button type="button" class="th-menu-btn" id="th-menu-toggle" aria-label="Open table of contents">☰</button>
+</div>
+
+<div class="th-toc-overlay" id="th-overlay"></div>
+
+<div class="th-shell">
+
+  <!-- ═══ STICKY / SLIDE-IN TABLE OF CONTENTS ═══ -->
+  <nav class="th-toc" id="th-toc" aria-label="Table of contents">
+    <h4>In This Protocol</h4>
+    <ol>
+      <li><a href="#why-first-hour">Why the First Hour Matters</a></li>
+      <li><a href="#recognizing-gunshot-wounds">Recognizing Gunshot Wounds</a></li>
+      <li><a href="#immediate-response">The Immediate Response Protocol</a></li>
+      <li><a href="#tourniquet">Applying a Tourniquet</a></li>
+      <li><a href="#wound-packing">Wound Packing &amp; Hemostatic Gauze</a></li>
+      <li><a href="#fragments-chest">Fragments, Multiple Wounds &amp; Chest Seals</a></li>
+      <li><a href="#pressure-dressing">Pressure Dressings &amp; Improvised Materials</a></li>
+      <li><a href="#shock">Recognizing &amp; Managing Shock</a></li>
+      <li><a href="#special-situations">Special Situations</a></li>
+      <li><a href="#environment-demographics">Climate &amp; Demographic Notes</a></li>
+      <li><a href="#call-911">When to Call 911</a></li>
+      <li><a href="#aftercare">Aftercare &amp; Follow-Up</a></li>
+      <li><a href="#checklist">Essential Items Checklist</a></li>
+      <li><a href="#state-appendix">Your State: Good Samaritan Protections</a></li>
+      <li><a href="#disclaimer">Medical Disclaimer</a></li>
+    </ol>
+  </nav>
+
+  <!-- ═══ MAIN CONTENT ═══ -->
+  <main class="th-main">
+    <article class="th-article">
+
+      <div class="th-cover">
+        <div class="th-kicker">1st Hour Protocol</div>
+        <h1>Gunshot Wound Response</h1>
+        <p class="lede">Builds on the tourniquet and wound-packing skills from Severe Bleeding &amp; Hemorrhage Control — this guide covers what's different when the wound is a gunshot: entry and exit assessment, multiple wound sites, retained fragments, and chest seals.</p>
+      </div>
+
+      <div class="th-download-wrap">
+        <a class="th-download-btn" href="../../pdfs/1sthour-gunshotwound-ebook-002.pdf" target="_blank" rel="noopener">⬇ Download PDF Version</a>
+        <span class="th-edition-note">Edition: August 24, 2026 — this page always links the current PDF; re-download anytime for the latest revision.</span>
+      </div>
+
+      <div class="th-disclaimer">
+        <strong>Before you read further:</strong> This guide is general first aid education. It is not a substitute for professional medical care, EMS response, or a certified first aid/CPR course, and it is not legal advice. In any true emergency, call <strong>911</strong> immediately. See the full disclaimer at the bottom of this book.
+      </div>
+
+      <div class="th-jump">
+        <strong>Jump to:</strong>
+        <a href="#recognizing-gunshot-wounds">Recognize</a><span class="arrow">→</span>
+        <a href="#immediate-response">Respond</a><span class="arrow">→</span>
+        <a href="#fragments-chest">Stabilize</a><span class="arrow">→</span>
+        <a href="#call-911">Call 911</a>
+      </div>
+
+      <!-- ═══ 1. WHY THE FIRST HOUR MATTERS ═══ -->
+      <section class="th-section" id="why-first-hour">
+        <h2>1. Why the First Hour Matters</h2>
+        <p>Gunshot wounds kill almost exclusively through one mechanism: uncontrolled bleeding, whether it's visible and pouring out of an obvious wound or hidden inside the chest or abdomen. Military and civilian trauma data agree on this point — the overwhelming majority of preventable deaths from penetrating trauma happen before the person ever reaches a hospital, and most of those deaths are from hemorrhage that a bystander could have slowed or stopped in the first few minutes.</p>
+        <p>A firearm injury compresses the timeline that already applies to severe bleeding in general. A bullet can damage a major blood vessel instantly and without warning; there's frequently more than one wound to manage at once, and — unlike a laceration you can see start to finish — you often don't know how much internal damage happened along the bullet's path until the person is already showing signs of shock. That uncertainty is exactly why the "Stop the Bleed" campaign this guide follows was built in direct response to mass-casualty shooting events: the goal is to turn ordinary bystanders into the first line of hemorrhage control before EMS can physically reach the scene.</p>
+        <p>This guide assumes you already know — or are about to learn from <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a> — how to apply a tourniquet and pack a wound. What follows is everything specific to a gunshot: how to find every wound, what to leave alone, and how to handle the two failure modes bystanders miss most often — a second wound they never checked for, and bleeding they can't see at all.</p>
+        <div class="th-callout">
+          <strong>The core idea</strong>
+          Every bullet makes at least one hole, and often two. Your job is not to identify the caliber or guess the trajectory — it's to find every wound, control the ones you can reach, and get help moving toward the ones you can't.
+        </div>
+      </section>
+
+      <!-- ═══ 2. RECOGNIZING GUNSHOT WOUNDS ═══ -->
+      <section class="th-section" id="recognizing-gunshot-wounds">
+        <h2>2. Recognizing Gunshot Wounds</h2>
+        <p>The single most common mistake bystanders make with a gunshot injury is stopping at the first wound they see. A bullet that enters the body has to go somewhere — it either lodges inside or exits somewhere else, and that exit wound is frequently larger, messier, and more dangerous than the entry point everyone's attention is focused on.</p>
+
+        <div class="th-table-wrap">
+          <table class="th-table">
+            <thead>
+              <tr><th>Wound type</th><th>What it typically looks like</th><th>What it means for you</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Entry wound</strong></td><td>Usually smaller and more round, edges turned slightly inward. May show soot, stippling, or a faint burn ring if the shot was fired at close range.</td><td>Almost never the full extent of the injury — keep looking.</td></tr>
+              <tr><td><strong>Exit wound</strong></td><td>Often larger and more irregular than the entry, edges turned outward, typically bleeds more heavily.</td><td>May be the primary source of visible blood loss — treat whichever wound is bleeding worse first, but pack or dress both.</td></tr>
+              <tr><td><strong>No exit found</strong></td><td>Only one wound visible anywhere on the body after a full check.</td><td>The bullet or a fragment is still inside — this is expected, not a sign you missed something. See Section 6 on retained fragments.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Because entry and exit wounds can be far apart on the body — a round can enter the shoulder and exit the lower back — a full-body check matters more here than with most other injuries. Work systematically, ideally with a second person helping, and check areas that are easy to overlook: the scalp and hairline, under the arms, between skin folds, the back, and the buttocks and groin if the person was seated or in motion when hit.</p>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-320.png" alt="1st Hour gunshot wound assessment diagram — front and back body outlines marked with common wound sites, with a callout to check for both entry and exit wounds and to check both sides of the body.">
+        </figure>
+
+        <div class="th-warn">
+          <strong>Assume every gunshot victim has more than one wound until proven otherwise.</strong> Count the entry wounds, then actively search for a matching exit for each one. If you can only account for entries and no exits, treat it as confirmed — not suspected — that fragments remain inside (Section 6).
+        </div>
+      </section>
+
+      <!-- ═══ 3. IMMEDIATE RESPONSE PROTOCOL ═══ -->
+      <section class="th-section" id="immediate-response">
+        <h2>3. The Immediate Response Protocol</h2>
+        <p>This sequence mirrors the core Stop the Bleed protocol from Severe Bleeding &amp; Hemorrhage Control, with one addition specific to firearm injuries at the front: confirming the scene is actually safe to enter before you do anything else.</p>
+
+        <ol class="th-steps">
+          <li><strong>Confirm the scene is safe before approaching.</strong> If there is any possibility the shooter is still present or the area isn't secured, do not approach — see Section 9 for scene-safety guidance specific to an active-threat situation.</li>
+          <li><strong>Call or have someone call 911 immediately</strong> and tell the dispatcher a firearm was involved — this changes how the response is staged and may mean EMS waits for police to clear the scene before entering (see Section 11).</li>
+          <li><strong>Apply firm, direct pressure to any severe bleeding you can see, immediately</strong> — don't wait to check the rest of the body first. Use your bare hands if nothing else is available, or non-latex gloves from your kit if they're within reach, then grab the thickest clean cloth, gauze, or dressing you can find.</li>
+          <li><strong>Once that bleeding is controlled (or you have help holding pressure), sweep the rest of the body for additional entry and exit wounds</strong> — a bullet often makes more than one hole, and bystanders routinely stop at the first wound they find (Section 2). If you have help, assign a second person to hold pressure on a second wound the moment it's found rather than splitting your own attention.</li>
+          <li><strong>Escalate to a tourniquet for a limb wound, or pack the wound for a torso/junctional wound,</strong> exactly as covered in Sections 4 and 5 — don't wait to see if direct pressure alone will be enough.</li>
+          <li><strong>If a wound is in the chest and you hear a sucking or hissing sound with each breath, apply a chest seal immediately</strong> — see Section 6. This takes priority over a dressing that isn't sealed.</li>
+          <li><strong>Keep the person as still and warm as possible</strong> and monitor breathing and consciousness continuously until EMS arrives.</li>
+        </ol>
+
+        <div class="th-callout dark">
+          <strong>Don't do this</strong>
+          Don't remove a bullet or visible fragment — see Section 6. Don't roll or reposition the person more than necessary to check for wounds; unnecessary movement can worsen internal bleeding or a spinal injury if the round struck near the spine. Don't assume a small entry wound means a minor injury — internal damage is not predictable from the size of the hole in the skin.
+        </div>
+      </section>
+
+      <!-- ═══ 4. APPLYING A TOURNIQUET ═══ -->
+      <section class="th-section" id="tourniquet">
+        <h2>4. Applying a Tourniquet</h2>
+        <p>A gunshot wound to an arm or leg is treated with a tourniquet exactly the same way as any other severe limb bleed — the technique doesn't change because the wound came from a bullet instead of a blade or blunt trauma. If you haven't already, read <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>'s Section 4 for the full step-by-step walkthrough with both commercial and improvised tourniquets. The short version:</p>
+
+        <ol class="th-steps">
+          <li><strong>Place it high and tight</strong> — 2–3 inches above the wound, never over a joint. If you're unsure exactly where the bleeding is coming from, place it as high on the limb as possible.</li>
+          <li><strong>Tighten fully and twist the windlass</strong> until bleeding stops completely, not just slows.</li>
+          <li><strong>Lock it in place and write down the time it was applied.</strong> EMS needs this exact number.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>One gunshot-specific wrinkle:</strong> if a limb has both an entry and an exit wound, one tourniquet placed correctly above both wounds still works — you do not need a second tourniquet for the second hole, as long as it's on the same limb and above both injury points.
+        </div>
+      </section>
+
+      <!-- ═══ 5. WOUND PACKING & HEMOSTATIC GAUZE ═══ -->
+      <section class="th-section" id="wound-packing">
+        <h2>5. Wound Packing &amp; Hemostatic Gauze</h2>
+        <p>For a gunshot wound to the torso, neck, or a junctional area a tourniquet can't reach, the response is the same wound-packing technique covered in full in <a href="../Severe-Bleeding-Hemorrhage-Control/1HT_Protocol_SevereBleeding_v10.html">Severe Bleeding &amp; Hemorrhage Control</a>'s Section 5 — hemostatic gauze pushed firmly into the wound cavity, packed to the base of the wound, then held under continuous direct pressure.</p>
+
+        <p>The gunshot-specific adjustment: if you've confirmed both an entry and an exit wound on the torso, <strong>pack both</strong>. Treat them as two separate wounds requiring two separate packing efforts and, ideally, two sets of hands holding pressure — don't assume packing one side is enough because the bleeding "looks" controlled from the other.</p>
+
+        <ol class="th-steps">
+          <li><strong>Expose both wounds</strong> if an entry and exit are both present — cut or move clothing out of the way for each.</li>
+          <li><strong>Pack each wound tightly</strong> with gauze, using hemostatic gauze first if you have it, pushing material to the base of the wound cavity rather than laying it on top.</li>
+          <li><strong>Hold firm, continuous pressure on each packed wound</strong> for at least three minutes without letting up — recruit a second responder for the second wound if at all possible.</li>
+          <li><strong>Secure both with pressure bandages</strong> once bleeding is controlled, without removing the packed gauze underneath.</li>
+        </ol>
+
+        <div class="th-warn">
+          <strong>If you don't have hemostatic gauze:</strong> plain gauze, a clean cloth, or a rolled shirt works with the identical technique for either wound — pack deep, pack firm, hold pressure. The material matters far less than doing it at both wound sites.
+        </div>
+      </section>
+
+      <!-- ═══ 6. FRAGMENTS, MULTIPLE WOUNDS & CHEST SEALS ═══ -->
+      <section class="th-section" id="fragments-chest">
+        <h2>6. Fragments, Multiple Wounds &amp; Chest Seals</h2>
+        <p>This section covers the three situations that are unique to firearm injuries and don't come up with other kinds of severe bleeding: a bullet or fragment still lodged in the body, more wounds than you can treat with two hands, and a penetrating chest wound that lets air leak into the chest cavity.</p>
+
+        <h3>Retained bullets and fragments</h3>
+        <p><strong>Do not attempt to remove a bullet or fragment, and do not probe the wound to try to find one.</strong> Both actions are far more likely to cause new damage — cutting a blood vessel that was undamaged, or dislodging a clot that formed around the fragment — than they are to help. A retained fragment is a job for a surgeon with imaging equipment, not a first responder in the field. If you can see a fragment sitting at the surface of a wound and it comes out on its own while you're packing, that's fine; the rule is against digging for one or pulling on one that's still seated in tissue.</p>
+
+        <h3>Multiple wound triage</h3>
+        <p>When one person has several gunshot wounds, or when you have more than one injured person, triage by immediacy: control the bleed that will kill fastest first — visible spurting or pooling blood takes priority over a wound that's oozing slowly. A tourniquet, once applied, is largely self-sustaining, which is exactly why it's prioritized over ongoing manual pressure when your hands are needed elsewhere. Work through wounds in order of severity rather than the order you happened to find them.</p>
+
+        <h3>Chest wounds and chest seals</h3>
+        <p>A gunshot wound to the chest can let air leak into the space around the lung with every breath instead of staying in the airway where it belongs — you may hear a sucking or hissing sound at the wound site. Left alone, this can collapse the lung — and if enough air keeps building up with nowhere to escape, it can progress to a more dangerous tension pneumothorax that puts pressure on the heart and major blood vessels, which is exactly the deterioration Step 5 below is watching for. If your kit includes a chest seal (an occlusive or vented adhesive dressing), apply it directly over the wound the moment you identify this — it takes priority over an ordinary gauze dressing at that specific wound.</p>
+
+        <ol class="th-steps">
+          <li><strong>Locate the wound and wipe the surrounding skin as dry as you can</strong> so the seal's adhesive will hold.</li>
+          <li><strong>Apply the chest seal directly over the wound,</strong> centered so its edges adhere to intact skin all the way around.</li>
+          <li><strong>Position the person semi-upright if possible,</strong> rather than flat on their back — this reduces pressure on the chest and makes breathing easier, and is the single biggest comfort/effectiveness improvement you can make without equipment.</li>
+          <li><strong>Check the back for a matching exit wound</strong> and apply a second seal there if one exists — a chest wound needs the same entry/exit check as anywhere else on the body.</li>
+          <li><strong>Monitor breathing closely.</strong> If breathing becomes noticeably more difficult after applying any chest seal — vented or not — lift one edge of the seal briefly to release trapped air, then reseal; this applies whether or not the product is specifically "designed" to vent on its own. If your kit has a choice, a vented chest seal is generally preferred for this reason.</li>
+        </ol>
+
+        <figure class="th-illo">
+          <img src="assets/pr-graphic-336.png" alt="1st Hour chest wound positioning diagram — keep the person semi-upright to ease breathing, apply a chest seal directly over the wound, and use a backpack or rolled clothing for support.">
+        </figure>
+
+        <div class="th-callout">
+          <strong>No chest seal in your kit?</strong> Any clean plastic wrap, or the wrapper from a dressing package, held firmly in place over the wound (taped on three sides, left open on one edge to allow trapped air to escape) is a workable improvised substitute until you can get a real chest seal or EMS arrives.
+        </div>
+      </section>
+
+      <!-- ═══ 7. PRESSURE DRESSINGS & IMPROVISED MATERIALS ═══ -->
+      <section class="th-section" id="pressure-dressing">
+        <h2>7. Pressure Dressings &amp; Improvised Materials</h2>
+        <p>Once each wound's bleeding is under control — by pressure, tourniquet, packing, or a chest seal — a pressure dressing over the packed material keeps it that way and frees your hands for the next wound or the next casualty.</p>
+        <ul>
+          <li><strong>Commercial pressure bandage:</strong> wrap firmly and evenly from below the wound upward, tight enough to maintain pressure without cutting off circulation — check that fingers or toes past the dressing stay warm and pink.</li>
+          <li><strong>Improvised options:</strong> a folded shirt secured with a belt, a scarf wrapped snugly, or duct tape over a folded pad all work when you're managing more wounds than you have commercial dressings for.</li>
+          <li><strong>Never remove a dressing to "check" a wound underneath.</strong> If blood soaks through, add more material on top rather than taking anything off — this applies to every wound on a multi-wound patient, not just the first one you treated.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 8. SHOCK ═══ -->
+      <section class="th-section" id="shock">
+        <h2>8. Recognizing &amp; Managing Shock</h2>
+        <p>Shock is especially dangerous after a gunshot wound because the amount of internal bleeding is rarely obvious from the outside. A person can be losing significant blood into the chest, abdomen, or a large muscle mass around a wound track while showing only a small external hole and no external bleeding to speak of — which is exactly why shock symptoms, not the wound's appearance, should drive how urgently you act.</p>
+
+        <h3>Signs of shock:</h3>
+        <ul>
+          <li>Pale, cool, or clammy skin</li>
+          <li>Rapid, weak pulse</li>
+          <li>Rapid, shallow breathing</li>
+          <li>Confusion, anxiety, or restlessness</li>
+          <li>Nausea or vomiting</li>
+          <li>Extreme thirst</li>
+          <li>Progressive weakness or loss of consciousness</li>
+        </ul>
+
+        <div class="th-warn">
+          <strong>Treat shock as internal bleeding until proven otherwise.</strong> If someone who was shot is showing shock symptoms and you can't find enough external blood loss to explain them, assume they're bleeding internally and that this is now the most urgent thing EMS needs to know — say so explicitly on the 911 call.
+        </div>
+
+        <h3>What to do:</h3>
+        <ol class="th-steps">
+          <li><strong>Keep all identified wounds controlled</strong> — shock will not improve while any bleeding continues, visible or not.</li>
+          <li><strong>Lay the person flat</strong> if there's no suspected spinal injury and no chest wound requiring the semi-upright position from Section 6 — the two positions can conflict, so prioritize chest-wound breathing support if both apply. If there's no suspected spinal injury, leg injury, or breathing difficulty of any kind, and no chest wound requiring the semi-upright position from Section 6, you may gently raise the legs about 6–12 inches — current first aid guidance notes this can help blood return to vital organs, but the effect is brief and not required; don't delay or skip warmth and bleeding control to do it, and stop if it causes pain, shortness of breath, or is impractical given the injury location.</li>
+          <li><strong>Keep them warm</strong> with a blanket, jacket, or emergency blanket — losing body heat significantly worsens shock.</li>
+          <li><strong>Do not give food or water,</strong> even if requested — it can cause vomiting and complicates emergency surgery.</li>
+          <li><strong>Keep talking to them and note any change in alertness</strong> to report to EMS the moment they arrive.</li>
+        </ol>
+      </section>
+
+      <!-- ═══ 9. SPECIAL SITUATIONS ═══ -->
+      <section class="th-section" id="special-situations">
+        <h2>9. Special Situations</h2>
+
+        <h3>Scene safety near an active threat</h3>
+        <p>Unlike most other trauma in this library, a gunshot wound can mean the danger that caused it is still nearby. If there is any indication the shooter is still present, still armed, or the scene has not been secured by law enforcement, do not approach the injured person — get to cover, call 911, and wait for police to clear the area or signal that it's safe to render aid. This isn't overcaution: rescuers who become a second casualty stop helping the first one entirely. If you are already with the injured person when a threat is confirmed nearby, prioritize moving to cover over continuing treatment, even mid-procedure — a tourniquet in progress can be resumed the moment you're safe; a second gunshot victim cannot be undone.</p>
+
+        <h3>Multiple casualties</h3>
+        <p>Mass-casualty shooting events are the exact scenario the modern Stop the Bleed curriculum was built around. If you're one of several capable bystanders, coordinate quickly — assign one person per identified severe bleed rather than everyone clustering around the first person found. If you're the only capable responder, triage by immediacy exactly as described in Section 6: the wound most likely to kill fastest gets treated first, tourniquets before ongoing manual pressure, chest seals before minor dressings.</p>
+
+        <h3>Pediatric gunshot wounds</h3>
+        <p>The same core techniques apply — locate every wound, pack or tourniquet as appropriate, apply a chest seal if needed — but a child's total blood volume is much smaller, so what looks like a moderate bleed by adult standards can become critical far faster. Don't wait to escalate to a tourniquet or packing if direct pressure isn't controlling the bleeding quickly, and treat any sign of shock in a child as more urgent than the same signs in an adult.</p>
+      </section>
+
+      <!-- ═══ 10. ENVIRONMENT & DEMOGRAPHIC NOTES ═══ -->
+      <section class="th-section" id="environment-demographics">
+        <h2>10. Climate &amp; Demographic Notes</h2>
+        <p>The bleeding and shock response in this guide doesn't change by geography, but the same environmental factors that affect any severe bleeding emergency apply here too — plus one response-time factor specific to a shooting scene.</p>
+        <ul>
+          <li><strong>Cold climates:</strong> blood loss and cold exposure compound each other — a drop in body temperature interferes with clotting, meaning a gunshot wound can bleed longer and harder the colder the person gets. Warming the person is part of bleeding control, not just comfort, especially in northern states and winter conditions.</li>
+          <li><strong>Hot climates:</strong> heat accelerates dehydration, which lowers blood volume and pushes a person into shock faster after any significant blood loss. In southern and desert states, get the person into shade and treat aggressively for shock even after a smaller apparent volume of blood loss.</li>
+          <li><strong>Scene-clearance delays:</strong> unlike most medical emergencies, EMS response to a shooting is frequently staged behind a law enforcement perimeter until the scene is confirmed safe — a process that can add meaningful time beyond the normal EMS response window discussed elsewhere in this library, urban or rural. Plan to sustain bleeding control for longer than you might for a non-violent injury, and don't assume "help is close" translates to "help can reach you yet."</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 11. WHEN TO CALL 911 ═══ -->
+      <section class="th-section" id="call-911">
+        <h2>11. When to Call 911</h2>
+        <div class="th-warn">
+          <strong>Short answer: immediately, every time, before you start treatment if you can manage both.</strong> Any gunshot wound warrants a 911 call — there is no version of this injury minor enough to skip it.
+        </div>
+        <p>Tell the dispatcher explicitly that a firearm was involved as early in the call as possible — this affects how the response is staged, including whether EMS waits for police confirmation that the scene is secure before approaching (Section 9). Give your location, the number of people injured, and what wounds you've found and treated so far, including any chest seal or tourniquet and the time it was applied.</p>
+        <p>Do not attempt to drive a gunshot victim to a hospital yourself unless a 911 dispatcher explicitly tells you to because EMS cannot reach you. A moving vehicle makes it far harder to maintain pressure on multiple wounds, monitor a chest seal, or respond if the person's condition changes suddenly.</p>
+      </section>
+
+      <!-- ═══ 12. AFTERCARE ═══ -->
+      <section class="th-section" id="aftercare">
+        <h2>12. Aftercare &amp; Follow-Up</h2>
+        <p>Once EMS has taken over, a few things matter afterward.</p>
+        <ul>
+          <li><strong>Tell EMS everything you found and did</strong> — every wound location, every tourniquet's application time, and whether a chest seal is in place. This directly shapes how the trauma team prioritizes treatment.</li>
+          <li><strong>Restock your kit immediately,</strong> including any chest seal, tourniquet, or hemostatic gauze used — a real emergency means those items need replacing before the kit can be trusted again.</li>
+          <li><strong>It's normal to feel shaken afterward,</strong> and more so after a violent-injury scene than most other emergencies. Debrief with someone, and talk to a professional if the experience stays with you.</li>
+          <li><strong>If you had bare-hand contact with blood,</strong> wash thoroughly and mention it to EMS or a doctor — this is a standard, low-drama thing to flag.</li>
+        </ul>
+      </section>
+
+      <!-- ═══ 13. ESSENTIAL ITEMS CHECKLIST ═══ -->
+      <section class="th-section" id="checklist">
+        <h2>13. Essential Items Checklist</h2>
+        <p>This protocol assumes the same core supplies as Severe Bleeding &amp; Hemorrhage Control, plus one addition specific to penetrating chest trauma. Restock immediately after any real use, per Section 12.</p>
+
+        <ul class="th-checklist">
+          <li><span class="th-cl-box"></span><div><strong>Commercial tourniquet (CAT-style)</strong><span class="th-cl-why"> — Section 4. For any limb wound with severe bleeding.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Hemostatic gauze</strong><span class="th-cl-why"> — Section 5. Clotting-agent gauze for deep wound packing.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Chest seal (occlusive/vented)</strong><span class="th-cl-why"> — Section 6. For a penetrating chest wound.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Plain roller gauze / trauma dressing</strong><span class="th-cl-why"> — Sections 5–7. Backup packing and dressing padding for a second or third wound.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Pressure/elastic wrap bandage</strong><span class="th-cl-why"> — Section 7. Secures packing and holds pressure hands-free.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Non-latex gloves</strong><span class="th-cl-why"> — worn before contact with any blood, per Section 3's immediate response steps.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Trauma shears</strong><span class="th-cl-why"> — Section 2. Cuts clothing away fast to complete the full-body wound check.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Permanent marker or time-tape</strong><span class="th-cl-why"> — Section 4. Records the exact tourniquet application time for EMS.</span></div></li>
+          <li><span class="th-cl-box"></span><div><strong>Emergency/space blanket</strong><span class="th-cl-why"> — Sections 3 &amp; 8. Warmth slows the progression of shock.</span></div></li>
+        </ul>
+
+        <div class="th-callout">
+          <strong>Where these live</strong>
+          Keep them together in one kit, in the same place every time. A multi-wound scenario means you'll be reaching for several of these items in quick succession — a scattered kit costs you time you don't have.
+        </div>
+      </section>
+
+      <!-- ═══ 14. STATE APPENDIX ═══ -->
+      <section class="th-section" id="state-appendix">
+        <h2>14. Your State: Good Samaritan Protections</h2>
+        <p>Every U.S. state has some form of Good Samaritan law — legal protection for people who provide reasonable emergency assistance in good faith, without expectation of payment. The exact wording, what's covered, and any exceptions vary by state, and laws change over time. What follows is a general overview for the twelve most populous states, not legal advice — see the full disclaimer below.</p>
+
+        <div class="th-state-grid">
+          <div class="th-state-card">
+            <h4>California</h4>
+            <p>Good Samaritan protection extends broadly to emergency care given in good faith, including non-medical bystanders. Coastal wildfire-adjacent regions also mean bleeding response sometimes overlaps with evacuation conditions — treat and transport decisions may be affected by road closures.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Texas</h4>
+            <p>Good Samaritan protection applies to good-faith emergency care without expectation of compensation. Hot, humid summers raise shock and dehydration risk after blood loss — see the heat-climate note in Section 10.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Florida</h4>
+            <p>Good Samaritan protection covers emergency assistance rendered in good faith. Hurricane-season power and EMS disruptions can extend response times well beyond normal averages in affected areas.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>New York</h4>
+            <p>Good Samaritan protection applies to good-faith emergency aid. Cold-season response in upstate and rural areas should factor in the cold-climate clotting note in Section 10.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Pennsylvania</h4>
+            <p>Good Samaritan protection covers emergency care provided in good faith and without compensation. Rural counties outside Philadelphia and Pittsburgh can see longer EMS transport times.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Illinois</h4>
+            <p>Good Samaritan protection applies broadly to good-faith emergency assistance. Winters are a factor for the cold-climate bleeding/shock interaction described in Section 10.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Ohio</h4>
+            <p>Good Samaritan protection covers those who render emergency care in good faith. A largely rural geography outside major metros means response-time planning matters here.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Georgia</h4>
+            <p>Good Samaritan protection applies to good-faith emergency aid. Hot, humid summers make the heat/shock note in Section 10 especially relevant.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>North Carolina</h4>
+            <p>Good Samaritan protection covers good-faith emergency assistance. Both coastal storm exposure and mountain-region rural response times are relevant depending on where in the state you are.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Michigan</h4>
+            <p>Good Samaritan protection applies to those providing emergency care in good faith. Cold-weather response is a real factor for much of the year — see Section 10.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>New Jersey</h4>
+            <p>Good Samaritan protection covers good-faith emergency assistance without compensation. Dense population generally means shorter average EMS response times than the national average.</p>
+          </div>
+          <div class="th-state-card">
+            <h4>Virginia</h4>
+            <p>Good Samaritan protection applies to good-faith emergency care. Response times vary sharply between the Northern Virginia/D.C. corridor and the state's more rural southern and western regions.</p>
+          </div>
+        </div>
+
+        <div class="th-callout">
+          <strong>Not in this list?</strong> All 50 states and Washington, D.C. have some version of a Good Samaritan law. If your state isn't shown here, the same general principle applies: good-faith, no-compensation emergency assistance is broadly protected — but confirm the specifics for your state, since exceptions and requirements (such as "reasonable care" standards) differ.
+        </div>
+      </section>
+
+      <!-- ═══ 15. DISCLAIMER ═══ -->
+      <section class="th-section" id="disclaimer">
+        <h2>15. Medical Disclaimer</h2>
+        <div class="th-disclaimer">
+          <p><strong>This guide is for general educational purposes only</strong> and does not constitute medical advice, diagnosis, or treatment. It is not a substitute for professional medical care, emergency medical services, or a certified first aid, CPR, or Stop the Bleed course, which we strongly recommend taking in person.</p>
+          <p><strong>In any real emergency, call 911 (or your local emergency number) immediately.</strong> Nothing in this guide should delay that call.</p>
+          <p><strong>The Good Samaritan law information in Section 14 is general information, not legal advice.</strong> Laws vary by state, change over time, and may have exceptions not covered here. Consult a licensed attorney in your state for guidance on your specific situation.</p>
+          <p>1st Hour and its parent company make no warranty, express or implied, regarding outcomes from applying the information in this guide, and disclaim liability for actions taken based on its contents to the fullest extent permitted by law.</p>
+        </div>
+        <p class="th-note-sm"><em>Editor's note: this edition reflects content as of August 24, 2026. 1st Hour periodically revises protocol guides as best practices evolve — visit <a href="https://1sthourprotocols.com/gunshot-wound-response/">1sthourprotocols.com/gunshot-wound-response</a> for the current edition and to re-download the latest PDF.</em></p>
+      </section>
+
+    </article>
+  </main>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="th-footer">
+  <div class="th-flogo">1ST<span>HOUR</span></div>
+  <div class="th-ftag">Be Prepared. Be Confident. Be Ready.</div>
+  <p>&copy; 2026 1st Hour · Not a substitute for professional medical care. Call 911 in an emergency.</p>
+  <p><a href="../../index.html">1sthour.com</a></p>
+</footer>
+
+<button type="button" id="th-top-btn" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var toc = document.getElementById('th-toc');
+  var overlay = document.getElementById('th-overlay');
+  var menuBtn = document.getElementById('th-menu-toggle');
+
+  function closeToc(){
+    toc.classList.remove('open');
+    overlay.classList.remove('open');
+  }
+  function openToc(){
+    toc.classList.add('open');
+    overlay.classList.add('open');
+  }
+  menuBtn.addEventListener('click', function(){
+    toc.classList.contains('open') ? closeToc() : openToc();
+  });
+  overlay.addEventListener('click', closeToc);
+  toc.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeToc);
+  });
+
+  var topBtn = document.getElementById('th-top-btn');
+  window.addEventListener('scroll', function(){
+    topBtn.classList.toggle('show', window.scrollY > 500);
+  });
+  topBtn.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.th-section'));
+  var tocLinks = Array.prototype.slice.call(toc.querySelectorAll('a'));
+  function onScrollSpy(){
+    var pos = window.scrollY + 120;
+    var current = sections[0];
+    sections.forEach(function(s){ if (s.offsetTop <= pos) current = s; });
+    tocLinks.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current.id);
+    });
+  }
+  window.addEventListener('scroll', onScrollSpy);
+  onScrollSpy();
+})();
+</script>
+
+</body>
+</html>
