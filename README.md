@@ -14,6 +14,7 @@ Portfolio of recent work by Keith Ratner.
 8. <a href="https://kratner.github.io/landing-pages/assets/Outdoor%20Survival%20Kit.html" target="_blank">Outdoor Survival Kit</a> — demonstrates scroll-triggered narratives
 9. <a href="https://kratner.github.io/landing-pages/assets/Portable%20Protocols/index.html" target="_blank">Portable Protocols</a>
 10. <a href="https://kratner.github.io/landing-pages/assets/1st%20Hour%20Pack%20Your%20Box.html" target="_blank">1st Hour Pack Your Box</a>
+11. <a href="https://kratner.github.io/landing-pages/assets/11-in-1%20Multi%20Tool%20Card.html" target="_blank">11-in-1 Multi Tool Card</a> — demonstrates scroll-triggered storytelling: a pinned camera walks through every tool on the real card
 
 ---
 © 2026 Keith Ratner

@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11-in-1 Multi Tool Card</title>
+<meta name="description" content="Cinematic, scroll-driven sales page for the 11-in-1 Multi Tool Card: a pinned GSAP camera walks through every tool on the real card.">
+<style>
+  html { font-size: 62.5%; }  /* as ClickFunnels' lander.css: the page sizes its type in px so it renders the same here and live */
+  body { margin: 0; background: #07090b; overflow-x: hidden; }
+  .lp-form { box-sizing: border-box; background: #f2f3f4; color: #16191d; padding: 64px 20px; text-align: center;
+             font: 18px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; }
+  .lp-form b { display: block; font-size: 24px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    /* ==== CONTROL -- "Steel Plate" TOKENS =====================================
+       Dark-dominant EDC look: graphite bands, a brushed-steel value plate
+       (the card's own finish), blaze-amber accents, rounded corners, soft
+       shadows, heavy SANS display. */
+
+    /* type */
+    --mtc-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mtc-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mtc-display-weight: 900;
+    --mtc-display-track: -0.015em;
+
+    /* light reading bands */
+    --mtc-light-bg:   #f2f3f4;   /* cool steel-white                           */
+    --mtc-ink:        #16191d;   /* text on steel-white                        */
+    --mtc-ink-soft:   #454c55;   /* muted text                                 */
+    --mtc-head-ink:   #16191d;
+    --mtc-accent-ink: #a8231c;   /* red TEXT on steel-white                    */
+    --mtc-hairline:   #dde0e4;
+    --mtc-card-bg:    #ffffff;
+    --mtc-card-border: 2px solid #d3d7dc;
+
+    /* feature bands (.mtc-dark) */
+    --mtc-feat-bg:       #111418;
+    --mtc-feat-ink:      #f1f3f5;
+    --mtc-feat-ink-soft: #c9d0d8;
+    --mtc-feat-head:     #f1f3f5;
+    --mtc-feat-accent:   #f5a524;   /* blaze amber on graphite                 */
+
+    /* value plate = brushed steel, near-black text */
+    --mtc-plate-bg:     linear-gradient(118deg, #f4f6f8 0%, #cfd5db 48%, #aab2bb 100%);
+    --mtc-plate-border: 2px solid #5d6670;
+    --mtc-plate-ink:    #101317;
+    --mtc-plate-rule:   #5d6670;
+
+    /* frames, rules, shape */
+    --mtc-frame-border: 2px solid #2c333b;
+    --mtc-media-bg:     #1b2026;
+    --mtc-shadow:       0 10px 26px rgba(0,0,0,0.32);
+    --mtc-rule:         #f5a524;
+    --mtc-r-lg:   12px;
+    --mtc-r-md:   10px;
+    --mtc-r-sm:   8px;
+    --mtc-r-pill: 999px;
+    --mtc-r-input: 6px;
+
+    /* trust bar */
+    --mtc-tag-bg:     #111418;
+    --mtc-tag-ink:    #f5a524;
+    --mtc-tag-border: 2px solid #5d6670;
+
+    /* primary CTA -- red, the same in both cells (not under test) */
+    --mtc-cta-bg:     #c3201a;
+    --mtc-cta-ink:    #ffffff;
+    --mtc-cta-edge:   #74110d;
+    --mtc-focus-ring: #f5a524;
+
+    /* "why" check icons */
+    --mtc-icon-bg:     #111418;
+    --mtc-icon-border: 2px solid #f5a524;
+    --mtc-icon-ink:    #f5a524;
+
+    /* ---- order form ---- */
+    --mtc-placeholder:      #5c5850;
+    --mtc-focus-border:     #d98a0b;
+    --mtc-focus-glow:       rgba(245, 165, 36, 0.30);
+    --mtc-of-head-bg:       #111418;
+    --mtc-of-head-rule:     #f5a524;
+    --mtc-of-head-ink:      #f1f3f5;
+    --mtc-of-head-ink-soft: #c9d0d8;
+    --mtc-of-track:         #2a3038;
+    --mtc-of-progress:      linear-gradient(90deg, #c3201a 0%, #f5a524 100%);
+    --mtc-of-panel:         #f1f3f5;
+    --mtc-of-line:          #cfd4da;
+    --mtc-of-row-accent:    #8a939d;
+    --mtc-of-hover:         #fafbfc;
+    --mtc-of-checked-tint:  linear-gradient(135deg, rgba(195,32,26,0.06) 0%, rgba(245,165,36,0.12) 100%);
+    --mtc-of-checked-glow:  rgba(195, 32, 26, 0.16);
+    --mtc-of-feature-edge:  #d98a0b;
+    --mtc-of-feature-bg:    #fdf5e6;
+    --mtc-btn1-bg:   linear-gradient(118deg, #f4f6f8 0%, #cfd5db 48%, #aab2bb 100%);
+    --mtc-btn1-edge: #5d6670;
+    --mtc-btn1-ink:  #101317;
+  }
+
+  /* =========================================================================
+     ====  SHARED RULES -- byte-identical in the Style A and Style B files ====
+     Everything below reads the :root tokens above. To change a LOOK, change
+     tokens (or the variant block at the end). To change a RULE, edit it in
+     BOTH files identically -- see the file header's split-test invariant.
+     ========================================================================= */
+
+  /* =========================================================================
+     SHELL -- scoped, never global
+     ========================================================================= */
+  .mtc-sec {
+    box-sizing: border-box !important;
+    font-family: var(--mtc-sans) !important;
+    font-size: clamp(19px, 1.7vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--mtc-ink) !important;
+    background: var(--mtc-light-bg) !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .mtc-sec *,
+  .mtc-sec *::before,
+  .mtc-sec *::after { box-sizing: border-box !important; }
+
+  /* Full-viewport breakout -- escapes CF's container padding/max-width */
+  .mtc-breakout {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .mtc-wrap {
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+
+  /* "Feature" bands (class name kept as mtc-dark from v1). Style A paints
+     them vault-black; Style B paints them white -- see the tokens. */
+  .mtc-dark { background: var(--mtc-feat-bg) !important; color: var(--mtc-feat-ink) !important; }
+
+  .mtc-sec img { display: block !important; max-width: 100% !important; height: auto !important; }
+  .mtc-sec p { margin: 0 0 20px 0 !important; }
+  .mtc-sec p:last-child { margin-bottom: 0 !important; }
+
+  /* =========================================================================
+     TYPE
+     ========================================================================= */
+  .mtc-h1, .mtc-h2, .mtc-h3 {
+    font-family: var(--mtc-display) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    margin: 0 !important;
+    letter-spacing: var(--mtc-display-track) !important;
+    color: var(--mtc-head-ink) !important;
+    text-wrap: balance !important;       /* no one-word last lines */
+  }
+  .mtc-h1 { font-size: clamp(36px, 5.6vw, 64px) !important; line-height: 1.1 !important; }
+  .mtc-h2 { font-size: clamp(29px, 4.2vw, 46px) !important; line-height: 1.14 !important; }
+  .mtc-h3 { font-size: clamp(23px, 2.6vw, 30px) !important; line-height: 1.2  !important; }
+
+  .mtc-dark .mtc-h1, .mtc-dark .mtc-h2, .mtc-dark .mtc-h3 { color: var(--mtc-feat-head) !important; }
+  .mtc-sec .mtc-hi-txt { color: var(--mtc-feat-accent) !important; }
+
+  .mtc-sec p.mtc-copy {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--mtc-ink) !important;
+    max-width: 62ch !important;
+  }
+  .mtc-dark p.mtc-copy { color: var(--mtc-feat-ink) !important; }
+  .mtc-center { text-align: center !important; }
+  .mtc-center p.mtc-copy { margin-left: auto !important; margin-right: auto !important; }
+
+  .mtc-sec p.mtc-kicker {
+    font-family: var(--mtc-sans) !important;
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--mtc-accent-ink) !important;
+    margin: 0 0 12px 0 !important;
+  }
+  .mtc-dark p.mtc-kicker { color: var(--mtc-feat-accent) !important; }
+
+  /* =========================================================================
+     VALUE PLATE -- Style A: brushed-steel plate / ink text. Style B: solid slate / white.
+     ========================================================================= */
+  .mtc-plate {
+    position: relative !important;
+    display: inline-block !important;
+    background: var(--mtc-plate-bg) !important;
+    border: var(--mtc-plate-border) !important;
+    border-radius: var(--mtc-r-md) !important;
+    padding: clamp(16px, 2.4vw, 26px) clamp(20px, 3vw, 34px) !important;
+    box-shadow: var(--mtc-shadow) !important;
+    color: var(--mtc-plate-ink) !important;   /* the plate's OWN text too --
+                                                   else it inherits a band's */
+  }
+  .mtc-plate * { color: var(--mtc-plate-ink) !important; }
+
+  /* Image / video frame */
+  .mtc-frame {
+    display: block !important;
+    width: 100% !important;
+    border-radius: var(--mtc-r-lg) !important;
+    border: var(--mtc-frame-border) !important;
+    overflow: hidden !important;
+    box-shadow: var(--mtc-shadow) !important;
+    background: var(--mtc-media-bg) !important;
+  }
+  .mtc-sec img.mtc-shot {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--mtc-media-bg) !important;
+  }
+  .mtc-shot-wide   { aspect-ratio: 4 / 3 !important; object-position: 50% 50% !important; }
+  .mtc-shot-square { aspect-ratio: 1 / 1 !important; object-position: 50% 50% !important; }
+
+  /* =========================================================================
+     MOTION -- native video elements only (no script tags; CF drops pasted scripts).
+     Every clip has a poster and a declared aspect-ratio, so its box is
+     reserved and a first frame shows even if the file never loads. All
+     carry `controls`: an older audience must be able to stop motion.
+     ========================================================================= */
+  .mtc-video-wrap { width: 100% !important; max-width: 820px !important; margin: 0 auto !important; }
+  .mtc-sec video.mtc-video {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--mtc-media-bg) !important;
+  }
+  .mtc-sec video.mtc-video-wide { aspect-ratio: 16 / 9 !important; }
+  /* Real-clip loops: animated WebP in a picture element. They play on their
+     own (no play button); under prefers-reduced-motion the picture swaps in
+     the still JPG instead, so motion-sensitive viewers see no animation. */
+  .mtc-sec picture { display: block !important; }
+  .mtc-sec img.mtc-anim { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .mtc-sec p.mtc-video-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.6 !important;
+    color: var(--mtc-ink-soft) !important;
+    text-align: center !important;
+    max-width: 56ch !important;
+    margin: 16px auto 0 auto !important;
+  }
+  .mtc-ugc-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: clamp(16px, 2.4vw, 26px) !important;
+  }
+  .mtc-sec figure.mtc-ugc { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 12px !important; }
+  .mtc-sec figcaption.mtc-ugc-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.55 !important;
+    color: var(--mtc-ink) !important;
+  }
+
+  /* =========================================================================
+     STAR DIVIDER
+     ========================================================================= */
+  .mtc-stars { display: flex !important; align-items: center !important; justify-content: center !important; gap: 14px !important; }
+  .mtc-stars-mark {
+    font-size: clamp(18px, 2vw, 24px) !important;
+    color: var(--mtc-accent-ink) !important;
+    letter-spacing: 6px !important;
+    line-height: 1 !important;
+  }
+  .mtc-dark .mtc-stars-mark { color: var(--mtc-feat-accent) !important; }
+  .mtc-stars-rule { flex: 1 1 60px !important; max-width: 120px !important; height: 2px !important; background: var(--mtc-rule) !important; }
+  .mtc-divider { padding: clamp(20px, 4vw, 34px) 0 !important; }
+
+  /* =========================================================================
+     TRUST BAR (top)
+     ========================================================================= */
+  .mtc-sec.mtc-tagbar { padding: 14px 0 !important; background: var(--mtc-tag-bg) !important; border-bottom: var(--mtc-tag-border) !important; }
+  .mtc-tagbar-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(10px, 3vw, 28px) !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+  .mtc-tagbar-item {
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.04em !important;
+    color: var(--mtc-tag-ink) !important;
+    white-space: nowrap !important;
+  }
+
+  /* =========================================================================
+     HERO
+     ========================================================================= */
+  .mtc-hero { padding: clamp(40px, 7vw, 76px) 0 clamp(36px, 6vw, 64px) 0 !important; }
+  .mtc-hero-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: clamp(18px, 3vw, 26px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .mtc-badge {
+    display: inline-block !important;
+    background: var(--mtc-cta-bg) !important;
+    color: var(--mtc-cta-ink) !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    padding: 8px 18px !important;
+    border-radius: var(--mtc-r-pill) !important;
+  }
+  .mtc-hero-h1 { max-width: 24ch !important; }
+  .mtc-hero-art { width: 100% !important; max-width: 680px !important; margin: 0 auto !important; }
+  .mtc-sec p.mtc-hero-sub {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--mtc-feat-ink) !important;
+    max-width: min(720px, 62ch) !important;
+    margin: 0 auto !important;
+    text-wrap: pretty !important;
+  }
+
+  .mtc-price-row { display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+  .mtc-price-label {
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 18px) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+  }
+  .mtc-price-was { font-family: var(--mtc-display) !important; font-size: clamp(22px, 2.6vw, 30px) !important; }
+  .mtc-price-now { font-family: var(--mtc-display) !important; font-weight: var(--mtc-display-weight) !important; font-size: clamp(40px, 6vw, 60px) !important; line-height: 1 !important; }
+  .mtc-price-rule { display: block !important; width: 100% !important; max-width: 220px !important; height: 2px !important; background: var(--mtc-plate-rule) !important; margin: 10px auto !important; }
+
+  .mtc-cta {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    min-height: 76px !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    background: var(--mtc-cta-bg) !important;
+    color: var(--mtc-cta-ink) !important;
+    text-decoration: none !important;
+    border-radius: var(--mtc-r-sm) !important;
+    border-bottom: 6px solid var(--mtc-cta-edge) !important;
+    padding: 14px 26px !important;
+    box-shadow: var(--mtc-shadow) !important;
+    transition: filter .18s ease, transform .18s ease !important;
+    cursor: pointer !important;
+  }
+  .mtc-cta:hover { filter: brightness(1.08) !important; transform: translateY(-2px) !important; }
+  .mtc-cta:active { transform: translateY(0) !important; }
+  .mtc-cta:focus-visible { outline: 4px solid var(--mtc-focus-ring) !important; outline-offset: 3px !important; }
+  .mtc-cta-main { font-family: var(--mtc-display) !important; font-weight: var(--mtc-display-weight) !important; font-size: clamp(22px, 2.8vw, 28px) !important; line-height: 1.2 !important; color: var(--mtc-cta-ink) !important; }
+  .mtc-cta-sub { font-family: var(--mtc-sans) !important; font-weight: 400 !important; font-size: clamp(15px, 1.5vw, 16px) !important; color: var(--mtc-cta-ink) !important; }
+  .mtc-cta-block { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 14px !important; width: 100% !important; }
+  .mtc-sec p.mtc-cta-note { font-size: clamp(14px, 1.5vw, 16px) !important; color: var(--mtc-feat-ink-soft) !important; margin: 0 !important; }
+
+  .mtc-trust {
+    list-style: none !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px 22px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .mtc-trust li {
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    color: var(--mtc-feat-ink-soft) !important;
+  }
+
+  /* =========================================================================
+     BAND SECTIONS
+     ========================================================================= */
+  .mtc-band { padding: clamp(48px, 7vw, 84px) 0 !important; }
+  .mtc-band-head { max-width: 720px !important; margin: 0 auto clamp(30px, 5vw, 48px) auto !important; }
+
+  .mtc-get-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(20px, 3vw, 36px) !important;
+  }
+  .mtc-card {
+    background: var(--mtc-card-bg) !important;
+    border: var(--mtc-card-border) !important;
+    border-radius: var(--mtc-r-lg) !important;
+    padding: clamp(18px, 2.6vw, 26px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .mtc-card-h { font-family: var(--mtc-display) !important; font-weight: var(--mtc-display-weight) !important; font-size: clamp(22px, 2.6vw, 27px) !important; color: var(--mtc-head-ink) !important; margin: 0 !important; }
+  .mtc-card-list { list-style: none !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; gap: 10px !important; }
+  .mtc-card-list li {
+    font-size: clamp(17px, 1.7vw, 19px) !important;
+    line-height: 1.6 !important;
+    color: var(--mtc-ink) !important;
+    padding-left: 30px !important;
+    position: relative !important;
+  }
+  .mtc-card-list li::before {
+    content: "\2713" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    color: var(--mtc-accent-ink) !important;
+    font-weight: 700 !important;
+  }
+
+  /* Retail value band */
+  .mtc-value-wrap { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 22px !important; }
+  .mtc-value-art { width: 100% !important; max-width: 720px !important; margin: 0 auto !important; }
+  .mtc-value-fig { font-family: var(--mtc-display) !important; font-weight: var(--mtc-display-weight) !important; font-size: clamp(42px, 6vw, 64px) !important; line-height: 1 !important; }
+  .mtc-sec p.mtc-value-label { font-family: var(--mtc-sans) !important; font-weight: 700 !important; font-size: clamp(15px, 1.6vw, 17px) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; color: var(--mtc-feat-accent) !important; margin: 0 !important; }
+
+  .mtc-why-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(16px, 2.6vw, 28px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .mtc-why-item { display: flex !important; align-items: flex-start !important; gap: 14px !important; text-align: left !important; }
+  .mtc-why-icon {
+    flex: 0 0 auto !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: var(--mtc-r-pill) !important;
+    background: var(--mtc-icon-bg) !important;
+    border: var(--mtc-icon-border) !important;
+    color: var(--mtc-icon-ink) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+  }
+  .mtc-why-item p { margin: 0 !important; font-size: clamp(17px, 1.7vw, 19px) !important; line-height: 1.6 !important; color: var(--mtc-ink) !important; }
+
+  /* Reviews */
+  .mtc-rev-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(18px, 2.6vw, 28px) !important; }
+  .mtc-rev {
+    background: var(--mtc-card-bg) !important;
+    border: var(--mtc-card-border) !important;
+    border-radius: var(--mtc-r-lg) !important;
+    padding: clamp(18px, 2.4vw, 24px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .mtc-sec p.mtc-rev-stars { color: var(--mtc-accent-ink) !important; letter-spacing: 4px !important; font-size: clamp(16px, 1.8vw, 19px) !important; line-height: 1 !important; margin: 0 0 14px 0 !important; }
+  .mtc-sec p.mtc-rev-txt { font-size: clamp(18px, 1.8vw, 20px) !important; line-height: 1.7 !important; color: var(--mtc-ink) !important; margin: 0 0 18px 0 !important; flex: 1 1 auto !important; }
+  .mtc-sec p.mtc-rev-by { font-size: clamp(16px, 1.6vw, 18px) !important; line-height: 1.5 !important; color: var(--mtc-ink-soft) !important; margin: 0 !important; padding-top: 14px !important; border-top: 2px solid var(--mtc-hairline) !important; }
+  .mtc-rev-by b { display: block !important; color: var(--mtc-ink) !important; font-size: 1.05em !important; }
+
+  /* Guarantee */
+  .mtc-guar-grid { display: grid !important; grid-template-columns: 1fr 1.3fr !important; gap: clamp(24px, 4vw, 48px) !important; align-items: center !important; }
+  .mtc-guar-seal {
+    display: inline-block !important;
+    margin-bottom: 18px !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 17px) !important;
+  }
+
+  /* Final CTA */
+  .mtc-final { padding: clamp(50px, 7vw, 90px) 0 !important; text-align: center !important; }
+
+  /* Disclaimer */
+  .mtc-fine { padding: 22px 0 !important; }
+  .mtc-sec.mtc-fine p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: var(--mtc-ink-soft) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  /* =========================================================================
+     RESPONSIVE
+     ========================================================================= */
+  @media (max-width: 968px) {
+    .mtc-guar-grid { grid-template-columns: 1fr !important; }
+    .mtc-guar-fig { max-width: 380px !important; margin: 0 auto !important; }
+    .mtc-ugc-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 768px) {
+    .mtc-get-grid { grid-template-columns: 1fr !important; }
+    .mtc-why-grid { grid-template-columns: 1fr !important; }
+    .mtc-rev-grid { grid-template-columns: 1fr !important; }
+    .mtc-stars-rule { flex-basis: 40px !important; }
+    .mtc-cta { max-width: 100% !important; }
+  }
+
+  /* Touch devices + reduced motion: no CSS transitions/transforms. (Videos
+     keep their native controls; reduced-motion users can pause them.) */
+  @media (hover: none) {
+    .mtc-sec *, .mtc-sec *::before, .mtc-sec *::after { animation: none !important; transition: none !important; }
+    .mtc-cta:hover { transform: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .mtc-sec *, .mtc-sec *::before, .mtc-sec *::after { animation: none !important; transition: none !important; }
+    .mtc-cta:hover { transform: none !important; }
+  }
+
+
+  /* #########################################################################
+     ORDER FORM STYLING -- merged in (was a separate element on sibling
+     funnels). ClickFunnels Classic native order-form overrides, APPEARANCE
+     ONLY. Base: TBGS_SalesPageSections_v5.html (Trump Blackout Gold Set, same
+     2-step form), re-pointed at this file's tokens.
+
+     These selectors are deliberately NOT under .mtc- -- they must hit CF's
+     own global form classes (.elInput, .order2*, .elOrderProductOptin*,
+     .orderFormBump, .elButton ...). They only match form elements, so they
+     cannot bleed into the .mtc- page sections (which use no CF classes).
+     Pasted in the same element as the page, they apply to the native CF
+     order form wherever it sits on this step.
+
+     RULES HONORED
+       * Inputs: border / background / color / font ONLY -- never width,
+         margin or padding (breaks CF's form grid). font-size >= 16px so iOS
+         does not zoom on focus.
+       * NEVER blanket-!important the input border-color with a brand color:
+         CF writes validation borders INLINE without !important. Default is a
+         NEUTRAL gray, and the VALIDATION STATE block re-asserts CF's own
+         green/red at higher specificity (Documentation/
+         SOP-CF-Order-Form-Validation.md). gray = neutral, green = valid,
+         red = invalid -- in BOTH styles; the colors are not part of the test.
+       * Product rows never get display:...!important (would un-hide the bump rows
+         product-row-hider.js hides).
+     ######################################################################### */
+
+  /* ---- INPUT FIELDS -- appearance only, never layout ---- */
+  .elInput,
+  input[type="email"],
+  input[type="tel"],
+  input[type="text"],
+  select,
+  textarea {
+    border-color: #cbc6ba !important;          /* neutral -- see rules above */
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-radius: var(--mtc-r-input) !important;
+    background-color: #ffffff !important;
+    color: var(--mtc-ink) !important;
+    font-size: 18px !important;
+    font-family: var(--mtc-sans) !important;
+  }
+  .elInput::placeholder,
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--mtc-placeholder) !important;
+    opacity: 1 !important;
+  }
+  .elInput:focus,
+  input[type="email"]:focus,
+  input[type="tel"]:focus,
+  input[type="text"]:focus,
+  select:focus,
+  textarea:focus {
+    border-color: var(--mtc-focus-border) !important;
+    box-shadow: 0 0 0 4px var(--mtc-focus-glow) !important;
+    outline: none !important;
+    background-color: #ffffff !important;
+  }
+
+  /* ---- VALIDATION STATE -- let ClickFunnels' native inline validation win ---- */
+  .elInput.error,
+  input.error,
+  select.error,
+  textarea.error,
+  .elInput[style*="185, 21, 23"],
+  input[style*="185, 21, 23"],
+  select[style*="185, 21, 23"],
+  textarea[style*="185, 21, 23"] {
+    border-color: #b91517 !important;   /* CF invalid red -- rgb(185, 21, 23) */
+  }
+  .elInput[style*="74, 137, 32"],
+  input[style*="74, 137, 32"],
+  select[style*="74, 137, 32"],
+  textarea[style*="74, 137, 32"] {
+    border-color: #4a8920 !important;   /* CF valid green -- rgb(74, 137, 32) */
+  }
+
+  /* ---- 2-STEP HEADERS / PROGRESS ---- */
+  .order2StepHeader {
+    background: var(--mtc-of-head-bg) !important;
+    border-bottom: 3px solid var(--mtc-of-head-rule) !important;
+    border-radius: var(--mtc-r-input) var(--mtc-r-input) 0 0 !important;
+  }
+  .order2StepNumber {
+    background: var(--mtc-plate-bg) !important;
+    color: var(--mtc-plate-ink) !important;
+    border: var(--mtc-plate-border) !important;
+    border-radius: var(--mtc-r-input) !important;
+    font-family: var(--mtc-display) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    font-size: clamp(22px, 3vw, 27px) !important;
+    width: 52px !important;
+    height: 52px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+  }
+  .order2StepActive .order2StepNumber {
+    background: var(--mtc-cta-bg) !important;
+    color: var(--mtc-cta-ink) !important;
+    border-color: var(--mtc-of-head-rule) !important;
+  }
+  .order2StepHeaderText {
+    margin-left: 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+  }
+  .order2StepTitle {
+    font-family: var(--mtc-display) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    font-size: clamp(20px, 2.6vw, 26px) !important;
+    line-height: 1.2 !important;
+    color: var(--mtc-of-head-ink) !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+  }
+  .order2StepActive .order2StepTitle { color: var(--mtc-of-head-ink) !important; }
+  .order2StepSubTitle {
+    font-family: var(--mtc-sans) !important;
+    font-weight: 400 !important;
+    font-size: clamp(16px, 2vw, 18px) !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    color: var(--mtc-of-head-ink-soft) !important;
+  }
+  .order2StepProgressBg { background: var(--mtc-of-track) !important; }
+  .order2StepProgress { background: var(--mtc-of-progress) !important; }
+
+  /* ---- FORM LABELS / SHIPPING TITLE ---- */
+  .ccAddressTitle,
+  .ccAddressLabel,
+  .elS1Fullname,
+  .ccCardText,
+  .ccInputText,
+  .ccExpYearText,
+  .ccCVCText {
+    color: var(--mtc-ink) !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(18px, 1.8vw, 20px) !important;
+    line-height: 1.45 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    background: transparent !important;
+  }
+  .ccAddressTitle.elS1Shipping {
+    color: var(--mtc-cta-ink) !important;
+    background: var(--mtc-cta-bg) !important;
+    border-bottom: 3px solid var(--mtc-cta-edge) !important;
+    border-radius: var(--mtc-r-input) var(--mtc-r-input) 0 0 !important;
+    font-family: var(--mtc-display) !important;
+    font-size: clamp(20px, 2.2vw, 24px) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    display: block !important;
+  }
+  /* SHIPPING-LABEL COLOR FIX (Funnels/SHIPPING-LABEL-COLOR-FIX.md) */
+  .elOrderProductOptinLabel,
+  .elOrderProductOptinShippingLabel,
+  .elOrderProductOptinName {
+    color: var(--mtc-ink) !important;
+  }
+
+  /* ---- PRODUCT OPTIONS (1x/2x/3x/5x tier rows) ---- */
+  .elOrderProductOptions {
+    background: var(--mtc-of-panel) !important;
+    border: 2px solid var(--mtc-of-line) !important;
+    border-radius: var(--mtc-r-md) !important;
+    padding: 14px !important;
+    margin: 22px 0 !important;
+  }
+  .elOrderProductOptinProducts {
+    background: #ffffff !important;
+    border: 2px solid var(--mtc-of-line) !important;
+    border-left: 6px solid var(--mtc-of-row-accent) !important;
+    border-radius: var(--mtc-r-input) !important;
+    cursor: pointer !important;
+  }
+  .elOrderProductOptinProducts:hover {
+    background: var(--mtc-of-hover) !important;
+    border-left-color: var(--mtc-cta-bg) !important;
+  }
+  .elOrderProductOptinProducts.elOrderProductOptinProductsChecked,
+  .elOrderProductOptions .elOrderProductOptinProducts:has(input:checked) {
+    background: var(--mtc-of-checked-tint), #ffffff !important;
+    border: 3px solid var(--mtc-cta-bg) !important;
+    border-left: 8px solid var(--mtc-cta-bg) !important;
+    box-shadow: 0 0 0 3px var(--mtc-of-checked-glow) !important;
+  }
+  tr.elOrderProductOptinProducts[style*="display: none"] { display: none !important; }
+  /* MTC: product-row-hider.js tags bump rows data-bump-hidden="1"; keep them
+     hidden even against the flex rules below (safeguard, higher specificity). */
+  .elOrderProductOptions .elOrderProductOptinProducts[data-bump-hidden="1"] { display: none !important; }
+
+  /* ---- PRODUCT ROW LAYOUT -- the price-column crop fix (see
+     MCGB_OrderFormStyling_v2.html for the full reasoning). lander.css pins the
+     price to 30%, the footer makes the row display:flex, so the row is laid
+     out AS a flex row; the price is flex:0 0 auto + nowrap and wraps under the
+     name on narrow screens instead of being cropped. This step's overrides
+     ("FREE + $8.95 S/H EACH") are exactly the long strings that crop. ---- */
+  .elOrderProductOptions .elOrderProductOptinLabel,
+  .elOrderProductOptions .elOrderProductOptinProducts {
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    font-size: inherit !important;
+    flex-wrap: wrap !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinProducts { display: flex; }   /* NOT !important -- see rules above */
+  .elOrderProductOptions .elOrderProductOptinLabel    { display: flex !important; }
+  .elOrderProductOptions .elOrderProductOptinItem,
+  .elOrderProductOptions .elOrderProductOptinTableProductName,
+  .elOrderProductOptions .elOrderProductOptinProductName,
+  .elOrderProductOptions .elOrderProductOptinProductName.product-name {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    min-width: 18ch !important;   /* NOT 0 -- a zero floor collapses the name to ~2px at 320px */
+  }
+  .elOrderProductOptions .elOrderProductOptinProductName > input,
+  .elOrderProductOptions .elOrderProductOptinTableProductName > input {
+    float: none !important;
+    flex: 0 0 auto !important;
+    margin: 0 8px 0 0 !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinProductName > label,
+  .elOrderProductOptions .elOrderProductOptinTableProductName > label {
+    float: none !important;
+    max-width: none !important;
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+  }
+  .elOrderProductOptinProductName input[type="radio"] {
+    width: 22px !important;
+    height: 22px !important;
+    cursor: pointer !important;
+    accent-color: var(--mtc-cta-bg) !important;
+    vertical-align: middle !important;
+    flex: 0 0 auto !important;
+  }
+  .elOrderProductOptinProductName label,
+  .elOrderProductOptinItem {
+    color: var(--mtc-ink) !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(19px, 2vw, 21px) !important;
+    line-height: 1.45 !important;
+    margin: 0 !important;
+    word-break: break-word !important;
+    vertical-align: middle !important;
+    cursor: pointer !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinLabelPrice,
+  .elOrderProductOptions .elOrderProductOptinPriceTable,
+  .elOrderProductOptions .elOrderProductOptinPrice,
+  .elOrderProductOptions .elOrderProductOptinTablePriceName,
+  .elOrderProductOptions .product-price {
+    display: block !important;
+    flex: 0 0 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    text-align: right !important;
+    white-space: nowrap !important;
+    padding-left: 12px !important;
+    float: none !important;
+    margin-left: auto !important;
+  }
+  .elOrderProductOptinPrice,
+  .elOrderProductOptinLabelPrice {
+    color: var(--mtc-accent-ink) !important;
+    font-family: var(--mtc-display) !important;
+    font-weight: 700 !important;
+    font-size: clamp(19px, 2vw, 21px) !important;
+  }
+  /* Smallest phones (<400px): the longest override ("FREE + $8.95 S/H EACH",
+     ~254px at 21px serif) is wider than the whole row there, so nowrap would
+     crop it even on its own line. Let it wrap and step it down to 18px --
+     measured: cropped at 320px without this, clean with it. */
+  @media (max-width: 400px) {
+    .elOrderProductOptions .elOrderProductOptinPrice,
+    .elOrderProductOptions .product-price {
+      white-space: normal !important;
+      flex: 1 1 100% !important;
+      font-size: 18px !important;
+      padding-left: 0 !important;
+    }
+  }
+  /* 2-STEP ROW ORDER (v5). On this 2-step form CF nests the price INSIDE the
+     name cell: .elOrderProductOptinProductName > input + .elOrderProductOptinPrice
+     + label. CF's float:right put the price on the right; the flex cell above
+     (float:none) lays it out in DOM order instead, so the price landed between
+     the radio and the name (live, v4). Force radio -> label -> price. Label
+     keeps >= 50% so a long price wraps under the name instead of squeezing it
+     into a sliver in the ~480px form column. Same fix as FTGS_SalesPage_v5.
+     :not(.product-name) skips the order-summary row (sibling cells). */
+  .elOrderProductOptions .elOrderProductOptinProducts > .elOrderProductOptinProductName:not(.product-name) {
+    flex-wrap: wrap !important;
+    column-gap: 10px !important;
+    row-gap: 4px !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinProductName:not(.product-name) > input { order: 1 !important; }
+  .elOrderProductOptions .elOrderProductOptinProductName:not(.product-name) > label {
+    order: 2 !important;
+    flex: 1 1 0 !important;
+    min-width: 50% !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinProductName:not(.product-name) > .elOrderProductOptinPrice {
+    order: 3 !important;
+    flex: 0 1 auto !important;
+    white-space: normal !important;
+    text-wrap: balance !important;
+  }
+  @media (max-width: 400px) {
+    /* price on its own line: indent to line up with the name text */
+    .elOrderProductOptions .elOrderProductOptinProductName:not(.product-name) > .elOrderProductOptinPrice {
+      padding-left: 50px !important;
+      text-align: left !important;
+    }
+  }
+  .elOrderProductOptions {
+    table-layout: fixed !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  /* Best-seller tier -- MTC_FooterCode core (Order Form Builder core v3) section 4 marks the row .ofc-best
+     and prepends span.ofc-best-head (.best-seller = older pages' class). These
+     !important rules also override the footer's base yellow look. */
+  .elOrderProductOptinProducts.best-seller,
+  .elOrderProductOptions .elOrderProductOptinProducts.ofc-best {
+    border: 3px solid var(--mtc-of-feature-edge) !important;
+    border-left: 8px solid var(--mtc-of-feature-edge) !important;
+    background: var(--mtc-of-feature-bg) !important;
+    position: relative !important;
+    z-index: 10 !important;
+  }
+  .elOrderProductOptinProducts.best-seller.elOrderProductOptinProductsChecked,
+  .elOrderProductOptions .elOrderProductOptinProducts.best-seller:has(input:checked),
+  .elOrderProductOptions .elOrderProductOptinProducts.ofc-best:has(input:checked) {
+    background: var(--mtc-of-checked-tint), var(--mtc-of-feature-bg) !important;
+  }
+  .best-seller-head,
+  span.ofc-best-head {
+    display: inline-block !important;
+    background: var(--mtc-cta-bg) !important;
+    color: var(--mtc-cta-ink) !important;
+    padding: 8px 18px !important;
+    border-radius: var(--mtc-r-input) !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(16px, 1.6vw, 18px) !important;
+    letter-spacing: 0.06em !important;
+    margin-bottom: 10px !important;
+    text-transform: uppercase !important;
+  }
+
+  /* ---- ORDER BUMPS (Expedite 5137205 + bumps 5137206 / 5137207 / 5137208 are plain CF
+     bump elements wired by MTC_FooterCode -- core + bump-selector v1.2.10; this
+     only styles them) ---- */
+  .orderFormBump {
+    background-color: var(--mtc-of-hover) !important;
+    border: 3px dashed var(--mtc-cta-bg) !important;
+    border-radius: var(--mtc-r-md) !important;
+    padding: 22px !important;
+    margin: 18px 0 !important;
+    transition: border-color .25s ease, box-shadow .25s ease !important;
+  }
+  .orderFormBump:hover {
+    border-color: var(--mtc-accent-ink) !important;
+    box-shadow: 0 4px 16px var(--mtc-of-checked-glow) !important;
+  }
+  .bump-headline {
+    background: var(--mtc-plate-bg) !important;
+    border: var(--mtc-plate-border) !important;
+    padding: 10px 16px !important;
+    border-radius: var(--mtc-r-input) !important;
+    margin-bottom: 16px !important;
+    display: flex !important;
+    align-items: center !important;
+    text-align: left !important;
+    gap: 10px !important;
+  }
+  .bumpHeadline {
+    color: var(--mtc-plate-ink) !important;
+    font-family: var(--mtc-display) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    font-size: clamp(20px, 2.4vw, 25px) !important;
+    line-height: 1.3 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+  }
+  .bump-headline input[type="checkbox"] {
+    width: 22px !important;
+    height: 22px !important;
+    cursor: pointer !important;
+    accent-color: var(--mtc-cta-bg) !important;
+    flex-shrink: 0 !important;
+    margin: 0 !important;
+    float: none !important;
+    position: static !important;
+    vertical-align: middle !important;
+  }
+  /* Bump headline alignment fix (CF floats the arrow + checkbox, collapsing
+     the label to 0 height) */
+  .bump-headline label {
+    cursor: pointer !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    padding: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    flex: 1 !important;
+    gap: 10px !important;
+    min-height: 0 !important;
+  }
+  .bump-headline label:first-child { flex: 0 0 auto !important; gap: 8px !important; }
+  .bump-headline label:last-child {
+    flex: 1 !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 0 !important;
+    min-width: 0 !important;
+  }
+  .bump-headline img,
+  .bump-headline label img {
+    flex-shrink: 0 !important;
+    margin: 0 8px 0 0 !important;
+    display: inline-block !important;
+    float: none !important;
+    position: static !important;
+    left: auto !important;
+    vertical-align: middle !important;
+  }
+  .bump-headline b,
+  .bump-headline font,
+  .bump-headline .bumpHeadline {
+    line-height: 1.3 !important;
+    display: block !important;
+    width: 100% !important;
+    word-break: break-word !important;
+    overflow-wrap: break-word !important;
+    color: var(--mtc-plate-ink) !important;
+  }
+  .orderFormBump p,
+  .orderFormBump span,
+  .orderFormBump div {
+    font-size: 18px !important;
+    line-height: 1.6 !important;
+    color: var(--mtc-ink) !important;
+  }
+  .orderFormBump .bump-headline span,
+  .orderFormBump .bump-headline div { color: var(--mtc-plate-ink) !important; }
+
+  /* ---- STRIPE / CREDIT CARD CONTAINER ---- */
+  .ccFormContainer {
+    background: var(--mtc-of-panel) !important;
+    border-radius: var(--mtc-r-md) !important;
+  }
+  .StripeElement {
+    background: #ffffff !important;
+    border: 2px solid #cbc6ba !important;
+    border-radius: var(--mtc-r-input) !important;
+  }
+  .StripeElement--focus {
+    border-color: var(--mtc-focus-border) !important;
+    box-shadow: 0 0 0 4px var(--mtc-focus-glow) !important;
+  }
+
+  /* ---- BUTTONS -- Step 1 / Continue = the style's secondary button;
+     Step 2 / Submit = the page's primary CTA red. Min 68px. ---- */
+  .elButton,
+  .elButtonStep1,
+  .order2stepbutton .elButton,
+  a.elButton {
+    background: var(--mtc-btn1-bg) !important;
+    border: 0 !important;
+    border-bottom: 6px solid var(--mtc-btn1-edge) !important;
+    border-radius: var(--mtc-r-sm) !important;
+    color: var(--mtc-btn1-ink) !important;
+    text-decoration: none !important;
+    font-family: var(--mtc-display) !important;
+    font-weight: var(--mtc-display-weight) !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-size: clamp(24px, 2.8vw, 30px) !important;
+    line-height: 1.2 !important;
+    min-height: 68px !important;
+    box-shadow: var(--mtc-shadow) !important;
+    transition: filter .18s ease, transform .18s ease !important;
+    cursor: pointer !important;
+  }
+  .elButton *, a.elButton * { color: inherit !important; }
+  /* CTA label centering (v4). CF renders .elButtonMain + an EMPTY .elButtonSub
+     span after it; that blank line (and CF's uneven size/padding classes) left
+     "GO TO STEP #2" / "COMPLETE ORDER" sitting high. Center the label in the
+     step buttons (both carry .elButtonStep1, always full-width) and drop the
+     empty sub line. Scoped to the form's buttons -- page CTAs are untouched. */
+  .elButtonStep1,
+  .order2stepbutton .elButton,
+  .order2stepbuttonOrder .elButton {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+  }
+  .elButtonStep1 .elButtonMain,
+  .order2stepbutton .elButton .elButtonMain,
+  .order2stepbuttonOrder .elButton .elButtonMain {
+    display: block !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .elButton .elButtonSub:empty { display: none !important; }
+  .elButton:hover,
+  .elButtonStep1:hover,
+  .order2stepbutton .elButton:hover,
+  a.elButton:hover {
+    filter: brightness(1.08) !important;
+    transform: translateY(-2px) !important;
+  }
+  .elButton:active,
+  .elButtonStep1:active,
+  .order2stepbutton .elButton:active,
+  a.elButton:active { transform: translateY(0) !important; }
+  .elButton:focus-visible,
+  a.elButton:focus-visible {
+    outline: 4px solid var(--mtc-cta-bg) !important;
+    outline-offset: 3px !important;
+  }
+  .order2stepbuttonOrder .elButton {
+    background: var(--mtc-cta-bg) !important;
+    border-bottom: 6px solid var(--mtc-cta-edge) !important;
+    color: var(--mtc-cta-ink) !important;
+  }
+  .order2stepbuttonOrder .elButton:hover {
+    background: var(--mtc-accent-ink) !important;
+    color: var(--mtc-cta-ink) !important;
+    filter: none !important;
+  }
+  .order2ButtonSubText,
+  .order2ButtonSubText2 {
+    color: var(--mtc-ink-soft) !important;
+    font-family: var(--mtc-sans) !important;
+    font-size: 17px !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    text-align: center !important;
+  }
+  .goBacktoStepOneOrderBump,
+  .goBacktoStepOneOrderBump span {
+    color: var(--mtc-accent-ink) !important;
+    font-size: 18px !important;
+    text-decoration: underline !important;
+  }
+
+  /* ---- ORDER SUMMARY -- appearance only. MTC_FooterCode core (Order Form Builder core v3) section 2
+     renders the lines + total from #cfAR; this only styles them. ---- */
+  [data-title="cf-order-summary"] {
+    background: #ffffff !important;
+    border: 2px solid var(--mtc-of-line) !important;
+    border-radius: var(--mtc-r-md) !important;
+  }
+  [data-title="cf-order-summary"] .product-name,
+  [data-title="cf-order-summary"] .elOrderProductOptinProductName {
+    color: var(--mtc-ink) !important;
+    font-size: 18px !important;
+  }
+  [data-title="cf-order-summary"] .product-price,
+  [data-title="cf-order-summary"] .elOrderProductOptinPrice,
+  [data-title="cf-order-summary"] .elOrderProductOptinLabelPrice {
+    color: var(--mtc-accent-ink) !important;
+    font-family: var(--mtc-display) !important;
+    font-size: 18px !important;
+  }
+  [data-title="cf-order-summary"] .cf-order-total-row .product-name,
+  [data-title="cf-order-summary"] .ofc-sum-total .product-name { font-weight: 700 !important; }
+  [data-title="cf-order-summary"] .ofc-sum-total { border-top: 2px solid var(--mtc-of-line) !important; }
+  .elOrderProductOptions.ofc-summary .elOrderProductOptinProducts {
+    cursor: default !important;
+    border-left: 2px solid var(--mtc-of-line) !important;
+    background: #ffffff !important;
+    box-shadow: none !important;
+  }
+  .elOrderProductOptions.ofc-summary .product-name { color: var(--mtc-ink) !important; font-size: 18px !important; font-weight: 400 !important; }
+  .elOrderProductOptions.ofc-summary .product-price {
+    color: var(--mtc-accent-ink) !important;
+    font-family: var(--mtc-display) !important;
+    font-size: 18px !important;
+  }
+  .elOrderProductOptions.ofc-summary .ofc-sum-total { border-top: 2px solid var(--mtc-of-line) !important; }
+  .elOrderProductOptions.ofc-summary .ofc-sum-total .product-name,
+  .elOrderProductOptions.ofc-summary .ofc-sum-total .product-price { font-size: 22px !important; font-weight: 700 !important; }
+  /* Summary rows, v4. The row-spacing rule pads only the NAME cell; here the
+     price is a sibling cell, so it sat flush against the right border. Pad
+     it to match, and keep it on the name's line (summary prices are short):
+     the name drops the tier rows' 18ch floor and shrinks instead. */
+  .elOrderProductOptions.ofc-summary .elOrderProductOptinProducts { flex-wrap: nowrap !important; }
+  .elOrderProductOptions.ofc-summary .elOrderProductOptinProducts > .product-name {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+  }
+  .elOrderProductOptions.ofc-summary .elOrderProductOptinProducts > .product-price {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+    padding: 12px 16px 12px 8px !important;
+  }
+  /* ...and inset the heading to the same columns: row border 2px + cell
+     padding (name 14px left, price 16px right). */
+  .elOrderProductOptions.ofc-summary .elOrderProductOptinLabel {
+    padding: 0 18px 8px 16px !important;
+  }
+  /* Summary heading ("Item" / "amount"), v4. Live, the header row rendered
+     reversed ("amountItem", both at the left) although the DOM is Item then
+     amount -- a CF 2-step rule reorders the flex row. Pin direction + order:
+     Item left, amount pushed to the right edge. */
+  .elOrderProductOptions .elOrderProductOptinLabel {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    direction: ltr !important;
+    flex-wrap: nowrap !important;   /* two one-word labels: never wrap "amount" under "Item" */
+  }
+  .elOrderProductOptions .elOrderProductOptinLabel > .elOrderProductOptinItem {
+    order: 1 !important;
+    min-width: 0 !important;        /* the tier rows' 18ch floor pushed "amount" to a 2nd line at 390px */
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinLabel > .elOrderProductOptinLabelPrice {
+    order: 2 !important;
+    margin-left: auto !important;
+    text-align: right !important;
+  }
+  [data-title="cf-order-summary"] .cf-order-total-row .product-price,
+  [data-title="cf-order-summary"] .ofc-sum-total .product-price {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+  }
+
+
+  /* =========================================================================
+     MTC ADDITIONS (shared) -- hero photo, clip / photo boxes, tool diagram
+     ========================================================================= */
+  /* Motion = self-playing animated WebP loops from the team's own footage (no
+     play button, no controls); each <picture> swaps in a real still
+     (mtc-still-00N.jpg, a frame of that same clip) under
+     prefers-reduced-motion, since an animated image cannot be paused. Boxes
+     are reserved by aspect-ratio so nothing shifts while they load.
+     Hero: mtc-hero-001.jpg, 1600x900 -- the team's photo pr-photo-7218
+     (card sliding out of its sleeve), the same 16:9 at every width.
+     Feature cards: square crops of the hand-held clips (the card stays
+     centered). Real-photo grid: 4:5 crops. */
+  .mtc-sec img.mtc-hero-img { aspect-ratio: 16 / 9 !important; object-position: 50% 50% !important; }
+  .mtc-hero-art.mtc-hero-wide { max-width: 980px !important; }
+  .mtc-sec img.mtc-real { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .mtc-card .mtc-frame { margin: 0 !important; }
+  /* The supplier's labeled tool diagram (pr-photo-5060, 425x702, white
+     background): shown whole, never cropped, on white so its labels read in
+     both cells. */
+  .mtc-sec img.mtc-diagram {
+    aspect-ratio: 425 / 702 !important;
+    object-fit: contain !important;
+    background: #ffffff !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+    padding: 10px !important;
+  }
+  /* The 11 tools: two columns of the card list's check rows, one on phones. */
+  .mtc-sec ul.mtc-tools-list {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    column-gap: 24px !important;
+    row-gap: 8px !important;
+    margin-top: 20px !important;
+  }
+  @media (max-width: 480px) {
+    .mtc-sec ul.mtc-tools-list { grid-template-columns: 1fr !important; }
+  }
+
+  /* ---- ORDER-FORM ROW SPACING (from Gold Duo v3, live-checked 2026-10-06) ----
+     The price-column fix above zeroes the tier ROW's padding/margin (needed
+     so the flex row lays out), which left the radio touching the
+     left border and the price touching the right one. Pad the CELL inside
+     the row instead -- the row's own box model is untouched. Covers both the
+     2-step div cells and 1-step table cells. */
+  .elOrderProductOptions .elOrderProductOptinProducts > .elOrderProductOptinProductName,
+  .elOrderProductOptions .elOrderProductOptinProducts > .elOrderProductOptinTableProductName,
+  .elOrderProductOptions .elOrderProductOptinProducts > td {
+    padding: 12px 16px 12px 14px !important;
+  }
+  .elOrderProductOptions .elOrderProductOptinProducts > td + td { padding-left: 0 !important; }
+  .elOrderProductOptions .elOrderProductOptinProductName:not(.product-name) > .elOrderProductOptinPrice { padding-right: 2px !important; }
+
+
+  /* ---- TIER TABLE (both cells; from PCB v2, Keith 2026-10-20 "please fix layout") ----
+     This step's 2-Step form lists its tiers in a <table> (tr / th / td), not
+     the <div> rows the inherited rules were written for. Without this, the
+     intro <th> (70% wide, floated) overflows UP over the "Edit Shipping
+     Details" line, a lone "Price" <th> sits beside it, and each tier's price
+     is stranded bottom-right under its name. Now: the intro runs full width
+     in 16px soft text, the "Price" heading goes, and each tier reads as two
+     lines -- name (18px bold) over price (17px, accent red) on the name's
+     left edge. Measured on Paracord's live step (the clone source) at 390 /
+     768 / 1280. Appearance + the cells' inner flow only; the row's display is
+     left to the shared rules, so product-row-hider.js still hides the bump
+     rows. */
+  .elOrderProductOptions tr.elOrderProductOptinLabel {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: flex-start !important;
+    margin: 0 0 12px 0 !important;
+    height: auto !important;
+  }
+  .elOrderProductOptions tr.elOrderProductOptinLabel > th.elOrderProductOptinItem {
+    float: none !important;
+    width: auto !important;
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    color: var(--mtc-ink-soft) !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+    white-space: normal !important;
+  }
+  .elOrderProductOptions tr.elOrderProductOptinLabel > th.elOrderProductOptinLabelPrice { display: none !important; }
+  .elOrderProductOptions tr.elOrderProductOptinProducts { margin: 0 0 10px 0 !important; }
+  .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinTableProductName {
+    float: none !important;
+    width: auto !important;
+    flex: 1 1 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    column-gap: 12px !important;
+    padding: 14px 16px 2px 14px !important;
+  }
+  .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinTableProductName > input { margin: 0 !important; float: none !important; flex: 0 0 auto !important; }
+  .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinTableProductName > label {
+    float: none !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    padding-left: 0 !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    letter-spacing: 0 !important;
+    color: var(--mtc-ink) !important;
+  }
+  .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinPrice {
+    float: none !important;
+    order: 2 !important;
+    width: auto !important;
+    flex: 1 1 100% !important;
+    margin: 0 !important;
+    padding: 0 16px 14px 38px !important;   /* measured live: lines the price up under the name text */
+    text-align: left !important;
+    white-space: normal !important;
+    font-family: var(--mtc-sans) !important;
+    font-weight: 700 !important;
+    font-size: 17px !important;
+    line-height: 1.3 !important;
+    color: var(--mtc-accent-ink) !important;
+  }
+  .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinTableProductName span.ofc-best-head {
+    font-size: 13px !important;
+    padding: 4px 10px !important;
+    margin: 0 0 6px 0 !important;
+    letter-spacing: 0.08em !important;
+    line-height: 1.3 !important;
+  }
+  @media (max-width: 480px) {
+    .elOrderProductOptions tr.elOrderProductOptinProducts > td.elOrderProductOptinPrice { font-size: 16px !important; }
+  }
+
+  /* ====  END SHARED RULES  ==================================================== */
+
+  /* ==== VARIANT B RULES -- CINEMATIC =======================================
+     Everything below is the cinematic cell's own page system (.mtc-cine-*).
+     The tokens, shared page rules and ORDER FORM rules above are the
+     control's, byte for byte, so the order form looks the same in both cells.
+     STATIC FIRST: every rule here renders a complete page with no script.
+     The payload only adds .mtc-cine-wait (hero lines hidden for their
+     entrance), .mtc-cine-on and .mtc-cine-anat-on (pinned camera stage); if
+     GSAP never loads, those classes never stay, so nothing stays hidden. */
+
+  .mtc-cine { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+  .mtc-cine .mtc-sec.mtc-dark { background: #07090b !important; }
+
+  /* ---- ACT 1: full-screen hero ---- */
+  .mtc-sec.mtc-cine-hero {
+    min-height: 100vh !important;
+    min-height: 100svh !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    background: #07090b !important;
+  }
+  .mtc-cine-hero-media { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .mtc-sec img.mtc-cine-hero-img {
+    width: 100% !important; height: 100% !important; max-width: none !important;
+    object-fit: cover !important; object-position: 56% 56% !important;
+    will-change: transform;
+  }
+  .mtc-cine-hero-shade {
+    position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: linear-gradient(90deg, rgba(7,9,11,0.94) 0%, rgba(7,9,11,0.72) 34%, rgba(7,9,11,0.08) 66%),
+                linear-gradient(0deg, rgba(7,9,11,0.88) 0%, rgba(7,9,11,0) 38%) !important;
+  }
+  .mtc-cine-hero-copy {
+    position: relative !important; z-index: 2 !important;
+    display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+    gap: clamp(16px, 2.4vw, 24px) !important;
+    width: 100% !important; max-width: 680px !important;
+    padding: clamp(90px, 14vh, 140px) clamp(20px, 5vw, 72px) clamp(84px, 12vh, 120px) clamp(20px, 5vw, 72px) !important;
+    text-align: left !important;
+  }
+  /* Desktop: the photo fills the right ~70% so the headline never sits on the card. */
+  @media (min-width: 900px) {
+    .mtc-cine-hero-media { left: 30% !important; }
+    .mtc-cine-hero-shade { background: linear-gradient(90deg, #07090b 0%, #07090b 30%, rgba(7,9,11,0.55) 42%, rgba(7,9,11,0) 60%),
+                                       linear-gradient(0deg, rgba(7,9,11,0.7) 0%, rgba(7,9,11,0) 30%) !important; }
+    .mtc-sec img.mtc-cine-hero-img { object-position: 60% 52% !important; }
+  }
+  .mtc-cine-h1.mtc-h1 { font-size: clamp(40px, 5.2vw, 76px) !important; line-height: 1.02 !important; color: #ffffff !important; letter-spacing: -0.02em !important; }
+  .mtc-cine-line { display: block !important; overflow: hidden !important; padding-bottom: 0.06em !important; }
+  .mtc-cine-line-in { display: block !important; }
+  .mtc-sec p.mtc-cine-hero-sub {
+    font-size: clamp(19px, 1.6vw, 21px) !important; line-height: 1.7 !important;
+    color: #dfe4ea !important; max-width: 52ch !important; margin: 0 !important;
+  }
+  .mtc-cine-hero-cta { width: 100% !important; max-width: 480px !important; }
+  .mtc-cine-hero-cta .mtc-cta { width: 100% !important; }
+  .mtc-cine-cue {
+    position: absolute !important; z-index: 2 !important; left: 50% !important; bottom: 18px !important;
+    transform: translateX(-50%) !important;
+    display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important;
+    font-family: var(--mtc-sans) !important; font-size: 14px !important; font-weight: 700 !important;
+    letter-spacing: 0.14em !important; text-transform: uppercase !important; color: #c9d0d8 !important;
+  }
+  .mtc-cine-cue i {
+    display: block !important; width: 14px !important; height: 14px !important;
+    border-right: 2px solid #f5a524 !important; border-bottom: 2px solid #f5a524 !important;
+    transform: rotate(45deg) !important; animation: mtcCue 1.6s ease-in-out infinite !important;
+  }
+  @keyframes mtcCue { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 1; } 50% { transform: translateY(7px) rotate(45deg); opacity: .55; } }
+  .mtc-cine-wait [data-fx="line"], .mtc-cine-wait [data-fx="hero"] { visibility: hidden !important; }
+
+  /* ---- ACT 2: anatomy. Static = photo + the beats as a numbered grid. ---- */
+  .mtc-sec.mtc-cine-anat { padding: 0 0 clamp(40px, 6vw, 72px) 0 !important; background: #07090b !important; }
+  /* NOT !important on position/width: ScrollTrigger's pin writes position:fixed + a px width
+     inline while the stage is pinned, and an !important rule here would cancel the pin. */
+  .mtc-cine-stage { position: relative; width: 100%; }
+  .mtc-cine-cam { position: relative !important; width: 100% !important; overflow: hidden !important; }
+  .mtc-sec img.mtc-cine-cam-img { width: 100% !important; height: auto !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 57% 43% !important; }
+  .mtc-cine-reticle, .mtc-cine-vignette, .mtc-cine-count, .mtc-cine-bar { display: none !important; }
+  .mtc-cine-panel { max-width: 1180px !important; margin: 0 auto !important; padding: clamp(28px, 4vw, 48px) clamp(18px, 4vw, 40px) 0 !important; }
+  .mtc-sec p.mtc-cine-kicker { color: #f5a524 !important; }
+  .mtc-cine-beats {
+    list-style: none !important; margin: 0 !important; padding: 0 !important; counter-reset: beat !important;
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(18px, 2.6vw, 30px) !important;
+  }
+  .mtc-cine-beat { counter-increment: beat !important; padding-left: 52px !important; position: relative !important; }
+  .mtc-cine-beat::before {
+    content: counter(beat, decimal-leading-zero) !important; position: absolute !important; left: 0 !important; top: 2px !important;
+    font-family: var(--mtc-display) !important; font-weight: 900 !important; font-size: 26px !important; color: #f5a524 !important;
+  }
+  .mtc-cine-beat-h { font-family: var(--mtc-display) !important; font-weight: 900 !important; font-size: clamp(22px, 2.4vw, 28px) !important; line-height: 1.2 !important; color: #ffffff !important; margin: 0 0 6px 0 !important; }
+  .mtc-cine-beat p { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #c9d0d8 !important; margin: 0 !important; }
+
+  /* Pinned camera stage (the payload adds .mtc-cine-anat-on) */
+  .mtc-cine-anat-on .mtc-sec.mtc-cine-anat { padding: 0 !important; }
+  .mtc-cine-anat-on .mtc-cine-stage { height: 100vh !important; height: 100svh !important; overflow: hidden !important; background: #07090b !important; }
+  .mtc-cine-anat-on .mtc-cine-cam { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; }
+  .mtc-cine-anat-on .mtc-sec img.mtc-cine-cam-img,
+  .mtc-cine-anat-on img.mtc-cine-cam-img {
+    position: absolute !important; top: 0 !important; left: 0 !important;
+    width: var(--mtc-cam-w, 100%) !important; height: var(--mtc-cam-h, auto) !important;   /* set by the payload */
+    max-width: none !important; aspect-ratio: auto !important; object-fit: fill !important;
+    will-change: transform;
+  }
+  .mtc-cine-anat-on .mtc-cine-count { opacity: 0; }   /* the payload fades it in at the first tool */
+  .mtc-cine-anat-on .mtc-cine-vignette {
+    display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; pointer-events: none !important;
+    background: radial-gradient(ellipse at 66% 50%, rgba(7,9,11,0) 30%, rgba(7,9,11,0.55) 75%, rgba(7,9,11,0.85) 100%) !important;
+  }
+  .mtc-cine-anat-on .mtc-cine-reticle {
+    display: block !important; position: absolute !important; z-index: 2 !important;
+    left: 66% !important; top: 50% !important; width: 132px !important; height: 132px !important;
+    margin: -66px 0 0 -66px !important; border-radius: 50% !important;
+    border: 2px solid #f5a524 !important; box-shadow: 0 0 0 6px rgba(245,165,36,0.18), 0 0 30px rgba(245,165,36,0.35) !important;
+    pointer-events: none !important;
+  }
+  .mtc-cine-anat-on .mtc-cine-panel {
+    position: absolute !important; z-index: 3 !important; top: 0 !important; bottom: 0 !important; left: 0 !important;
+    width: min(46%, 560px) !important; max-width: none !important; margin: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: center !important;
+    padding: 0 clamp(24px, 3vw, 48px) 0 clamp(24px, 5vw, 72px) !important;
+    background: linear-gradient(90deg, rgba(7,9,11,0.95) 0%, rgba(7,9,11,0.82) 62%, rgba(7,9,11,0) 100%) !important;
+  }
+  .mtc-cine-anat-on .mtc-cine-count { display: flex !important; align-items: baseline !important; gap: 10px !important; margin: 0 0 18px 0 !important; }
+  .mtc-cine-count b { font-family: var(--mtc-display) !important; font-weight: 900 !important; font-size: clamp(56px, 6vw, 84px) !important; line-height: 1 !important; color: #f5a524 !important; min-width: 1.3em !important; }
+  .mtc-cine-count span { font-family: var(--mtc-sans) !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: #c9d0d8 !important; }
+  .mtc-cine-anat-on .mtc-cine-beats { display: block !important; position: relative !important; min-height: 230px !important; }
+  .mtc-cine-anat-on .mtc-cine-beat { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; padding-left: 0 !important; }
+  .mtc-cine-anat-on .mtc-cine-beat::before { display: none !important; }
+  .mtc-cine-anat-on .mtc-cine-beat-h { font-size: clamp(30px, 3.4vw, 46px) !important; margin-bottom: 12px !important; }
+  .mtc-cine-anat-on .mtc-cine-beat p { font-size: clamp(18px, 1.6vw, 21px) !important; color: #dfe4ea !important; }
+  .mtc-cine-anat-on .mtc-cine-bar { display: block !important; height: 3px !important; background: rgba(255,255,255,0.14) !important; margin-top: 26px !important; max-width: 320px !important; }
+  .mtc-cine-bar i { display: block !important; height: 100% !important; background: #f5a524 !important; transform: scaleX(0); transform-origin: 0 50% !important; }
+
+  /* ---- ACT 3: real clips ---- */
+  .mtc-sec.mtc-cine-reel { padding: clamp(56px, 8vw, 100px) 0 !important; }
+  .mtc-cine-reel-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(18px, 2.6vw, 32px) !important; }
+  .mtc-sec figure.mtc-cine-clip { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 14px !important; }
+  .mtc-cine-clip img {
+    width: 100% !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 50% 50% !important;
+    border-radius: var(--mtc-r-lg) !important; background: #1b2026 !important; box-shadow: 0 18px 40px rgba(0,0,0,0.5) !important;
+  }
+  .mtc-cine-clip-tall img { aspect-ratio: 4 / 5 !important; max-width: 440px !important; margin: 0 auto !important; }
+  .mtc-sec .mtc-cine-clip figcaption { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #c9d0d8 !important; }
+  .mtc-cine-clip figcaption b { color: #ffffff !important; }
+
+  /* ---- ACT 4: value ---- */
+  .mtc-sec.mtc-cine-value { padding: clamp(64px, 9vw, 120px) 0 !important; }
+  .mtc-cine-price { display: flex !important; align-items: center !important; justify-content: center !important; flex-wrap: wrap !important; gap: 10px clamp(24px, 4vw, 56px) !important; margin: 18px 0 26px 0 !important; }
+  .mtc-cine-was { position: relative !important; display: inline-block !important; font-family: var(--mtc-display) !important; font-weight: 900 !important; font-size: clamp(72px, 11vw, 150px) !important; line-height: 1 !important; color: #6f7883 !important; }
+  .mtc-cine-was i { position: absolute !important; left: -6% !important; right: -6% !important; top: 50% !important; height: clamp(6px, 0.8vw, 11px) !important; margin-top: -4px !important; background: #c3201a !important; border-radius: 4px !important; transform: rotate(-9deg); transform-origin: 0 50% !important; }
+  .mtc-cine-free { display: inline-block !important; font-family: var(--mtc-display) !important; font-weight: 900 !important; font-size: clamp(76px, 12vw, 164px) !important; line-height: 1 !important; color: #f5a524 !important; text-shadow: 0 0 40px rgba(245,165,36,0.35) !important; }
+
+  /* ---- ACT 5 / 8: full-bleed photos with parallax ---- */
+  .mtc-sec.mtc-cine-bleed { min-height: 82vh !important; min-height: 82svh !important; padding: clamp(70px, 10vw, 120px) 0 !important; display: flex !important; align-items: center !important; background: #07090b !important; }
+  .mtc-cine-bleed-media { position: absolute !important; top: -10% !important; bottom: -10% !important; left: 0 !important; right: 0 !important; }
+  .mtc-cine-bleed-media img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: 50% 50% !important; will-change: transform; }
+  .mtc-cine-bleed-shade { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; background: linear-gradient(90deg, rgba(7,9,11,0.92) 0%, rgba(7,9,11,0.7) 45%, rgba(7,9,11,0.2) 80%) !important; }
+  .mtc-cine-final .mtc-cine-bleed-shade { background: radial-gradient(ellipse at 50% 55%, rgba(7,9,11,0.62) 0%, rgba(7,9,11,0.9) 70%) !important; }
+  .mtc-cine-bleed-copy { position: relative !important; z-index: 2 !important; }
+  /* Warehouse: the card is left of center in 7217, so the copy sits on the right. */
+  @media (min-width: 900px) {
+    .mtc-cine-bleed-r .mtc-cine-bleed-shade { background: linear-gradient(270deg, rgba(7,9,11,0.94) 0%, rgba(7,9,11,0.72) 40%, rgba(7,9,11,0.1) 72%) !important; }
+    .mtc-cine-bleed-r .mtc-cine-bleed-copy { display: flex !important; flex-direction: column !important; align-items: flex-end !important; }
+    .mtc-cine-bleed-r .mtc-cine-bleed-copy > * { width: 100% !important; max-width: 470px !important; }
+    /* a full-width photo can't slide with object-position, so widen its box past the left edge:
+       the card (x ~0.45 of 7217) lands near 35% of the screen, clear of the copy */
+    .mtc-cine-bleed-r .mtc-cine-bleed-media { left: -20% !important; }
+  }
+  .mtc-cine-value .mtc-cine-hero-cta { margin-left: auto !important; margin-right: auto !important; }
+  .mtc-cine-bleed-copy > .mtc-h2, .mtc-cine-bleed-copy > p.mtc-copy, .mtc-cine-bleed-copy > p.mtc-kicker { max-width: 600px !important; }
+  .mtc-cine-final .mtc-cine-bleed-copy > p.mtc-copy { max-width: 62ch !important; }
+  .mtc-cine-final .mtc-cine-line { text-align: center !important; }
+
+  /* ---- Floating CTA (moved to <body> by the payload; scoped by its own class) ---- */
+  .mtc-cine-fbar {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; z-index: 99990 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important; gap: 16px !important;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    background: rgba(9,11,14,0.96) !important; border-top: 2px solid #f5a524 !important;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.45) !important;
+    transform: translateY(110%) !important; transition: transform .35s ease !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    box-sizing: border-box !important;
+  }
+  .mtc-cine-fbar.mtc-cine-fbar-on { transform: translateY(0) !important; }
+  .mtc-cine-fbar-txt { font-size: 17px !important; line-height: 1.3 !important; color: #dfe4ea !important; }
+  .mtc-cine-fbar-txt b { color: #ffffff !important; }
+  a.mtc-cine-fbar-btn {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-height: 50px !important; padding: 0 26px !important; border-radius: 8px !important;
+    background: #c3201a !important; border-bottom: 4px solid #74110d !important; color: #ffffff !important;
+    font-size: 19px !important; font-weight: 900 !important; text-decoration: none !important; white-space: nowrap !important;
+  }
+  @media (prefers-reduced-motion: reduce) { .mtc-cine-fbar { transition: none !important; } }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 899px) {
+    /* Phone: the photo owns the top of the screen (card fully in view), the copy sits below it. */
+    .mtc-cine-hero-media { bottom: auto !important; height: 64vh !important; height: 64svh !important; }
+    .mtc-cine-hero-shade { background: linear-gradient(0deg, #07090b 0%, #07090b calc(100% - 64svh), rgba(7,9,11,0.55) calc(100% - 56svh), rgba(7,9,11,0) calc(100% - 40svh)) !important; }
+    .mtc-sec img.mtc-cine-hero-img { object-position: 60% 56% !important; }
+    .mtc-cine-hero-copy { padding-top: 54vh !important; padding-top: 54svh !important; }
+    .mtc-cine-anat-on .mtc-cine-panel {
+      top: auto !important; bottom: 0 !important; right: 0 !important; width: 100% !important; justify-content: flex-end !important;
+      padding: 60px 18px 26px 18px !important;
+      background: linear-gradient(0deg, rgba(7,9,11,0.97) 0%, rgba(7,9,11,0.9) 62%, rgba(7,9,11,0) 100%) !important;
+    }
+    .mtc-cine-anat-on .mtc-cine-reticle { left: 50% !important; top: 36% !important; width: 104px !important; height: 104px !important; margin: -52px 0 0 -52px !important; }
+    .mtc-cine-anat-on .mtc-cine-vignette { background: radial-gradient(ellipse at 50% 36%, rgba(7,9,11,0) 26%, rgba(7,9,11,0.6) 80%) !important; }
+    .mtc-cine-anat-on .mtc-cine-count { margin-bottom: 8px !important; }
+    .mtc-cine-count b { font-size: 48px !important; }
+    .mtc-cine-anat-on .mtc-cine-beats { min-height: 190px !important; }
+    .mtc-cine-anat-on .mtc-cine-beat-h { font-size: 28px !important; margin-bottom: 8px !important; }
+    .mtc-cine-anat-on .mtc-cine-bar { margin-top: 14px !important; max-width: none !important; }
+    .mtc-cine-bleed-shade { background: linear-gradient(0deg, rgba(7,9,11,0.95) 0%, rgba(7,9,11,0.82) 38%, rgba(7,9,11,0.2) 70%, rgba(7,9,11,0.05) 100%) !important; }
+    .mtc-sec.mtc-cine-bleed { align-items: flex-end !important; }
+  }
+  @media (max-width: 768px) {
+    .mtc-cine-beats, .mtc-cine-reel-grid { grid-template-columns: 1fr !important; }
+    .mtc-cine-fbar-txt { display: none !important; }
+    a.mtc-cine-fbar-btn { width: 100% !important; }
+  }
+</style>
+<!-- ======================= CINEMATIC ROOT (one per page; multi-instance safe) ======================= -->
+<div class="mtc-cine" data-mtc-cine>
+
+<!-- ======================= TRUST BAR ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-tagbar">
+  <div class="mtc-tagbar-inner">
+    <span class="mtc-tagbar-item">Free + Shipping</span>
+    <span class="mtc-tagbar-item">Ships Within The USA</span>
+    <span class="mtc-tagbar-item">30-Day Money Back</span>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 1 -- FULL-SCREEN HERO ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-hero" data-cine-hero>
+  <div class="mtc-cine-hero-media">
+    <img class="mtc-cine-hero-img" data-cine-hero-img
+         src="https://mtp-images.com/pr-photo-7221.webp"
+         width="3523" height="3523" loading="eager" decoding="async"
+         alt="A hand holding the stainless steel 11-in-1 multi tool card half out of its black sleeve against green trees">
+  </div>
+  <div class="mtc-cine-hero-shade"></div>
+  <div class="mtc-cine-hero-copy">
+    <span class="mtc-badge" data-fx="hero">Free + Shipping</span>
+    <h1 class="mtc-h1 mtc-cine-h1">
+      <span class="mtc-cine-line"><span class="mtc-cine-line-in" data-fx="line">Eleven tools.</span></span>
+      <span class="mtc-cine-line"><span class="mtc-cine-line-in" data-fx="line">One steel card.</span></span>
+      <span class="mtc-cine-line"><span class="mtc-cine-line-in mtc-hi-txt" data-fx="line">Yours free today.</span></span>
+    </h1>
+    <p class="mtc-cine-hero-sub" data-fx="hero">
+      A saw blade, openers, wrenches, a screwdriver and a ruler, cut into one
+      stainless steel card the size of a credit card. It rides in your wallet,
+      so it's there when you need it. A $19 retail value. Free today -- you
+      only cover the shipping.
+    </p>
+    <div class="mtc-cine-hero-cta" data-fx="hero">
+      <a class="mtc-cta" href="#" data-cine-cta
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="mtc-cta-main">Claim My Free Tool Card</span>
+        <span class="mtc-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+  <div class="mtc-cine-cue" aria-hidden="true"><span>Scroll to see all 11</span><i></i></div>
+</section>
+
+
+<!-- ======================= ACT 2 -- ANATOMY (pinned camera over the real photo) =======================
+     Static / no-JS / reduced motion: the photo, then the six beats as a numbered list.
+     With JS: the stage pins, the camera moves to each beat's focal point (data-fx/fy = the
+     point on pr-photo-7218, 0..1) and that beat's caption plays. -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-anat" data-cine-anat>
+  <div class="mtc-cine-stage" data-cine-stage>
+    <div class="mtc-cine-cam" data-cine-cam>
+      <img class="mtc-cine-cam-img" data-cine-cam-img
+           src="https://mtp-images.com/pr-photo-7218.webp"
+           width="5712" height="3213" loading="lazy" decoding="async"
+           alt="Close-up of the 11-in-1 multi tool card held in two hands: saw teeth down the left side, a large bottle opener cutout at the top, wrench cutouts in the middle, a ruler along the right edge and a direction indicator at the bottom">
+    </div>
+    <div class="mtc-cine-reticle" data-cine-reticle aria-hidden="true"></div>
+    <div class="mtc-cine-vignette" aria-hidden="true"></div>
+
+    <div class="mtc-cine-panel">
+      <p class="mtc-kicker mtc-cine-kicker">Every Tool, Up Close</p>
+      <div class="mtc-cine-count" aria-hidden="true"><b data-cine-count>11</b><span>of 11 tools</span></div>
+      <ol class="mtc-cine-beats" data-cine-beats>
+        <li class="mtc-cine-beat" data-fx="0.507" data-fy="0.470" data-z="2.3" data-n="1">
+          <h3 class="mtc-cine-beat-h">Saw Blade</h3>
+          <p>Serrated teeth down one full side. Saws through cord, twine and packing tape when there's no blade handy.</p>
+        </li>
+        <li class="mtc-cine-beat" data-fx="0.598" data-fy="0.292" data-z="2.2" data-n="2">
+          <h3 class="mtc-cine-beat-h">Bottle Opener</h3>
+          <p>The big cutout up top pops a cap at the cooler, the campsite or the tailgate.</p>
+        </li>
+        <li class="mtc-cine-beat" data-fx="0.536" data-fy="0.262" data-z="2.6" data-n="4">
+          <h3 class="mtc-cine-beat-h">Knife Edge &amp; Can Opener</h3>
+          <p>A hooked corner and a sharpened edge for opening cans and slicing open packages.</p>
+        </li>
+        <li class="mtc-cine-beat" data-fx="0.572" data-fy="0.432" data-z="1.6" data-n="7">
+          <h3 class="mtc-cine-beat-h">Three Wrenches</h3>
+          <p>A 4-position wrench, a butterfly wrench and a small hex wrench for the nuts and bolts that work loose.</p>
+        </li>
+        <li class="mtc-cine-beat" data-fx="0.646" data-fy="0.360" data-z="2.2" data-n="9">
+          <h3 class="mtc-cine-beat-h">Ruler &amp; Screwdriver</h3>
+          <p>A ruler etched down the edge and a flat screwdriver tip at the corner.</p>
+        </li>
+        <li class="mtc-cine-beat" data-fx="0.594" data-fy="0.560" data-z="1.9" data-n="11">
+          <h3 class="mtc-cine-beat-h">Direction Indicator &amp; Key Ring</h3>
+          <p>A basic direction aid on the round cutout, and a key ring hole so it can ride on your keys instead.</p>
+        </li>
+        <li class="mtc-cine-beat" data-final>
+          <h3 class="mtc-cine-beat-h">All 11. One Card.</h3>
+          <p>Flat stainless steel the size of a credit card, in its own sleeve. Free today -- you only cover the shipping.</p>
+        </li>
+      </ol>
+      <div class="mtc-cine-bar" aria-hidden="true"><i data-cine-bar></i></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 3 -- IN HAND (real clips, wipe reveals) ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-reel">
+  <div class="mtc-wrap">
+    <div class="mtc-band-head mtc-center" data-fx="up">
+      <p class="mtc-kicker">Real Card. Real Hands.</p>
+      <h2 class="mtc-h2">Small Enough To Forget. Strong Enough To Count On.</h2>
+    </div>
+    <div class="mtc-cine-reel-grid">
+      <figure class="mtc-cine-clip" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/mtc-still-001.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7948.webp" width="960" height="540" loading="lazy" decoding="async"
+               alt="The stainless steel tool card turned over in an open palm, its saw-tooth edge running down one side">
+        </picture>
+        <figcaption><b>Solid steel.</b> One piece: no hinges, no springs, nothing to rattle loose.</figcaption>
+      </figure>
+      <figure class="mtc-cine-clip" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/mtc-still-002.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7945.webp" width="960" height="540" loading="lazy" decoding="async"
+               alt="The tool card held up outdoors, showing its wrench and bottle opener cutouts">
+        </picture>
+        <figcaption><b>Ready in a second.</b> No unfolding, no fumbling -- just turn it to the tool you need.</figcaption>
+      </figure>
+      <figure class="mtc-cine-clip" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/mtc-still-003.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7946.webp" width="960" height="540" loading="lazy" decoding="async"
+               alt="Hands sliding the tool card into its black protective sleeve">
+        </picture>
+        <figcaption><b>Its own sleeve.</b> Covers the edges, so it rides with your cards and cash without snagging.</figcaption>
+      </figure>
+      <figure class="mtc-cine-clip" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/mtc-still-004.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7947.webp" width="960" height="540" loading="lazy" decoding="async"
+               alt="The tool card pulled from its sleeve between two hands">
+        </picture>
+        <figcaption><b>Credit-card size.</b> Slips into the wallet slot you already have.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 4 -- VALUE (strike, then FREE) ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-value" data-cine-value>
+  <div class="mtc-wrap mtc-center">
+    <p class="mtc-value-label" data-fx="up">Each Tool Card Carries A $19 Retail Value</p>
+    <div class="mtc-cine-price" aria-label="Retails for 19 dollars, yours free today">
+      <span class="mtc-cine-was"><span>$19</span><i data-cine-strike></i></span>
+      <span class="mtc-cine-free" data-cine-free>FREE</span>
+    </div>
+    <p class="mtc-copy mtc-center" data-fx="up" style="margin:0 auto !important;">
+      We cover the card. You cover the shipping. Order more than one and your
+      shipping per card drops -- choose how many on the order form below.
+    </p>
+    <div class="mtc-cine-hero-cta" data-fx="up" style="margin-top:28px !important;">
+      <a class="mtc-cta" href="#"
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="mtc-cta-main">Claim My Free Tool Card</span>
+        <span class="mtc-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 5 -- WAREHOUSE (full-bleed parallax) ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-bleed mtc-cine-bleed-r" data-cine-bleed>
+  <div class="mtc-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pr-photo-7217.webp" width="5712" height="3214" loading="lazy" decoding="async"
+         alt="A tool card held up in our warehouse, shelves of stock behind it">
+  </div>
+  <div class="mtc-cine-bleed-shade"></div>
+  <div class="mtc-wrap mtc-cine-bleed-copy" data-fx="up">
+    <p class="mtc-kicker">Not A Rendering</p>
+    <h2 class="mtc-h2">The Same Card That Ships To You</h2>
+    <p class="mtc-copy">
+      Every photo and clip on this page was shot in our own warehouse and out
+      back -- real cards from the same stock your order is packed from.
+    </p>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 6 -- STOCK UP ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-band">
+  <div class="mtc-wrap">
+    <div class="mtc-guar-grid">
+      <figure class="mtc-cine-clip mtc-cine-clip-tall" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/mtc-still-005.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-101.webp" width="587" height="1080" loading="lazy" decoding="async"
+               alt="The bare stainless steel tool card resting in an open palm outdoors">
+        </picture>
+      </figure>
+      <div data-fx="up">
+        <p class="mtc-kicker">Stock Up</p>
+        <h2 class="mtc-h2">One For Every Wallet, Glove Box And Go-Bag</h2>
+        <p class="mtc-copy" style="margin-top:18px !important;">
+          Keep one in your wallet, one in the truck and one in the tackle box.
+          Hand the rest to the hunters, campers, fishermen and new drivers in
+          your family. It fits in a birthday card.
+        </p>
+        <p class="mtc-copy">The more you order, the less you pay in shipping for each one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 7 -- GUARANTEE ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-band mtc-cine-guar">
+  <div class="mtc-wrap">
+    <div class="mtc-guar-grid">
+      <img class="mtc-guar-fig mtc-frame mtc-shot mtc-shot-square" data-fx="wipe"
+           src="https://mtp-images.com/pr-photo-7222.webp"
+           width="4066" height="4066" loading="lazy" decoding="async"
+           alt="Peeling the protective film off a new tool card beside its black sleeve">
+      <div data-fx="up">
+        <span class="mtc-plate mtc-guar-seal">30-Day Money-Back Guarantee</span>
+        <h2 class="mtc-h2">You Take No Risk</h2>
+        <p class="mtc-copy" style="margin-top:18px !important;">
+          Get the card in your hands first. Peel off the film. Try the opener
+          and the wrench. Slide it into your wallet.
+        </p>
+        <p class="mtc-copy">
+          If you are not happy with it, tell us within 30 days and we will
+          refund you in full. The card itself is free, so the shipping is the
+          only thing you paid, and the only thing there is to refund.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 8 -- FINAL CTA (full-bleed) ======================= -->
+<section class="mtc-sec mtc-breakout mtc-dark mtc-cine-bleed mtc-cine-final" data-cine-bleed>
+  <div class="mtc-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pr-photo-7216.webp" width="4032" height="2268" loading="lazy" decoding="async"
+         alt="The tool card held over an open palm outdoors">
+  </div>
+  <div class="mtc-cine-bleed-shade"></div>
+  <div class="mtc-wrap mtc-center mtc-cine-bleed-copy">
+    <h2 class="mtc-h1">
+      <span class="mtc-cine-line"><span class="mtc-cine-line-in" data-fx="line2">Claim Your Free Tool Card</span></span>
+      <span class="mtc-cine-line"><span class="mtc-cine-line-in mtc-hi-txt" data-fx="line2">While Supplies Last</span></span>
+    </h2>
+    <p class="mtc-copy mtc-center" data-fx="up" style="margin:20px auto 0 auto !important;">
+      A $19 multi tool card, free today. We cover the card. You cover the shipping.
+    </p>
+    <div class="mtc-cta-block" data-fx="up" style="margin-top:30px !important;">
+      <a class="mtc-cta" href="#"
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="mtc-cta-main">Yes, Send My Free Tool Card</span>
+        <span class="mtc-cta-sub">11 tools in your wallet &mdash; just cover the shipping</span>
+      </a>
+      <p class="mtc-cta-note">Secure checkout &middot; Ships within the USA &middot; 30-day money back</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= DISCLAIMER ======================= -->
+<section class="mtc-sec mtc-breakout mtc-fine">
+  <div class="mtc-wrap">
+    <p>
+      The card has sharp edges and a saw blade: handle it with care and keep
+      it away from children. It is a light-duty everyday tool, not a
+      replacement for full-size tools. The direction indicator is a basic
+      aid, not a compass. Because it has a cutting edge, pack it in checked
+      luggage, not a carry-on, when you fly. Ships to U.S. addresses only.
+    </p>
+  </div>
+</section>
+
+
+<!-- ======================= FLOATING CTA (shown by the payload after the hero; hidden over the form) ======================= -->
+<div class="mtc-cine-fbar" data-cine-fbar aria-hidden="true">
+  <span class="mtc-cine-fbar-txt"><b>11 tools. One card.</b> Free today.</span>
+  <a class="mtc-cine-fbar-btn" href="#" tabindex="-1"
+     onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">Claim Mine</a>
+</div>
+
+<img data-mtc-cine-boot alt="" aria-hidden="true" width="1" height="1"
+     style="position:absolute;width:1px;height:1px;opacity:0;border:0;pointer-events:none;"
+     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+     onload="this.onload=this.onerror=null;if(!window.__mtcCineRan&&!window.__mtcCineBoot){window.__mtcCineBoot=1;try{var b=atob(this.getAttribute('data-mtc-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[MTC CINE] boot failed:',e&&e.message);}}"
+     onerror="this.onload=this.onerror=null;if(!window.__mtcCineRan&&!window.__mtcCineBoot){window.__mtcCineBoot=1;try{var b=atob(this.getAttribute('data-mtc-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[MTC CINE] boot failed:',e&&e.message);}}"
+     data-mtc-cine-payload="LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBGSUxFOiBtdGNfY2luZS5wYXlsb2FkLmpzCiAgIFBBVEg6IEZ1bm5lbHMvMTEgaW4gMSBNdWx0aSBUb29sIENhcmQgLSAxMzcxMDU0Ny8xMSBpbiAxIE11bHRpIFRvb2wgQ2FyZCAoRitTKS9fc3JjL210Y19jaW5lLnBheWxvYWQuanMKICAgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogICBSRUFEQUJMRSBTT1VSQ0Ugb2YgdGhlIGNpbmVtYXRpYyBWYXJpYW50IEIncyBzY3JpcHQuIGJ1aWxkX2NpbmVtYXRpYy5weQogICBCYXNlNjQtZW5jb2RlcyBpdCBpbnRvIHRoZSBkYXRhLW10Yy1jaW5lLXBheWxvYWQgYXR0cmlidXRlIG9mIHRoZSBoaWRkZW4KICAgPGltZyBkYXRhLW10Yy1jaW5lLWJvb3Q+IGF0IHRoZSBlbmQgb2YgdGhlIHBhZ2UgKENGIHN0cmlwcyBhbmQgbWFuZ2xlcyBhCiAgIHBhc3RlZCA8c2NyaXB0Pjsgc2VlIERvY3VtZW50YXRpb24vU09QLUNGLUN1c3RvbS1KUy1JbmplY3Rpb24ubWQpLiBFZGl0CiAgIGhlcmUsIHJlLXJ1biBidWlsZF9jaW5lbWF0aWMucHkgLS0gbmV2ZXIgZWRpdCB0aGUgQmFzZTY0LgoKICAgV2hhdCBpdCBkb2VzLCBwZXIgW2RhdGEtbXRjLWNpbmVdIHJvb3QgKG11bHRpLWluc3RhbmNlIHNhZmU7IG5vIGlkcyk6CiAgICAgKiBSZWR1Y2VkIG1vdGlvbiAtPiBub3RoaW5nIGFuaW1hdGVzOyB0aGUgcGFnZSBpcyBhbHJlYWR5IGNvbXBsZXRlLgogICAgICogT3RoZXJ3aXNlIGFkZHMgLm10Yy1jaW5lLXdhaXQgKGhpZGVzIG9ubHkgdGhlIGhlcm8gbGluZXMgZm9yIHRoZWlyCiAgICAgICBlbnRyYW5jZSksIGxvYWRzIEdTQVAgMy4xNC4yICsgU2Nyb2xsVHJpZ2dlciAoanNkZWxpdnIgLT4gY2RuanMgLT4KICAgICAgIHVucGtnKSwgdGhlbiBidWlsZHM6CiAgICAgICAgIEFjdCAxICBoZXJvIGxpbmVzIHJpc2UgaW47IHRoZSBwaG90byBwdXNoZXMgaW4gKyBkYXJrZW5zIG9uIHNjcm9sbAogICAgICAgICBBY3QgMiAgQU5BVE9NWTogcGlucyB0aGUgc3RhZ2UgKHBpblR5cGUgJ2ZpeGVkJyAtLSBDRidzCiAgICAgICAgICAgICAgICBvdmVyZmxvdy1oaWRkZW4gYW5jZXN0b3IgYnJlYWtzIHBvc2l0aW9uOnN0aWNreSksIG1vdmVzIGEKICAgICAgICAgICAgICAgIGNhbWVyYSBvdmVyIHByLXBob3RvLTcyMTggdG8gZWFjaCBiZWF0J3MgZm9jYWwgcG9pbnQKICAgICAgICAgICAgICAgIChkYXRhLWZ4IC8gZGF0YS1meSBvbiB0aGUgcGhvdG8sIDAuLjE7IGRhdGEteiA9IHpvb20gb3ZlcgogICAgICAgICAgICAgICAgdGhlIGNhcmQtZml0IHNjYWxlKSwgc3dhcHMgdGhlIGNhcHRpb24sIHRpY2tzIHRoZSB0b29sCiAgICAgICAgICAgICAgICBjb3VudGVyLCBwdWxzZXMgdGhlIHJldGljbGUKICAgICAgICAgQWN0IDMrIGNsaXAgd2lwZXMsIGxpbmUgcmV2ZWFscywgdGhlICQxOSBzdHJpa2UgLT4gRlJFRSBwdW5jaCwKICAgICAgICAgICAgICAgIHBhcmFsbGF4IG9uIHRoZSBmdWxsLWJsZWVkIHBob3RvcwogICAgICAgYW5kIGEgZmxvYXRpbmcgQ1RBIGJhciAobW92ZWQgdG8gPGJvZHk+IHNvIHBvc2l0aW9uOmZpeGVkIGlzIHRoZQogICAgICAgdmlld3BvcnQncykgc2hvd24gYWZ0ZXIgdGhlIGhlcm8sIGhpZGRlbiB3aGlsZSB0aGUgb3JkZXIgZm9ybSBpcyBvbgogICAgICAgc2NyZWVuLgogICAgICogSWYgR1NBUCBuZXZlciBsb2FkczogcmVtb3ZlcyAubXRjLWNpbmUtd2FpdCAtPiB0aGUgc3RhdGljIHBhZ2UuCiAgIERlYnVnOiBhZGQgP210Y2RlYnVnIHRvIHRoZSBVUkwgdG8gbG9nIHRoZSBwaXBlbGluZSB0byB0aGUgY29uc29sZS4KCiAgIFJFVklTSU9OIEhJU1RPUlkKICAgICB2MSAoMjAyNi0xMC0yMCkgQ2xhdWRlOiBmaXJzdCB2ZXJzaW9uLiBab29tIGNhcHBlZCBhdCB0aGUgcGhvdG8ncyBuYXRpdmUKICAgICAgICAgICAgICAgICAgICAgcGl4ZWxzLiBMb2FkZXIgKyBndWFyZHMgZnJvbQogICAgICAgICAgICAgICAgICAgICBPU0tfUHJlbGFuZGVyX1NUTl92My5wYXlsb2FkLmpzICh0aGUgU09QJ3MgcmVmZXJlbmNlKS4KICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwooZnVuY3Rpb24gKCkgewogICJ1c2Ugc3RyaWN0IjsKICBpZiAod2luZG93Ll9fbXRjQ2luZVJhbikgcmV0dXJuOwogIHdpbmRvdy5fX210Y0NpbmVSYW4gPSB0cnVlOwogIHZhciBEQkcgPSAvWz8mXW10Y2RlYnVnL2kudGVzdChsb2NhdGlvbi5zZWFyY2gpIHx8IHdpbmRvdy5NVENfREVCVUc7CiAgZnVuY3Rpb24gbG9nKCkgeyBpZiAoREJHICYmIHdpbmRvdy5jb25zb2xlKSBjb25zb2xlLmxvZy5hcHBseShjb25zb2xlLCBbJ1tNVEMgQ0lORV0nXS5jb25jYXQoW10uc2xpY2UuY2FsbChhcmd1bWVudHMpKSk7IH0KICBsb2coJ3BheWxvYWQgZXhlY3V0ZWQnKTsKCiAgdmFyIFJFRFVDRSA9IHdpbmRvdy5tYXRjaE1lZGlhICYmIHdpbmRvdy5tYXRjaE1lZGlhKCcocHJlZmVycy1yZWR1Y2VkLW1vdGlvbjogcmVkdWNlKScpLm1hdGNoZXM7CiAgdmFyIFBIT1RPID0geyB3OiA1NzEyLCBoOiAzMjEzIH07ICAgICAgICAgICAgICAgICAgICAgICAgLy8gcHItcGhvdG8tNzIxOAogIHZhciBDQVJEID0geyB4MDogMC40ODgsIHgxOiAwLjY2MCwgeTA6IDAuMjIyLCB5MTogMC42NDAgfTsgICAvLyB0aGUgY2FyZCBvbiB0aGF0IHBob3RvIChtZWFzdXJlZCkKICB2YXIgR1NBUF9VUkxTID0gWwogICAgJ2h0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZ3NhcEAzLjE0LjIvZGlzdC9nc2FwLm1pbi5qcycsCiAgICAnaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvZ3NhcC8zLjE0LjIvZ3NhcC5taW4uanMnLAogICAgJ2h0dHBzOi8vdW5wa2cuY29tL2dzYXBAMy4xNC4yL2Rpc3QvZ3NhcC5taW4uanMnCiAgXTsKICB2YXIgU1RfVVJMUyA9IFsKICAgICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2dzYXBAMy4xNC4yL2Rpc3QvU2Nyb2xsVHJpZ2dlci5taW4uanMnLAogICAgJ2h0dHBzOi8vY2RuanMuY2xvdWRmbGFyZS5jb20vYWpheC9saWJzL2dzYXAvMy4xNC4yL1Njcm9sbFRyaWdnZXIubWluLmpzJywKICAgICdodHRwczovL3VucGtnLmNvbS9nc2FwQDMuMTQuMi9kaXN0L1Njcm9sbFRyaWdnZXIubWluLmpzJwogIF07CgogIGZ1bmN0aW9uIGxvYWRGaXJzdCh1cmxzKSB7CiAgICByZXR1cm4gbmV3IFByb21pc2UoZnVuY3Rpb24gKHJlcywgcmVqKSB7CiAgICAgIHZhciBpID0gMDsKICAgICAgKGZ1bmN0aW9uIG5leHQoKSB7CiAgICAgICAgaWYgKGkgPj0gdXJscy5sZW5ndGgpIHsgcmVqKG5ldyBFcnJvcignYWxsIENETnMgZmFpbGVkJykpOyByZXR1cm47IH0KICAgICAgICB2YXIgdXJsID0gdXJsc1tpKytdLCBzID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7CiAgICAgICAgcy5zcmMgPSB1cmw7IHMuYXN5bmMgPSB0cnVlOwogICAgICAgIHMub25sb2FkID0gZnVuY3Rpb24gKCkgeyBsb2coJ2xvYWRlZCcsIHVybCk7IHJlcygpOyB9OwogICAgICAgIHMub25lcnJvciA9IGZ1bmN0aW9uICgpIHsgbG9nKCdGQUlMRUQnLCB1cmwpOyBuZXh0KCk7IH07CiAgICAgICAgZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzKTsKICAgICAgfSkoKTsKICAgIH0pOwogIH0KICBmdW5jdGlvbiBvcmRlckZvcm0oKSB7CiAgICByZXR1cm4gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtdGl0bGU9Il9PUkRFUkZPUk0iXScpIHx8IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWRlLXR5cGVePSJvcmRlcjJzdGVwIl0nKSB8fAogICAgICAgICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5vcmRlcmZvcm10YXJnZXQnKTsKICB9CgogIC8vIC0tLS0gRmxvYXRpbmcgQ1RBOiB3b3JrcyB3aXRob3V0IEdTQVAgKEludGVyc2VjdGlvbk9ic2VydmVyKSwgc28gaXQgcnVucyBmaXJzdC4gLS0tLQogIGZ1bmN0aW9uIGZsb2F0YmFyKHJvb3QpIHsKICAgIHZhciBmYiA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1mYmFyXScpIHx8IHJvb3QuX19mYmFyOwogICAgdmFyIGhlcm8gPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtaGVyb10nKTsKICAgIGlmICghZmIgfHwgIWhlcm8gfHwgISgnSW50ZXJzZWN0aW9uT2JzZXJ2ZXInIGluIHdpbmRvdykpIHJldHVybjsKICAgIHJvb3QuX19mYmFyID0gZmI7CiAgICBpZiAoZmIucGFyZW50Tm9kZSAhPT0gZG9jdW1lbnQuYm9keSkgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChmYik7ICAgLy8gZml4ZWQgPSB0aGUgdmlld3BvcnQncwogICAgdmFyIHBhc3RIZXJvID0gZmFsc2UsIGZvcm1PbiA9IGZhbHNlOwogICAgZnVuY3Rpb24gYXBwbHkoKSB7CiAgICAgIHZhciBvbiA9IHBhc3RIZXJvICYmICFmb3JtT247CiAgICAgIGZiLmNsYXNzTGlzdC50b2dnbGUoJ210Yy1jaW5lLWZiYXItb24nLCBvbik7CiAgICAgIGZiLnNldEF0dHJpYnV0ZSgnYXJpYS1oaWRkZW4nLCBvbiA/ICdmYWxzZScgOiAndHJ1ZScpOwogICAgICB2YXIgYSA9IGZiLnF1ZXJ5U2VsZWN0b3IoJ2EnKTsgaWYgKGEpIGEudGFiSW5kZXggPSBvbiA/IDAgOiAtMTsKICAgIH0KICAgIG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihmdW5jdGlvbiAoZXMpIHsgcGFzdEhlcm8gPSAhZXNbMF0uaXNJbnRlcnNlY3Rpbmc7IGFwcGx5KCk7IH0sIHsgdGhyZXNob2xkOiAwIH0pLm9ic2VydmUoaGVybyk7CiAgICB2YXIgZiA9IG9yZGVyRm9ybSgpOwogICAgaWYgKGYpIG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihmdW5jdGlvbiAoZXMpIHsgZm9ybU9uID0gZXNbMF0uaXNJbnRlcnNlY3Rpbmc7IGFwcGx5KCk7IH0sIHsgdGhyZXNob2xkOiAwIH0pLm9ic2VydmUoZik7CiAgfQoKICBmdW5jdGlvbiBpbml0KHJvb3QpIHsKICAgIGlmICghcm9vdCB8fCByb290Ll9fbXRjQ2luZSkgcmV0dXJuOwogICAgcm9vdC5fX210Y0NpbmUgPSB0cnVlOwogICAgbG9nKCdpbml0Jyk7CiAgICBmbG9hdGJhcihyb290KTsKICAgIGlmIChSRURVQ0UpIHsgbG9nKCdyZWR1Y2VkIG1vdGlvbjogc3RhdGljIHBhZ2UnKTsgcmV0dXJuOyB9CiAgICByb290LmNsYXNzTGlzdC5hZGQoJ210Yy1jaW5lLXdhaXQnKTsKICAgIHZhciBzYWZldHkgPSBzZXRUaW1lb3V0KGZ1bmN0aW9uICgpIHsgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCdtdGMtY2luZS13YWl0Jyk7IGxvZygnc2FmZXR5IHRpbWVvdXQ6IHN0YXRpYyBwYWdlJyk7IH0sIDQwMDApOwogICAgdmFyIHJlYWR5ID0gKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKSA/IFByb21pc2UucmVzb2x2ZSgpIDoKICAgICAgbG9hZEZpcnN0KEdTQVBfVVJMUykudGhlbihmdW5jdGlvbiAoKSB7IHJldHVybiBsb2FkRmlyc3QoU1RfVVJMUyk7IH0pOwogICAgcmVhZHkudGhlbihmdW5jdGlvbiAoKSB7CiAgICAgIGNsZWFyVGltZW91dChzYWZldHkpOwogICAgICBpZiAoISh3aW5kb3cuZ3NhcCAmJiB3aW5kb3cuU2Nyb2xsVHJpZ2dlcikpIHRocm93IG5ldyBFcnJvcignZ2xvYmFscyBtaXNzaW5nJyk7CiAgICAgIGJ1aWxkKHJvb3QpOwogICAgfSkuY2F0Y2goZnVuY3Rpb24gKGUpIHsKICAgICAgY2xlYXJUaW1lb3V0KHNhZmV0eSk7CiAgICAgIHJvb3QuY2xhc3NMaXN0LnJlbW92ZSgnbXRjLWNpbmUtd2FpdCcsICdtdGMtY2luZS1vbicpOwogICAgICBsb2coJ0dTQVAgdW5hdmFpbGFibGUgLT4gc3RhdGljIHBhZ2U6JywgZSAmJiBlLm1lc3NhZ2UpOwogICAgfSk7CiAgfQoKICBmdW5jdGlvbiBidWlsZChyb290KSB7CiAgICB2YXIgZ3NhcCA9IHdpbmRvdy5nc2FwLCBTVCA9IHdpbmRvdy5TY3JvbGxUcmlnZ2VyOwogICAgZ3NhcC5yZWdpc3RlclBsdWdpbihTVCk7CiAgICB2YXIgcSA9IGZ1bmN0aW9uIChzKSB7IHJldHVybiByb290LnF1ZXJ5U2VsZWN0b3Iocyk7IH07CiAgICB2YXIgcWEgPSBmdW5jdGlvbiAocykgeyByZXR1cm4gW10uc2xpY2UuY2FsbChyb290LnF1ZXJ5U2VsZWN0b3JBbGwocykpOyB9OwoKICAgIC8vIEluaXRpYWwgc3RhdGVzIGFyZSBzZXQgaGVyZSwgdGhlbiB0aGUgY2xhc3Mgc3dhcCAtLSBzbyBub3RoaW5nIGlzIGhpZGRlbgogICAgLy8gdW5sZXNzIEdTQVAgaXMgcHJlc2VudCB0byBicmluZyBpdCBiYWNrLgogICAgdmFyIGxpbmVzID0gcWEoJ1tkYXRhLWZ4PSJsaW5lIl0nKSwgaGVyb0Z4ID0gcWEoJ1tkYXRhLWZ4PSJoZXJvIl0nKTsKICAgIGdzYXAuc2V0KGxpbmVzLCB7IHlQZXJjZW50OiAxMTAgfSk7CiAgICBnc2FwLnNldChoZXJvRngsIHsgYXV0b0FscGhhOiAwLCB5OiAyNCB9KTsKICAgIHJvb3QuY2xhc3NMaXN0LmFkZCgnbXRjLWNpbmUtb24nKTsKICAgIHJvb3QuY2xhc3NMaXN0LnJlbW92ZSgnbXRjLWNpbmUtd2FpdCcpOwoKICAgIC8vIC0tLS0gQUNUIDE6IGhlcm8gZW50cmFuY2UgKyBzY3JvbGwgcHVzaC1pbiAtLS0tCiAgICBnc2FwLnRpbWVsaW5lKHsgZGVsYXk6IDAuMTUgfSkKICAgICAgLnRvKGxpbmVzLCB7IHlQZXJjZW50OiAwLCBkdXJhdGlvbjogMC45LCBzdGFnZ2VyOiAwLjE2LCBlYXNlOiAncG93ZXIzLm91dCcgfSkKICAgICAgLnRvKGhlcm9GeCwgeyBhdXRvQWxwaGE6IDEsIHk6IDAsIGR1cmF0aW9uOiAwLjcsIHN0YWdnZXI6IDAuMTIsIGVhc2U6ICdwb3dlcjIub3V0JyB9LCAnLT0wLjQ1Jyk7CiAgICB2YXIgaGVybyA9IHEoJ1tkYXRhLWNpbmUtaGVyb10nKSwgaGVyb0ltZyA9IHEoJ1tkYXRhLWNpbmUtaGVyby1pbWddJyk7CiAgICBpZiAoaGVybyAmJiBoZXJvSW1nKSB7CiAgICAgIGdzYXAuZnJvbVRvKGhlcm9JbWcsIHsgc2NhbGU6IDEuMDIgfSwgeyBzY2FsZTogMS4xNCwgZWFzZTogJ25vbmUnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogaGVybywgc3RhcnQ6ICd0b3AgdG9wJywgZW5kOiAnYm90dG9tIHRvcCcsIHNjcnViOiB0cnVlIH0gfSk7CiAgICAgIGdzYXAudG8ocSgnLm10Yy1jaW5lLWN1ZScpLCB7IGF1dG9BbHBoYTogMCwgZWFzZTogJ25vbmUnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogaGVybywgc3RhcnQ6ICd0b3AgdG9wJywgZW5kOiAnMjAlIHRvcCcsIHNjcnViOiB0cnVlIH0gfSk7CiAgICB9CgogICAgLy8gLS0tLSBBQ1QgMjogYW5hdG9teSBjYW1lcmEgLS0tLQogICAgYnVpbGRBbmF0b215KHJvb3QsIGdzYXAsIFNUKTsKCiAgICAvLyAtLS0tIFJldmVhbHMgLS0tLQogICAgcWEoJ1tkYXRhLWZ4PSJ1cCJdJykuZm9yRWFjaChmdW5jdGlvbiAoZWwpIHsKICAgICAgZ3NhcC5mcm9tKGVsLCB7IGF1dG9BbHBoYTogMCwgeTogMzQsIGR1cmF0aW9uOiAwLjgsIGVhc2U6ICdwb3dlcjIub3V0JywKICAgICAgICBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IGVsLCBzdGFydDogJ3RvcCA4NiUnLCBvbmNlOiB0cnVlIH0gfSk7CiAgICB9KTsKICAgIHFhKCdbZGF0YS1meD0id2lwZSJdJykuZm9yRWFjaChmdW5jdGlvbiAoZWwsIGkpIHsKICAgICAgZ3NhcC5mcm9tVG8oZWwsIHsgY2xpcFBhdGg6ICdpbnNldCgwIDAgMTAwJSAwKScgfSwgeyBjbGlwUGF0aDogJ2luc2V0KDAgMCAwJSAwKScsIGR1cmF0aW9uOiAxLjEsIGVhc2U6ICdwb3dlcjMuaW5PdXQnLAogICAgICAgIGRlbGF5OiAoaSAlIDIpICogMC4xMiwgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBlbCwgc3RhcnQ6ICd0b3AgODglJywgb25jZTogdHJ1ZSB9IH0pOwogICAgfSk7CiAgICB2YXIgbDIgPSBxYSgnW2RhdGEtZng9ImxpbmUyIl0nKTsKICAgIGlmIChsMi5sZW5ndGgpIGdzYXAuZnJvbShsMiwgeyB5UGVyY2VudDogMTEwLCBkdXJhdGlvbjogMC45LCBzdGFnZ2VyOiAwLjE2LCBlYXNlOiAncG93ZXIzLm91dCcsCiAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogbDJbMF0sIHN0YXJ0OiAndG9wIDg1JScsIG9uY2U6IHRydWUgfSB9KTsKCiAgICAvLyAtLS0tIEFDVCA0OiAkMTkgc3RydWNrIHRocm91Z2gsIHRoZW4gRlJFRSAtLS0tCiAgICB2YXIgdmFsID0gcSgnW2RhdGEtY2luZS12YWx1ZV0nKSwgc3RyaWtlID0gcSgnW2RhdGEtY2luZS1zdHJpa2VdJyksIGZyZWUgPSBxKCdbZGF0YS1jaW5lLWZyZWVdJyk7CiAgICBpZiAodmFsICYmIHN0cmlrZSAmJiBmcmVlKSB7CiAgICAgIGdzYXAuc2V0KHN0cmlrZSwgeyBzY2FsZVg6IDAgfSk7CiAgICAgIGdzYXAuc2V0KGZyZWUsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMC42IH0pOwogICAgICBnc2FwLnRpbWVsaW5lKHsgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiB2YWwsIHN0YXJ0OiAndG9wIDcwJScsIG9uY2U6IHRydWUgfSB9KQogICAgICAgIC50byhzdHJpa2UsIHsgc2NhbGVYOiAxLCBkdXJhdGlvbjogMC41NSwgZWFzZTogJ3Bvd2VyMi5pbk91dCcgfSkKICAgICAgICAudG8oZnJlZSwgeyBhdXRvQWxwaGE6IDEsIHNjYWxlOiAxLCBkdXJhdGlvbjogMC42LCBlYXNlOiAnYmFjay5vdXQoMi4yKScgfSwgJys9MC4xJyk7CiAgICB9CgogICAgLy8gLS0tLSBQYXJhbGxheCBvbiBmdWxsLWJsZWVkIHBob3RvcyAtLS0tCiAgICBxYSgnW2RhdGEtY2luZS1ibGVlZF0nKS5mb3JFYWNoKGZ1bmN0aW9uIChzZWMpIHsKICAgICAgdmFyIGltZyA9IHNlYy5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jaW5lLXBhcl0nKTsKICAgICAgaWYgKGltZykgZ3NhcC5mcm9tVG8oaW1nLCB7IHlQZXJjZW50OiAtOCB9LCB7IHlQZXJjZW50OiA4LCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBzZWMsIHN0YXJ0OiAndG9wIGJvdHRvbScsIGVuZDogJ2JvdHRvbSB0b3AnLCBzY3J1YjogdHJ1ZSB9IH0pOwogICAgfSk7CgogICAgdmFyIHJlZnJlc2ggPSBmdW5jdGlvbiAoKSB7IFNULnJlZnJlc2goKTsgfTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdsb2FkJywgcmVmcmVzaCk7CiAgICBzZXRUaW1lb3V0KHJlZnJlc2gsIDE1MDApOwogICAgcm9vdC5fX210Y0NpbmVCdWlsdCA9IHRydWU7CiAgICB3aW5kb3cuX19tdGNDaW5lQnVpbHQgPSAod2luZG93Ll9fbXRjQ2luZUJ1aWx0IHx8IDApICsgMTsKICAgIGxvZygnYnVpbHQ7IFNjcm9sbFRyaWdnZXJzID0nLCBTVC5nZXRBbGwoKS5sZW5ndGgpOwogIH0KCiAgZnVuY3Rpb24gYnVpbGRBbmF0b215KHJvb3QsIGdzYXAsIFNUKSB7CiAgICB2YXIgc3RhZ2UgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtc3RhZ2VdJyksIGNhbSA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1jYW1dJyksCiAgICAgICAgaW1nID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jaW5lLWNhbS1pbWddJyksIGJlYXRzID0gW10uc2xpY2UuY2FsbChyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJy5tdGMtY2luZS1iZWF0Om5vdChbZGF0YS1maW5hbF0pJykpLAogICAgICAgIGZpbiA9IHJvb3QucXVlcnlTZWxlY3RvcignLm10Yy1jaW5lLWJlYXRbZGF0YS1maW5hbF0nKSwKICAgICAgICBjb3VudCA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1jb3VudF0nKSwgY291bnRXcmFwID0gcm9vdC5xdWVyeVNlbGVjdG9yKCcubXRjLWNpbmUtY291bnQnKSwKICAgICAgICBiYXIgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtYmFyXScpLCByZXQgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtcmV0aWNsZV0nKTsKICAgIGlmICghc3RhZ2UgfHwgIWNhbSB8fCAhaW1nIHx8ICFiZWF0cy5sZW5ndGgpIHJldHVybjsKICAgIGltZy5sb2FkaW5nID0gJ2VhZ2VyJzsgICAgICAgICAgICAgICAgICAgICAgIC8vIHRoZSBwaW5uZWQgc2NlbmUgbXVzdCBub3Qgd2FpdCBvbiBsYXp5LWxvYWQKICAgIHZhciBzaG90cyA9IFt7IGZ4OiAoQ0FSRC54MCArIENBUkQueDEpIC8gMiwgZnk6IChDQVJELnkwICsgQ0FSRC55MSkgLyAyLCB6OiAxLCBuOiAwIH1dLmNvbmNhdChiZWF0cy5tYXAoZnVuY3Rpb24gKGIpIHsKICAgICAgcmV0dXJuIHsgZng6ICtiLmdldEF0dHJpYnV0ZSgnZGF0YS1meCcpLCBmeTogK2IuZ2V0QXR0cmlidXRlKCdkYXRhLWZ5JyksIHo6ICtiLmdldEF0dHJpYnV0ZSgnZGF0YS16JykgfHwgMiwgbjogK2IuZ2V0QXR0cmlidXRlKCdkYXRhLW4nKSB8fCAwIH07CiAgICB9KSk7CiAgICB2YXIgZ2VvID0ge307CiAgICAvLyBTaXplIHRoZSBwaG90byB0byAiY292ZXIiIHRoZSBzdGFnZSBvbmNlOyB0aGUgY2FtZXJhIGlzIGEgdHJhbnNmb3JtIG9uIHRvcC4KICAgIGZ1bmN0aW9uIG1lYXN1cmUoKSB7CiAgICAgIHZhciBXID0gc3RhZ2UuY2xpZW50V2lkdGgsIEggPSBzdGFnZS5jbGllbnRIZWlnaHQ7CiAgICAgIHZhciBrID0gTWF0aC5tYXgoVyAvIFBIT1RPLncsIEggLyBQSE9UTy5oKTsKICAgICAgdmFyIGl3ID0gUEhPVE8udyAqIGssIGloID0gUEhPVE8uaCAqIGs7CiAgICAgIC8vIHZpYSBDU1MgdmFyaWFibGVzOiB0aGUgc3R5bGVzaGVldCdzICFpbXBvcnRhbnQgc2l6ZSBydWxlcyByZWFkIHRoZW0gKGFuIGlubGluZSBweCB3aWR0aCBhbG9uZSBsb3NlcykKICAgICAgaW1nLnN0eWxlLnNldFByb3BlcnR5KCctLW10Yy1jYW0tdycsIGl3ICsgJ3B4Jyk7IGltZy5zdHlsZS5zZXRQcm9wZXJ0eSgnLS1tdGMtY2FtLWgnLCBpaCArICdweCcpOwogICAgICAvLyBjYXJkLWZpdDogdGhlIHdob2xlIGNhcmQgYXQgfjc4JSBvZiB0aGUgc3RhZ2UncyBzaG9ydCBzaWRlIChhbmQgdGhlIHBhbmVsJ3Mgcm9vbSBvbiBkZXNrdG9wKQogICAgICB2YXIgY3cgPSAoQ0FSRC54MSAtIENBUkQueDApICogaXcsIGNoID0gKENBUkQueTEgLSBDQVJELnkwKSAqIGloOwogICAgICB2YXIgd2lkZSA9IFcgPj0gOTAwOwogICAgICB2YXIgcm9vbSA9IHdpZGUgPyBXICogMC41MiA6IFcgKiAwLjkyLCByb29tSCA9IHdpZGUgPyBIICogMC44MiA6IEggKiAwLjU2OwogICAgICBnZW8gPSB7IFc6IFcsIEg6IEgsIGl3OiBpdywgaWg6IGloLCBmaXQ6IE1hdGgubWluKHJvb20gLyBjdywgcm9vbUggLyBjaCksIHdpZGU6IHdpZGUsIG1heDogMSAvIGsgfTsKICAgIH0KICAgIGZ1bmN0aW9uIHBvc2UocykgewogICAgICB2YXIgc2NhbGUgPSBNYXRoLm1pbihnZW8uZml0ICogcy56LCBnZW8ubWF4KTsgICAgICAgLy8gbmV2ZXIgcGFzdCB0aGUgcGhvdG8ncyBuYXRpdmUgcGl4ZWxzIChzdGF5cyBzaGFycCkKICAgICAgdmFyIGN4ID0gZ2VvLndpZGUgPyBnZW8uVyAqIDAuNjYgOiBnZW8uVyAqIDAuNTsgICAgIC8vIGRlc2t0b3A6IHN1YmplY3QgcmlnaHQgb2YgdGhlIGNhcHRpb24gcGFuZWwKICAgICAgdmFyIGN5ID0gZ2VvLndpZGUgPyBnZW8uSCAqIDAuNSA6IGdlby5IICogMC4zNjsgICAgIC8vIHBob25lOiBzdWJqZWN0IGFib3ZlIHRoZSBjYXB0aW9uIHBhbmVsCiAgICAgIHZhciB4ID0gY3ggLSBzLmZ4ICogZ2VvLml3ICogc2NhbGUsIHkgPSBjeSAtIHMuZnkgKiBnZW8uaWggKiBzY2FsZTsKICAgICAgeCA9IE1hdGgubWluKDAsIE1hdGgubWF4KGdlby5XIC0gZ2VvLml3ICogc2NhbGUsIHgpKTsgICAvLyBuZXZlciBzaG93IHBhc3QgdGhlIHBob3RvJ3MgZWRnZQogICAgICB5ID0gTWF0aC5taW4oMCwgTWF0aC5tYXgoZ2VvLkggLSBnZW8uaWggKiBzY2FsZSwgeSkpOwogICAgICByZXR1cm4geyB4OiB4LCB5OiB5LCBzY2FsZTogc2NhbGUgfTsKICAgIH0KICAgIHJvb3QuY2xhc3NMaXN0LmFkZCgnbXRjLWNpbmUtYW5hdC1vbicpOyAgICAgIC8vIGZ1bGwtc2NyZWVuIHN0YWdlIGZpcnN0IC0tIHRoZW4gbWVhc3VyZSBpdAogICAgbWVhc3VyZSgpOwogICAgZ3NhcC5zZXQoaW1nLCB7IHRyYW5zZm9ybU9yaWdpbjogJzAgMCcgfSk7CiAgICBnc2FwLnNldChpbWcsIHBvc2Uoc2hvdHNbMF0pKTsKICAgIGdzYXAuc2V0KGJlYXRzLmNvbmNhdChmaW4gPyBbZmluXSA6IFtdKSwgeyBhdXRvQWxwaGE6IDAsIHk6IDI2IH0pOwogICAgZ3NhcC5zZXQocmV0LCB7IGF1dG9BbHBoYTogMCwgc2NhbGU6IDEuNiB9KTsKICAgIGlmIChjb3VudCkgY291bnQudGV4dENvbnRlbnQgPSAnMCc7CgogICAgLy8gc3RhdGVzOiAtMSA9IG92ZXJ2aWV3IChubyBjYXB0aW9uLCBubyBjb3VudGVyKSwgMC4ubi0xID0gYSB0b29sLCAnZW5kJyA9IHB1bGxlZCBiYWNrIChjbG9zaW5nIGNhcHRpb24pCiAgICB2YXIgY3VycmVudCA9IC0xOwogICAgZnVuY3Rpb24gY2FwKGkpIHsgcmV0dXJuIGkgPT09ICdlbmQnID8gZmluIDogKGkgPj0gMCA/IGJlYXRzW2ldIDogbnVsbCk7IH0KICAgIGZ1bmN0aW9uIGNvdW50VG8odikgewogICAgICBpZiAoIWNvdW50KSByZXR1cm47CiAgICAgIHZhciBmcm9tID0geyB2OiArY291bnQudGV4dENvbnRlbnQgfHwgMCB9OwogICAgICBnc2FwLnRvKGZyb20sIHsgdjogdiwgZHVyYXRpb246IDAuNSwgZWFzZTogJ3Bvd2VyMS5vdXQnLCBvdmVyd3JpdGU6IHRydWUsIG9uVXBkYXRlOiBmdW5jdGlvbiAoKSB7IGNvdW50LnRleHRDb250ZW50ID0gTWF0aC5yb3VuZChmcm9tLnYpOyB9IH0pOwogICAgfQogICAgZnVuY3Rpb24gc2hvdyhpKSB7CiAgICAgIGlmIChpID09PSBjdXJyZW50KSByZXR1cm47CiAgICAgIHZhciBwcmV2ID0gY2FwKGN1cnJlbnQpLCBuZXh0ID0gY2FwKGkpOyBjdXJyZW50ID0gaTsKICAgICAgaWYgKHByZXYpIGdzYXAudG8ocHJldiwgeyBhdXRvQWxwaGE6IDAsIHk6IC0xOCwgZHVyYXRpb246IDAuMywgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICBpZiAobmV4dCkgZ3NhcC5mcm9tVG8obmV4dCwgeyBhdXRvQWxwaGE6IDAsIHk6IDI2IH0sIHsgYXV0b0FscGhhOiAxLCB5OiAwLCBkdXJhdGlvbjogMC40NSwgZGVsYXk6IDAuMSwgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICBpZiAoY291bnRXcmFwKSBnc2FwLnRvKGNvdW50V3JhcCwgeyBhdXRvQWxwaGE6IGkgPT09IC0xID8gMCA6IDEsIGR1cmF0aW9uOiAwLjMsIG92ZXJ3cml0ZTogdHJ1ZSB9KTsKICAgICAgaWYgKHR5cGVvZiBpID09PSAnbnVtYmVyJyAmJiBpID49IDApIHsKICAgICAgICBnc2FwLmZyb21UbyhyZXQsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMS42IH0sIHsgYXV0b0FscGhhOiAxLCBzY2FsZTogMSwgZHVyYXRpb246IDAuNSwgZWFzZTogJ3Bvd2VyMy5vdXQnLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgICAgY291bnRUbyhzaG90c1tpICsgMV0ubik7CiAgICAgIH0gZWxzZSB7CiAgICAgICAgZ3NhcC50byhyZXQsIHsgYXV0b0FscGhhOiAwLCBkdXJhdGlvbjogMC4yNSwgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICAgIGlmIChpID09PSAnZW5kJykgY291bnRUbygxMSk7CiAgICAgIH0KICAgIH0KCiAgICAvLyBPbmUgdGltZWxpbmUgc3RlcCBwZXIgYmVhdDogbW92ZSB0aGUgY2FtZXJhLCB0aGVuIGhvbGQuIExhYmVscyBkcml2ZSB0aGUgY2FwdGlvbnMuCiAgICAvLyBGdW5jdGlvbiB2YWx1ZXM6IEdTQVAgcmUtcmVhZHMgdGhlbSB3aGVuZXZlciB0aGUgdGltZWxpbmUgaXMgaW52YWxpZGF0ZWQKICAgIC8vIChyZWZyZXNoSW5pdCBiZWxvdyksIHNvIGEgcmVzaXplIC8gcm90YXRpb24gcmUtYWltcyBldmVyeSBzaG90LgogICAgZnVuY3Rpb24gbW92ZShzKSB7CiAgICAgIHJldHVybiB7IGR1cmF0aW9uOiAxLCB4OiBmdW5jdGlvbiAoKSB7IHJldHVybiBwb3NlKHMpLng7IH0sIHk6IGZ1bmN0aW9uICgpIHsgcmV0dXJuIHBvc2UocykueTsgfSwKICAgICAgICAgICAgICAgc2NhbGU6IGZ1bmN0aW9uICgpIHsgcmV0dXJuIHBvc2Uocykuc2NhbGU7IH0gfTsKICAgIH0KICAgIHZhciB0bCA9IGdzYXAudGltZWxpbmUoeyBkZWZhdWx0czogeyBlYXNlOiAncG93ZXIyLmluT3V0JyB9IH0pOwogICAgdGwudG8oe30sIHsgZHVyYXRpb246IDAuNSB9KTsgICAgICAgICAgICAgIC8vIG92ZXJ2aWV3IGhvbGQKICAgIHNob3RzLnNsaWNlKDEpLmZvckVhY2goZnVuY3Rpb24gKHMsIGspIHsKICAgICAgdGwudG8oaW1nLCBtb3ZlKHMpLCAnPicpOwogICAgICB0bC5hZGRMYWJlbCgnYmVhdCcgKyBrKTsKICAgICAgdGwudG8oe30sIHsgZHVyYXRpb246IDAuOSB9KTsgICAgICAgICAgICAvLyBob2xkIG9uIHRoZSB0b29sCiAgICB9KTsKICAgIHRsLnRvKGltZywgbW92ZShzaG90c1swXSksICc+Jyk7ICAgICAgICAgICAvLyBwdWxsIGJhY2sgdG8gdGhlIHdob2xlIGNhcmQKICAgIHRsLnRvKHt9LCB7IGR1cmF0aW9uOiAwLjQgfSk7CgogICAgU1QuY3JlYXRlKHsKICAgICAgdHJpZ2dlcjogc3RhZ2UsIHN0YXJ0OiAndG9wIHRvcCcsCiAgICAgIGVuZDogZnVuY3Rpb24gKCkgeyByZXR1cm4gJys9JyArIE1hdGgucm91bmQod2luZG93LmlubmVySGVpZ2h0ICogKDEuMSAqIHNob3RzLmxlbmd0aCkpOyB9LAogICAgICBwaW46IHN0YWdlLCBwaW5UeXBlOiAnZml4ZWQnLCBwaW5TcGFjaW5nOiB0cnVlLCBhbnRpY2lwYXRlUGluOiAxLCBzY3J1YjogMC42LAogICAgICBhbmltYXRpb246IHRsLCBpbnZhbGlkYXRlT25SZWZyZXNoOiB0cnVlLAogICAgICBvblJlZnJlc2hJbml0OiBmdW5jdGlvbiAoKSB7IG1lYXN1cmUoKTsgfSwKICAgICAgb25VcGRhdGU6IGZ1bmN0aW9uIChzZWxmKSB7CiAgICAgICAgaWYgKGJhcikgYmFyLnN0eWxlLnRyYW5zZm9ybSA9ICdzY2FsZVgoJyArIHNlbGYucHJvZ3Jlc3MudG9GaXhlZCgzKSArICcpJzsKICAgICAgICB2YXIgdCA9IHRsLmR1cmF0aW9uKCkgKiBzZWxmLnByb2dyZXNzLCBpZHggPSAtMTsKICAgICAgICBmb3IgKHZhciBrID0gMDsgayA8IGJlYXRzLmxlbmd0aDsgaysrKSB7CiAgICAgICAgICB2YXIgYXQgPSB0bC5sYWJlbHNbJ2JlYXQnICsga107CiAgICAgICAgICBpZiAodCA+PSBhdCAtIDAuMzUpIGlkeCA9IGs7CiAgICAgICAgfQogICAgICAgIGlmICh0ID49IHRsLmR1cmF0aW9uKCkgLSAxLjMpIGlkeCA9ICdlbmQnOyAgICAgICAvLyBwdWxsZWQgYmFjazogYWxsIDExCiAgICAgICAgc2hvdyhpZHgpOwogICAgICB9CiAgICB9KTsKICAgIC8vIFJlLXBvc2UgdGhlIGNhbWVyYSB3aGVuIHRoZSBzdGFnZSBzaXplIGNoYW5nZXMgKHJvdGF0aW9uIC8gdG9vbGJhcikuCiAgICBTVC5hZGRFdmVudExpc3RlbmVyKCdyZWZyZXNoSW5pdCcsIGZ1bmN0aW9uICgpIHsKICAgICAgbWVhc3VyZSgpOyB0bC5pbnZhbGlkYXRlKCk7CiAgICB9KTsKICB9CgogIGZ1bmN0aW9uIGJvb3QoKSB7CiAgICB2YXIgcm9vdHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCdbZGF0YS1tdGMtY2luZV0nKTsKICAgIGxvZygncm9vdHMnLCByb290cy5sZW5ndGgpOwogICAgW10uZm9yRWFjaC5jYWxsKHJvb3RzLCBpbml0KTsKICB9CiAgaWYgKGRvY3VtZW50LnJlYWR5U3RhdGUgPT09ICdsb2FkaW5nJykgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGJvb3QpOyBlbHNlIGJvb3QoKTsKfSkoKTsK">
+</div>
+
+<!-- On the live funnel the ClickFunnels 2-step order form sits here; the CTAs and the floating bar target it. -->
+<section class="lp-form" data-title="_ORDERFORM">
+  <b>Order form</b>
+  On the live funnel, the ClickFunnels 2-step order form sits here &mdash; this portfolio copy shows the page experience only.
+</section>
+</body>
+</html>
