@@ -1,37 +1,28 @@
 /* ============================================================================
-   FILE: mtc_cine.payload.js
-   PATH: Funnels/11 in 1 Multi Tool Card - 13710547/11 in 1 Multi Tool Card (F+S)/_src/mtc_cine.payload.js
+   11-in-1 Multi Tool Card -- cinematic page script (readable source)
    ----------------------------------------------------------------------------
-   READABLE SOURCE of the cinematic Variant B's script. build_cinematic.py
-   Base64-encodes it into the data-mtc-cine-payload attribute of the hidden
-   <img data-mtc-cine-boot> at the end of the page (CF strips and mangles a
-   pasted <script>; see Documentation/SOP-CF-Custom-JS-Injection.md). Edit
-   here, re-run build_cinematic.py -- never edit the Base64.
+   Ships Base64-encoded in the data-mtc-cine-payload attribute of the hidden
+   <img data-mtc-cine-boot> at the end of the page; the image's onload decodes
+   and injects it. That keeps the page a single self-contained HTML block that
+   runs on hosts and page builders which strip or rewrite pasted <script> tags.
 
-   What it does, per [data-mtc-cine] root (multi-instance safe; no ids):
+   Per [data-mtc-cine] root (multi-instance safe; no ids):
      * Reduced motion -> nothing animates; the page is already complete.
-     * Otherwise adds .mtc-cine-wait (hides only the hero lines for their
-       entrance), loads GSAP 3.14.2 + ScrollTrigger (jsdelivr -> cdnjs ->
-       unpkg), then builds:
-         Act 1  hero lines rise in; the photo pushes in + darkens on scroll
-         Act 2  ANATOMY: pins the stage (pinType 'fixed' -- CF's
-                overflow-hidden ancestor breaks position:sticky), moves a
-                camera over pr-photo-7218 to each beat's focal point
-                (data-fx / data-fy on the photo, 0..1; data-z = zoom over
-                the card-fit scale), swaps the caption, ticks the tool
-                counter, pulses the reticle
+     * Otherwise loads GSAP 3.14.2 + ScrollTrigger (jsdelivr -> cdnjs ->
+       unpkg) and builds:
+         Act 1  hero lines rise in; the photo pushes in on scroll
+         Act 2  ANATOMY: pins the stage (pinType 'fixed', which survives an
+                overflow-hidden ancestor where position:sticky would not) and
+                moves a camera over the product photo to each beat's focal
+                point (data-fx / data-fy, 0..1; data-z = zoom over the
+                card-fit scale, capped at the photo's native pixels); swaps
+                the caption, ticks the tool counter, pulses the reticle
          Act 3+ clip wipes, line reveals, the $19 strike -> FREE punch,
                 parallax on the full-bleed photos
        and a floating CTA bar (moved to <body> so position:fixed is the
-       viewport's) shown after the hero, hidden while the order form is on
-       screen.
-     * If GSAP never loads: removes .mtc-cine-wait -> the static page.
+       viewport's), shown after the hero and hidden over the checkout target.
+     * If GSAP never loads: the static page stays.
    Debug: add ?mtcdebug to the URL to log the pipeline to the console.
-
-   REVISION HISTORY
-     v1 (2026-10-20) Claude: first version. Zoom capped at the photo's native
-                     pixels. Loader + guards from
-                     OSK_Prelander_STN_v3.payload.js (the SOP's reference).
    ============================================================================ */
 (function () {
   "use strict";
