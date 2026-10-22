@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paracord Survival Bracelet</title>
+<meta name="description" content="Cinematic, scroll-driven sales page for a paracord survival bracelet: a pinned GSAP stage steps through every tool built into the real bracelet.">
+<style>
+  html { font-size: 62.5%; }  /* type is sized in px throughout, so the page renders the same whatever the host's root size */
+  body { margin: 0; background: #090c0a; overflow-x: hidden; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    /* ==== CONTROL -- "Night Field" TOKENS =====================================
+       Dark-dominant field-gear look: near-black bands with a faint green
+       cast, compass-green accents (the color of the real compass faces),
+       rounded corners, soft shadows, heavy SANS display. */
+
+    /* type */
+    --pcb-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --pcb-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --pcb-display-weight: 900;
+    --pcb-display-track: -0.015em;
+
+    /* light reading bands */
+    --pcb-light-bg:   #f3f2ee;   /* warm stone                                 */
+    --pcb-ink:        #1b1f1c;   /* text on stone                              */
+    --pcb-ink-soft:   #474e49;   /* muted text on stone                        */
+    --pcb-head-ink:   #1b1f1c;
+    --pcb-accent-ink: #a8231c;   /* red TEXT on stone                          */
+    --pcb-hairline:   #e0ded6;
+    --pcb-card-bg:    #ffffff;
+    --pcb-card-border: 2px solid #d8d5cb;
+
+    /* feature bands (.pcb-dark) */
+    --pcb-feat-bg:       #101412;
+    --pcb-feat-ink:      #f1f2ee;
+    --pcb-feat-ink-soft: #cdd3ce;
+    --pcb-feat-head:     #f1f2ee;
+    --pcb-feat-accent:   #4fdc86;   /* compass green on near-black             */
+
+    /* value plate = compass-green gradient, near-black text */
+    --pcb-plate-bg:     linear-gradient(118deg, #6ee69c 0%, #43cf7a 48%, #2fb866 100%);
+    --pcb-plate-border: 2px solid #1d6e41;
+    --pcb-plate-ink:    #0c1410;
+    --pcb-plate-rule:   #1d6e41;
+
+    /* frames, rules, shape */
+    --pcb-frame-border: 2px solid #2f3a33;
+    --pcb-media-bg:     #1a201c;
+    --pcb-shadow:       0 10px 26px rgba(0,0,0,0.32);
+    --pcb-rule:         #2fb866;
+    --pcb-r-lg:   12px;
+    --pcb-r-md:   10px;
+    --pcb-r-sm:   8px;
+    --pcb-r-pill: 999px;
+    --pcb-r-input: 6px;
+
+    /* trust bar */
+    --pcb-tag-bg:     #101412;
+    --pcb-tag-ink:    #4fdc86;
+    --pcb-tag-border: 2px solid #1d6e41;
+
+    /* primary CTA -- red, the same in both cells (not under test) */
+    --pcb-cta-bg:     #c3201a;
+    --pcb-cta-ink:    #ffffff;
+    --pcb-cta-edge:   #74110d;
+    --pcb-focus-ring: #4fdc86;
+
+    /* "why" check icons */
+    --pcb-icon-bg:     #101412;
+    --pcb-icon-border: 2px solid #2fb866;
+    --pcb-icon-ink:    #4fdc86;
+
+    /* ---- order form ---- */
+    --pcb-placeholder:      #5c5850;
+    --pcb-focus-border:     #2fb866;
+    --pcb-focus-glow:       rgba(47, 184, 102, 0.30);
+    --pcb-of-head-bg:       #101412;
+    --pcb-of-head-rule:     #2fb866;
+    --pcb-of-head-ink:      #f1f2ee;
+    --pcb-of-head-ink-soft: #cdd3ce;
+    --pcb-of-track:         #26302a;
+    --pcb-of-progress:      linear-gradient(90deg, #c3201a 0%, #2fb866 100%);
+    --pcb-of-panel:         #f1f2ee;
+    --pcb-of-line:          #cdd2c9;
+    --pcb-of-row-accent:    #2fb866;
+    --pcb-of-hover:         #fafcf9;
+    --pcb-of-checked-tint:  linear-gradient(135deg, rgba(195,32,26,0.06) 0%, rgba(47,184,102,0.13) 100%);
+    --pcb-of-checked-glow:  rgba(195, 32, 26, 0.16);
+    --pcb-of-feature-edge:  #2fb866;
+    --pcb-of-feature-bg:    #edf9f1;
+    --pcb-btn1-bg:   linear-gradient(118deg, #6ee69c 0%, #43cf7a 48%, #2fb866 100%);
+    --pcb-btn1-edge: #1d6e41;
+    --pcb-btn1-ink:  #0c1410;
+  }
+
+  /* =========================================================================
+     ====  SHARED RULES -- byte-identical in the Style A and Style B files ====
+     Everything below reads the :root tokens above. To change a LOOK, change
+     tokens (or the variant block at the end). To change a RULE, edit it in
+     BOTH files identically -- see the file header's split-test invariant.
+     ========================================================================= */
+
+  /* =========================================================================
+     SHELL -- scoped, never global
+     ========================================================================= */
+  .pcb-sec {
+    box-sizing: border-box !important;
+    font-family: var(--pcb-sans) !important;
+    font-size: clamp(19px, 1.7vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--pcb-ink) !important;
+    background: var(--pcb-light-bg) !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .pcb-sec *,
+  .pcb-sec *::before,
+  .pcb-sec *::after { box-sizing: border-box !important; }
+
+  /* Full-viewport breakout -- escapes any host container's padding/max-width */
+  .pcb-breakout {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .pcb-wrap {
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+
+  /* "Feature" bands (class name kept as pcb-dark from v1). Style A paints
+     them vault-black; Style B paints them white -- see the tokens. */
+  .pcb-dark { background: var(--pcb-feat-bg) !important; color: var(--pcb-feat-ink) !important; }
+
+  .pcb-sec img { display: block !important; max-width: 100% !important; height: auto !important; }
+  .pcb-sec p { margin: 0 0 20px 0 !important; }
+  .pcb-sec p:last-child { margin-bottom: 0 !important; }
+
+  /* =========================================================================
+     TYPE
+     ========================================================================= */
+  .pcb-h1, .pcb-h2, .pcb-h3 {
+    font-family: var(--pcb-display) !important;
+    font-weight: var(--pcb-display-weight) !important;
+    margin: 0 !important;
+    letter-spacing: var(--pcb-display-track) !important;
+    color: var(--pcb-head-ink) !important;
+    text-wrap: balance !important;       /* no one-word last lines */
+  }
+  .pcb-h1 { font-size: clamp(36px, 5.6vw, 64px) !important; line-height: 1.1 !important; }
+  .pcb-h2 { font-size: clamp(29px, 4.2vw, 46px) !important; line-height: 1.14 !important; }
+  .pcb-h3 { font-size: clamp(23px, 2.6vw, 30px) !important; line-height: 1.2  !important; }
+
+  .pcb-dark .pcb-h1, .pcb-dark .pcb-h2, .pcb-dark .pcb-h3 { color: var(--pcb-feat-head) !important; }
+  .pcb-sec .pcb-hi-txt { color: var(--pcb-feat-accent) !important; }
+
+  .pcb-sec p.pcb-copy {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--pcb-ink) !important;
+    max-width: 62ch !important;
+  }
+  .pcb-dark p.pcb-copy { color: var(--pcb-feat-ink) !important; }
+  .pcb-center { text-align: center !important; }
+  .pcb-center p.pcb-copy { margin-left: auto !important; margin-right: auto !important; }
+
+  .pcb-sec p.pcb-kicker {
+    font-family: var(--pcb-sans) !important;
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--pcb-accent-ink) !important;
+    margin: 0 0 12px 0 !important;
+  }
+  .pcb-dark p.pcb-kicker { color: var(--pcb-feat-accent) !important; }
+
+  /* =========================================================================
+     VALUE PLATE -- Style A: compass-green plate / ink text. Style B: solid olive / white.
+     ========================================================================= */
+  .pcb-plate {
+    position: relative !important;
+    display: inline-block !important;
+    background: var(--pcb-plate-bg) !important;
+    border: var(--pcb-plate-border) !important;
+    border-radius: var(--pcb-r-md) !important;
+    padding: clamp(16px, 2.4vw, 26px) clamp(20px, 3vw, 34px) !important;
+    box-shadow: var(--pcb-shadow) !important;
+    color: var(--pcb-plate-ink) !important;   /* the plate's OWN text too --
+                                                   else it inherits a band's */
+  }
+  .pcb-plate * { color: var(--pcb-plate-ink) !important; }
+
+  /* Image / video frame */
+  .pcb-frame {
+    display: block !important;
+    width: 100% !important;
+    border-radius: var(--pcb-r-lg) !important;
+    border: var(--pcb-frame-border) !important;
+    overflow: hidden !important;
+    box-shadow: var(--pcb-shadow) !important;
+    background: var(--pcb-media-bg) !important;
+  }
+  .pcb-sec img.pcb-shot {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--pcb-media-bg) !important;
+  }
+  .pcb-shot-wide   { aspect-ratio: 4 / 3 !important; object-position: 50% 50% !important; }
+  .pcb-shot-square { aspect-ratio: 1 / 1 !important; object-position: 50% 50% !important; }
+
+  /* =========================================================================
+     MOTION -- native video elements only.
+     Every clip has a poster and a declared aspect-ratio, so its box is
+     reserved and a first frame shows even if the file never loads. All
+     carry `controls`: an older audience must be able to stop motion.
+     ========================================================================= */
+  .pcb-video-wrap { width: 100% !important; max-width: 820px !important; margin: 0 auto !important; }
+  .pcb-sec video.pcb-video {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--pcb-media-bg) !important;
+  }
+  .pcb-sec video.pcb-video-wide { aspect-ratio: 16 / 9 !important; }
+  /* Real-clip loops: animated WebP in a picture element. They play on their
+     own (no play button); under prefers-reduced-motion the picture swaps in
+     the still JPG instead, so motion-sensitive viewers see no animation. */
+  .pcb-sec picture { display: block !important; }
+  .pcb-sec img.pcb-anim { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .pcb-sec p.pcb-video-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.6 !important;
+    color: var(--pcb-ink-soft) !important;
+    text-align: center !important;
+    max-width: 56ch !important;
+    margin: 16px auto 0 auto !important;
+  }
+  .pcb-ugc-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: clamp(16px, 2.4vw, 26px) !important;
+  }
+  .pcb-sec figure.pcb-ugc { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 12px !important; }
+  .pcb-sec figcaption.pcb-ugc-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.55 !important;
+    color: var(--pcb-ink) !important;
+  }
+
+  /* =========================================================================
+     STAR DIVIDER
+     ========================================================================= */
+  .pcb-stars { display: flex !important; align-items: center !important; justify-content: center !important; gap: 14px !important; }
+  .pcb-stars-mark {
+    font-size: clamp(18px, 2vw, 24px) !important;
+    color: var(--pcb-accent-ink) !important;
+    letter-spacing: 6px !important;
+    line-height: 1 !important;
+  }
+  .pcb-dark .pcb-stars-mark { color: var(--pcb-feat-accent) !important; }
+  .pcb-stars-rule { flex: 1 1 60px !important; max-width: 120px !important; height: 2px !important; background: var(--pcb-rule) !important; }
+  .pcb-divider { padding: clamp(20px, 4vw, 34px) 0 !important; }
+
+  /* =========================================================================
+     TRUST BAR (top)
+     ========================================================================= */
+  .pcb-sec.pcb-tagbar { padding: 14px 0 !important; background: var(--pcb-tag-bg) !important; border-bottom: var(--pcb-tag-border) !important; }
+  .pcb-tagbar-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(10px, 3vw, 28px) !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+  .pcb-tagbar-item {
+    font-family: var(--pcb-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.04em !important;
+    color: var(--pcb-tag-ink) !important;
+    white-space: nowrap !important;
+  }
+
+  /* =========================================================================
+     HERO
+     ========================================================================= */
+  .pcb-hero { padding: clamp(40px, 7vw, 76px) 0 clamp(36px, 6vw, 64px) 0 !important; }
+  .pcb-hero-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: clamp(18px, 3vw, 26px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .pcb-badge {
+    display: inline-block !important;
+    background: var(--pcb-cta-bg) !important;
+    color: var(--pcb-cta-ink) !important;
+    font-family: var(--pcb-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    padding: 8px 18px !important;
+    border-radius: var(--pcb-r-pill) !important;
+  }
+  .pcb-hero-h1 { max-width: 24ch !important; }
+  .pcb-hero-art { width: 100% !important; max-width: 680px !important; margin: 0 auto !important; }
+  .pcb-sec p.pcb-hero-sub {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--pcb-feat-ink) !important;
+    max-width: min(720px, 62ch) !important;
+    margin: 0 auto !important;
+    text-wrap: pretty !important;
+  }
+
+  .pcb-price-row { display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+  .pcb-price-label {
+    font-family: var(--pcb-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 18px) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+  }
+  .pcb-price-was { font-family: var(--pcb-display) !important; font-size: clamp(22px, 2.6vw, 30px) !important; }
+  .pcb-price-now { font-family: var(--pcb-display) !important; font-weight: var(--pcb-display-weight) !important; font-size: clamp(40px, 6vw, 60px) !important; line-height: 1 !important; }
+  .pcb-price-rule { display: block !important; width: 100% !important; max-width: 220px !important; height: 2px !important; background: var(--pcb-plate-rule) !important; margin: 10px auto !important; }
+
+  .pcb-cta {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    min-height: 76px !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    background: var(--pcb-cta-bg) !important;
+    color: var(--pcb-cta-ink) !important;
+    text-decoration: none !important;
+    border-radius: var(--pcb-r-sm) !important;
+    border-bottom: 6px solid var(--pcb-cta-edge) !important;
+    padding: 14px 26px !important;
+    box-shadow: var(--pcb-shadow) !important;
+    transition: filter .18s ease, transform .18s ease !important;
+    cursor: pointer !important;
+  }
+  .pcb-cta:hover { filter: brightness(1.08) !important; transform: translateY(-2px) !important; }
+  .pcb-cta:active { transform: translateY(0) !important; }
+  .pcb-cta:focus-visible { outline: 4px solid var(--pcb-focus-ring) !important; outline-offset: 3px !important; }
+  .pcb-cta-main { font-family: var(--pcb-display) !important; font-weight: var(--pcb-display-weight) !important; font-size: clamp(22px, 2.8vw, 28px) !important; line-height: 1.2 !important; color: var(--pcb-cta-ink) !important; }
+  .pcb-cta-sub { font-family: var(--pcb-sans) !important; font-weight: 400 !important; font-size: clamp(15px, 1.5vw, 16px) !important; color: var(--pcb-cta-ink) !important; }
+  .pcb-cta-block { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 14px !important; width: 100% !important; }
+  .pcb-sec p.pcb-cta-note { font-size: clamp(14px, 1.5vw, 16px) !important; color: var(--pcb-feat-ink-soft) !important; margin: 0 !important; }
+
+  .pcb-trust {
+    list-style: none !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px 22px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .pcb-trust li {
+    font-family: var(--pcb-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    color: var(--pcb-feat-ink-soft) !important;
+  }
+
+  /* =========================================================================
+     BAND SECTIONS
+     ========================================================================= */
+  .pcb-band { padding: clamp(48px, 7vw, 84px) 0 !important; }
+  .pcb-band-head { max-width: 720px !important; margin: 0 auto clamp(30px, 5vw, 48px) auto !important; }
+
+  .pcb-get-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(20px, 3vw, 36px) !important;
+  }
+  .pcb-card {
+    background: var(--pcb-card-bg) !important;
+    border: var(--pcb-card-border) !important;
+    border-radius: var(--pcb-r-lg) !important;
+    padding: clamp(18px, 2.6vw, 26px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .pcb-card-h { font-family: var(--pcb-display) !important; font-weight: var(--pcb-display-weight) !important; font-size: clamp(22px, 2.6vw, 27px) !important; color: var(--pcb-head-ink) !important; margin: 0 !important; }
+  .pcb-card-list { list-style: none !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; gap: 10px !important; }
+  .pcb-card-list li {
+    font-size: clamp(17px, 1.7vw, 19px) !important;
+    line-height: 1.6 !important;
+    color: var(--pcb-ink) !important;
+    padding-left: 30px !important;
+    position: relative !important;
+  }
+  .pcb-card-list li::before {
+    content: "\2713" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    color: var(--pcb-accent-ink) !important;
+    font-weight: 700 !important;
+  }
+
+  /* Retail value band */
+  .pcb-value-wrap { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 22px !important; }
+  .pcb-value-art { width: 100% !important; max-width: 720px !important; margin: 0 auto !important; }
+  .pcb-value-fig { font-family: var(--pcb-display) !important; font-weight: var(--pcb-display-weight) !important; font-size: clamp(42px, 6vw, 64px) !important; line-height: 1 !important; }
+  .pcb-sec p.pcb-value-label { font-family: var(--pcb-sans) !important; font-weight: 700 !important; font-size: clamp(15px, 1.6vw, 17px) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; color: var(--pcb-feat-accent) !important; margin: 0 !important; }
+
+  .pcb-why-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(16px, 2.6vw, 28px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .pcb-why-item { display: flex !important; align-items: flex-start !important; gap: 14px !important; text-align: left !important; }
+  .pcb-why-icon {
+    flex: 0 0 auto !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: var(--pcb-r-pill) !important;
+    background: var(--pcb-icon-bg) !important;
+    border: var(--pcb-icon-border) !important;
+    color: var(--pcb-icon-ink) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+  }
+  .pcb-why-item p { margin: 0 !important; font-size: clamp(17px, 1.7vw, 19px) !important; line-height: 1.6 !important; color: var(--pcb-ink) !important; }
+
+  /* Reviews */
+  .pcb-rev-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(18px, 2.6vw, 28px) !important; }
+  .pcb-rev {
+    background: var(--pcb-card-bg) !important;
+    border: var(--pcb-card-border) !important;
+    border-radius: var(--pcb-r-lg) !important;
+    padding: clamp(18px, 2.4vw, 24px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .pcb-sec p.pcb-rev-stars { color: var(--pcb-accent-ink) !important; letter-spacing: 4px !important; font-size: clamp(16px, 1.8vw, 19px) !important; line-height: 1 !important; margin: 0 0 14px 0 !important; }
+  .pcb-sec p.pcb-rev-txt { font-size: clamp(18px, 1.8vw, 20px) !important; line-height: 1.7 !important; color: var(--pcb-ink) !important; margin: 0 0 18px 0 !important; flex: 1 1 auto !important; }
+  .pcb-sec p.pcb-rev-by { font-size: clamp(16px, 1.6vw, 18px) !important; line-height: 1.5 !important; color: var(--pcb-ink-soft) !important; margin: 0 !important; padding-top: 14px !important; border-top: 2px solid var(--pcb-hairline) !important; }
+  .pcb-rev-by b { display: block !important; color: var(--pcb-ink) !important; font-size: 1.05em !important; }
+
+  /* Guarantee */
+  .pcb-guar-grid { display: grid !important; grid-template-columns: 1fr 1.3fr !important; gap: clamp(24px, 4vw, 48px) !important; align-items: center !important; }
+  .pcb-guar-seal {
+    display: inline-block !important;
+    margin-bottom: 18px !important;
+    font-family: var(--pcb-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 17px) !important;
+  }
+
+  /* Final CTA */
+  .pcb-final { padding: clamp(50px, 7vw, 90px) 0 !important; text-align: center !important; }
+
+  /* Disclaimer */
+  .pcb-fine { padding: 22px 0 !important; }
+  .pcb-sec.pcb-fine p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: var(--pcb-ink-soft) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  /* =========================================================================
+     RESPONSIVE
+     ========================================================================= */
+  @media (max-width: 968px) {
+    .pcb-guar-grid { grid-template-columns: 1fr !important; }
+    .pcb-guar-fig { max-width: 380px !important; margin: 0 auto !important; }
+    .pcb-ugc-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 768px) {
+    .pcb-get-grid { grid-template-columns: 1fr !important; }
+    .pcb-why-grid { grid-template-columns: 1fr !important; }
+    .pcb-rev-grid { grid-template-columns: 1fr !important; }
+    .pcb-stars-rule { flex-basis: 40px !important; }
+    .pcb-cta { max-width: 100% !important; }
+  }
+
+  /* Touch devices + reduced motion: no CSS transitions/transforms. (Videos
+     keep their native controls; reduced-motion users can pause them.) */
+  @media (hover: none) {
+    .pcb-sec *, .pcb-sec *::before, .pcb-sec *::after { animation: none !important; transition: none !important; }
+    .pcb-cta:hover { transform: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pcb-sec *, .pcb-sec *::before, .pcb-sec *::after { animation: none !important; transition: none !important; }
+    .pcb-cta:hover { transform: none !important; }
+  }
+
+
+  /* =========================================================================
+     PCB ADDITIONS (shared) -- hero photo + clip / photo boxes
+     ========================================================================= */
+  /* Motion = self-playing animated WebP loops from the team's own footage (no
+     play button, no controls); each <picture> swaps in a real still under
+     prefers-reduced-motion, since an animated image cannot be paused. Boxes
+     are reserved by aspect-ratio so nothing shifts while they load.
+     Hero: pcb-hero-001.jpg, 1600x900, the same 16:9 at every width (a 4:5
+     crop cut off the outer bracelets). Feature cards: square crops of the
+     close-up clips (compass, rod and striker stay centered in every frame).
+     Real-photo grid: 4:5 crops of the wrist / outdoor / warehouse / desk
+     clips. */
+  .pcb-sec img.pcb-hero-img { aspect-ratio: 16 / 9 !important; object-position: 50% 50% !important; }
+  .pcb-hero-art.pcb-hero-wide { max-width: 980px !important; }
+  .pcb-sec img.pcb-real { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .pcb-card .pcb-frame { margin: 0 !important; }
+
+  /* ====  END SHARED RULES  ==================================================== */
+
+  /* ==== VARIANT B RULES -- CINEMATIC =======================================
+     Everything below is the cinematic cell's own page system (.pcb-cine-*).
+     The tokens and shared page rules above are the classic page's.
+     STATIC FIRST: every rule here renders a complete page with no script.
+     The payload only adds .pcb-cine-wait (hero lines hidden for their
+     entrance), .pcb-cine-on and .pcb-cine-tools-on (pinned tool stage); if
+     GSAP never loads, those classes never stay, so nothing stays hidden. */
+
+  .pcb-cine { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+  .pcb-cine .pcb-sec.pcb-dark { background: #090c0a !important; }
+
+  /* ---- ACT 1: full-screen hero ---- */
+  .pcb-sec.pcb-cine-hero {
+    min-height: 100vh !important;
+    min-height: 100svh !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    background: #090c0a !important;
+  }
+  .pcb-cine-hero-media { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .pcb-sec img.pcb-cine-hero-img {
+    width: 100% !important; height: 100% !important; max-width: none !important;
+    object-fit: cover !important; object-position: 54% 52% !important;
+    will-change: transform;
+  }
+  .pcb-cine-hero-shade {
+    position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: linear-gradient(90deg, rgba(9,12,10,0.94) 0%, rgba(9,12,10,0.72) 34%, rgba(9,12,10,0.08) 66%),
+                linear-gradient(0deg, rgba(9,12,10,0.88) 0%, rgba(9,12,10,0) 38%) !important;
+  }
+  .pcb-cine-hero-copy {
+    position: relative !important; z-index: 2 !important;
+    display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+    gap: clamp(16px, 2.4vw, 24px) !important;
+    width: 100% !important; max-width: 700px !important;
+    padding: clamp(90px, 14vh, 140px) clamp(20px, 5vw, 72px) clamp(84px, 12vh, 120px) clamp(20px, 5vw, 72px) !important;
+    text-align: left !important;
+  }
+  /* Desktop: the photo fills the right ~70% so the headline never sits on the product. */
+  @media (min-width: 900px) {
+    .pcb-cine-hero-media { left: 30% !important; }
+    .pcb-cine-hero-shade { background: linear-gradient(90deg, #090c0a 0%, #090c0a 30%, rgba(9,12,10,0.55) 42%, rgba(9,12,10,0) 60%),
+                                       linear-gradient(0deg, rgba(9,12,10,0.7) 0%, rgba(9,12,10,0) 30%) !important; }
+  }
+  .pcb-cine-h1.pcb-h1 { font-size: clamp(40px, 5.2vw, 76px) !important; line-height: 1.02 !important; color: #ffffff !important; letter-spacing: -0.02em !important; }
+  .pcb-cine-line { display: block !important; overflow: hidden !important; padding-bottom: 0.06em !important; }
+  .pcb-cine-line-in { display: block !important; }
+  .pcb-sec p.pcb-cine-hero-sub {
+    font-size: clamp(19px, 1.6vw, 21px) !important; line-height: 1.7 !important;
+    color: #dfe5e0 !important; max-width: 52ch !important; margin: 0 !important; text-align: left !important;
+  }
+  .pcb-cine-hero-cta { width: 100% !important; max-width: 480px !important; }
+  .pcb-cine-hero-cta .pcb-cta { width: 100% !important; }
+  .pcb-cine-cue {
+    position: absolute !important; z-index: 2 !important; left: 50% !important; bottom: 18px !important;
+    transform: translateX(-50%) !important;
+    display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important;
+    font-family: var(--pcb-sans) !important; font-size: 14px !important; font-weight: 700 !important;
+    letter-spacing: 0.14em !important; text-transform: uppercase !important; color: #c9d1cb !important;
+  }
+  .pcb-cine-cue i {
+    display: block !important; width: 14px !important; height: 14px !important;
+    border-right: 2px solid #4fdc86 !important; border-bottom: 2px solid #4fdc86 !important;
+    transform: rotate(45deg) !important; animation: pcbCue 1.6s ease-in-out infinite !important;
+  }
+  @keyframes pcbCue { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 1; } 50% { transform: translateY(7px) rotate(45deg); opacity: .55; } }
+  .pcb-cine-wait [data-fx="line"], .pcb-cine-wait [data-fx="hero"] { visibility: hidden !important; }
+
+  /* ---- ACT 2: five tools. Static = each tool as photo + caption in a grid. ---- */
+  .pcb-sec.pcb-cine-tools { padding: clamp(48px, 7vw, 90px) 0 !important; background: #090c0a !important; }
+  /* NOT !important on position/width: ScrollTrigger's pin writes position:fixed + a px width
+     inline while the stage is pinned, and an !important rule here would cancel the pin. */
+  .pcb-cine-stage { position: relative; width: 100%; }
+  .pcb-cine-shots, .pcb-cine-vignette, .pcb-cine-count, .pcb-cine-bar { display: none !important; }
+  .pcb-cine-panel { max-width: 1180px !important; margin: 0 auto !important; padding: 0 clamp(18px, 4vw, 40px) !important; }
+  .pcb-sec p.pcb-cine-kicker { color: #4fdc86 !important; }
+  .pcb-cine-beats {
+    list-style: none !important; margin: 0 !important; padding: 0 !important;
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(22px, 3vw, 36px) !important;
+  }
+  .pcb-cine-beat { margin: 0 !important; padding: 0 !important; }
+  .pcb-sec img.pcb-cine-beat-img {
+    display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9 !important;
+    object-fit: cover !important; border-radius: var(--pcb-r-lg) !important; margin: 0 0 16px 0 !important;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.5) !important;
+  }
+  .pcb-cine-beat-h { font-family: var(--pcb-display) !important; font-weight: 900 !important; font-size: clamp(22px, 2.4vw, 28px) !important; line-height: 1.2 !important; color: #ffffff !important; margin: 0 0 6px 0 !important; }
+  .pcb-cine-beat p { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #c9d1cb !important; margin: 0 !important; }
+
+  /* Pinned stage (the payload adds .pcb-cine-tools-on) */
+  .pcb-cine-tools-on .pcb-sec.pcb-cine-tools { padding: 0 !important; }
+  .pcb-cine-tools-on .pcb-cine-stage { height: 100vh !important; height: 100svh !important; overflow: hidden !important; background: #090c0a !important; }
+  .pcb-cine-tools-on .pcb-cine-shots { display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .pcb-cine-tools-on .pcb-sec img.pcb-cine-shot,
+  .pcb-cine-tools-on img.pcb-cine-shot {
+    position: absolute !important; top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important; max-width: none !important;
+    object-fit: cover !important; object-position: 50% 50% !important;
+    will-change: transform, opacity;
+  }
+  /* must out-rank the static ".pcb-sec img.pcb-cine-beat-img" (0,2,1) -- a plain
+     ".pcb-cine-tools-on .pcb-cine-beat-img" (0,2,0) lost and left thumbnails in the panel */
+  .pcb-cine-tools-on .pcb-sec img.pcb-cine-beat-img { display: none !important; }
+  .pcb-cine-tools-on .pcb-cine-vignette {
+    display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; pointer-events: none !important;
+    background: radial-gradient(ellipse at 66% 50%, rgba(9,12,10,0) 34%, rgba(9,12,10,0.5) 78%, rgba(9,12,10,0.82) 100%) !important;
+  }
+  .pcb-cine-tools-on .pcb-cine-panel {
+    position: absolute !important; z-index: 3 !important; top: 0 !important; bottom: 0 !important; left: 0 !important;
+    width: min(44%, 560px) !important; max-width: none !important; margin: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: center !important;
+    padding: 0 clamp(24px, 3vw, 48px) 76px clamp(24px, 5vw, 72px) !important;   /* bottom: room for the floating CTA bar */
+    background: linear-gradient(90deg, rgba(9,12,10,0.95) 0%, rgba(9,12,10,0.84) 62%, rgba(9,12,10,0) 100%) !important;
+  }
+  .pcb-cine-tools-on .pcb-cine-count { display: flex !important; align-items: baseline !important; gap: 10px !important; margin: 0 0 18px 0 !important; }
+  .pcb-cine-count b { font-family: var(--pcb-display) !important; font-weight: 900 !important; font-size: clamp(56px, 6vw, 84px) !important; line-height: 1 !important; color: #4fdc86 !important; min-width: 0.8em !important; }
+  .pcb-cine-count span { font-family: var(--pcb-sans) !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: #c9d1cb !important; }
+  .pcb-cine-tools-on .pcb-cine-beats { display: block !important; position: relative !important; min-height: 210px !important; }
+  .pcb-cine-tools-on .pcb-cine-beat { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; }
+  .pcb-cine-tools-on .pcb-cine-beat-h { font-size: clamp(30px, 3.4vw, 46px) !important; margin-bottom: 12px !important; }
+  .pcb-cine-tools-on .pcb-cine-beat p { font-size: clamp(18px, 1.6vw, 21px) !important; color: #dfe5e0 !important; }
+  .pcb-cine-tools-on .pcb-cine-bar { display: block !important; height: 3px !important; background: rgba(255,255,255,0.14) !important; margin-top: 26px !important; max-width: 320px !important; }
+  .pcb-cine-bar i { display: block !important; height: 100% !important; background: #4fdc86 !important; transform: scaleX(0); transform-origin: 0 50% !important; }
+
+  /* ---- ACT 4: real clips ---- */
+  .pcb-sec.pcb-cine-reel { padding: clamp(56px, 8vw, 100px) 0 !important; }
+  .pcb-cine-reel-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(18px, 2.6vw, 32px) !important; }
+  .pcb-sec figure.pcb-cine-clip { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 14px !important; }
+  .pcb-cine-clip img {
+    width: 100% !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 50% 50% !important;
+    border-radius: var(--pcb-r-lg) !important; background: #1a201c !important; box-shadow: 0 18px 40px rgba(0,0,0,0.5) !important;
+  }
+  .pcb-cine-clip-tall img { aspect-ratio: 4 / 5 !important; max-width: 440px !important; margin: 0 auto !important; }
+  .pcb-sec .pcb-cine-clip figcaption { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #c9d1cb !important; max-width: 440px !important; margin: 0 auto !important; }
+  .pcb-cine-clip figcaption b { color: #ffffff !important; }
+
+  /* ---- ACT 5: value ---- */
+  .pcb-sec.pcb-cine-value { padding: clamp(64px, 9vw, 120px) 0 !important; }
+  .pcb-cine-price { display: flex !important; align-items: center !important; justify-content: center !important; flex-wrap: wrap !important; gap: 10px clamp(24px, 4vw, 56px) !important; margin: 18px 0 26px 0 !important; }
+  .pcb-cine-was { position: relative !important; display: inline-block !important; font-family: var(--pcb-display) !important; font-weight: 900 !important; font-size: clamp(72px, 11vw, 150px) !important; line-height: 1 !important; color: #6f7a73 !important; }
+  .pcb-cine-was i { position: absolute !important; left: -6% !important; right: -6% !important; top: 50% !important; height: clamp(6px, 0.8vw, 11px) !important; margin-top: -4px !important; background: #c3201a !important; border-radius: 4px !important; transform: rotate(-9deg); transform-origin: 0 50% !important; }
+  .pcb-cine-free { display: inline-block !important; font-family: var(--pcb-display) !important; font-weight: 900 !important; font-size: clamp(76px, 12vw, 164px) !important; line-height: 1 !important; color: #4fdc86 !important; text-shadow: 0 0 40px rgba(79,220,134,0.35) !important; }
+  .pcb-cine-value .pcb-cine-hero-cta { margin-left: auto !important; margin-right: auto !important; }
+
+  /* ---- ACT 3 / 6 / 9: full-bleed photos with parallax ---- */
+  .pcb-sec.pcb-cine-bleed { min-height: 82vh !important; min-height: 82svh !important; padding: clamp(70px, 10vw, 120px) 0 !important; display: flex !important; align-items: center !important; background: #090c0a !important; }
+  .pcb-cine-bleed-media { position: absolute !important; top: -10% !important; bottom: -10% !important; left: 0 !important; right: 0 !important; }
+  .pcb-cine-bleed-media img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: 50% 50% !important; will-change: transform; }
+  .pcb-cine-bleed-shade { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; background: linear-gradient(90deg, rgba(9,12,10,0.92) 0%, rgba(9,12,10,0.7) 45%, rgba(9,12,10,0.2) 80%) !important; }
+  .pcb-cine-final .pcb-cine-bleed-shade { background: radial-gradient(ellipse at 50% 55%, rgba(9,12,10,0.62) 0%, rgba(9,12,10,0.9) 70%) !important; }
+  .pcb-cine-bleed-copy { position: relative !important; z-index: 2 !important; }
+  .pcb-cine-bleed-copy > .pcb-h2, .pcb-cine-bleed-copy > p.pcb-copy, .pcb-cine-bleed-copy > p.pcb-kicker { max-width: 600px !important; text-align: left !important; }
+  .pcb-cine-fire .pcb-h2 { font-size: clamp(44px, 6vw, 88px) !important; line-height: 1.02 !important; }
+  .pcb-cine-final .pcb-cine-bleed-copy > p.pcb-copy { max-width: 62ch !important; text-align: center !important; }
+  .pcb-cine-final .pcb-cine-line { text-align: center !important; }
+  /* Fire scene: the subject sits right of center, so push the photo right on desktop. */
+  @media (min-width: 900px) { .pcb-cine-fire .pcb-cine-bleed-media { left: 22% !important; } }
+
+  /* ---- Floating CTA (moved to <body> by the payload; scoped by its own class) ---- */
+  .pcb-cine-fbar {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; z-index: 99990 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important; gap: 16px !important;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    background: rgba(10,13,11,0.96) !important; border-top: 2px solid #4fdc86 !important;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.45) !important;
+    transform: translateY(110%) !important; transition: transform .35s ease !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    box-sizing: border-box !important;
+  }
+  .pcb-cine-fbar.pcb-cine-fbar-on { transform: translateY(0) !important; }
+  .pcb-cine-fbar-txt { font-size: 17px !important; line-height: 1.3 !important; color: #dfe5e0 !important; }
+  .pcb-cine-fbar-txt b { color: #ffffff !important; }
+  a.pcb-cine-fbar-btn {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-height: 50px !important; padding: 0 26px !important; border-radius: 8px !important;
+    background: #c3201a !important; border-bottom: 4px solid #74110d !important; color: #ffffff !important;
+    font-size: 19px !important; font-weight: 900 !important; text-decoration: none !important; white-space: nowrap !important;
+  }
+  @media (prefers-reduced-motion: reduce) { .pcb-cine-fbar { transition: none !important; } }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 899px) {
+    /* Phone: the photo owns the top of the screen, the copy sits below it. */
+    .pcb-cine-hero-media { bottom: auto !important; height: 60vh !important; height: 60svh !important; }
+    .pcb-cine-hero-shade { background: linear-gradient(0deg, #090c0a 0%, #090c0a calc(100% - 60svh), rgba(9,12,10,0.55) calc(100% - 52svh), rgba(9,12,10,0) calc(100% - 36svh)) !important; }
+    .pcb-cine-hero-copy { padding-top: 50vh !important; padding-top: 50svh !important; }
+    .pcb-cine-tools-on .pcb-cine-shots { bottom: auto !important; height: 58% !important; }
+    .pcb-cine-tools-on .pcb-cine-panel {
+      top: auto !important; bottom: 0 !important; right: 0 !important; width: 100% !important; justify-content: flex-end !important;
+      padding: 40px 18px 96px 18px !important;   /* bottom: the floating CTA bar (~74px) sits over this */
+      background: linear-gradient(0deg, #090c0a 0%, #090c0a 70%, rgba(9,12,10,0) 100%) !important;
+    }
+    .pcb-cine-tools-on .pcb-cine-vignette { background: linear-gradient(0deg, rgba(9,12,10,0) 50%, rgba(9,12,10,0.4) 100%) !important; }
+    .pcb-cine-tools-on .pcb-cine-count { margin-bottom: 8px !important; }
+    .pcb-cine-count b { font-size: 48px !important; }
+    .pcb-cine-tools-on .pcb-cine-beats { min-height: 180px !important; }
+    .pcb-cine-tools-on .pcb-cine-beat-h { font-size: 28px !important; margin-bottom: 8px !important; }
+    .pcb-cine-tools-on .pcb-cine-bar { margin-top: 14px !important; max-width: none !important; }
+    .pcb-cine-bleed-shade { background: linear-gradient(0deg, rgba(9,12,10,0.95) 0%, rgba(9,12,10,0.82) 38%, rgba(9,12,10,0.2) 70%, rgba(9,12,10,0.05) 100%) !important; }
+    .pcb-sec.pcb-cine-bleed { align-items: flex-end !important; }
+  }
+  @media (max-width: 768px) {
+    .pcb-cine-beats, .pcb-cine-reel-grid { grid-template-columns: 1fr !important; }
+    .pcb-cine-fbar-txt { display: none !important; }
+    a.pcb-cine-fbar-btn { width: 100% !important; }
+  }
+</style>
+<!-- ======================= CINEMATIC ROOT (one per page; multi-instance safe) ======================= -->
+<div class="pcb-cine" data-pcb-cine>
+
+<!-- ======================= TRUST BAR ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-tagbar">
+  <div class="pcb-tagbar-inner">
+    <span class="pcb-tagbar-item">Free + Shipping</span>
+    <span class="pcb-tagbar-item">Ships Within The USA</span>
+    <span class="pcb-tagbar-item">30-Day Money Back</span>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 1 -- FULL-SCREEN HERO ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-hero" data-cine-hero>
+  <div class="pcb-cine-hero-media">
+    <img class="pcb-cine-hero-img" data-cine-hero-img
+         src="https://mtp-images.com/pcb-hero-cine-001.jpg"
+         width="2000" height="1116" loading="eager" decoding="async"
+         alt="A man resting his forearm on his knee beside a campfire in a dark forest, the black paracord survival bracelet with its green compass on his wrist">
+  </div>
+  <div class="pcb-cine-hero-shade"></div>
+  <div class="pcb-cine-hero-copy">
+    <span class="pcb-badge" data-fx="hero">Free + Shipping</span>
+    <h1 class="pcb-h1 pcb-cine-h1">
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in" data-fx="line">Five survival tools.</span></span>
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in" data-fx="line">Wrapped around your wrist.</span></span>
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in pcb-hi-txt" data-fx="line">Yours free today.</span></span>
+    </h1>
+    <p class="pcb-cine-hero-sub" data-fx="hero">
+      Woven paracord, a compass, a fire-starter rod, a steel striker and a
+      whistle -- all in a bracelet you never have to remember to pack. A $19
+      retail value. Free today -- you only cover the shipping.
+    </p>
+    <div class="pcb-cine-hero-cta" data-fx="hero">
+      <a class="pcb-cta" href="#" data-cine-cta
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="pcb-cta-main">Claim My Free Bracelet</span>
+        <span class="pcb-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+  <div class="pcb-cine-cue" aria-hidden="true"><span>Scroll to see all five</span><i></i></div>
+</section>
+
+
+<!-- ======================= ACT 2 -- FIVE TOOLS (pinned, one real close-up per tool) =======================
+     Static / no-JS / reduced motion: each tool as a photo + caption, in a grid.
+     With JS: the stage pins full-screen and steps through the tools -- the close-up
+     crossfades in with a slow push, the caption swaps, the counter ticks 1..5. -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-tools" data-cine-tools>
+  <div class="pcb-cine-stage" data-cine-stage>
+    <div class="pcb-cine-shots" aria-hidden="true">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-cord-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-compass-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-rod-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-striker-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-whistle-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+      <img class="pcb-cine-shot" data-cine-shot src="https://mtp-images.com/pcb-hero-001.jpg" width="1600" height="900" loading="lazy" decoding="async" alt="">
+    </div>
+    <div class="pcb-cine-vignette" aria-hidden="true"></div>
+
+    <div class="pcb-cine-panel">
+      <p class="pcb-kicker pcb-cine-kicker">Built Into Every Bracelet</p>
+      <div class="pcb-cine-count" aria-hidden="true"><b data-cine-count>1</b><span>of 5 tools</span></div>
+      <ol class="pcb-cine-beats">
+        <li class="pcb-cine-beat">
+          <img class="pcb-cine-beat-img" src="https://mtp-images.com/pcb-cord-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+               alt="A black paracord bracelet held up in our warehouse, its tight woven cord in focus">
+          <h3 class="pcb-cine-beat-h">Woven Paracord</h3>
+          <p>A tight black paracord weave that's comfortable enough to wear every day, so the other four tools are always with you.</p>
+        </li>
+        <li class="pcb-cine-beat">
+          <img class="pcb-cine-beat-img" src="https://mtp-images.com/pcb-compass-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+               alt="Fingers holding the bracelet's buckle, its green-faced compass and steel striker plate facing up">
+          <h3 class="pcb-cine-beat-h">Built-In Compass</h3>
+          <p>A green-faced compass set right into the buckle. Find north at a glance, without digging through a pack.</p>
+        </li>
+        <li class="pcb-cine-beat">
+          <img class="pcb-cine-beat-img" src="https://mtp-images.com/pcb-rod-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+               alt="The bracelet's buckle opened to show the short metal fire-starter rod between its prongs, the steel striker plate in the other hand">
+          <h3 class="pcb-cine-beat-h">Fire-Starter Rod</h3>
+          <p>A metal fire-starter rod rides between the buckle's prongs. Strike it to throw sparks into dry tinder -- no matches, no lighter fluid.</p>
+        </li>
+        <li class="pcb-cine-beat">
+          <img class="pcb-cine-beat-img" src="https://mtp-images.com/pcb-striker-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+               alt="The steel striker plate slid out of the buckle, its serrated edge and TacRight etching up close">
+          <h3 class="pcb-cine-beat-h">Steel Striker Plate</h3>
+          <p>Slides out of the buckle. Scrape its serrated edge down the rod and the sparks fly.</p>
+        </li>
+        <li class="pcb-cine-beat">
+          <img class="pcb-cine-beat-img" src="https://mtp-images.com/pcb-whistle-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+               alt="Two bracelets on a stand, the whistle mouthpiece beside each compass">
+          <h3 class="pcb-cine-beat-h">Emergency Whistle</h3>
+          <p>Built into the end of the buckle. A whistle carries farther than a shout -- and it doesn't wear out your voice.</p>
+        </li>
+        <li class="pcb-cine-beat" data-final>
+          <h3 class="pcb-cine-beat-h">All Five. On Your Wrist.</h3>
+          <p>One bracelet that's there on every hike, hunt and drive. Free today -- you only cover the shipping.</p>
+        </li>
+      </ol>
+      <div class="pcb-cine-bar" aria-hidden="true"><i data-cine-bar></i></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 3 -- SPARKS (full-bleed) ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-bleed pcb-cine-fire" data-cine-bleed>
+  <div class="pcb-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pcb-sparks-001.jpg" width="2000" height="1116" loading="lazy" decoding="async"
+         alt="Two hands scrape the bracelet's steel striker plate down the fire-starter rod in its buckle, throwing a shower of sparks into dry grass">
+  </div>
+  <div class="pcb-cine-bleed-shade"></div>
+  <div class="pcb-wrap pcb-cine-bleed-copy">
+    <p class="pcb-kicker" data-fx="up">When The Matches Are Wet</p>
+    <h2 class="pcb-h2">
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in" data-fx="line2">Rod. Striker.</span></span>
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in pcb-hi-txt" data-fx="line2">Sparks.</span></span>
+    </h2>
+    <p class="pcb-copy" data-fx="up">
+      Slide the striker out, pull the rod from the buckle and scrape. The
+      sparks land in dry tinder -- birch bark, dry grass, a cotton ball --
+      and you have a fire without a match in your pocket.
+    </p>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 4 -- IN HAND (real clips, wipe reveals) ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-reel">
+  <div class="pcb-wrap">
+    <div class="pcb-band-head pcb-center" data-fx="up">
+      <p class="pcb-kicker">Real Bracelet. Real Hands.</p>
+      <h2 class="pcb-h2">Wear It Every Day. Forget It's There.</h2>
+    </div>
+    <div class="pcb-cine-reel-grid">
+      <figure class="pcb-cine-clip pcb-cine-clip-tall" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/pr-photo-7918.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7926.webp" width="603" height="1080" loading="lazy" decoding="async"
+               alt="A paracord bracelet worn on the wrist, its compass buckle facing out">
+        </picture>
+        <figcaption><b>Snaps on in a second.</b> Wear it all day and forget it's there -- until you need it.</figcaption>
+      </figure>
+      <figure class="pcb-cine-clip pcb-cine-clip-tall" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/pr-photo-7915.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7924.webp" width="594" height="1080" loading="lazy" decoding="async"
+               alt="A paracord bracelet held up outdoors against green trees">
+        </picture>
+        <figcaption><b>Made for outside.</b> The trail, the creek bank, the deer stand.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 5 -- VALUE (strike, then FREE) ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-value" data-cine-value>
+  <div class="pcb-wrap pcb-center">
+    <p class="pcb-value-label" data-fx="up">Each Bracelet Carries A $19 Retail Value</p>
+    <div class="pcb-cine-price" aria-label="Retails for 19 dollars, yours free today">
+      <span class="pcb-cine-was"><span>$19</span><i data-cine-strike></i></span>
+      <span class="pcb-cine-free" data-cine-free>FREE</span>
+    </div>
+    <p class="pcb-copy pcb-center" data-fx="up" style="margin:0 auto !important;">
+      We cover the bracelet. You cover the shipping. Order more than one and
+      your shipping per bracelet drops -- choose how many on the order form below.
+    </p>
+    <div class="pcb-cine-hero-cta" data-fx="up" style="margin-top:28px !important;">
+      <a class="pcb-cta" href="#"
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="pcb-cta-main">Claim My Free Bracelet</span>
+        <span class="pcb-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 6 -- WAREHOUSE (full-bleed parallax) ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-bleed" data-cine-bleed>
+  <div class="pcb-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pcb-warehouse-001.jpg" width="1600" height="900" loading="lazy" decoding="async"
+         alt="Three paracord bracelets in an open palm in our warehouse, shelves of stock behind them">
+  </div>
+  <div class="pcb-cine-bleed-shade"></div>
+  <div class="pcb-wrap pcb-cine-bleed-copy" data-fx="up">
+    <p class="pcb-kicker">Not A Rendering</p>
+    <h2 class="pcb-h2">The Same Bracelet That Ships To You</h2>
+    <p class="pcb-copy">
+      The close-ups and clips on this page were shot in our own warehouse
+      and out back -- real bracelets from the same stock your order is
+      packed from.
+    </p>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 7 -- STOCK UP ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-band">
+  <div class="pcb-wrap">
+    <div class="pcb-guar-grid">
+      <figure class="pcb-cine-clip" data-fx="wipe">
+        <picture>
+          <source srcset="https://mtp-images.com/pr-photo-7920.jpg" media="(prefers-reduced-motion: reduce)">
+          <img src="https://mtp-images.com/pr-photo-7929.webp" width="960" height="540" loading="lazy" decoding="async"
+               alt="A row of paracord bracelets on a display stand">
+        </picture>
+      </figure>
+      <div data-fx="up">
+        <p class="pcb-kicker">Stock Up</p>
+        <h2 class="pcb-h2">One For Every Bag You Own</h2>
+        <p class="pcb-copy" style="margin-top:18px !important;">
+          Keep one on your wrist, one in the glove box and one clipped to the
+          go-bag. Hand the rest to the hunters, campers and fishermen in your
+          family.
+        </p>
+        <p class="pcb-copy">The more you order, the less you pay in shipping for each one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 8 -- GUARANTEE ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-band pcb-cine-guar">
+  <div class="pcb-wrap">
+    <div class="pcb-guar-grid">
+      <img class="pcb-guar-fig pcb-frame pcb-shot pcb-shot-square" data-fx="wipe"
+           src="https://mtp-images.com/pr-photo-7923.jpg"
+           width="1000" height="563" loading="lazy" decoding="async"
+           alt="Three black paracord survival bracelets on a table, compass buckles facing up">
+      <div data-fx="up">
+        <span class="pcb-plate pcb-guar-seal">30-Day Money-Back Guarantee</span>
+        <h2 class="pcb-h2">You Take No Risk</h2>
+        <p class="pcb-copy" style="margin-top:18px !important;">
+          Get the bracelet in your hands first. Snap it on. Pull out the rod
+          and the striker. Check the compass.
+        </p>
+        <p class="pcb-copy">
+          If you are not happy with it, tell us within 30 days and we will
+          refund you in full. The bracelet itself is free, so the shipping is
+          the only thing you paid, and the only thing there is to refund.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 9 -- FINAL CTA (full-bleed) ======================= -->
+<section class="pcb-sec pcb-breakout pcb-dark pcb-cine-bleed pcb-cine-final" data-cine-bleed data-title="_ORDERFORM">
+  <div class="pcb-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pcb-log-cine-001.jpg" width="2000" height="1116" loading="lazy" decoding="async"
+         alt="The black paracord survival bracelet coiled on a wet mossy log in a forest at dusk, its compass glowing green">
+  </div>
+  <div class="pcb-cine-bleed-shade"></div>
+  <div class="pcb-wrap pcb-center pcb-cine-bleed-copy">
+    <h2 class="pcb-h1">
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in" data-fx="line2">Claim Your Free Bracelet</span></span>
+      <span class="pcb-cine-line"><span class="pcb-cine-line-in pcb-hi-txt" data-fx="line2">While Supplies Last</span></span>
+    </h2>
+    <p class="pcb-copy pcb-center" data-fx="up" style="margin:20px auto 0 auto !important;">
+      A $19 survival bracelet, free today. We cover the bracelet. You cover the shipping.
+    </p>
+    <div class="pcb-cta-block" data-fx="up" style="margin-top:30px !important;">
+      <a class="pcb-cta" href="#"
+         onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="pcb-cta-main">Yes, Send My Free Bracelet</span>
+        <span class="pcb-cta-sub">Compass, fire starter &amp; whistle &mdash; just cover the shipping</span>
+      </a>
+      <p class="pcb-cta-note">Secure checkout &middot; Ships within the USA &middot; 30-day money back</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= DISCLAIMER ======================= -->
+<section class="pcb-sec pcb-breakout pcb-fine">
+  <div class="pcb-wrap">
+    <p>
+      The campfire, fire-starting and forest scenes are illustrations of the bracelet in use; the close-ups and clips are photos and footage of the real bracelet. The built-in compass is a basic direction aid, not a precision
+      navigation instrument. The fire-starter rod needs dry tinder and some
+      practice to light a fire. This bracelet is not a substitute for
+      survival training, proper outdoor gear or emergency services -- in an
+      emergency, call 911. Ships to U.S. addresses only.
+    </p>
+  </div>
+</section>
+
+
+<!-- ======================= FLOATING CTA (shown by the script after the hero; hidden over the final call to action) ======================= -->
+<div class="pcb-cine-fbar" data-cine-fbar aria-hidden="true">
+  <span class="pcb-cine-fbar-txt"><b>5 survival tools. 1 bracelet.</b> Free today.</span>
+  <a class="pcb-cine-fbar-btn" href="#" tabindex="-1"
+     onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">Claim Mine</a>
+</div>
+
+<img data-pcb-cine-boot alt="" aria-hidden="true" width="1" height="1"
+     style="position:absolute;width:1px;height:1px;opacity:0;border:0;pointer-events:none;"
+     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+     onload="this.onload=this.onerror=null;if(!window.__pcbCineRan&&!window.__pcbCineBoot){window.__pcbCineBoot=1;try{var b=atob(this.getAttribute('data-pcb-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[PCB CINE] boot failed:',e&&e.message);}}"
+     onerror="this.onload=this.onerror=null;if(!window.__pcbCineRan&&!window.__pcbCineBoot){window.__pcbCineBoot=1;try{var b=atob(this.getAttribute('data-pcb-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[PCB CINE] boot failed:',e&&e.message);}}"
+     data-pcb-cine-payload="LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBQYXJhY29yZCBTdXJ2aXZhbCBCcmFjZWxldCAtLSBjaW5lbWF0aWMgcGFnZSBzY3JpcHQgKHJlYWRhYmxlIHNvdXJjZSkKICAgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQogICBTaGlwcyBCYXNlNjQtZW5jb2RlZCBpbiB0aGUgZGF0YS1wY2ItY2luZS1wYXlsb2FkIGF0dHJpYnV0ZSBvZiB0aGUgaGlkZGVuCiAgIDxpbWcgZGF0YS1wY2ItY2luZS1ib290PiBhdCB0aGUgZW5kIG9mIHRoZSBwYWdlOyB0aGUgaW1hZ2UncyBvbmxvYWQgZGVjb2RlcwogICBhbmQgaW5qZWN0cyBpdC4gVGhhdCBrZWVwcyB0aGUgcGFnZSBhIHNpbmdsZSBzZWxmLWNvbnRhaW5lZCBIVE1MIGJsb2NrIHRoYXQKICAgcnVucyBvbiBob3N0cyBhbmQgcGFnZSBidWlsZGVycyB3aGljaCBzdHJpcCBvciByZXdyaXRlIHBhc3RlZCA8c2NyaXB0PiB0YWdzLgoKICAgUGVyIFtkYXRhLXBjYi1jaW5lXSByb290IChtdWx0aS1pbnN0YW5jZSBzYWZlOyBubyBpZHMpOgogICAgICogUmVkdWNlZCBtb3Rpb24gLT4gbm90aGluZyBhbmltYXRlczsgdGhlIHBhZ2UgaXMgYWxyZWFkeSBjb21wbGV0ZS4KICAgICAqIE90aGVyd2lzZSBsb2FkcyBHU0FQIDMuMTQuMiArIFNjcm9sbFRyaWdnZXIgKGpzZGVsaXZyIC0+IGNkbmpzIC0+CiAgICAgICB1bnBrZykgYW5kIGJ1aWxkczoKICAgICAgICAgQWN0IDEgIGhlcm8gbGluZXMgcmlzZSBpbjsgdGhlIHBob3RvIHB1c2hlcyBpbiBvbiBzY3JvbGwKICAgICAgICAgQWN0IDIgIEZJVkUgVE9PTFM6IHBpbnMgdGhlIHN0YWdlIChwaW5UeXBlICdmaXhlZCcsIHdoaWNoIHN1cnZpdmVzIGFuCiAgICAgICAgICAgICAgICBvdmVyZmxvdy1oaWRkZW4gYW5jZXN0b3Igd2hlcmUgcG9zaXRpb246c3RpY2t5IHdvdWxkIG5vdCkgYW5kCiAgICAgICAgICAgICAgICBzdGVwcyB0aHJvdWdoIG9uZSByZWFsIGNsb3NlLXVwIHBlciB0b29sOiB0aGUgc2hvdCBjcm9zc2ZhZGVzCiAgICAgICAgICAgICAgICBpbiB3aXRoIGEgc2xvdyBwdXNoLCB0aGUgY2FwdGlvbiBzd2FwcywgdGhlIGNvdW50ZXIgdGlja3MKICAgICAgICAgICAgICAgIDEuLjUsIHRoZW4gYSBjbG9zaW5nIHNob3Qgb2YgYWxsIG9mIHRoZW0KICAgICAgICAgQWN0IDMrIGNsaXAgd2lwZXMsIGxpbmUgcmV2ZWFscywgdGhlICQxOSBzdHJpa2UgLT4gRlJFRSBwdW5jaCwKICAgICAgICAgICAgICAgIHBhcmFsbGF4IG9uIHRoZSBmdWxsLWJsZWVkIHBob3RvcwogICAgICAgYW5kIGEgZmxvYXRpbmcgQ1RBIGJhciAobW92ZWQgdG8gPGJvZHk+IHNvIHBvc2l0aW9uOmZpeGVkIGlzIHRoZQogICAgICAgdmlld3BvcnQncyksIHNob3duIGFmdGVyIHRoZSBoZXJvIGFuZCBoaWRkZW4gb3ZlciB0aGUgY2hlY2tvdXQgdGFyZ2V0LgogICAgICogSWYgR1NBUCBuZXZlciBsb2FkczogdGhlIHN0YXRpYyBwYWdlIHN0YXlzLgogICBEZWJ1ZzogYWRkID9wY2JkZWJ1ZyB0byB0aGUgVVJMIHRvIGxvZyB0aGUgcGlwZWxpbmUgdG8gdGhlIGNvbnNvbGUuCiAgID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8KKGZ1bmN0aW9uICgpIHsKICAidXNlIHN0cmljdCI7CiAgaWYgKHdpbmRvdy5fX3BjYkNpbmVSYW4pIHJldHVybjsKICB3aW5kb3cuX19wY2JDaW5lUmFuID0gdHJ1ZTsKICB2YXIgREJHID0gL1s/Jl1wY2JkZWJ1Zy9pLnRlc3QobG9jYXRpb24uc2VhcmNoKSB8fCB3aW5kb3cuUENCX0RFQlVHOwogIGZ1bmN0aW9uIGxvZygpIHsgaWYgKERCRyAmJiB3aW5kb3cuY29uc29sZSkgY29uc29sZS5sb2cuYXBwbHkoY29uc29sZSwgWydbUENCIENJTkVdJ10uY29uY2F0KFtdLnNsaWNlLmNhbGwoYXJndW1lbnRzKSkpOyB9CiAgbG9nKCdwYXlsb2FkIGV4ZWN1dGVkJyk7CgogIHZhciBSRURVQ0UgPSB3aW5kb3cubWF0Y2hNZWRpYSAmJiB3aW5kb3cubWF0Y2hNZWRpYSgnKHByZWZlcnMtcmVkdWNlZC1tb3Rpb246IHJlZHVjZSknKS5tYXRjaGVzOwogIHZhciBHU0FQX1VSTFMgPSBbCiAgICAnaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9nc2FwQDMuMTQuMi9kaXN0L2dzYXAubWluLmpzJywKICAgICdodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9nc2FwLzMuMTQuMi9nc2FwLm1pbi5qcycsCiAgICAnaHR0cHM6Ly91bnBrZy5jb20vZ3NhcEAzLjE0LjIvZGlzdC9nc2FwLm1pbi5qcycKICBdOwogIHZhciBTVF9VUkxTID0gWwogICAgJ2h0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZ3NhcEAzLjE0LjIvZGlzdC9TY3JvbGxUcmlnZ2VyLm1pbi5qcycsCiAgICAnaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvZ3NhcC8zLjE0LjIvU2Nyb2xsVHJpZ2dlci5taW4uanMnLAogICAgJ2h0dHBzOi8vdW5wa2cuY29tL2dzYXBAMy4xNC4yL2Rpc3QvU2Nyb2xsVHJpZ2dlci5taW4uanMnCiAgXTsKCiAgZnVuY3Rpb24gbG9hZEZpcnN0KHVybHMpIHsKICAgIHJldHVybiBuZXcgUHJvbWlzZShmdW5jdGlvbiAocmVzLCByZWopIHsKICAgICAgdmFyIGkgPSAwOwogICAgICAoZnVuY3Rpb24gbmV4dCgpIHsKICAgICAgICBpZiAoaSA+PSB1cmxzLmxlbmd0aCkgeyByZWoobmV3IEVycm9yKCdhbGwgQ0ROcyBmYWlsZWQnKSk7IHJldHVybjsgfQogICAgICAgIHZhciB1cmwgPSB1cmxzW2krK10sIHMgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKTsKICAgICAgICBzLnNyYyA9IHVybDsgcy5hc3luYyA9IHRydWU7CiAgICAgICAgcy5vbmxvYWQgPSBmdW5jdGlvbiAoKSB7IGxvZygnbG9hZGVkJywgdXJsKTsgcmVzKCk7IH07CiAgICAgICAgcy5vbmVycm9yID0gZnVuY3Rpb24gKCkgeyBsb2coJ0ZBSUxFRCcsIHVybCk7IG5leHQoKTsgfTsKICAgICAgICBkb2N1bWVudC5oZWFkLmFwcGVuZENoaWxkKHMpOwogICAgICB9KSgpOwogICAgfSk7CiAgfQogIGZ1bmN0aW9uIG9yZGVyRm9ybSgpIHsKICAgIHJldHVybiBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKCdbZGF0YS10aXRsZT0iX09SREVSRk9STSJdJykgfHwgZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtZGUtdHlwZV49Im9yZGVyMnN0ZXAiXScpIHx8CiAgICAgICAgICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcignLm9yZGVyZm9ybXRhcmdldCcpOwogIH0KCiAgLy8gLS0tLSBGbG9hdGluZyBDVEE6IHdvcmtzIHdpdGhvdXQgR1NBUCAoSW50ZXJzZWN0aW9uT2JzZXJ2ZXIpLCBzbyBpdCBydW5zIGZpcnN0LiAtLS0tCiAgZnVuY3Rpb24gZmxvYXRiYXIocm9vdCkgewogICAgdmFyIGZiID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jaW5lLWZiYXJdJykgfHwgcm9vdC5fX2ZiYXI7CiAgICB2YXIgaGVybyA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1oZXJvXScpOwogICAgaWYgKCFmYiB8fCAhaGVybyB8fCAhKCdJbnRlcnNlY3Rpb25PYnNlcnZlcicgaW4gd2luZG93KSkgcmV0dXJuOwogICAgcm9vdC5fX2ZiYXIgPSBmYjsKICAgIGlmIChmYi5wYXJlbnROb2RlICE9PSBkb2N1bWVudC5ib2R5KSBkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKGZiKTsgICAvLyBmaXhlZCA9IHRoZSB2aWV3cG9ydCdzCiAgICB2YXIgcGFzdEhlcm8gPSBmYWxzZSwgZm9ybU9uID0gZmFsc2U7CiAgICBmdW5jdGlvbiBhcHBseSgpIHsKICAgICAgdmFyIG9uID0gcGFzdEhlcm8gJiYgIWZvcm1PbjsKICAgICAgZmIuY2xhc3NMaXN0LnRvZ2dsZSgncGNiLWNpbmUtZmJhci1vbicsIG9uKTsKICAgICAgZmIuc2V0QXR0cmlidXRlKCdhcmlhLWhpZGRlbicsIG9uID8gJ2ZhbHNlJyA6ICd0cnVlJyk7CiAgICAgIHZhciBhID0gZmIucXVlcnlTZWxlY3RvcignYScpOyBpZiAoYSkgYS50YWJJbmRleCA9IG9uID8gMCA6IC0xOwogICAgfQogICAgbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKGZ1bmN0aW9uIChlcykgeyBwYXN0SGVybyA9ICFlc1swXS5pc0ludGVyc2VjdGluZzsgYXBwbHkoKTsgfSwgeyB0aHJlc2hvbGQ6IDAgfSkub2JzZXJ2ZShoZXJvKTsKICAgIHZhciBmID0gb3JkZXJGb3JtKCk7CiAgICBpZiAoZikgbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKGZ1bmN0aW9uIChlcykgeyBmb3JtT24gPSBlc1swXS5pc0ludGVyc2VjdGluZzsgYXBwbHkoKTsgfSwgeyB0aHJlc2hvbGQ6IDAgfSkub2JzZXJ2ZShmKTsKICB9CgogIGZ1bmN0aW9uIGluaXQocm9vdCkgewogICAgaWYgKCFyb290IHx8IHJvb3QuX19wY2JDaW5lKSByZXR1cm47CiAgICByb290Ll9fcGNiQ2luZSA9IHRydWU7CiAgICBsb2coJ2luaXQnKTsKICAgIGZsb2F0YmFyKHJvb3QpOwogICAgaWYgKFJFRFVDRSkgeyBsb2coJ3JlZHVjZWQgbW90aW9uOiBzdGF0aWMgcGFnZScpOyByZXR1cm47IH0KICAgIHJvb3QuY2xhc3NMaXN0LmFkZCgncGNiLWNpbmUtd2FpdCcpOwogICAgdmFyIHNhZmV0eSA9IHNldFRpbWVvdXQoZnVuY3Rpb24gKCkgeyByb290LmNsYXNzTGlzdC5yZW1vdmUoJ3BjYi1jaW5lLXdhaXQnKTsgbG9nKCdzYWZldHkgdGltZW91dDogc3RhdGljIHBhZ2UnKTsgfSwgNDAwMCk7CiAgICB2YXIgcmVhZHkgPSAod2luZG93LmdzYXAgJiYgd2luZG93LlNjcm9sbFRyaWdnZXIpID8gUHJvbWlzZS5yZXNvbHZlKCkgOgogICAgICBsb2FkRmlyc3QoR1NBUF9VUkxTKS50aGVuKGZ1bmN0aW9uICgpIHsgcmV0dXJuIGxvYWRGaXJzdChTVF9VUkxTKTsgfSk7CiAgICByZWFkeS50aGVuKGZ1bmN0aW9uICgpIHsKICAgICAgY2xlYXJUaW1lb3V0KHNhZmV0eSk7CiAgICAgIGlmICghKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKSkgdGhyb3cgbmV3IEVycm9yKCdnbG9iYWxzIG1pc3NpbmcnKTsKICAgICAgYnVpbGQocm9vdCk7CiAgICB9KS5jYXRjaChmdW5jdGlvbiAoZSkgewogICAgICBjbGVhclRpbWVvdXQoc2FmZXR5KTsKICAgICAgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCdwY2ItY2luZS13YWl0JywgJ3BjYi1jaW5lLW9uJyk7CiAgICAgIGxvZygnR1NBUCB1bmF2YWlsYWJsZSAtPiBzdGF0aWMgcGFnZTonLCBlICYmIGUubWVzc2FnZSk7CiAgICB9KTsKICB9CgogIGZ1bmN0aW9uIGJ1aWxkKHJvb3QpIHsKICAgIHZhciBnc2FwID0gd2luZG93LmdzYXAsIFNUID0gd2luZG93LlNjcm9sbFRyaWdnZXI7CiAgICBnc2FwLnJlZ2lzdGVyUGx1Z2luKFNUKTsKICAgIHZhciBxID0gZnVuY3Rpb24gKHMpIHsgcmV0dXJuIHJvb3QucXVlcnlTZWxlY3RvcihzKTsgfTsKICAgIHZhciBxYSA9IGZ1bmN0aW9uIChzKSB7IHJldHVybiBbXS5zbGljZS5jYWxsKHJvb3QucXVlcnlTZWxlY3RvckFsbChzKSk7IH07CgogICAgLy8gSW5pdGlhbCBzdGF0ZXMgYXJlIHNldCBoZXJlLCB0aGVuIHRoZSBjbGFzcyBzd2FwIC0tIHNvIG5vdGhpbmcgaXMgaGlkZGVuCiAgICAvLyB1bmxlc3MgR1NBUCBpcyBwcmVzZW50IHRvIGJyaW5nIGl0IGJhY2suCiAgICB2YXIgbGluZXMgPSBxYSgnW2RhdGEtZng9ImxpbmUiXScpLCBoZXJvRnggPSBxYSgnW2RhdGEtZng9Imhlcm8iXScpOwogICAgZ3NhcC5zZXQobGluZXMsIHsgeVBlcmNlbnQ6IDExMCB9KTsKICAgIGdzYXAuc2V0KGhlcm9GeCwgeyBhdXRvQWxwaGE6IDAsIHk6IDI0IH0pOwogICAgcm9vdC5jbGFzc0xpc3QuYWRkKCdwY2ItY2luZS1vbicpOwogICAgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCdwY2ItY2luZS13YWl0Jyk7CgogICAgLy8gLS0tLSBBQ1QgMTogaGVybyBlbnRyYW5jZSArIHNjcm9sbCBwdXNoLWluIC0tLS0KICAgIGdzYXAudGltZWxpbmUoeyBkZWxheTogMC4xNSB9KQogICAgICAudG8obGluZXMsIHsgeVBlcmNlbnQ6IDAsIGR1cmF0aW9uOiAwLjksIHN0YWdnZXI6IDAuMTYsIGVhc2U6ICdwb3dlcjMub3V0JyB9KQogICAgICAudG8oaGVyb0Z4LCB7IGF1dG9BbHBoYTogMSwgeTogMCwgZHVyYXRpb246IDAuNywgc3RhZ2dlcjogMC4xMiwgZWFzZTogJ3Bvd2VyMi5vdXQnIH0sICctPTAuNDUnKTsKICAgIHZhciBoZXJvID0gcSgnW2RhdGEtY2luZS1oZXJvXScpLCBoZXJvSW1nID0gcSgnW2RhdGEtY2luZS1oZXJvLWltZ10nKTsKICAgIGlmIChoZXJvICYmIGhlcm9JbWcpIHsKICAgICAgZ3NhcC5mcm9tVG8oaGVyb0ltZywgeyBzY2FsZTogMS4wMiB9LCB7IHNjYWxlOiAxLjE0LCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBoZXJvLCBzdGFydDogJ3RvcCB0b3AnLCBlbmQ6ICdib3R0b20gdG9wJywgc2NydWI6IHRydWUgfSB9KTsKICAgICAgZ3NhcC50byhxKCcucGNiLWNpbmUtY3VlJyksIHsgYXV0b0FscGhhOiAwLCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBoZXJvLCBzdGFydDogJ3RvcCB0b3AnLCBlbmQ6ICcyMCUgdG9wJywgc2NydWI6IHRydWUgfSB9KTsKICAgIH0KCiAgICAvLyAtLS0tIEFDVCAyOiBmaXZlIHRvb2xzIC0tLS0KICAgIGJ1aWxkVG9vbHMocm9vdCwgZ3NhcCwgU1QpOwoKICAgIC8vIC0tLS0gUmV2ZWFscyAtLS0tCiAgICBxYSgnW2RhdGEtZng9InVwIl0nKS5mb3JFYWNoKGZ1bmN0aW9uIChlbCkgewogICAgICBnc2FwLmZyb20oZWwsIHsgYXV0b0FscGhhOiAwLCB5OiAzNCwgZHVyYXRpb246IDAuOCwgZWFzZTogJ3Bvd2VyMi5vdXQnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogZWwsIHN0YXJ0OiAndG9wIDg2JScsIG9uY2U6IHRydWUgfSB9KTsKICAgIH0pOwogICAgcWEoJ1tkYXRhLWZ4PSJ3aXBlIl0nKS5mb3JFYWNoKGZ1bmN0aW9uIChlbCwgaSkgewogICAgICBnc2FwLmZyb21UbyhlbCwgeyBjbGlwUGF0aDogJ2luc2V0KDAgMCAxMDAlIDApJyB9LCB7IGNsaXBQYXRoOiAnaW5zZXQoMCAwIDAlIDApJywgZHVyYXRpb246IDEuMSwgZWFzZTogJ3Bvd2VyMy5pbk91dCcsCiAgICAgICAgZGVsYXk6IChpICUgMikgKiAwLjEyLCBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IGVsLCBzdGFydDogJ3RvcCA4OCUnLCBvbmNlOiB0cnVlIH0gfSk7CiAgICB9KTsKICAgIHFhKCdbZGF0YS1meD0ibGluZTIiXScpLmZvckVhY2goZnVuY3Rpb24gKGVsKSB7CiAgICAgIGdzYXAuZnJvbShlbCwgeyB5UGVyY2VudDogMTEwLCBkdXJhdGlvbjogMC45LCBlYXNlOiAncG93ZXIzLm91dCcsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBlbCwgc3RhcnQ6ICd0b3AgODglJywgb25jZTogdHJ1ZSB9IH0pOwogICAgfSk7CgogICAgLy8gLS0tLSBBQ1QgNTogJDE5IHN0cnVjayB0aHJvdWdoLCB0aGVuIEZSRUUgLS0tLQogICAgdmFyIHZhbCA9IHEoJ1tkYXRhLWNpbmUtdmFsdWVdJyksIHN0cmlrZSA9IHEoJ1tkYXRhLWNpbmUtc3RyaWtlXScpLCBmcmVlID0gcSgnW2RhdGEtY2luZS1mcmVlXScpOwogICAgaWYgKHZhbCAmJiBzdHJpa2UgJiYgZnJlZSkgewogICAgICBnc2FwLnNldChzdHJpa2UsIHsgc2NhbGVYOiAwIH0pOwogICAgICBnc2FwLnNldChmcmVlLCB7IGF1dG9BbHBoYTogMCwgc2NhbGU6IDAuNiB9KTsKICAgICAgZ3NhcC50aW1lbGluZSh7IHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogdmFsLCBzdGFydDogJ3RvcCA3MCUnLCBvbmNlOiB0cnVlIH0gfSkKICAgICAgICAudG8oc3RyaWtlLCB7IHNjYWxlWDogMSwgZHVyYXRpb246IDAuNTUsIGVhc2U6ICdwb3dlcjIuaW5PdXQnIH0pCiAgICAgICAgLnRvKGZyZWUsIHsgYXV0b0FscGhhOiAxLCBzY2FsZTogMSwgZHVyYXRpb246IDAuNiwgZWFzZTogJ2JhY2sub3V0KDIuMiknIH0sICcrPTAuMScpOwogICAgfQoKICAgIC8vIC0tLS0gUGFyYWxsYXggb24gZnVsbC1ibGVlZCBwaG90b3MgLS0tLQogICAgcWEoJ1tkYXRhLWNpbmUtYmxlZWRdJykuZm9yRWFjaChmdW5jdGlvbiAoc2VjKSB7CiAgICAgIHZhciBpbWcgPSBzZWMucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1wYXJdJyk7CiAgICAgIGlmIChpbWcpIGdzYXAuZnJvbVRvKGltZywgeyB5UGVyY2VudDogLTggfSwgeyB5UGVyY2VudDogOCwgZWFzZTogJ25vbmUnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogc2VjLCBzdGFydDogJ3RvcCBib3R0b20nLCBlbmQ6ICdib3R0b20gdG9wJywgc2NydWI6IHRydWUgfSB9KTsKICAgIH0pOwoKICAgIHZhciByZWZyZXNoID0gZnVuY3Rpb24gKCkgeyBTVC5yZWZyZXNoKCk7IH07CiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignbG9hZCcsIHJlZnJlc2gpOwogICAgc2V0VGltZW91dChyZWZyZXNoLCAxNTAwKTsKICAgIHJvb3QuX19wY2JDaW5lQnVpbHQgPSB0cnVlOwogICAgd2luZG93Ll9fcGNiQ2luZUJ1aWx0ID0gKHdpbmRvdy5fX3BjYkNpbmVCdWlsdCB8fCAwKSArIDE7CiAgICBsb2coJ2J1aWx0OyBTY3JvbGxUcmlnZ2VycyA9JywgU1QuZ2V0QWxsKCkubGVuZ3RoKTsKICB9CgogIGZ1bmN0aW9uIGJ1aWxkVG9vbHMocm9vdCwgZ3NhcCwgU1QpIHsKICAgIHZhciBzdGFnZSA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1zdGFnZV0nKSwKICAgICAgICBzaG90cyA9IFtdLnNsaWNlLmNhbGwocm9vdC5xdWVyeVNlbGVjdG9yQWxsKCdbZGF0YS1jaW5lLXNob3RdJykpLAogICAgICAgIGJlYXRzID0gW10uc2xpY2UuY2FsbChyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJy5wY2ItY2luZS1iZWF0Om5vdChbZGF0YS1maW5hbF0pJykpLAogICAgICAgIGZpbiA9IHJvb3QucXVlcnlTZWxlY3RvcignLnBjYi1jaW5lLWJlYXRbZGF0YS1maW5hbF0nKSwKICAgICAgICBjb3VudCA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1jb3VudF0nKSwgY291bnRXcmFwID0gcm9vdC5xdWVyeVNlbGVjdG9yKCcucGNiLWNpbmUtY291bnQnKSwKICAgICAgICBiYXIgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtYmFyXScpOwogICAgaWYgKCFzdGFnZSB8fCAhc2hvdHMubGVuZ3RoIHx8ICFiZWF0cy5sZW5ndGgpIHJldHVybjsKICAgIHNob3RzLmZvckVhY2goZnVuY3Rpb24gKHMpIHsgcy5sb2FkaW5nID0gJ2VhZ2VyJzsgfSk7ICAgLy8gdGhlIHBpbm5lZCBzY2VuZSBtdXN0IG5vdCB3YWl0IG9uIGxhenktbG9hZAogICAgcm9vdC5jbGFzc0xpc3QuYWRkKCdwY2ItY2luZS10b29scy1vbicpOyAgICAgICAgICAgICAgIC8vIHN0YWNrZWQgZnVsbC1zY3JlZW4gc3RhZ2UKCiAgICAvLyBzdGF0ZXM6IDAuLm4tMSA9IGEgdG9vbCwgJ2VuZCcgPSBhbGwgb2YgdGhlbSAodGhlIGNsb3Npbmcgc2hvdCkKICAgIHZhciBjYXBzID0gYmVhdHMuY29uY2F0KGZpbiA/IFtmaW5dIDogW10pOwogICAgZ3NhcC5zZXQoY2FwcywgeyBhdXRvQWxwaGE6IDAsIHk6IDI2IH0pOwogICAgZ3NhcC5zZXQoc2hvdHMsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMS4wNCB9KTsKICAgIGdzYXAuc2V0KHNob3RzWzBdLCB7IGF1dG9BbHBoYTogMSB9KTsKICAgIGlmIChjb3VudCkgY291bnQudGV4dENvbnRlbnQgPSAnMSc7CiAgICB2YXIgY3VycmVudCA9IG51bGwsIG4gPSBiZWF0cy5sZW5ndGg7CiAgICBmdW5jdGlvbiBzaG90Rm9yKGkpIHsgcmV0dXJuIGkgPT09ICdlbmQnID8gc2hvdHNbc2hvdHMubGVuZ3RoIC0gMV0gOiBzaG90c1tNYXRoLm1pbihpLCBzaG90cy5sZW5ndGggLSAxKV07IH0KICAgIGZ1bmN0aW9uIGNhcEZvcihpKSB7IHJldHVybiBpID09PSAnZW5kJyA/IGZpbiA6IGJlYXRzW2ldOyB9CiAgICBmdW5jdGlvbiBzaG93KGkpIHsKICAgICAgaWYgKGkgPT09IGN1cnJlbnQpIHJldHVybjsKICAgICAgdmFyIHByZXZDYXAgPSBjdXJyZW50ID09PSBudWxsID8gbnVsbCA6IGNhcEZvcihjdXJyZW50KSwgcHJldlNob3QgPSBjdXJyZW50ID09PSBudWxsID8gbnVsbCA6IHNob3RGb3IoY3VycmVudCk7CiAgICAgIGN1cnJlbnQgPSBpOwogICAgICB2YXIgbmV4dENhcCA9IGNhcEZvcihpKSwgbmV4dFNob3QgPSBzaG90Rm9yKGkpOwogICAgICBpZiAocHJldkNhcCkgZ3NhcC50byhwcmV2Q2FwLCB7IGF1dG9BbHBoYTogMCwgeTogLTE4LCBkdXJhdGlvbjogMC4zLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgIGlmIChuZXh0Q2FwKSBnc2FwLmZyb21UbyhuZXh0Q2FwLCB7IGF1dG9BbHBoYTogMCwgeTogMjYgfSwgeyBhdXRvQWxwaGE6IDEsIHk6IDAsIGR1cmF0aW9uOiAwLjUsIGRlbGF5OiAwLjEsIG92ZXJ3cml0ZTogdHJ1ZSB9KTsKICAgICAgaWYgKHByZXZTaG90ICYmIHByZXZTaG90ICE9PSBuZXh0U2hvdCkgZ3NhcC50byhwcmV2U2hvdCwgeyBhdXRvQWxwaGE6IDAsIGR1cmF0aW9uOiAwLjYsIG92ZXJ3cml0ZTogJ2F1dG8nIH0pOwogICAgICAvLyBzbG93IHB1c2ggb24gdGhlIGluY29taW5nIGNsb3NlLXVwICh0aGUgc2hvdCBzdGF5cyBzaGFycDogMTYwMHB4IHNvdXJjZSwgbWF4IDEuMTJ4KQogICAgICBnc2FwLmZyb21UbyhuZXh0U2hvdCwgeyBhdXRvQWxwaGE6IHByZXZTaG90ID09PSBuZXh0U2hvdCA/IDEgOiAwLCBzY2FsZTogMS4wNCB9LAogICAgICAgIHsgYXV0b0FscGhhOiAxLCBzY2FsZTogMS4xMiwgZHVyYXRpb246IDAuNiwgb3ZlcndyaXRlOiAnYXV0bycsCiAgICAgICAgICBvbkNvbXBsZXRlOiBmdW5jdGlvbiAoKSB7IGdzYXAudG8obmV4dFNob3QsIHsgc2NhbGU6IDEuMTYsIGR1cmF0aW9uOiA2LCBlYXNlOiAnbm9uZScgfSk7IH0gfSk7CiAgICAgIGlmIChjb3VudFdyYXApIGdzYXAudG8oY291bnRXcmFwLCB7IGF1dG9BbHBoYTogaSA9PT0gJ2VuZCcgPyAwIDogMSwgZHVyYXRpb246IDAuMywgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICBpZiAoY291bnQgJiYgaSAhPT0gJ2VuZCcpIGNvdW50LnRleHRDb250ZW50ID0gU3RyaW5nKGkgKyAxKTsKICAgIH0KCiAgICBTVC5jcmVhdGUoewogICAgICB0cmlnZ2VyOiBzdGFnZSwgc3RhcnQ6ICd0b3AgdG9wJywKICAgICAgZW5kOiBmdW5jdGlvbiAoKSB7IHJldHVybiAnKz0nICsgTWF0aC5yb3VuZCh3aW5kb3cuaW5uZXJIZWlnaHQgKiAwLjkgKiAobiArIDEpKTsgfSwKICAgICAgcGluOiBzdGFnZSwgcGluVHlwZTogJ2ZpeGVkJywgcGluU3BhY2luZzogdHJ1ZSwgYW50aWNpcGF0ZVBpbjogMSwKICAgICAgb25VcGRhdGU6IGZ1bmN0aW9uIChzZWxmKSB7CiAgICAgICAgaWYgKGJhcikgYmFyLnN0eWxlLnRyYW5zZm9ybSA9ICdzY2FsZVgoJyArIHNlbGYucHJvZ3Jlc3MudG9GaXhlZCgzKSArICcpJzsKICAgICAgICB2YXIgc2VnID0gTWF0aC5mbG9vcihzZWxmLnByb2dyZXNzICogKG4gKyAxKSk7CiAgICAgICAgc2hvdyhzZWcgPj0gbiA/ICdlbmQnIDogTWF0aC5tYXgoMCwgc2VnKSk7CiAgICAgIH0sCiAgICAgIG9uRW50ZXI6IGZ1bmN0aW9uICgpIHsgaWYgKGN1cnJlbnQgPT09IG51bGwpIHNob3coMCk7IH0sCiAgICAgIG9uRW50ZXJCYWNrOiBmdW5jdGlvbiAoKSB7IGlmIChjdXJyZW50ID09PSBudWxsKSBzaG93KDApOyB9CiAgICB9KTsKICAgIHNob3coMCk7CiAgfQoKICBmdW5jdGlvbiBib290KCkgewogICAgdmFyIHJvb3RzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnW2RhdGEtcGNiLWNpbmVdJyk7CiAgICBsb2coJ3Jvb3RzJywgcm9vdHMubGVuZ3RoKTsKICAgIFtdLmZvckVhY2guY2FsbChyb290cywgaW5pdCk7CiAgfQogIGlmIChkb2N1bWVudC5yZWFkeVN0YXRlID09PSAnbG9hZGluZycpIGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBib290KTsgZWxzZSBib290KCk7Cn0pKCk7Cg==">
+</div>
+
+</body>
+</html>
