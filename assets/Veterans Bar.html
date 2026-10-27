@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veterans Bar</title>
+<meta name="description" content="Cinematic, scroll-driven sales page for a commemorative Veterans Bar: a pinned GSAP camera turns the real bar over and walks through every detail on the front and back.">
+<style>
+  html { font-size: 62.5%; }  /* type is sized in px throughout, so the page renders the same whatever the host's root size */
+  body { margin: 0; background: #070a12; overflow-x: hidden; }
+</style>
+</head>
+<body>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
+  .vbc { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important;
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+         font-size: clamp(17px, 1.5vw, 19px) !important; color: #e7e9ee !important;
+         -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  .vbc *, .vbc *::before, .vbc *::after { box-sizing: border-box !important; }
+  .vbc-sec {
+    position: relative !important; overflow: hidden !important;
+    width: 100vw !important; max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important; margin-right: calc(-50vw + 50%) !important;
+    background: #070a12 !important; padding: 0 !important;
+  }
+  .vbc-wrap { position: relative !important; width: 100% !important; max-width: 1180px !important; margin: 0 auto !important; padding: 0 clamp(18px, 4vw, 40px) !important; }
+  .vbc-narrow { max-width: 860px !important; }
+  .vbc-center { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+  .vbc-h1, .vbc-h2, .vbc-beat-h, .vbc-count b, .vbc-was, .vbc-free {
+    font-family: 'Oswald', Impact, 'Arial Narrow Bold', 'Arial Narrow', Arial, sans-serif !important;
+    text-transform: uppercase !important; letter-spacing: 0.01em !important; margin: 0 !important;
+  }
+  .vbc-h1 { font-size: clamp(42px, 5.6vw, 82px) !important; line-height: 1.02 !important; font-weight: 700 !important; color: #ffffff !important; }
+  .vbc-h2 { font-size: clamp(32px, 3.8vw, 52px) !important; line-height: 1.08 !important; font-weight: 700 !important; color: #ffffff !important; }
+  .vbc-gold { color: #f2d27a !important; }
+  .vbc-kicker { font-size: clamp(14px, 1.1vw, 15px) !important; font-weight: 800 !important; letter-spacing: 0.18em !important;
+                text-transform: uppercase !important; color: #d8b04a !important; margin: 0 0 12px 0 !important; }
+  .vbc p.vbc-copy { font-size: clamp(18px, 1.5vw, 20px) !important; line-height: 1.7 !important; color: #c9ced8 !important; margin: 0 0 16px 0 !important; max-width: 62ch !important; }
+  .vbc p.vbc-copy.vbc-center { margin-left: auto !important; margin-right: auto !important; }
+  .vbc-head { margin: 0 0 clamp(26px, 3.6vw, 44px) 0 !important; }
+  .vbc-head .vbc-h2 { margin-bottom: 14px !important; }
+  .vbc img { display: block !important; max-width: 100% !important; height: auto !important; border: 0 !important; }
+  .vbc-cta-wrap { width: 100% !important; max-width: 480px !important; }
+  .vbc-cta-wrap.vbc-center { margin-top: 28px !important; }
+  a.vbc-cta {
+    display: flex !important; flex-direction: column !important; align-items: center !important; justify-content: center !important;
+    width: 100% !important; min-height: 64px !important; padding: 14px 22px !important; border-radius: 10px !important;
+    background: #c3201a !important; border-bottom: 5px solid #74110d !important; color: #ffffff !important; text-decoration: none !important;
+    box-shadow: 0 14px 30px rgba(195,32,26,0.35) !important; transition: transform .15s ease, filter .15s ease !important;
+  }
+  a.vbc-cta:hover { transform: translateY(-2px) !important; filter: brightness(1.06) !important; }
+  .vbc-cta-main { font-size: clamp(20px, 1.9vw, 24px) !important; font-weight: 900 !important; line-height: 1.2 !important; text-transform: uppercase !important; letter-spacing: 0.02em !important; }
+  .vbc-cta-sub { font-size: 15px !important; font-weight: 600 !important; opacity: .92 !important; margin-top: 3px !important; }
+  .vbc p.vbc-cta-note { font-size: 15px !important; color: #b7bdc9 !important; margin: 12px 0 0 0 !important; text-align: center !important; }
+  .vbc-sec.vbc-tagbar { background: #0d1528 !important; border-bottom: 2px solid #d8b04a !important; }
+  .vbc-tagbar-inner { display: flex !important; flex-wrap: wrap !important; justify-content: center !important; gap: 6px clamp(16px, 3vw, 40px) !important; padding: 10px 16px !important; }
+  .vbc-tagbar-inner span { font-size: 14px !important; font-weight: 800 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: #f2d27a !important; }
+  .vbc-sec.vbc-hero { min-height: 100vh !important; min-height: 100svh !important; display: flex !important; align-items: center !important; }
+  .vbc-hero-media { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .vbc-hero-media picture { display: block !important; width: 100% !important; height: 100% !important; }
+  .vbc img.vbc-hero-img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: 50% 52% !important; will-change: transform; }
+  .vbc-hero-shade { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: linear-gradient(0deg, rgba(7,10,18,0.9) 0%, rgba(7,10,18,0) 36%) !important; }
+  .vbc-hero-copy { position: relative !important; z-index: 2 !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+    gap: clamp(16px, 2.2vw, 24px) !important; width: 100% !important; max-width: 640px !important;
+    padding: clamp(90px, 14vh, 140px) clamp(20px, 5vw, 72px) clamp(84px, 12vh, 120px) clamp(20px, 5vw, 72px) !important; }
+  @media (min-width: 900px) {
+    .vbc-hero-media { left: 36% !important; }
+    .vbc-hero-shade { background: linear-gradient(90deg, #070a12 0%, #070a12 36%, rgba(7,10,18,0.5) 44%, rgba(7,10,18,0) 58%),
+                                  linear-gradient(0deg, rgba(7,10,18,0.7) 0%, rgba(7,10,18,0) 28%) !important; }
+  }
+  .vbc-badge { display: inline-block !important; padding: 7px 14px !important; border-radius: 999px !important; background: #d8b04a !important; color: #070a12 !important;
+    font-size: 14px !important; font-weight: 900 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  .vbc-line { display: block !important; overflow: hidden !important; padding-bottom: 0.06em !important; }
+  .vbc-line-in { display: block !important; }
+  .vbc p.vbc-hero-sub { font-size: clamp(18px, 1.5vw, 21px) !important; line-height: 1.7 !important; color: #dfe3ea !important; max-width: 50ch !important; margin: 0 !important; }
+  .vbc-cue { position: absolute !important; z-index: 2 !important; left: 50% !important; bottom: 18px !important; transform: translateX(-50%) !important;
+    display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important;
+    font-size: 14px !important; font-weight: 800 !important; letter-spacing: 0.14em !important; text-transform: uppercase !important; color: #c9ced8 !important; }
+  .vbc-cue i { display: block !important; width: 14px !important; height: 14px !important; border-right: 2px solid #d8b04a !important; border-bottom: 2px solid #d8b04a !important;
+    transform: rotate(45deg) !important; animation: vbcCue 1.6s ease-in-out infinite !important; }
+  @keyframes vbcCue { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 1; } 50% { transform: translateY(7px) rotate(45deg); opacity: .55; } }
+  .vbc-wait [data-fx="line"], .vbc-wait [data-fx="hero"] { visibility: hidden !important; }
+  .vbc-sec.vbc-turn { padding: clamp(56px, 8vw, 96px) 0 !important; background: radial-gradient(ellipse at 50% 30%, #13203d 0%, #070a12 70%) !important; }
+  .vbc-stage { position: relative; width: 100%; }
+  .vbc-cam { position: relative !important; width: 100% !important; max-width: 1180px !important; margin: 0 auto !important; padding: 0 clamp(18px, 4vw, 40px) !important; }
+  .vbc-card { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: clamp(16px, 3vw, 36px) !important; }
+  .vbc img.vbc-face { width: 100% !important; filter: drop-shadow(0 18px 30px rgba(0,0,0,0.55)) !important; }
+  .vbc-ring, .vbc-count, .vbc-bar { display: none !important; }
+  .vbc-panel { max-width: 1180px !important; margin: 0 auto !important; padding: clamp(32px, 4vw, 52px) clamp(18px, 4vw, 40px) 0 !important; }
+  .vbc-beats { list-style: none !important; margin: 0 !important; padding: 0 !important; counter-reset: beat !important;
+    display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: clamp(18px, 2.6vw, 30px) !important; }
+  .vbc-beat { counter-increment: beat !important; padding-left: 48px !important; position: relative !important; margin: 0 !important; }
+  .vbc-beat::before { content: counter(beat, decimal-leading-zero) !important; position: absolute !important; left: 0 !important; top: 2px !important;
+    font-family: 'Oswald', Impact, Arial, sans-serif !important; font-weight: 700 !important; font-size: 26px !important; color: #d8b04a !important; }
+  .vbc-beat-h { font-size: clamp(21px, 2vw, 26px) !important; line-height: 1.15 !important; font-weight: 600 !important; color: #ffffff !important; margin: 0 0 6px 0 !important; }
+  .vbc-beat p { font-size: clamp(17px, 1.4vw, 19px) !important; line-height: 1.6 !important; color: #c9ced8 !important; margin: 0 !important; }
+  .vbc-turn-on .vbc-sec.vbc-turn { padding: 0 !important; }
+  .vbc-turn-on .vbc-stage { height: 100vh !important; height: 100svh !important; overflow: hidden !important; }
+  .vbc-turn-on .vbc-cam { position: absolute !important; padding: 0 !important; max-width: none !important; margin: 0 !important; will-change: transform;
+    left: var(--vbc-cam-l, 0px) !important; top: var(--vbc-cam-t, 0px) !important;      
+    width: var(--vbc-cam-w, 100%) !important; height: var(--vbc-cam-h, auto) !important; }
+  .vbc-turn-on .vbc-card { display: block !important; position: relative !important; width: 100% !important; height: 100% !important; transform-style: preserve-3d !important; }
+  .vbc-turn-on .vbc img.vbc-face, .vbc-turn-on img.vbc-face {
+    position: absolute !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important;
+    object-fit: contain !important; -webkit-backface-visibility: hidden !important; backface-visibility: hidden !important;
+  }
+  .vbc-turn-on img.vbc-face-back { transform: rotateY(180deg) !important; }
+  .vbc-turn-on .vbc-ring {
+    display: block !important; position: absolute !important; z-index: 2 !important; width: 150px !important; height: 150px !important;
+    margin: -75px 0 0 -75px !important; border-radius: 50% !important; pointer-events: none !important;
+    border: 2px solid #f2d27a !important; box-shadow: 0 0 0 6px rgba(242,210,122,0.16), 0 0 34px rgba(242,210,122,0.35) !important;
+  }
+  .vbc-turn-on .vbc-panel {
+    position: absolute !important; z-index: 3 !important; top: 0 !important; bottom: 0 !important; left: 0 !important;
+    width: min(40%, 520px) !important; max-width: none !important; margin: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: center !important;
+    padding: 0 clamp(24px, 3vw, 44px) 0 clamp(24px, 5vw, 72px) !important;
+    background: linear-gradient(90deg, rgba(7,10,18,0.96) 0%, rgba(7,10,18,0.85) 64%, rgba(7,10,18,0) 100%) !important;
+  }
+  .vbc-turn-on .vbc-count { display: flex !important; align-items: baseline !important; gap: 12px !important; margin: 0 0 16px 0 !important; opacity: 0; }
+  .vbc-count b { font-size: clamp(44px, 4.6vw, 64px) !important; line-height: 1 !important; font-weight: 700 !important; color: #f2d27a !important; }
+  .vbc-count span { font-size: 15px !important; font-weight: 800 !important; letter-spacing: 0.14em !important; text-transform: uppercase !important; color: #c9ced8 !important; }
+  .vbc-turn-on .vbc-beats { display: block !important; position: relative !important; min-height: 220px !important; }
+  .vbc-turn-on .vbc-beat { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; padding-left: 0 !important; }
+  .vbc-turn-on .vbc-beat::before { display: none !important; }
+  .vbc-turn-on .vbc-beat-h { font-size: clamp(28px, 3vw, 42px) !important; margin-bottom: 12px !important; }
+  .vbc-turn-on .vbc-beat p { font-size: clamp(18px, 1.5vw, 21px) !important; color: #dfe3ea !important; }
+  .vbc-turn-on .vbc-bar { display: block !important; height: 3px !important; background: rgba(255,255,255,0.14) !important; margin-top: 26px !important; max-width: 320px !important; }
+  .vbc-bar i { display: block !important; height: 100% !important; background: #d8b04a !important; transform: scaleX(0); transform-origin: 0 50% !important; }
+  .vbc-sec.vbc-band { padding: clamp(60px, 8vw, 110px) 0 !important; background: #070a12 !important; }
+  .vbc-sec.vbc-band-alt { background: #0d1528 !important; }
+  .vbc-split { display: grid !important; grid-template-columns: 1.1fr 1fr !important; gap: clamp(24px, 4vw, 56px) !important; align-items: center !important; }
+  .vbc figure.vbc-fig { margin: 0 !important; }
+  .vbc-fig img { width: 100% !important; border-radius: 14px !important; box-shadow: 0 22px 46px rgba(0,0,0,0.55) !important; }
+  .vbc-ticks { list-style: none !important; margin: 8px 0 0 0 !important; padding: 0 !important; }
+  .vbc-ticks li { position: relative !important; padding: 0 0 0 30px !important; margin: 0 0 10px 0 !important; font-size: clamp(17px, 1.4vw, 19px) !important; line-height: 1.5 !important; color: #e7e9ee !important; }
+  .vbc-ticks li::before { content: "\2605" !important; position: absolute !important; left: 0 !important; top: 0 !important; color: #d8b04a !important; }
+  .vbc-seal { display: inline-block !important; margin: 0 0 14px 0 !important; padding: 8px 14px !important; border: 2px solid #d8b04a !important; border-radius: 6px !important;
+    color: #f2d27a !important; font-size: 14px !important; font-weight: 900 !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; }
+  .vbc-copy-col .vbc-h2 { margin-bottom: 16px !important; }
+  .vbc-sec.vbc-value { padding: clamp(64px, 9vw, 120px) 0 !important; background: radial-gradient(ellipse at 50% 50%, #13203d 0%, #070a12 72%) !important; }
+  .vbc-price { display: flex !important; align-items: center !important; justify-content: center !important; flex-wrap: wrap !important; gap: 10px clamp(24px, 4vw, 56px) !important; margin: 14px 0 26px 0 !important; }
+  .vbc-was { position: relative !important; display: inline-block !important; font-weight: 700 !important; font-size: clamp(72px, 11vw, 150px) !important; line-height: 1 !important; color: #6f7686 !important; }
+  .vbc-was i { position: absolute !important; left: -6% !important; right: -6% !important; top: 50% !important; height: clamp(6px, 0.8vw, 11px) !important; margin-top: -4px !important;
+    background: #c3201a !important; border-radius: 4px !important; transform: rotate(-9deg); transform-origin: 0 50% !important; }
+  .vbc-free { display: inline-block !important; font-weight: 700 !important; font-size: clamp(76px, 12vw, 164px) !important; line-height: 1 !important; color: #f2d27a !important;
+    text-shadow: 0 0 40px rgba(242,210,122,0.35) !important; }
+  .vbc-tiers { display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; gap: clamp(12px, 2vw, 24px) !important; }
+  .vbc figure.vbc-tier { position: relative !important; margin: 0 !important; padding: 18px 14px 20px !important; border-radius: 14px !important;
+    background: #111b33 !important; border: 1px solid rgba(216,176,74,0.28) !important; text-align: center !important; }
+  .vbc figure.vbc-tier.vbc-tier-hot { border: 2px solid #d8b04a !important; box-shadow: 0 0 0 4px rgba(216,176,74,0.14), 0 18px 40px rgba(0,0,0,0.5) !important; }
+  .vbc-tier-flag { position: absolute !important; top: -13px !important; left: 50% !important; transform: translateX(-50%) !important; white-space: nowrap !important;
+    padding: 4px 12px !important; border-radius: 999px !important; background: #c3201a !important; color: #ffffff !important;
+    font-size: 13px !important; font-weight: 900 !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; }
+  .vbc-tier img { width: 100% !important; aspect-ratio: 1 / 1 !important; object-fit: contain !important; }
+  .vbc-tier figcaption { display: flex !important; flex-direction: column !important; gap: 2px !important; margin-top: 8px !important; }
+  .vbc-tier figcaption b { font-family: 'Oswald', Impact, Arial, sans-serif !important; font-size: clamp(22px, 2.2vw, 28px) !important; font-weight: 700 !important; text-transform: uppercase !important; color: #ffffff !important; }
+  .vbc-tier figcaption span { font-size: 15px !important; color: #b7bdc9 !important; }
+  .vbc p.vbc-note { font-size: 15px !important; color: #b7bdc9 !important; margin: 22px auto 0 auto !important; max-width: 60ch !important; }
+  .vbc-faq details { border-bottom: 1px solid rgba(216,176,74,0.25) !important; }
+  .vbc-faq summary { list-style: none !important; cursor: pointer !important; display: flex !important; justify-content: space-between !important; align-items: center !important; gap: 16px !important;
+    padding: 18px 0 !important; min-height: 44px !important; font-size: clamp(18px, 1.6vw, 21px) !important; font-weight: 800 !important; color: #ffffff !important; }
+  .vbc-faq summary::-webkit-details-marker { display: none !important; }
+  .vbc-faq summary span { flex: 0 0 auto !important; font-size: 26px !important; line-height: 1 !important; color: #d8b04a !important; transition: transform .2s ease !important; }
+  .vbc-faq details[open] summary span { transform: rotate(45deg) !important; }
+  .vbc-faq details p { font-size: clamp(17px, 1.4vw, 19px) !important; line-height: 1.65 !important; color: #c9ced8 !important; margin: 0 0 18px 0 !important; }
+  .vbc-sec.vbc-bleed { min-height: 82vh !important; min-height: 82svh !important; padding: clamp(70px, 10vw, 120px) 0 !important; display: flex !important; align-items: center !important; }
+  .vbc-bleed-media { position: absolute !important; top: -10% !important; bottom: -10% !important; left: 0 !important; right: 0 !important; }
+  .vbc-bleed-media img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: 55% 50% !important; will-change: transform; }
+  .vbc-bleed-shade { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: radial-gradient(ellipse at 50% 55%, rgba(7,10,18,0.62) 0%, rgba(7,10,18,0.9) 70%) !important; }
+  .vbc-bleed-copy { position: relative !important; z-index: 2 !important; }
+  .vbc-bleed .vbc-h1 { margin-bottom: 18px !important; }
+  .vbc-sec.vbc-fine { padding: 28px 0 !important; background: #05070d !important; }
+  .vbc-fine p { font-size: 14px !important; line-height: 1.6 !important; color: #8d94a3 !important; margin: 0 auto !important; max-width: 90ch !important; text-align: center !important; }
+  .vbc-fbar {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; z-index: 99990 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important; gap: 16px !important;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    background: rgba(7,10,18,0.96) !important; border-top: 2px solid #d8b04a !important; box-shadow: 0 -10px 30px rgba(0,0,0,0.45) !important;
+    transform: translateY(110%) !important; transition: transform .35s ease !important; box-sizing: border-box !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+  }
+  .vbc-fbar.vbc-fbar-on { transform: translateY(0) !important; }
+  .vbc-fbar-txt { font-size: 17px !important; line-height: 1.3 !important; color: #dfe3ea !important; }
+  .vbc-fbar-txt b { color: #ffffff !important; }
+  a.vbc-fbar-btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; min-height: 50px !important; padding: 0 26px !important;
+    border-radius: 8px !important; background: #c3201a !important; border-bottom: 4px solid #74110d !important; color: #ffffff !important;
+    font-size: 19px !important; font-weight: 900 !important; text-decoration: none !important; white-space: nowrap !important; }
+  @media (prefers-reduced-motion: reduce) { .vbc-fbar { transition: none !important; } .vbc-cue i { animation: none !important; } }
+  @media (max-width: 899px) {
+    .vbc-sec.vbc-hero { align-items: flex-end !important; }
+    .vbc-hero-media { bottom: auto !important; height: 70vh !important; height: 70svh !important; }
+    .vbc img.vbc-hero-img { object-position: 50% 40% !important; }
+    .vbc-hero-shade { background: linear-gradient(0deg, #070a12 0%, #070a12 calc(100% - 70svh), rgba(7,10,18,0.55) calc(100% - 60svh), rgba(7,10,18,0) calc(100% - 46svh)) !important; }
+    .vbc-hero-copy { padding-top: 50vh !important; padding-top: 50svh !important; }
+    .vbc-split { grid-template-columns: 1fr !important; }
+    .vbc-beats { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .vbc-tiers { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; row-gap: 26px !important; }
+    .vbc-turn-on .vbc-panel {
+      top: auto !important; bottom: 0 !important; right: 0 !important; width: 100% !important; justify-content: flex-end !important;
+      padding: 60px 18px 26px 18px !important;
+      background: linear-gradient(0deg, rgba(7,10,18,0.97) 0%, rgba(7,10,18,0.9) 62%, rgba(7,10,18,0) 100%) !important;
+    }
+    .vbc-turn-on .vbc-ring { width: 110px !important; height: 110px !important; margin: -55px 0 0 -55px !important; }
+    .vbc-turn-on .vbc-count { margin-bottom: 8px !important; }
+    .vbc-count b { font-size: 40px !important; }
+    .vbc-turn-on .vbc-beats { min-height: 180px !important; }
+    .vbc-turn-on .vbc-beat-h { font-size: 26px !important; margin-bottom: 8px !important; }
+    .vbc-turn-on .vbc-bar { margin-top: 14px !important; max-width: none !important; }
+  }
+  @media (max-width: 768px) {
+    .vbc-card { grid-template-columns: 1fr !important; }
+    .vbc-beats { grid-template-columns: 1fr !important; }
+    .vbc-fbar-txt { display: none !important; }
+    a.vbc-fbar-btn { width: 100% !important; }
+  }
+  @media (max-width: 480px) {
+    .vbc-tiers { grid-template-columns: 1fr 1fr !important; gap: 12px !important; }
+    .vbc figure.vbc-tier { padding: 16px 8px 14px !important; }
+  }
+  @media (hover: none) { a.vbc-cta:hover { transform: none !important; filter: none !important; } }
+</style>
+<div class="vbc" data-vbc>
+<section class="vbc-sec vbc-tagbar">
+  <div class="vbc-tagbar-inner">
+    <span>Free + Shipping</span>
+    <span>Ships Within The USA</span>
+    <span>30-Day Money Back</span>
+  </div>
+</section>
+<section class="vbc-sec vbc-hero" data-vbc-hero>
+  <div class="vbc-hero-media">
+    <picture>
+      <source srcset="https://mtp-images.com/vb-hero-flag-mobile-001.jpg" media="(max-width: 899px)">
+      <img class="vbc-hero-img" data-vbc-hero-img
+           src="https://mtp-images.com/vb-hero-flag-001.jpg"
+           width="1920" height="1081" loading="eager" decoding="async"
+           alt="The Veterans Bar: a gold bar showing a saluting soldier in dress uniform in front of the American flag, stamped VETERAN Gold Edition, Honoring Those Who Served">
+    </picture>
+  </div>
+  <div class="vbc-hero-shade"></div>
+  <div class="vbc-hero-copy">
+    <span class="vbc-badge" data-fx="hero">Free + Shipping</span>
+    <h1 class="vbc-h1">
+      <span class="vbc-line"><span class="vbc-line-in" data-fx="line">They Served.</span></span>
+      <span class="vbc-line"><span class="vbc-line-in" data-fx="line">Now Honor Them</span></span>
+      <span class="vbc-line"><span class="vbc-line-in vbc-gold" data-fx="line">In Gold.</span></span>
+    </h1>
+    <p class="vbc-hero-sub" data-fx="hero">
+      The Veterans Bar: a salute on the front, "Land of the Free Because of
+      the Brave" on the back, in a gold finish with red, white and blue
+      enamel. A $49 retail value. Yours free today &mdash; you only cover the
+      shipping.
+    </p>
+    <div class="vbc-cta-wrap" data-fx="hero">
+      <a class="vbc-cta" href="#"
+         onclick="var t=document.querySelector('[data-vbc-final]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'center'});}">
+        <span class="vbc-cta-main">Claim My Free Veterans Bar</span>
+        <span class="vbc-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+  <div class="vbc-cue" aria-hidden="true"><span>Turn it over</span><i></i></div>
+</section>
+<section class="vbc-sec vbc-turn" data-vbc-turn>
+  <div class="vbc-stage" data-vbc-stage>
+    <div class="vbc-cam" data-vbc-cam>
+      <div class="vbc-card" data-vbc-card>
+        <img class="vbc-face vbc-face-front" data-vbc-front
+             src="https://mtp-images.com/vb-front-cutout-001.png" width="1315" height="740" loading="lazy" decoding="async"
+             alt="Front of the Veterans Bar: a soldier in dress uniform saluting before the American flag; VETERAN, Gold Edition, Honoring Those Who Served; an eagle with a stars-and-stripes shield between two laurel branches">
+        <img class="vbc-face vbc-face-back" data-vbc-back
+             src="https://mtp-images.com/vb-back-cutout-001.png" width="1308" height="716" loading="lazy" decoding="async"
+             alt="Back of the Veterans Bar: a bald eagle before the American flag; Land of the Free Because of the Brave; Honor, Courage, Sacrifice; a helmet, dog tags, rifle and boots">
+      </div>
+    </div>
+    <div class="vbc-ring" data-vbc-ring aria-hidden="true"></div>
+    <div class="vbc-panel">
+      <p class="vbc-kicker">Both Sides, Up Close</p>
+      <div class="vbc-count" aria-hidden="true"><b data-vbc-side>Front</b><span data-vbc-step>1 of 6</span></div>
+      <ol class="vbc-beats">
+        <li class="vbc-beat" data-face="front" data-x="0.25" data-y="0.44" data-z="1.7">
+          <h3 class="vbc-beat-h">The Salute</h3>
+          <p>A soldier in dress uniform, hand to the brim, the flag behind him. The moment every veteran knows.</p>
+        </li>
+        <li class="vbc-beat" data-face="front" data-x="0.70" data-y="0.42" data-z="1.55">
+          <h3 class="vbc-beat-h">"Veteran &mdash; Gold Edition"</h3>
+          <p>Raised lettering that says exactly who this bar is for, and why it's on the mantel.</p>
+        </li>
+        <li class="vbc-beat" data-face="front" data-x="0.70" data-y="0.74" data-z="1.7">
+          <h3 class="vbc-beat-h">"Honoring Those Who Served"</h3>
+          <p>An eagle with a stars-and-stripes shield, framed in laurel and red, white and blue ribbon.</p>
+        </li>
+        <li class="vbc-beat" data-face="back" data-x="0.26" data-y="0.40" data-z="1.6">
+          <h3 class="vbc-beat-h">Turn It Over: The Eagle</h3>
+          <p>A bald eagle in sharp relief against the flag. The back is as finished as the front.</p>
+        </li>
+        <li class="vbc-beat" data-face="back" data-x="0.62" data-y="0.44" data-z="1.45">
+          <h3 class="vbc-beat-h">"Land Of The Free Because Of The Brave"</h3>
+          <p>The words that say thank you, above "Honor &bull; Courage &bull; Sacrifice".</p>
+        </li>
+        <li class="vbc-beat" data-face="back" data-x="0.88" data-y="0.46" data-z="1.75">
+          <h3 class="vbc-beat-h">The Battlefield Cross</h3>
+          <p>Helmet, dog tags, rifle and boots: the tribute for the ones who didn't come home.</p>
+        </li>
+        <li class="vbc-beat" data-final>
+          <h3 class="vbc-beat-h">Two Sides. One Thank You.</h3>
+          <p>Gold finish, red, white and blue enamel, a $49 retail value. Free today &mdash; you only cover the shipping.</p>
+        </li>
+      </ol>
+      <div class="vbc-bar" aria-hidden="true"><i data-vbc-bar></i></div>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-band">
+  <div class="vbc-wrap">
+    <div class="vbc-head" data-fx="up">
+      <p class="vbc-kicker">For The Veteran In Your Life</p>
+      <h2 class="vbc-h2">A Thank You They Can Hold</h2>
+    </div>
+    <div class="vbc-split">
+      <figure class="vbc-fig" data-fx="wipe">
+        <img src="https://mtp-images.com/vb-scene-giftbox-001.jpg" width="1920" height="1072" loading="lazy" decoding="async"
+             alt="The Veterans Bar resting in an open black presentation box lined in navy satin, a red ribbon and a folded American flag beside it">
+      </figure>
+      <div class="vbc-copy-col" data-fx="up">
+        <p class="vbc-copy">
+          Your dad. Your grandfather. The neighbor who still raises the flag
+          every morning. Most veterans never ask to be thanked &mdash; and
+          they rarely get anything that says it this clearly.
+        </p>
+        <p class="vbc-copy">
+          Hand them a bar that salutes them on one side and tells them their
+          service mattered on the other. It belongs on a desk, a shelf or in a
+          shadow box beside their medals.
+        </p>
+        <ul class="vbc-ticks">
+          <li>Veterans Day, birthdays, retirements and homecomings</li>
+          <li>Every branch: the salute and the flag speak to all who served</li>
+          <li>Made for the desk, the shelf or the shadow box</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-value" data-vbc-value>
+  <div class="vbc-wrap vbc-center">
+    <p class="vbc-kicker" data-fx="up">Each Veterans Bar Carries A $49 Retail Value</p>
+    <div class="vbc-price" aria-label="Retails for 49 dollars, yours free today">
+      <span class="vbc-was"><span>$49</span><i data-vbc-strike></i></span>
+      <span class="vbc-free" data-vbc-free>FREE</span>
+    </div>
+    <p class="vbc-copy vbc-center" data-fx="up">
+      We cover the bar. You cover the shipping. Order more than one and your
+      shipping per bar drops &mdash; choose how many on the order form below.
+    </p>
+    <div class="vbc-cta-wrap vbc-center" data-fx="up">
+      <a class="vbc-cta" href="#"
+         onclick="var t=document.querySelector('[data-vbc-final]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'center'});}">
+        <span class="vbc-cta-main">Claim My Free Veterans Bar</span>
+        <span class="vbc-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-band vbc-band-alt">
+  <div class="vbc-wrap">
+    <div class="vbc-head vbc-center" data-fx="up">
+      <p class="vbc-kicker">One For Every Veteran You Know</p>
+      <h2 class="vbc-h2">Keep One. Give The Rest.</h2>
+      <p class="vbc-copy vbc-center">Every bar is free. The more you order, the less you pay in shipping for each one.</p>
+    </div>
+    <div class="vbc-tiers">
+      <figure class="vbc-tier" data-fx="up">
+        <img src="https://mtp-images.com/vb-tier1x-001.png" width="1200" height="1200" loading="lazy" decoding="async" alt="One Veterans Bar">
+        <figcaption><b>1 Bar</b><span>$49 retail value</span></figcaption>
+      </figure>
+      <figure class="vbc-tier" data-fx="up">
+        <img src="https://mtp-images.com/vb-tier2x-001.png" width="1200" height="1200" loading="lazy" decoding="async" alt="Two Veterans Bars, one showing the back">
+        <figcaption><b>2 Bars</b><span>$98 retail value</span></figcaption>
+      </figure>
+      <figure class="vbc-tier vbc-tier-hot" data-fx="up">
+        <span class="vbc-tier-flag">Most Chosen</span>
+        <img src="https://mtp-images.com/vb-tier3x-001.png" width="1200" height="1200" loading="lazy" decoding="async" alt="Three Veterans Bars, fanned to show the front and the back">
+        <figcaption><b>3 Bars</b><span>$147 retail value</span></figcaption>
+      </figure>
+      <figure class="vbc-tier" data-fx="up">
+        <img src="https://mtp-images.com/vb-tier5x-001.png" width="1200" height="1200" loading="lazy" decoding="async" alt="Five Veterans Bars, stacked to show the front and the back">
+        <figcaption><b>5 Bars</b><span>$245 retail value</span></figcaption>
+      </figure>
+    </div>
+    <p class="vbc-note vbc-center">Exact shipping &amp; handling for each option is shown in the order form below before you submit.</p>
+  </div>
+</section>
+<section class="vbc-sec vbc-band">
+  <div class="vbc-wrap">
+    <div class="vbc-split">
+      <figure class="vbc-fig" data-fx="wipe">
+        <img src="https://mtp-images.com/vb-scene-velvet-001.jpg" width="1920" height="1079" loading="lazy" decoding="async"
+             alt="The Veterans Bar on navy velvet beside a folded American flag and a pair of dog tags">
+      </figure>
+      <div class="vbc-copy-col" data-fx="up">
+        <span class="vbc-seal">30-Day Money-Back Guarantee</span>
+        <h2 class="vbc-h2">You Take No Risk</h2>
+        <p class="vbc-copy">
+          Get the bar in your hands first. Turn it over. Picture it on the
+          shelf of the veteran you're giving it to.
+        </p>
+        <p class="vbc-copy">
+          If you're not happy with it, tell us within 30 days and we'll refund
+          you in full. The bar is free, so the shipping is the only thing you
+          paid, and the only thing there is to refund.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-band vbc-band-alt">
+  <div class="vbc-wrap vbc-narrow">
+    <div class="vbc-head vbc-center" data-fx="up">
+      <p class="vbc-kicker">Questions</p>
+      <h2 class="vbc-h2">Before You Claim Yours</h2>
+    </div>
+    <div class="vbc-faq">
+      <details>
+        <summary>What's on the bar?<span aria-hidden="true">+</span></summary>
+        <p>The front shows a saluting soldier before the American flag, with "VETERAN &mdash; Gold Edition &mdash; Honoring Those Who Served" and an eagle crest. The back shows a bald eagle and the flag, "Land of the Free Because of the Brave", "Honor &bull; Courage &bull; Sacrifice" and a battlefield cross.</p>
+      </details>
+      <details>
+        <summary>Is this real gold or legal tender?<span aria-hidden="true">+</span></summary>
+        <p>No. The Veterans Bar is a gold-finish commemorative collectible made for display and gifting. It is not solid gold, not legal tender and not an investment or bullion product.</p>
+      </details>
+      <details>
+        <summary>Why is it free?<span aria-hidden="true">+</span></summary>
+        <p>We're giving away a run of these bars to thank the people who served. You only cover shipping &amp; handling, shown in the order form below.</p>
+      </details>
+      <details>
+        <summary>How much is shipping?<span aria-hidden="true">+</span></summary>
+        <p>It depends on how many bars you choose. The exact amount is shown in the order form before you submit, with no hidden charges. The more bars you order, the less you pay in shipping per bar.</p>
+      </details>
+      <details>
+        <summary>Can I order more than one?<span aria-hidden="true">+</span></summary>
+        <p>Yes. Choose 1, 2, 3 or 5 free bars in the order form below. Three is the most chosen: one to keep and two to give.</p>
+      </details>
+      <details>
+        <summary>What if I'm not happy with it?<span aria-hidden="true">+</span></summary>
+        <p>You're covered by our 30-Day Money-Back Guarantee. Contact us within 30 days and we'll refund you in full.</p>
+      </details>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-bleed" data-vbc-bleed data-vbc-final>
+  <div class="vbc-bleed-media">
+    <img data-vbc-par src="https://mtp-images.com/vb-scene-desk-001.jpg" width="1920" height="1079" loading="lazy" decoding="async"
+         alt="Two Veterans Bars on a walnut desk, one showing the front and one the back, beside service ribbons, a bugle and a folded flag">
+  </div>
+  <div class="vbc-bleed-shade"></div>
+  <div class="vbc-wrap vbc-center vbc-bleed-copy">
+    <h2 class="vbc-h1">
+      <span class="vbc-line"><span class="vbc-line-in" data-fx="line2">Say Thank You</span></span>
+      <span class="vbc-line"><span class="vbc-line-in vbc-gold" data-fx="line2">In A Way They'll Keep</span></span>
+    </h2>
+    <p class="vbc-copy vbc-center" data-fx="up">
+      A $49 Veterans Bar, free today. We cover the bar. You cover the shipping.
+    </p>
+    <div class="vbc-cta-wrap vbc-center" data-fx="up">
+      <a class="vbc-cta" href="#"
+         onclick="var t=document.querySelector('[data-vbc-final]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'center'});}">
+        <span class="vbc-cta-main">Yes, Send My Free Veterans Bar</span>
+        <span class="vbc-cta-sub">Just cover the shipping</span>
+      </a>
+      <p class="vbc-cta-note">Secure checkout &middot; Ships within the USA &middot; 30-day money back</p>
+    </div>
+  </div>
+</section>
+<section class="vbc-sec vbc-fine">
+  <div class="vbc-wrap">
+    <p>
+      The Veterans Bar is a gold-finish commemorative collectible intended for
+      display. It is not legal tender, not solid gold and not an investment or
+      bullion product. The bar is shown on illustrated backgrounds; the display
+      box and props shown are for illustration and not included. Product
+      appearance may vary slightly from the images shown. Ships to U.S.
+      addresses only. 30-Day Money-Back Guarantee.
+    </p>
+  </div>
+</section>
+<div class="vbc-fbar" data-vbc-fbar aria-hidden="true">
+  <span class="vbc-fbar-txt"><b>The Veterans Bar.</b> Free today.</span>
+  <a class="vbc-fbar-btn" href="#" tabindex="-1"
+     onclick="var t=document.querySelector('[data-vbc-final]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'center'});}">Claim Mine</a>
+</div>
+<img data-vbc-boot alt="" aria-hidden="true" width="1" height="1"
+     style="position:absolute;width:1px;height:1px;opacity:0;border:0;pointer-events:none;"
+     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+     onload="this.onload=this.onerror=null;if(!window.__vbcRan&&!window.__vbcBoot){window.__vbcBoot=1;try{var b=atob(this.getAttribute('data-vbc-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[VBC] boot failed:',e&&e.message);}}"
+     onerror="this.onload=this.onerror=null;if(!window.__vbcRan&&!window.__vbcBoot){window.__vbcBoot=1;try{var b=atob(this.getAttribute('data-vbc-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[VBC] boot failed:',e&&e.message);}}"
+     data-vbc-payload="LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBWZXRlcmFucyBCYXIgLS0gY2luZW1hdGljIHBhZ2Ugc2NyaXB0IChyZWFkYWJsZSBzb3VyY2UpCiAgIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KICAgU2hpcHMgQmFzZTY0LWVuY29kZWQgaW4gdGhlIGRhdGEtdmJjLXBheWxvYWQgYXR0cmlidXRlIG9mIHRoZSBoaWRkZW4KICAgPGltZyBkYXRhLXZiYy1ib290PiBhdCB0aGUgZW5kIG9mIHRoZSBwYWdlOyB0aGUgaW1hZ2UncyBvbmxvYWQgZGVjb2RlcwogICBhbmQgaW5qZWN0cyBpdC4gVGhhdCBrZWVwcyB0aGUgcGFnZSBhIHNpbmdsZSBzZWxmLWNvbnRhaW5lZCBIVE1MIGJsb2NrIHRoYXQKICAgcnVucyBvbiBob3N0cyBhbmQgcGFnZSBidWlsZGVycyB3aGljaCBzdHJpcCBvciByZXdyaXRlIHBhc3RlZCA8c2NyaXB0PiB0YWdzLgoKICAgUGVyIFtkYXRhLXZiY10gcm9vdCAobXVsdGktaW5zdGFuY2Ugc2FmZTsgbm8gaWRzKToKICAgICAqIFJlZHVjZWQgbW90aW9uIC0+IG5vdGhpbmcgYW5pbWF0ZXM7IHRoZSBwYWdlIGlzIGFscmVhZHkgY29tcGxldGUuCiAgICAgKiBPdGhlcndpc2UgYWRkcyAudmJjLXdhaXQgKGhpZGVzIG9ubHkgdGhlIGhlcm8gbGluZXMgZm9yIHRoZWlyIGVudHJhbmNlKSwKICAgICAgIGxvYWRzIEdTQVAgMy4xNC4yICsgU2Nyb2xsVHJpZ2dlciAoanNkZWxpdnIgLT4gY2RuanMgLT4gdW5wa2cpLCB0aGVuOgogICAgICAgICBBY3QgMSAgaGVybyBsaW5lcyByaXNlIGluOyB0aGUgcGhvdG8gcHVzaGVzIGluIG9uIHNjcm9sbAogICAgICAgICBBY3QgMiAgVFVSTiBJVCBPVkVSOiBwaW5zIHRoZSBzdGFnZSAocGluVHlwZSAnZml4ZWQnLCB3aGljaCBzdXJ2aXZlcwogICAgICAgICAgICAgICAgYW4gb3ZlcmZsb3ctaGlkZGVuIGFuY2VzdG9yIHdoZXJlIHBvc2l0aW9uOnN0aWNreSB3b3VsZCBub3QpLAogICAgICAgICAgICAgICAgZWFzZXMgYSBjYW1lcmEgdG8gZWFjaCBkZXRhaWwgb24gdGhlIGJhciAoZGF0YS14IC8gZGF0YS15IG9uCiAgICAgICAgICAgICAgICB0aGF0IGZhY2UsIDAuLjE7IGRhdGEteiA9IHpvb20sIGNhcHBlZCBhdCB0aGUgcmVuZGVyJ3MgbmF0aXZlCiAgICAgICAgICAgICAgICBwaXhlbHMpLCB0dXJucyB0aGUgYmFyIG92ZXIgYmV0d2VlbiB0aGUgZnJvbnQgYW5kIGJhY2sKICAgICAgICAgICAgICAgIGRldGFpbHMsIHN3YXBzIHRoZSBjYXB0aW9uLCByaW5ncyB0aGUgZGV0YWlsLCBwdWxscyBiYWNrCiAgICAgICAgIEFjdCAzKyB3aXBlcywgbGluZSByZXZlYWxzLCB0aGUgJDQ5IHN0cmlrZSAtPiBGUkVFIHB1bmNoLCBwYXJhbGxheAogICAgICAgYW5kIGEgZmxvYXRpbmcgQ1RBIGJhciAobW92ZWQgdG8gPGJvZHk+IHNvIHBvc2l0aW9uOmZpeGVkIGlzIHRoZQogICAgICAgdmlld3BvcnQncyksIHNob3duIGFmdGVyIHRoZSBoZXJvIGFuZCBoaWRkZW4gb3ZlciB0aGUgZmluYWwKICAgICAgIGNhbGwtdG8tYWN0aW9uIHNlY3Rpb24uCiAgICAgKiBJZiBHU0FQIG5ldmVyIGxvYWRzOiByZW1vdmVzIC52YmMtd2FpdCAtPiB0aGUgc3RhdGljIHBhZ2UuCiAgIERlYnVnOiBhZGQgP3ZiY2RlYnVnIHRvIHRoZSBVUkwgdG8gbG9nIHRoZSBwaXBlbGluZSB0byB0aGUgY29uc29sZS4KICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwooZnVuY3Rpb24gKCkgewogICJ1c2Ugc3RyaWN0IjsKICBpZiAod2luZG93Ll9fdmJjUmFuKSByZXR1cm47CiAgd2luZG93Ll9fdmJjUmFuID0gdHJ1ZTsKICB2YXIgREJHID0gL1s/Jl12YmNkZWJ1Zy9pLnRlc3QobG9jYXRpb24uc2VhcmNoKSB8fCB3aW5kb3cuVkJDX0RFQlVHOwogIGZ1bmN0aW9uIGxvZygpIHsgaWYgKERCRyAmJiB3aW5kb3cuY29uc29sZSkgY29uc29sZS5sb2cuYXBwbHkoY29uc29sZSwgWydbVkJDXSddLmNvbmNhdChbXS5zbGljZS5jYWxsKGFyZ3VtZW50cykpKTsgfQogIGxvZygncGF5bG9hZCBleGVjdXRlZCcpOwoKICB2YXIgUkVEVUNFID0gd2luZG93Lm1hdGNoTWVkaWEgJiYgd2luZG93Lm1hdGNoTWVkaWEoJyhwcmVmZXJzLXJlZHVjZWQtbW90aW9uOiByZWR1Y2UpJykubWF0Y2hlczsKICB2YXIgTkFUSVZFX1cgPSAxMzE1OyAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gdGhlIGZyb250IGN1dG91dCdzIHdpZHRoIGluIHB4IChuZXZlciB1cHNjYWxlIHBhc3QgaXQpCiAgdmFyIEdTQVBfVVJMUyA9IFsKICAgICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2dzYXBAMy4xNC4yL2Rpc3QvZ3NhcC5taW4uanMnLAogICAgJ2h0dHBzOi8vY2RuanMuY2xvdWRmbGFyZS5jb20vYWpheC9saWJzL2dzYXAvMy4xNC4yL2dzYXAubWluLmpzJywKICAgICdodHRwczovL3VucGtnLmNvbS9nc2FwQDMuMTQuMi9kaXN0L2dzYXAubWluLmpzJwogIF07CiAgdmFyIFNUX1VSTFMgPSBbCiAgICAnaHR0cHM6Ly9jZG4uanNkZWxpdnIubmV0L25wbS9nc2FwQDMuMTQuMi9kaXN0L1Njcm9sbFRyaWdnZXIubWluLmpzJywKICAgICdodHRwczovL2NkbmpzLmNsb3VkZmxhcmUuY29tL2FqYXgvbGlicy9nc2FwLzMuMTQuMi9TY3JvbGxUcmlnZ2VyLm1pbi5qcycsCiAgICAnaHR0cHM6Ly91bnBrZy5jb20vZ3NhcEAzLjE0LjIvZGlzdC9TY3JvbGxUcmlnZ2VyLm1pbi5qcycKICBdOwoKICBmdW5jdGlvbiBsb2FkRmlyc3QodXJscykgewogICAgcmV0dXJuIG5ldyBQcm9taXNlKGZ1bmN0aW9uIChyZXMsIHJlaikgewogICAgICB2YXIgaSA9IDA7CiAgICAgIChmdW5jdGlvbiBuZXh0KCkgewogICAgICAgIGlmIChpID49IHVybHMubGVuZ3RoKSB7IHJlaihuZXcgRXJyb3IoJ2FsbCBDRE5zIGZhaWxlZCcpKTsgcmV0dXJuOyB9CiAgICAgICAgdmFyIHVybCA9IHVybHNbaSsrXSwgcyA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NjcmlwdCcpOwogICAgICAgIHMuc3JjID0gdXJsOyBzLmFzeW5jID0gdHJ1ZTsKICAgICAgICBzLm9ubG9hZCA9IGZ1bmN0aW9uICgpIHsgbG9nKCdsb2FkZWQnLCB1cmwpOyByZXMoKTsgfTsKICAgICAgICBzLm9uZXJyb3IgPSBmdW5jdGlvbiAoKSB7IGxvZygnRkFJTEVEJywgdXJsKTsgbmV4dCgpOyB9OwogICAgICAgIGRvY3VtZW50LmhlYWQuYXBwZW5kQ2hpbGQocyk7CiAgICAgIH0pKCk7CiAgICB9KTsKICB9CiAgZnVuY3Rpb24gb3JkZXJGb3JtKCkgewogICAgcmV0dXJuIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1maW5hbF0nKTsKICB9CgogIC8vIC0tLS0gRmxvYXRpbmcgQ1RBOiB3b3JrcyB3aXRob3V0IEdTQVAgKEludGVyc2VjdGlvbk9ic2VydmVyKSwgc28gaXQgcnVucyBmaXJzdC4gLS0tLQogIGZ1bmN0aW9uIGZsb2F0YmFyKHJvb3QpIHsKICAgIHZhciBmYiA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtdmJjLWZiYXJdJykgfHwgcm9vdC5fX2ZiYXI7CiAgICB2YXIgaGVybyA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtdmJjLWhlcm9dJyk7CiAgICBpZiAoIWZiIHx8ICFoZXJvIHx8ICEoJ0ludGVyc2VjdGlvbk9ic2VydmVyJyBpbiB3aW5kb3cpKSByZXR1cm47CiAgICByb290Ll9fZmJhciA9IGZiOwogICAgaWYgKGZiLnBhcmVudE5vZGUgIT09IGRvY3VtZW50LmJvZHkpIGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoZmIpOyAgIC8vIGZpeGVkID0gdGhlIHZpZXdwb3J0J3MKICAgIHZhciBwYXN0SGVybyA9IGZhbHNlLCBmb3JtT24gPSBmYWxzZTsKICAgIGZ1bmN0aW9uIGFwcGx5KCkgewogICAgICB2YXIgb24gPSBwYXN0SGVybyAmJiAhZm9ybU9uOwogICAgICBmYi5jbGFzc0xpc3QudG9nZ2xlKCd2YmMtZmJhci1vbicsIG9uKTsKICAgICAgZmIuc2V0QXR0cmlidXRlKCdhcmlhLWhpZGRlbicsIG9uID8gJ2ZhbHNlJyA6ICd0cnVlJyk7CiAgICAgIHZhciBhID0gZmIucXVlcnlTZWxlY3RvcignYScpOyBpZiAoYSkgYS50YWJJbmRleCA9IG9uID8gMCA6IC0xOwogICAgfQogICAgbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKGZ1bmN0aW9uIChlcykgeyBwYXN0SGVybyA9ICFlc1swXS5pc0ludGVyc2VjdGluZzsgYXBwbHkoKTsgfSwgeyB0aHJlc2hvbGQ6IDAgfSkub2JzZXJ2ZShoZXJvKTsKICAgIHZhciBmID0gb3JkZXJGb3JtKCk7CiAgICBpZiAoZikgbmV3IEludGVyc2VjdGlvbk9ic2VydmVyKGZ1bmN0aW9uIChlcykgeyBmb3JtT24gPSBlc1swXS5pc0ludGVyc2VjdGluZzsgYXBwbHkoKTsgfSwgeyB0aHJlc2hvbGQ6IDAgfSkub2JzZXJ2ZShmKTsKICB9CgogIGZ1bmN0aW9uIGluaXQocm9vdCkgewogICAgaWYgKCFyb290IHx8IHJvb3QuX192YmMpIHJldHVybjsKICAgIHJvb3QuX192YmMgPSB0cnVlOwogICAgbG9nKCdpbml0Jyk7CiAgICBmbG9hdGJhcihyb290KTsKICAgIGlmIChSRURVQ0UpIHsgbG9nKCdyZWR1Y2VkIG1vdGlvbjogc3RhdGljIHBhZ2UnKTsgcmV0dXJuOyB9CiAgICByb290LmNsYXNzTGlzdC5hZGQoJ3ZiYy13YWl0Jyk7CiAgICB2YXIgc2FmZXR5ID0gc2V0VGltZW91dChmdW5jdGlvbiAoKSB7IHJvb3QuY2xhc3NMaXN0LnJlbW92ZSgndmJjLXdhaXQnKTsgbG9nKCdzYWZldHkgdGltZW91dDogc3RhdGljIHBhZ2UnKTsgfSwgNDAwMCk7CiAgICB2YXIgcmVhZHkgPSAod2luZG93LmdzYXAgJiYgd2luZG93LlNjcm9sbFRyaWdnZXIpID8gUHJvbWlzZS5yZXNvbHZlKCkgOgogICAgICBsb2FkRmlyc3QoR1NBUF9VUkxTKS50aGVuKGZ1bmN0aW9uICgpIHsgcmV0dXJuIGxvYWRGaXJzdChTVF9VUkxTKTsgfSk7CiAgICByZWFkeS50aGVuKGZ1bmN0aW9uICgpIHsKICAgICAgY2xlYXJUaW1lb3V0KHNhZmV0eSk7CiAgICAgIGlmICghKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKSkgdGhyb3cgbmV3IEVycm9yKCdnbG9iYWxzIG1pc3NpbmcnKTsKICAgICAgYnVpbGQocm9vdCk7CiAgICB9KS5jYXRjaChmdW5jdGlvbiAoZSkgewogICAgICBjbGVhclRpbWVvdXQoc2FmZXR5KTsKICAgICAgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCd2YmMtd2FpdCcsICd2YmMtb24nKTsKICAgICAgbG9nKCdHU0FQIHVuYXZhaWxhYmxlIC0+IHN0YXRpYyBwYWdlOicsIGUgJiYgZS5tZXNzYWdlKTsKICAgIH0pOwogIH0KCiAgZnVuY3Rpb24gYnVpbGQocm9vdCkgewogICAgdmFyIGdzYXAgPSB3aW5kb3cuZ3NhcCwgU1QgPSB3aW5kb3cuU2Nyb2xsVHJpZ2dlcjsKICAgIGdzYXAucmVnaXN0ZXJQbHVnaW4oU1QpOwogICAgdmFyIHEgPSBmdW5jdGlvbiAocykgeyByZXR1cm4gcm9vdC5xdWVyeVNlbGVjdG9yKHMpOyB9OwogICAgdmFyIHFhID0gZnVuY3Rpb24gKHMpIHsgcmV0dXJuIFtdLnNsaWNlLmNhbGwocm9vdC5xdWVyeVNlbGVjdG9yQWxsKHMpKTsgfTsKCiAgICAvLyBJbml0aWFsIHN0YXRlcyBmaXJzdCwgdGhlbiB0aGUgY2xhc3Mgc3dhcCAtLSBub3RoaW5nIGlzIGhpZGRlbiB1bmxlc3MgR1NBUCBpcyBoZXJlIHRvIGJyaW5nIGl0IGJhY2suCiAgICB2YXIgbGluZXMgPSBxYSgnW2RhdGEtZng9ImxpbmUiXScpLCBoZXJvRnggPSBxYSgnW2RhdGEtZng9Imhlcm8iXScpOwogICAgZ3NhcC5zZXQobGluZXMsIHsgeVBlcmNlbnQ6IDExMCB9KTsKICAgIGdzYXAuc2V0KGhlcm9GeCwgeyBhdXRvQWxwaGE6IDAsIHk6IDI0IH0pOwogICAgcm9vdC5jbGFzc0xpc3QuYWRkKCd2YmMtb24nKTsKICAgIHJvb3QuY2xhc3NMaXN0LnJlbW92ZSgndmJjLXdhaXQnKTsKCiAgICAvLyAtLS0tIEFDVCAxOiBoZXJvIGVudHJhbmNlICsgc2Nyb2xsIHB1c2gtaW4gLS0tLQogICAgZ3NhcC50aW1lbGluZSh7IGRlbGF5OiAwLjE1IH0pCiAgICAgIC50byhsaW5lcywgeyB5UGVyY2VudDogMCwgZHVyYXRpb246IDAuOSwgc3RhZ2dlcjogMC4xNiwgZWFzZTogJ3Bvd2VyMy5vdXQnIH0pCiAgICAgIC50byhoZXJvRngsIHsgYXV0b0FscGhhOiAxLCB5OiAwLCBkdXJhdGlvbjogMC43LCBzdGFnZ2VyOiAwLjEyLCBlYXNlOiAncG93ZXIyLm91dCcgfSwgJy09MC40NScpOwogICAgdmFyIGhlcm8gPSBxKCdbZGF0YS12YmMtaGVyb10nKSwgaGVyb0ltZyA9IHEoJ1tkYXRhLXZiYy1oZXJvLWltZ10nKTsKICAgIGlmIChoZXJvICYmIGhlcm9JbWcpIHsKICAgICAgZ3NhcC5mcm9tVG8oaGVyb0ltZywgeyBzY2FsZTogMS4wMiB9LCB7IHNjYWxlOiAxLjEyLCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBoZXJvLCBzdGFydDogJ3RvcCB0b3AnLCBlbmQ6ICdib3R0b20gdG9wJywgc2NydWI6IHRydWUgfSB9KTsKICAgICAgZ3NhcC50byhxKCcudmJjLWN1ZScpLCB7IGF1dG9BbHBoYTogMCwgZWFzZTogJ25vbmUnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogaGVybywgc3RhcnQ6ICd0b3AgdG9wJywgZW5kOiAnMjAlIHRvcCcsIHNjcnViOiB0cnVlIH0gfSk7CiAgICB9CgogICAgLy8gLS0tLSBBQ1QgMjogdHVybiBpdCBvdmVyIC0tLS0KICAgIGJ1aWxkVHVybihyb290LCBnc2FwLCBTVCk7CgogICAgLy8gLS0tLSBSZXZlYWxzIC0tLS0KICAgIHFhKCdbZGF0YS1meD0idXAiXScpLmZvckVhY2goZnVuY3Rpb24gKGVsKSB7CiAgICAgIGdzYXAuZnJvbShlbCwgeyBhdXRvQWxwaGE6IDAsIHk6IDM0LCBkdXJhdGlvbjogMC44LCBlYXNlOiAncG93ZXIyLm91dCcsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBlbCwgc3RhcnQ6ICd0b3AgODYlJywgb25jZTogdHJ1ZSB9IH0pOwogICAgfSk7CiAgICBxYSgnW2RhdGEtZng9IndpcGUiXScpLmZvckVhY2goZnVuY3Rpb24gKGVsKSB7CiAgICAgIGdzYXAuZnJvbVRvKGVsLCB7IGNsaXBQYXRoOiAnaW5zZXQoMCAwIDEwMCUgMCknIH0sIHsgY2xpcFBhdGg6ICdpbnNldCgwIDAgMCUgMCknLCBkdXJhdGlvbjogMS4xLCBlYXNlOiAncG93ZXIzLmluT3V0JywKICAgICAgICBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IGVsLCBzdGFydDogJ3RvcCA4OCUnLCBvbmNlOiB0cnVlIH0gfSk7CiAgICB9KTsKICAgIHZhciBsMiA9IHFhKCdbZGF0YS1meD0ibGluZTIiXScpOwogICAgaWYgKGwyLmxlbmd0aCkgZ3NhcC5mcm9tKGwyLCB7IHlQZXJjZW50OiAxMTAsIGR1cmF0aW9uOiAwLjksIHN0YWdnZXI6IDAuMTYsIGVhc2U6ICdwb3dlcjMub3V0JywKICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBsMlswXSwgc3RhcnQ6ICd0b3AgODUlJywgb25jZTogdHJ1ZSB9IH0pOwoKICAgIC8vIC0tLS0gQUNUIDQ6ICQ0OSBzdHJ1Y2sgdGhyb3VnaCwgdGhlbiBGUkVFIC0tLS0KICAgIHZhciB2YWwgPSBxKCdbZGF0YS12YmMtdmFsdWVdJyksIHN0cmlrZSA9IHEoJ1tkYXRhLXZiYy1zdHJpa2VdJyksIGZyZWUgPSBxKCdbZGF0YS12YmMtZnJlZV0nKTsKICAgIGlmICh2YWwgJiYgc3RyaWtlICYmIGZyZWUpIHsKICAgICAgZ3NhcC5zZXQoc3RyaWtlLCB7IHNjYWxlWDogMCB9KTsKICAgICAgZ3NhcC5zZXQoZnJlZSwgeyBhdXRvQWxwaGE6IDAsIHNjYWxlOiAwLjYgfSk7CiAgICAgIGdzYXAudGltZWxpbmUoeyBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IHZhbCwgc3RhcnQ6ICd0b3AgNzAlJywgb25jZTogdHJ1ZSB9IH0pCiAgICAgICAgLnRvKHN0cmlrZSwgeyBzY2FsZVg6IDEsIGR1cmF0aW9uOiAwLjU1LCBlYXNlOiAncG93ZXIyLmluT3V0JyB9KQogICAgICAgIC50byhmcmVlLCB7IGF1dG9BbHBoYTogMSwgc2NhbGU6IDEsIGR1cmF0aW9uOiAwLjYsIGVhc2U6ICdiYWNrLm91dCgyLjIpJyB9LCAnKz0wLjEnKTsKICAgIH0KCiAgICAvLyAtLS0tIFBhcmFsbGF4IG9uIHRoZSBmdWxsLWJsZWVkIHBob3RvIC0tLS0KICAgIHFhKCdbZGF0YS12YmMtYmxlZWRdJykuZm9yRWFjaChmdW5jdGlvbiAoc2VjKSB7CiAgICAgIHZhciBpbWcgPSBzZWMucXVlcnlTZWxlY3RvcignW2RhdGEtdmJjLXBhcl0nKTsKICAgICAgaWYgKGltZykgZ3NhcC5mcm9tVG8oaW1nLCB7IHlQZXJjZW50OiAtOCB9LCB7IHlQZXJjZW50OiA4LCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBzZWMsIHN0YXJ0OiAndG9wIGJvdHRvbScsIGVuZDogJ2JvdHRvbSB0b3AnLCBzY3J1YjogdHJ1ZSB9IH0pOwogICAgfSk7CgogICAgdmFyIHJlZnJlc2ggPSBmdW5jdGlvbiAoKSB7IFNULnJlZnJlc2goKTsgfTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdsb2FkJywgcmVmcmVzaCk7CiAgICBzZXRUaW1lb3V0KHJlZnJlc2gsIDE1MDApOwogICAgcm9vdC5fX3ZiY0J1aWx0ID0gdHJ1ZTsKICAgIHdpbmRvdy5fX3ZiY0J1aWx0ID0gKHdpbmRvdy5fX3ZiY0J1aWx0IHx8IDApICsgMTsKICAgIGxvZygnYnVpbHQ7IFNjcm9sbFRyaWdnZXJzID0nLCBTVC5nZXRBbGwoKS5sZW5ndGgpOwogIH0KCiAgZnVuY3Rpb24gYnVpbGRUdXJuKHJvb3QsIGdzYXAsIFNUKSB7CiAgICB2YXIgc3RhZ2UgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1zdGFnZV0nKSwgY2FtID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS12YmMtY2FtXScpLAogICAgICAgIGNhcmQgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1jYXJkXScpLAogICAgICAgIGJlYXRzID0gW10uc2xpY2UuY2FsbChyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJy52YmMtYmVhdDpub3QoW2RhdGEtZmluYWxdKScpKSwKICAgICAgICBmaW4gPSByb290LnF1ZXJ5U2VsZWN0b3IoJy52YmMtYmVhdFtkYXRhLWZpbmFsXScpLAogICAgICAgIHNpZGUgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1zaWRlXScpLCBzdGVwID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS12YmMtc3RlcF0nKSwKICAgICAgICBjb3VudFdyYXAgPSByb290LnF1ZXJ5U2VsZWN0b3IoJy52YmMtY291bnQnKSwKICAgICAgICBiYXIgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1iYXJdJyksIHJpbmcgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLXZiYy1yaW5nXScpOwogICAgaWYgKCFzdGFnZSB8fCAhY2FtIHx8ICFjYXJkIHx8ICFiZWF0cy5sZW5ndGgpIHJldHVybjsKICAgIFtdLmZvckVhY2guY2FsbChjYXJkLnF1ZXJ5U2VsZWN0b3JBbGwoJ2ltZycpLCBmdW5jdGlvbiAoaSkgeyBpLmxvYWRpbmcgPSAnZWFnZXInOyB9KTsgICAvLyB0aGUgcGlubmVkIHNjZW5lIG11c3Qgbm90IHdhaXQgb24gbGF6eS1sb2FkCiAgICB2YXIgc2hvdHMgPSBiZWF0cy5tYXAoZnVuY3Rpb24gKGIpIHsKICAgICAgcmV0dXJuIHsgeDogK2IuZ2V0QXR0cmlidXRlKCdkYXRhLXgnKSwgeTogK2IuZ2V0QXR0cmlidXRlKCdkYXRhLXknKSwgejogK2IuZ2V0QXR0cmlidXRlKCdkYXRhLXonKSB8fCAxLjUsCiAgICAgICAgICAgICAgIGJhY2s6IGIuZ2V0QXR0cmlidXRlKCdkYXRhLWZhY2UnKSA9PT0gJ2JhY2snIH07CiAgICB9KTsKICAgIHZhciBmaXJzdEJhY2sgPSAtMTsKICAgIGZvciAodmFyIGsgPSAwOyBrIDwgc2hvdHMubGVuZ3RoOyBrKyspIGlmIChzaG90c1trXS5iYWNrKSB7IGZpcnN0QmFjayA9IGs7IGJyZWFrOyB9CiAgICB2YXIgZ2VvID0ge307CgogICAgLy8gVGhlIGNhbWVyYSBib3ggaXMgcGxhY2VkIGFuZCBzaXplZCBieSBDU1MgKC0tdmJjLWNhbS0qIGJlbG93KTsgdGhlIGNhbWVyYSBtb3ZlIGlzIGEgdHJhbnNmb3JtIG9uIGl0LgogICAgZnVuY3Rpb24gbWVhc3VyZSgpIHsKICAgICAgdmFyIFcgPSBzdGFnZS5jbGllbnRXaWR0aCwgSCA9IHN0YWdlLmNsaWVudEhlaWdodCwgd2lkZSA9IFcgPj0gOTAwOwogICAgICB2YXIgY3cgPSB3aWRlID8gTWF0aC5taW4oVyAqIDAuNDgsIDc2MCkgOiBNYXRoLm1pbihXICogMC45LCA1NjApOwogICAgICB2YXIgY2ggPSBjdyAqIDc0MCAvIDEzMTU7CiAgICAgIGdlbyA9IHsgVzogVywgSDogSCwgY3c6IGN3LCBjaDogY2gsIHdpZGU6IHdpZGUsCiAgICAgICAgICAgICAgY3g6IHdpZGUgPyBXICogMC42OCA6IFcgKiAwLjUsICAgICAgICAgICAgIC8vIGRlc2t0b3A6IHN1YmplY3QgcmlnaHQgb2YgdGhlIGNhcHRpb24gcGFuZWwKICAgICAgICAgICAgICBjeTogd2lkZSA/IEggKiAwLjUgOiBIICogMC4zNCwgICAgICAgICAgICAgLy8gcGhvbmU6IHN1YmplY3QgYWJvdmUgdGhlIGNhcHRpb24gcGFuZWwKICAgICAgICAgICAgICBtYXg6IE5BVElWRV9XIC8gY3cgfTsKICAgICAgLy8gdmlhIENTUyB2YXJpYWJsZXM6IHRoZSBzdHlsZXNoZWV0J3MgIWltcG9ydGFudCBib3ggcnVsZXMgcmVhZCB0aGVtIChpbmxpbmUgcHggYWxvbmUgbG9zZXMgdG8gdGhlbSkKICAgICAgY2FtLnN0eWxlLnNldFByb3BlcnR5KCctLXZiYy1jYW0tbCcsIChnZW8uY3ggLSBjdyAvIDIpICsgJ3B4Jyk7IGNhbS5zdHlsZS5zZXRQcm9wZXJ0eSgnLS12YmMtY2FtLXQnLCAoZ2VvLmN5IC0gY2ggLyAyKSArICdweCcpOwogICAgICBjYW0uc3R5bGUuc2V0UHJvcGVydHkoJy0tdmJjLWNhbS13JywgY3cgKyAncHgnKTsgY2FtLnN0eWxlLnNldFByb3BlcnR5KCctLXZiYy1jYW0taCcsIGNoICsgJ3B4Jyk7CiAgICB9CiAgICBmdW5jdGlvbiBwb3NlKHMpIHsKICAgICAgaWYgKCFzKSByZXR1cm4geyB4OiAwLCB5OiAwLCBzY2FsZTogMSB9OwogICAgICB2YXIgeiA9IE1hdGgubWluKHMueiwgZ2VvLm1heCk7ICAgICAgICAgICAgICAgICAgICAvLyBuZXZlciBwYXN0IHRoZSByZW5kZXIncyBuYXRpdmUgcGl4ZWxzCiAgICAgIHZhciB4ID0gKDAuNSAtIHMueCkgKiBnZW8uY3cgKiB6OwogICAgICAvLyBkZXNrdG9wOiBuZXZlciBzbGlkZSB0aGUgYmFyIHVuZGVyIHRoZSBjYXB0aW9uIHBhbmVsIChsZWZ0IH40MCUpOyB0aGUgcmluZyBmb2xsb3dzIHRoZSBkZXRhaWwgaW5zdGVhZAogICAgICBpZiAoZ2VvLndpZGUpIHggPSBNYXRoLm1heCh4LCBnZW8uVyAqIDAuNDEgLSBnZW8uY3ggKyBnZW8uY3cgKiB6IC8gMik7CiAgICAgIHJldHVybiB7IHg6IHgsIHk6ICgwLjUgLSBzLnkpICogZ2VvLmNoICogeiwgc2NhbGU6IHogfTsKICAgIH0KICAgIGZ1bmN0aW9uIHJpbmdBdChzKSB7ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLy8gd2hlcmUgdGhlIGRldGFpbCBlbmRzIHVwIG9uIHNjcmVlbiBvbmNlIHRoZSBzaG90IHNldHRsZXMKICAgICAgdmFyIHAgPSBwb3NlKHMpOwogICAgICByZXR1cm4geyBsZWZ0OiBnZW8uY3ggKyBwLnggKyAocy54IC0gMC41KSAqIGdlby5jdyAqIHAuc2NhbGUsIHRvcDogZ2VvLmN5ICsgcC55ICsgKHMueSAtIDAuNSkgKiBnZW8uY2ggKiBwLnNjYWxlIH07CiAgICB9CiAgICByb290LmNsYXNzTGlzdC5hZGQoJ3ZiYy10dXJuLW9uJyk7ICAgICAgICAgICAgICAgICAgIC8vIGZ1bGwtc2NyZWVuIHN0YWdlIGZpcnN0IC0tIHRoZW4gbWVhc3VyZSBpdAogICAgbWVhc3VyZSgpOwogICAgZ3NhcC5zZXQoY2FtLCB7IHRyYW5zZm9ybU9yaWdpbjogJzUwJSA1MCUnIH0pOwogICAgZ3NhcC5zZXQoY2FtLCBwb3NlKG51bGwpKTsKICAgIGdzYXAuc2V0KGNhcmQsIHsgcm90YXRpb25ZOiAwLCB0cmFuc2Zvcm1QZXJzcGVjdGl2ZTogMTYwMCB9KTsKICAgIGdzYXAuc2V0KGJlYXRzLmNvbmNhdChmaW4gPyBbZmluXSA6IFtdKSwgeyBhdXRvQWxwaGE6IDAsIHk6IDI2IH0pOwogICAgZ3NhcC5zZXQocmluZywgeyBhdXRvQWxwaGE6IDAsIHNjYWxlOiAxLjYgfSk7CgogICAgLy8gc3RhdGVzOiAtMSA9IG92ZXJ2aWV3LCAwLi5uLTEgPSBhIGRldGFpbCwgJ2VuZCcgPSBwdWxsZWQgYmFjawogICAgdmFyIGN1cnJlbnQgPSAtMTsKICAgIGZ1bmN0aW9uIGNhcChpKSB7IHJldHVybiBpID09PSAnZW5kJyA/IGZpbiA6IChpID49IDAgPyBiZWF0c1tpXSA6IG51bGwpOyB9CiAgICBmdW5jdGlvbiBzaG93KGkpIHsKICAgICAgaWYgKGkgPT09IGN1cnJlbnQpIHJldHVybjsKICAgICAgdmFyIHByZXYgPSBjYXAoY3VycmVudCksIG5leHQgPSBjYXAoaSk7IGN1cnJlbnQgPSBpOwogICAgICBpZiAocHJldikgZ3NhcC50byhwcmV2LCB7IGF1dG9BbHBoYTogMCwgeTogLTE4LCBkdXJhdGlvbjogMC4zLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgIGlmIChuZXh0KSBnc2FwLmZyb21UbyhuZXh0LCB7IGF1dG9BbHBoYTogMCwgeTogMjYgfSwgeyBhdXRvQWxwaGE6IDEsIHk6IDAsIGR1cmF0aW9uOiAwLjQ1LCBkZWxheTogMC4xLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgIGlmIChjb3VudFdyYXApIGdzYXAudG8oY291bnRXcmFwLCB7IGF1dG9BbHBoYTogaSA9PT0gLTEgPyAwIDogMSwgZHVyYXRpb246IDAuMywgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICBpZiAodHlwZW9mIGkgPT09ICdudW1iZXInICYmIGkgPj0gMCkgewogICAgICAgIGdzYXAuc2V0KHJpbmcsIHJpbmdBdChzaG90c1tpXSkpOwogICAgICAgIGdzYXAuZnJvbVRvKHJpbmcsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMS42IH0sIHsgYXV0b0FscGhhOiAxLCBzY2FsZTogMSwgZHVyYXRpb246IDAuNSwgZWFzZTogJ3Bvd2VyMy5vdXQnLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgICAgaWYgKHNpZGUpIHNpZGUudGV4dENvbnRlbnQgPSBzaG90c1tpXS5iYWNrID8gJ0JhY2snIDogJ0Zyb250JzsKICAgICAgICBpZiAoc3RlcCkgc3RlcC50ZXh0Q29udGVudCA9IChpICsgMSkgKyAnIG9mICcgKyBzaG90cy5sZW5ndGg7CiAgICAgIH0gZWxzZSB7CiAgICAgICAgZ3NhcC50byhyaW5nLCB7IGF1dG9BbHBoYTogMCwgZHVyYXRpb246IDAuMjUsIG92ZXJ3cml0ZTogdHJ1ZSB9KTsKICAgICAgICBpZiAoaSA9PT0gJ2VuZCcpIHsgaWYgKHNpZGUpIHNpZGUudGV4dENvbnRlbnQgPSAnQm90aCc7IGlmIChzdGVwKSBzdGVwLnRleHRDb250ZW50ID0gJ3NpZGVzJzsgfQogICAgICB9CiAgICB9CgogICAgLy8gVGltZWxpbmU6IGhvbGQgLT4gZWFjaCBmcm9udCBkZXRhaWwgLT4gcHVsbCBiYWNrICsgdHVybiBvdmVyIC0+IGVhY2ggYmFjayBkZXRhaWwgLT4gcHVsbCBiYWNrLgogICAgLy8gRnVuY3Rpb24gdmFsdWVzIGFyZSByZS1yZWFkIHdoZW4gdGhlIHRpbWVsaW5lIGlzIGludmFsaWRhdGVkIChyZWZyZXNoSW5pdCksIHNvIGEgcmVzaXplIHJlLWFpbXMgZXZlcnkgc2hvdC4KICAgIGZ1bmN0aW9uIG1vdmUocykgewogICAgICByZXR1cm4geyBkdXJhdGlvbjogMSwgeDogZnVuY3Rpb24gKCkgeyByZXR1cm4gcG9zZShzKS54OyB9LCB5OiBmdW5jdGlvbiAoKSB7IHJldHVybiBwb3NlKHMpLnk7IH0sCiAgICAgICAgICAgICAgIHNjYWxlOiBmdW5jdGlvbiAoKSB7IHJldHVybiBwb3NlKHMpLnNjYWxlOyB9IH07CiAgICB9CiAgICB2YXIgdGwgPSBnc2FwLnRpbWVsaW5lKHsgZGVmYXVsdHM6IHsgZWFzZTogJ3Bvd2VyMi5pbk91dCcgfSB9KTsKICAgIHRsLnRvKHt9LCB7IGR1cmF0aW9uOiAwLjUgfSk7ICAgICAgICAgICAgICAgICAgICAgICAgLy8gb3ZlcnZpZXcgaG9sZAogICAgc2hvdHMuZm9yRWFjaChmdW5jdGlvbiAocywgaykgewogICAgICBpZiAoayA9PT0gZmlyc3RCYWNrKSB7CiAgICAgICAgdGwudG8oY2FtLCBtb3ZlKG51bGwpLCAnPicpOyAgICAgICAgICAgICAgICAgICAgIC8vIHB1bGwgYmFjay4uLgogICAgICAgIHRsLnRvKGNhcmQsIHsgcm90YXRpb25ZOiAxODAsIGR1cmF0aW9uOiAxLjIsIGVhc2U6ICdwb3dlcjIuaW5PdXQnIH0sICc+Jyk7ICAgLy8gLi4uYW5kIHR1cm4gaXQgb3ZlcgogICAgICB9CiAgICAgIHRsLnRvKGNhbSwgbW92ZShzKSwgJz4nKTsKICAgICAgdGwuYWRkTGFiZWwoJ2JlYXQnICsgayk7CiAgICAgIHRsLnRvKHt9LCB7IGR1cmF0aW9uOiAwLjkgfSk7ICAgICAgICAgICAgICAgICAgICAgIC8vIGhvbGQgb24gdGhlIGRldGFpbAogICAgfSk7CiAgICB0bC50byhjYW0sIG1vdmUobnVsbCksICc+Jyk7ICAgICAgICAgICAgICAgICAgICAgICAgIC8vIHB1bGwgYmFjayB0byB0aGUgd2hvbGUgYmFyCiAgICB0bC50byh7fSwgeyBkdXJhdGlvbjogMC40IH0pOwoKICAgIFNULmNyZWF0ZSh7CiAgICAgIHRyaWdnZXI6IHN0YWdlLCBzdGFydDogJ3RvcCB0b3AnLAogICAgICBlbmQ6IGZ1bmN0aW9uICgpIHsgcmV0dXJuICcrPScgKyBNYXRoLnJvdW5kKHdpbmRvdy5pbm5lckhlaWdodCAqICgxLjEgKiAoc2hvdHMubGVuZ3RoICsgMikpKTsgfSwKICAgICAgcGluOiBzdGFnZSwgcGluVHlwZTogJ2ZpeGVkJywgcGluU3BhY2luZzogdHJ1ZSwgYW50aWNpcGF0ZVBpbjogMSwgc2NydWI6IDAuNiwKICAgICAgYW5pbWF0aW9uOiB0bCwgaW52YWxpZGF0ZU9uUmVmcmVzaDogdHJ1ZSwKICAgICAgb25SZWZyZXNoSW5pdDogZnVuY3Rpb24gKCkgeyBtZWFzdXJlKCk7IH0sCiAgICAgIG9uVXBkYXRlOiBmdW5jdGlvbiAoc2VsZikgewogICAgICAgIGlmIChiYXIpIGJhci5zdHlsZS50cmFuc2Zvcm0gPSAnc2NhbGVYKCcgKyBzZWxmLnByb2dyZXNzLnRvRml4ZWQoMykgKyAnKSc7CiAgICAgICAgdmFyIHQgPSB0bC5kdXJhdGlvbigpICogc2VsZi5wcm9ncmVzcywgaWR4ID0gLTE7CiAgICAgICAgZm9yICh2YXIgayA9IDA7IGsgPCBiZWF0cy5sZW5ndGg7IGsrKykgewogICAgICAgICAgdmFyIGF0ID0gdGwubGFiZWxzWydiZWF0JyArIGtdOwogICAgICAgICAgaWYgKHQgPj0gYXQgLSAwLjM1KSBpZHggPSBrOwogICAgICAgIH0KICAgICAgICAvLyBiZXR3ZWVuIHRoZSBsYXN0IGZyb250IGRldGFpbCBhbmQgdGhlIGZpcnN0IGJhY2sgZGV0YWlsIHRoZSBiYXIgaXMgdHVybmluZzogbm8gcmluZwogICAgICAgIGlmIChmaXJzdEJhY2sgPiAwICYmIGlkeCA9PT0gZmlyc3RCYWNrIC0gMSAmJiB0ID4gdGwubGFiZWxzWydiZWF0JyArIChmaXJzdEJhY2sgLSAxKV0gKyAwLjkpIGlkeCA9IC0xOwogICAgICAgIGlmICh0ID49IHRsLmR1cmF0aW9uKCkgLSAxLjMpIGlkeCA9ICdlbmQnOwogICAgICAgIHNob3coaWR4KTsKICAgICAgfQogICAgfSk7CiAgICBTVC5hZGRFdmVudExpc3RlbmVyKCdyZWZyZXNoSW5pdCcsIGZ1bmN0aW9uICgpIHsgbWVhc3VyZSgpOyB0bC5pbnZhbGlkYXRlKCk7IH0pOwogIH0KCiAgZnVuY3Rpb24gYm9vdCgpIHsKICAgIHZhciByb290cyA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ1tkYXRhLXZiY10nKTsKICAgIGxvZygncm9vdHMnLCByb290cy5sZW5ndGgpOwogICAgW10uZm9yRWFjaC5jYWxsKHJvb3RzLCBpbml0KTsKICB9CiAgaWYgKGRvY3VtZW50LnJlYWR5U3RhdGUgPT09ICdsb2FkaW5nJykgZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGJvb3QpOyBlbHNlIGJvb3QoKTsKfSkoKTsK">
+</div>
+</body>
+</html>
