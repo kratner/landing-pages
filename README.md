@@ -9,13 +9,12 @@ Portfolio of recent work by Keith Ratner.
 3. <a href="https://kratner.github.io/landing-pages/assets/Day%20Pack%20Light%20Kit.html" target="_blank">Day Pack Light Kit</a>
 4. <a href="https://kratner.github.io/landing-pages/assets/SHTF%20Survival%20Kit.html" target="_blank">SHTF Survival Kit</a>
 5. <a href="https://kratner.github.io/landing-pages/assets/FAK_STN_SF.html" target="_blank">First Aid Kit</a> — demonstrates scroll-triggered narratives
-6. <a href="https://kratner.github.io/landing-pages/assets/Survival%20Mystery%20Box.html" target="_blank">Survival Mystery Box</a> — demonstrates scroll-triggered narratives
-7. <a href="https://kratner.github.io/landing-pages/assets/Outdoor%20Survival%20Kit.html" target="_blank">Outdoor Survival Kit</a> — demonstrates scroll-triggered narratives
-8. <a href="https://kratner.github.io/landing-pages/assets/Portable%20Protocols/index.html" target="_blank">Portable Protocols</a>
-9. <a href="https://kratner.github.io/landing-pages/assets/1st%20Hour%20Pack%20Your%20Box.html" target="_blank">1st Hour Pack Your Box</a>
-10. <a href="https://kratner.github.io/landing-pages/assets/11-in-1%20Multi%20Tool%20Card.html" target="_blank">11-in-1 Multi Tool Card</a> — demonstrates scroll-triggered storytelling: a pinned camera walks through every tool on the real card
-11. <a href="https://kratner.github.io/landing-pages/assets/Paracord%20Survival%20Bracelet.html" target="_blank">Paracord Survival Bracelet</a> — demonstrates scroll-triggered storytelling: a pinned stage steps through every tool built into the real bracelet
-12. <a href="https://kratner.github.io/landing-pages/assets/Veterans%20Bar.html" target="_blank">Veterans Bar</a> — demonstrates scroll-triggered storytelling: a pinned camera turns the real bar over and moves in on each detail, front and back
+6. <a href="https://kratner.github.io/landing-pages/assets/Outdoor%20Survival%20Kit.html" target="_blank">Outdoor Survival Kit</a> — demonstrates scroll-triggered narratives
+7. <a href="https://kratner.github.io/landing-pages/assets/Portable%20Protocols/index.html" target="_blank">Portable Protocols</a>
+8. <a href="https://kratner.github.io/landing-pages/assets/1st%20Hour%20Pack%20Your%20Box.html" target="_blank">1st Hour Pack Your Box</a>
+9. <a href="https://kratner.github.io/landing-pages/assets/11-in-1%20Multi%20Tool%20Card.html" target="_blank">11-in-1 Multi Tool Card</a> — demonstrates scroll-triggered storytelling: a pinned camera walks through every tool on the real card
+10. <a href="https://kratner.github.io/landing-pages/assets/Paracord%20Survival%20Bracelet.html" target="_blank">Paracord Survival Bracelet</a> — demonstrates scroll-triggered storytelling: a pinned stage steps through every tool built into the real bracelet
+11. <a href="https://kratner.github.io/landing-pages/assets/Veterans%20Bar.html" target="_blank">Veterans Bar</a> — demonstrates scroll-triggered storytelling: a pinned camera turns the real bar over and moves in on each detail, front and back
 
 ---
 © 2026 Keith Ratner
