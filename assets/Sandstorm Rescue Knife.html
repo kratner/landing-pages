@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sandstorm Rescue Knife</title>
+<meta name="description" content="Cinematic, scroll-driven sales page for a folding rescue knife: a pinned GSAP stage steps through the blade, seatbelt cutter, glass breaker and pocket clip.">
+<style>
+  html { font-size: 62.5%; }  /* type is sized in px throughout, so the page renders the same whatever the host's root size */
+  body { margin: 0; background: #0c0b09; overflow-x: hidden; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    /* ==== CONTROL -- "Desert Night" TOKENS ====================================
+       Dark-dominant field-gear look: near-black bands with a warm cast,
+       desert-sand accents (the tan of the Sandstorm's digital camo), rounded
+       corners, soft shadows, heavy SANS display. The CTA stays house red. */
+
+    /* type */
+    --trsk-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --trsk-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --trsk-display-weight: 900;
+    --trsk-display-track: -0.015em;
+
+    /* light reading bands */
+    --trsk-light-bg:   #f3f2ee;   /* warm stone                                 */
+    --trsk-ink:        #1f1c17;   /* text on stone                              */
+    --trsk-ink-soft:   #4f4a40;   /* muted text on stone                        */
+    --trsk-head-ink:   #1f1c17;
+    --trsk-accent-ink: #a8231c;   /* red TEXT on stone                          */
+    --trsk-hairline:   #e0ded6;
+    --trsk-card-bg:    #ffffff;
+    --trsk-card-border: 2px solid #d8d5cb;
+
+    /* feature bands (.trsk-dark) */
+    --trsk-feat-bg:       #121110;
+    --trsk-feat-ink:      #f3f0e8;
+    --trsk-feat-ink-soft: #d8d1c4;
+    --trsk-feat-head:     #f3f0e8;
+    --trsk-feat-accent:   #e0b96a;   /* desert sand on near-black               */
+
+    /* value plate = desert-sand gradient, near-black text */
+    --trsk-plate-bg:     linear-gradient(118deg, #ecca86 0%, #d4ad5c 48%, #c49a48 100%);
+    --trsk-plate-border: 2px solid #7a5a22;
+    --trsk-plate-ink:    #14110b;
+    --trsk-plate-rule:   #7a5a22;
+
+    /* frames, rules, shape */
+    --trsk-frame-border: 2px solid #3b362d;
+    --trsk-media-bg:     #1d1b18;
+    --trsk-shadow:       0 10px 26px rgba(0,0,0,0.32);
+    --trsk-rule:         #c49a48;
+    --trsk-r-lg:   12px;
+    --trsk-r-md:   10px;
+    --trsk-r-sm:   8px;
+    --trsk-r-pill: 999px;
+    --trsk-r-input: 6px;
+
+    /* trust bar */
+    --trsk-tag-bg:     #121110;
+    --trsk-tag-ink:    #e0b96a;
+    --trsk-tag-border: 2px solid #7a5a22;
+
+    /* primary CTA -- red, the same in both cells (not under test) */
+    --trsk-cta-bg:     #c3201a;
+    --trsk-cta-ink:    #ffffff;
+    --trsk-cta-edge:   #74110d;
+    --trsk-focus-ring: #e0b96a;
+
+    /* "why" check icons */
+    --trsk-icon-bg:     #121110;
+    --trsk-icon-border: 2px solid #c49a48;
+    --trsk-icon-ink:    #e0b96a;
+
+    /* ---- order form ---- */
+    --trsk-placeholder:      #5c5850;
+    --trsk-focus-border:     #c49a48;
+    --trsk-focus-glow:       rgba(196, 154, 72, 0.30);
+    --trsk-of-head-bg:       #121110;
+    --trsk-of-head-rule:     #c49a48;
+    --trsk-of-head-ink:      #f3f0e8;
+    --trsk-of-head-ink-soft: #d8d1c4;
+    --trsk-of-track:         #2f2b24;
+    --trsk-of-progress:      linear-gradient(90deg, #c3201a 0%, #c49a48 100%);
+    --trsk-of-panel:         #f3f0e8;
+    --trsk-of-line:          #d6cfc0;
+    --trsk-of-row-accent:    #c49a48;
+    --trsk-of-hover:         #fdfaf3;
+    --trsk-of-checked-tint:  linear-gradient(135deg, rgba(195,32,26,0.06) 0%, rgba(196,154,72,0.14) 100%);
+    --trsk-of-checked-glow:  rgba(195, 32, 26, 0.16);
+    --trsk-of-feature-edge:  #c49a48;
+    --trsk-of-feature-bg:    #f8f0df;
+    --trsk-btn1-bg:   linear-gradient(118deg, #ecca86 0%, #d4ad5c 48%, #c49a48 100%);
+    --trsk-btn1-edge: #7a5a22;
+    --trsk-btn1-ink:  #14110b;
+  }
+
+  /* =========================================================================
+     ====  SHARED RULES -- byte-identical in the Style A and Style B files ====
+     Everything below reads the :root tokens above. To change a LOOK, change
+     tokens (or the variant block at the end). To change a RULE, edit it in
+     BOTH files identically -- see the file header's split-test invariant.
+     ========================================================================= */
+
+  /* =========================================================================
+     SHELL -- scoped, never global
+     ========================================================================= */
+  .trsk-sec {
+    box-sizing: border-box !important;
+    font-family: var(--trsk-sans) !important;
+    font-size: clamp(19px, 1.7vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--trsk-ink) !important;
+    background: var(--trsk-light-bg) !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+    -webkit-font-smoothing: antialiased !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+  .trsk-sec *,
+  .trsk-sec *::before,
+  .trsk-sec *::after { box-sizing: border-box !important; }
+
+  /* Full-viewport breakout -- escapes any host container's padding/max-width */
+  .trsk-breakout {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    margin-right: calc(-50vw + 50%) !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .trsk-wrap {
+    width: 100% !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+
+  /* "Feature" bands (class name kept as trsk-dark from v1). Style A paints
+     them vault-black; Style B paints them white -- see the tokens. */
+  .trsk-dark { background: var(--trsk-feat-bg) !important; color: var(--trsk-feat-ink) !important; }
+
+  .trsk-sec img { display: block !important; max-width: 100% !important; height: auto !important; }
+  .trsk-sec p { margin: 0 0 20px 0 !important; }
+  .trsk-sec p:last-child { margin-bottom: 0 !important; }
+
+  /* =========================================================================
+     TYPE
+     ========================================================================= */
+  .trsk-h1, .trsk-h2, .trsk-h3 {
+    font-family: var(--trsk-display) !important;
+    font-weight: var(--trsk-display-weight) !important;
+    margin: 0 !important;
+    letter-spacing: var(--trsk-display-track) !important;
+    color: var(--trsk-head-ink) !important;
+    text-wrap: balance !important;       /* no one-word last lines */
+  }
+  .trsk-h1 { font-size: clamp(36px, 5.6vw, 64px) !important; line-height: 1.1 !important; }
+  .trsk-h2 { font-size: clamp(29px, 4.2vw, 46px) !important; line-height: 1.14 !important; }
+  .trsk-h3 { font-size: clamp(23px, 2.6vw, 30px) !important; line-height: 1.2  !important; }
+
+  .trsk-dark .trsk-h1, .trsk-dark .trsk-h2, .trsk-dark .trsk-h3 { color: var(--trsk-feat-head) !important; }
+  .trsk-sec .trsk-hi-txt { color: var(--trsk-feat-accent) !important; }
+
+  .trsk-sec p.trsk-copy {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--trsk-ink) !important;
+    max-width: 62ch !important;
+  }
+  .trsk-dark p.trsk-copy { color: var(--trsk-feat-ink) !important; }
+  .trsk-center { text-align: center !important; }
+  .trsk-center p.trsk-copy { margin-left: auto !important; margin-right: auto !important; }
+
+  .trsk-sec p.trsk-kicker {
+    font-family: var(--trsk-sans) !important;
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: var(--trsk-accent-ink) !important;
+    margin: 0 0 12px 0 !important;
+  }
+  .trsk-dark p.trsk-kicker { color: var(--trsk-feat-accent) !important; }
+
+  /* =========================================================================
+     VALUE PLATE -- control: desert-sand plate / ink text. Variant B: antique brass.
+     ========================================================================= */
+  .trsk-plate {
+    position: relative !important;
+    display: inline-block !important;
+    background: var(--trsk-plate-bg) !important;
+    border: var(--trsk-plate-border) !important;
+    border-radius: var(--trsk-r-md) !important;
+    padding: clamp(16px, 2.4vw, 26px) clamp(20px, 3vw, 34px) !important;
+    box-shadow: var(--trsk-shadow) !important;
+    color: var(--trsk-plate-ink) !important;   /* the plate's OWN text too --
+                                                   else it inherits a band's */
+  }
+  .trsk-plate * { color: var(--trsk-plate-ink) !important; }
+
+  /* Image / video frame */
+  .trsk-frame {
+    display: block !important;
+    width: 100% !important;
+    border-radius: var(--trsk-r-lg) !important;
+    border: var(--trsk-frame-border) !important;
+    overflow: hidden !important;
+    box-shadow: var(--trsk-shadow) !important;
+    background: var(--trsk-media-bg) !important;
+  }
+  .trsk-sec img.trsk-shot {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--trsk-media-bg) !important;
+  }
+  .trsk-shot-wide   { aspect-ratio: 4 / 3 !important; object-position: 50% 50% !important; }
+  .trsk-shot-square { aspect-ratio: 1 / 1 !important; object-position: 50% 50% !important; }
+
+  /* =========================================================================
+     MOTION -- native video elements only.
+     Every clip has a poster and a declared aspect-ratio, so its box is
+     reserved and a first frame shows even if the file never loads. All
+     carry `controls`: an older audience must be able to stop motion.
+     ========================================================================= */
+  .trsk-video-wrap { width: 100% !important; max-width: 820px !important; margin: 0 auto !important; }
+  .trsk-sec video.trsk-video {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    object-fit: cover !important;
+    background: var(--trsk-media-bg) !important;
+  }
+  .trsk-sec video.trsk-video-wide { aspect-ratio: 16 / 9 !important; }
+  /* Real-clip loops: animated WebP in a picture element. They play on their
+     own (no play button); under prefers-reduced-motion the picture swaps in
+     the still JPG instead, so motion-sensitive viewers see no animation. */
+  .trsk-sec picture { display: block !important; }
+  .trsk-sec img.trsk-anim { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .trsk-sec p.trsk-video-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.6 !important;
+    color: var(--trsk-ink-soft) !important;
+    text-align: center !important;
+    max-width: 56ch !important;
+    margin: 16px auto 0 auto !important;
+  }
+  .trsk-ugc-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: clamp(16px, 2.4vw, 26px) !important;
+  }
+  .trsk-sec figure.trsk-ugc { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 12px !important; }
+  .trsk-sec figcaption.trsk-ugc-cap {
+    font-size: clamp(16px, 1.5vw, 18px) !important;
+    line-height: 1.55 !important;
+    color: var(--trsk-ink) !important;
+  }
+
+  /* =========================================================================
+     STAR DIVIDER
+     ========================================================================= */
+  .trsk-stars { display: flex !important; align-items: center !important; justify-content: center !important; gap: 14px !important; }
+  .trsk-stars-mark {
+    font-size: clamp(18px, 2vw, 24px) !important;
+    color: var(--trsk-accent-ink) !important;
+    letter-spacing: 6px !important;
+    line-height: 1 !important;
+  }
+  .trsk-dark .trsk-stars-mark { color: var(--trsk-feat-accent) !important; }
+  .trsk-stars-rule { flex: 1 1 60px !important; max-width: 120px !important; height: 2px !important; background: var(--trsk-rule) !important; }
+  .trsk-divider { padding: clamp(20px, 4vw, 34px) 0 !important; }
+
+  /* =========================================================================
+     TRUST BAR (top)
+     ========================================================================= */
+  .trsk-sec.trsk-tagbar { padding: 14px 0 !important; background: var(--trsk-tag-bg) !important; border-bottom: var(--trsk-tag-border) !important; }
+  .trsk-tagbar-inner {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: clamp(10px, 3vw, 28px) !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 0 clamp(18px, 4vw, 40px) !important;
+  }
+  .trsk-tagbar-item {
+    font-family: var(--trsk-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.04em !important;
+    color: var(--trsk-tag-ink) !important;
+    white-space: nowrap !important;
+  }
+
+  /* =========================================================================
+     HERO
+     ========================================================================= */
+  .trsk-hero { padding: clamp(40px, 7vw, 76px) 0 clamp(36px, 6vw, 64px) 0 !important; }
+  .trsk-hero-stack {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: clamp(18px, 3vw, 26px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .trsk-badge {
+    display: inline-block !important;
+    background: var(--trsk-cta-bg) !important;
+    color: var(--trsk-cta-ink) !important;
+    font-family: var(--trsk-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    letter-spacing: 0.1em !important;
+    text-transform: uppercase !important;
+    padding: 8px 18px !important;
+    border-radius: var(--trsk-r-pill) !important;
+  }
+  .trsk-hero-h1 { max-width: 24ch !important; }
+  .trsk-hero-art { width: 100% !important; max-width: 680px !important; margin: 0 auto !important; }
+  .trsk-sec p.trsk-hero-sub {
+    font-size: clamp(19px, 1.8vw, 22px) !important;
+    line-height: 1.75 !important;
+    color: var(--trsk-feat-ink) !important;
+    max-width: min(720px, 62ch) !important;
+    margin: 0 auto !important;
+    text-wrap: pretty !important;
+  }
+
+  .trsk-price-row { display: flex !important; align-items: baseline !important; justify-content: center !important; gap: 10px !important; flex-wrap: wrap !important; }
+  .trsk-price-label {
+    font-family: var(--trsk-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 18px) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+  }
+  .trsk-price-was { font-family: var(--trsk-display) !important; font-size: clamp(22px, 2.6vw, 30px) !important; }
+  .trsk-price-now { font-family: var(--trsk-display) !important; font-weight: var(--trsk-display-weight) !important; font-size: clamp(40px, 6vw, 60px) !important; line-height: 1 !important; }
+  .trsk-price-rule { display: block !important; width: 100% !important; max-width: 220px !important; height: 2px !important; background: var(--trsk-plate-rule) !important; margin: 10px auto !important; }
+
+  .trsk-cta {
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    min-height: 76px !important;
+    width: 100% !important;
+    max-width: 480px !important;
+    background: var(--trsk-cta-bg) !important;
+    color: var(--trsk-cta-ink) !important;
+    text-decoration: none !important;
+    border-radius: var(--trsk-r-sm) !important;
+    border-bottom: 6px solid var(--trsk-cta-edge) !important;
+    padding: 14px 26px !important;
+    box-shadow: var(--trsk-shadow) !important;
+    transition: filter .18s ease, transform .18s ease !important;
+    cursor: pointer !important;
+  }
+  .trsk-cta:hover { filter: brightness(1.08) !important; transform: translateY(-2px) !important; }
+  .trsk-cta:active { transform: translateY(0) !important; }
+  .trsk-cta:focus-visible { outline: 4px solid var(--trsk-focus-ring) !important; outline-offset: 3px !important; }
+  .trsk-cta-main { font-family: var(--trsk-display) !important; font-weight: var(--trsk-display-weight) !important; font-size: clamp(22px, 2.8vw, 28px) !important; line-height: 1.2 !important; color: var(--trsk-cta-ink) !important; }
+  .trsk-cta-sub { font-family: var(--trsk-sans) !important; font-weight: 400 !important; font-size: clamp(15px, 1.5vw, 16px) !important; color: var(--trsk-cta-ink) !important; }
+  .trsk-cta-block { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 14px !important; width: 100% !important; }
+  .trsk-sec p.trsk-cta-note { font-size: clamp(14px, 1.5vw, 16px) !important; color: var(--trsk-feat-ink-soft) !important; margin: 0 !important; }
+
+  .trsk-trust {
+    list-style: none !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px 22px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .trsk-trust li {
+    font-family: var(--trsk-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.5vw, 16px) !important;
+    color: var(--trsk-feat-ink-soft) !important;
+  }
+
+  /* =========================================================================
+     BAND SECTIONS
+     ========================================================================= */
+  .trsk-band { padding: clamp(48px, 7vw, 84px) 0 !important; }
+  .trsk-band-head { max-width: 720px !important; margin: 0 auto clamp(30px, 5vw, 48px) auto !important; }
+
+  .trsk-get-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(20px, 3vw, 36px) !important;
+  }
+  .trsk-card {
+    background: var(--trsk-card-bg) !important;
+    border: var(--trsk-card-border) !important;
+    border-radius: var(--trsk-r-lg) !important;
+    padding: clamp(18px, 2.6vw, 26px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .trsk-card-h { font-family: var(--trsk-display) !important; font-weight: var(--trsk-display-weight) !important; font-size: clamp(22px, 2.6vw, 27px) !important; color: var(--trsk-head-ink) !important; margin: 0 !important; }
+  .trsk-card-list { list-style: none !important; margin: 0 !important; padding: 0 !important; display: flex !important; flex-direction: column !important; gap: 10px !important; }
+  .trsk-card-list li {
+    font-size: clamp(17px, 1.7vw, 19px) !important;
+    line-height: 1.6 !important;
+    color: var(--trsk-ink) !important;
+    padding-left: 30px !important;
+    position: relative !important;
+  }
+  .trsk-card-list li::before {
+    content: "\2713" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    color: var(--trsk-accent-ink) !important;
+    font-weight: 700 !important;
+  }
+
+  /* Retail value band */
+  .trsk-value-wrap { display: flex !important; flex-direction: column !important; align-items: center !important; text-align: center !important; gap: 22px !important; }
+  .trsk-value-art { width: 100% !important; max-width: 720px !important; margin: 0 auto !important; }
+  .trsk-value-fig { font-family: var(--trsk-display) !important; font-weight: var(--trsk-display-weight) !important; font-size: clamp(42px, 6vw, 64px) !important; line-height: 1 !important; }
+  .trsk-sec p.trsk-value-label { font-family: var(--trsk-sans) !important; font-weight: 700 !important; font-size: clamp(15px, 1.6vw, 17px) !important; letter-spacing: 0.1em !important; text-transform: uppercase !important; color: var(--trsk-feat-accent) !important; margin: 0 !important; }
+
+  .trsk-why-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: clamp(16px, 2.6vw, 28px) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+  }
+  .trsk-why-item { display: flex !important; align-items: flex-start !important; gap: 14px !important; text-align: left !important; }
+  .trsk-why-icon {
+    flex: 0 0 auto !important;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: var(--trsk-r-pill) !important;
+    background: var(--trsk-icon-bg) !important;
+    border: var(--trsk-icon-border) !important;
+    color: var(--trsk-icon-ink) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
+  }
+  .trsk-why-item p { margin: 0 !important; font-size: clamp(17px, 1.7vw, 19px) !important; line-height: 1.6 !important; color: var(--trsk-ink) !important; }
+
+  /* Reviews */
+  .trsk-rev-grid { display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(18px, 2.6vw, 28px) !important; }
+  .trsk-rev {
+    background: var(--trsk-card-bg) !important;
+    border: var(--trsk-card-border) !important;
+    border-radius: var(--trsk-r-lg) !important;
+    padding: clamp(18px, 2.4vw, 24px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .trsk-sec p.trsk-rev-stars { color: var(--trsk-accent-ink) !important; letter-spacing: 4px !important; font-size: clamp(16px, 1.8vw, 19px) !important; line-height: 1 !important; margin: 0 0 14px 0 !important; }
+  .trsk-sec p.trsk-rev-txt { font-size: clamp(18px, 1.8vw, 20px) !important; line-height: 1.7 !important; color: var(--trsk-ink) !important; margin: 0 0 18px 0 !important; flex: 1 1 auto !important; }
+  .trsk-sec p.trsk-rev-by { font-size: clamp(16px, 1.6vw, 18px) !important; line-height: 1.5 !important; color: var(--trsk-ink-soft) !important; margin: 0 !important; padding-top: 14px !important; border-top: 2px solid var(--trsk-hairline) !important; }
+  .trsk-rev-by b { display: block !important; color: var(--trsk-ink) !important; font-size: 1.05em !important; }
+
+  /* Guarantee */
+  .trsk-guar-grid { display: grid !important; grid-template-columns: 1fr 1.3fr !important; gap: clamp(24px, 4vw, 48px) !important; align-items: center !important; }
+  .trsk-guar-seal {
+    display: inline-block !important;
+    margin-bottom: 18px !important;
+    font-family: var(--trsk-sans) !important;
+    font-weight: 700 !important;
+    font-size: clamp(15px, 1.6vw, 17px) !important;
+  }
+
+  /* Final CTA */
+  .trsk-final { padding: clamp(50px, 7vw, 90px) 0 !important; text-align: center !important; }
+
+  /* Disclaimer */
+  .trsk-fine { padding: 22px 0 !important; }
+  .trsk-sec.trsk-fine p {
+    font-size: 16px !important;
+    line-height: 1.6 !important;
+    color: var(--trsk-ink-soft) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+  }
+
+  /* =========================================================================
+     RESPONSIVE
+     ========================================================================= */
+  @media (max-width: 968px) {
+    .trsk-guar-grid { grid-template-columns: 1fr !important; }
+    .trsk-guar-fig { max-width: 380px !important; margin: 0 auto !important; }
+    .trsk-ugc-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 768px) {
+    .trsk-get-grid { grid-template-columns: 1fr !important; }
+    .trsk-why-grid { grid-template-columns: 1fr !important; }
+    .trsk-rev-grid { grid-template-columns: 1fr !important; }
+    .trsk-stars-rule { flex-basis: 40px !important; }
+    .trsk-cta { max-width: 100% !important; }
+  }
+
+  /* Touch devices + reduced motion: no CSS transitions/transforms. (Videos
+     keep their native controls; reduced-motion users can pause them.) */
+  @media (hover: none) {
+    .trsk-sec *, .trsk-sec *::before, .trsk-sec *::after { animation: none !important; transition: none !important; }
+    .trsk-cta:hover { transform: none !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trsk-sec *, .trsk-sec *::before, .trsk-sec *::after { animation: none !important; transition: none !important; }
+    .trsk-cta:hover { transform: none !important; }
+  }
+
+
+  /* =========================================================================
+     SHARED IMAGE BOXES (only the frame / shot rules are used here) -- boxes are reserved by aspect-ratio so nothing
+     shifts while images load.
+     ========================================================================= */
+  .trsk-sec img.trsk-hero-img { aspect-ratio: 16 / 9 !important; object-position: 50% 50% !important; }
+  .trsk-hero-art.trsk-hero-wide { max-width: 980px !important; }
+  .trsk-sec img.trsk-real { aspect-ratio: 4 / 5 !important; object-position: 50% 50% !important; }
+  .trsk-card .trsk-frame { margin: 0 !important; }
+
+  /* ====  END SHARED RULES  ==================================================== */
+
+  /* ==== CONTROL VARIANT RULES -- CINEMATIC ==================================
+     The cinematic page system (.trsk-cine-*) in a desert-sand palette.
+     STATIC FIRST: every rule here renders a complete page with no script.
+     The payload only adds .trsk-cine-wait (hero lines hidden for their
+     entrance), .trsk-cine-on and .trsk-cine-tools-on (pinned tool stage); if
+     GSAP never loads, those classes never stay, so nothing stays hidden. */
+
+  .trsk-cine { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+  .trsk-cine .trsk-sec.trsk-dark { background: #0c0b09 !important; }
+
+  /* ---- ACT 1: full-screen hero ---- */
+  .trsk-sec.trsk-cine-hero {
+    min-height: 100vh !important;
+    min-height: 100svh !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: flex-end !important;
+    background: #0c0b09 !important;
+  }
+  .trsk-cine-hero-media { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .trsk-sec img.trsk-cine-hero-img {
+    width: 100% !important; height: 100% !important; max-width: none !important;
+    object-fit: cover !important; object-position: 50% 42% !important;
+    will-change: transform;
+  }
+  .trsk-cine-hero-shade {
+    position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: linear-gradient(90deg, rgba(12,11,9,0.94) 0%, rgba(12,11,9,0.72) 34%, rgba(12,11,9,0.08) 66%),
+                linear-gradient(0deg, rgba(12,11,9,0.88) 0%, rgba(12,11,9,0) 38%) !important;
+  }
+  .trsk-cine-hero-copy {
+    position: relative !important; z-index: 2 !important;
+    display: flex !important; flex-direction: column !important; align-items: flex-start !important;
+    gap: clamp(16px, 2.4vw, 24px) !important;
+    width: 100% !important; max-width: 700px !important;
+    padding: clamp(90px, 14vh, 140px) clamp(20px, 5vw, 72px) clamp(84px, 12vh, 120px) clamp(20px, 5vw, 72px) !important;
+    text-align: left !important;
+  }
+  /* Desktop: the photo fills the right ~70% so the headline never sits on the product. */
+  @media (min-width: 900px) {
+    .trsk-cine-hero-media { left: 30% !important; }
+    .trsk-cine-hero-shade { background: linear-gradient(90deg, #0c0b09 0%, #0c0b09 30%, rgba(12,11,9,0.55) 42%, rgba(12,11,9,0) 60%),
+                                       linear-gradient(0deg, rgba(12,11,9,0.7) 0%, rgba(12,11,9,0) 30%) !important; }
+  }
+  .trsk-cine-h1.trsk-h1 { font-size: clamp(40px, 5.2vw, 76px) !important; line-height: 1.02 !important; color: #ffffff !important; letter-spacing: -0.02em !important; }
+  .trsk-cine-line { display: block !important; overflow: hidden !important; padding-bottom: 0.06em !important; }
+  .trsk-cine-line-in { display: block !important; }
+  .trsk-sec p.trsk-cine-hero-sub {
+    font-size: clamp(19px, 1.6vw, 21px) !important; line-height: 1.7 !important;
+    color: #e9e3d7 !important; max-width: 52ch !important; margin: 0 !important; text-align: left !important;
+  }
+  .trsk-cine-hero-cta { width: 100% !important; max-width: 480px !important; }
+  .trsk-cine-hero-cta .trsk-cta { width: 100% !important; }
+  .trsk-cine-cue {
+    position: absolute !important; z-index: 2 !important; left: 50% !important; bottom: 18px !important;
+    transform: translateX(-50%) !important;
+    display: flex !important; flex-direction: column !important; align-items: center !important; gap: 6px !important;
+    font-family: var(--trsk-sans) !important; font-size: 14px !important; font-weight: 700 !important;
+    letter-spacing: 0.14em !important; text-transform: uppercase !important; color: #d4cdc0 !important;
+  }
+  .trsk-cine-cue i {
+    display: block !important; width: 14px !important; height: 14px !important;
+    border-right: 2px solid #e0b96a !important; border-bottom: 2px solid #e0b96a !important;
+    transform: rotate(45deg) !important; animation: trskCue 1.6s ease-in-out infinite !important;
+  }
+  @keyframes trskCue { 0%, 100% { transform: translateY(0) rotate(45deg); opacity: 1; } 50% { transform: translateY(7px) rotate(45deg); opacity: .55; } }
+  .trsk-cine-wait [data-fx="line"], .trsk-cine-wait [data-fx="hero"] { visibility: hidden !important; }
+
+  /* ---- ACT 2: five tools. Static = each tool as photo + caption in a grid. ---- */
+  .trsk-sec.trsk-cine-tools { padding: clamp(48px, 7vw, 90px) 0 !important; background: #0c0b09 !important; }
+  /* NOT !important on position/width: ScrollTrigger's pin writes position:fixed + a px width
+     inline while the stage is pinned, and an !important rule here would cancel the pin. */
+  .trsk-cine-stage { position: relative; width: 100%; }
+  .trsk-cine-shots, .trsk-cine-vignette, .trsk-cine-count, .trsk-cine-bar { display: none !important; }
+  .trsk-cine-panel { max-width: 1180px !important; margin: 0 auto !important; padding: 0 clamp(18px, 4vw, 40px) !important; }
+  .trsk-sec p.trsk-cine-kicker { color: #e0b96a !important; }
+  .trsk-cine-beats {
+    list-style: none !important; margin: 0 !important; padding: 0 !important;
+    display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(22px, 3vw, 36px) !important;
+  }
+  .trsk-cine-beat { margin: 0 !important; padding: 0 !important; }
+  .trsk-sec img.trsk-cine-beat-img {
+    display: block !important; width: 100% !important; height: auto !important; aspect-ratio: 16 / 9 !important;
+    object-fit: cover !important; border-radius: var(--trsk-r-lg) !important; margin: 0 0 16px 0 !important;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.5) !important;
+  }
+  .trsk-cine-beat-h { font-family: var(--trsk-display) !important; font-weight: 900 !important; font-size: clamp(22px, 2.4vw, 28px) !important; line-height: 1.2 !important; color: #ffffff !important; margin: 0 0 6px 0 !important; }
+  .trsk-cine-beat p { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #d4cdc0 !important; margin: 0 !important; }
+
+  /* Pinned stage (the payload adds .trsk-cine-tools-on) */
+  .trsk-cine-tools-on .trsk-sec.trsk-cine-tools { padding: 0 !important; }
+  .trsk-cine-tools-on .trsk-cine-stage { height: 100vh !important; height: 100svh !important; overflow: hidden !important; background: #0c0b09 !important; }
+  .trsk-cine-tools-on .trsk-cine-shots { display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; overflow: hidden !important; }
+  .trsk-cine-tools-on .trsk-sec img.trsk-cine-shot,
+  .trsk-cine-tools-on img.trsk-cine-shot {
+    position: absolute !important; top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important; max-width: none !important;
+    object-fit: cover !important; object-position: 50% 50% !important;
+    will-change: transform, opacity;
+  }
+  /* must out-rank the static ".trsk-sec img.trsk-cine-beat-img" (0,2,1) -- a plain
+     ".trsk-cine-tools-on .trsk-cine-beat-img" (0,2,0) lost and left thumbnails in the panel */
+  .trsk-cine-tools-on .trsk-sec img.trsk-cine-beat-img { display: none !important; }
+  .trsk-cine-tools-on .trsk-cine-vignette {
+    display: block !important; position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; pointer-events: none !important;
+    background: radial-gradient(ellipse at 66% 50%, rgba(12,11,9,0) 34%, rgba(12,11,9,0.5) 78%, rgba(12,11,9,0.82) 100%) !important;
+  }
+  .trsk-cine-tools-on .trsk-cine-panel {
+    position: absolute !important; z-index: 3 !important; top: 0 !important; bottom: 0 !important; left: 0 !important;
+    width: min(44%, 560px) !important; max-width: none !important; margin: 0 !important;
+    display: flex !important; flex-direction: column !important; justify-content: center !important;
+    padding: 0 clamp(24px, 3vw, 48px) 76px clamp(24px, 5vw, 72px) !important;   /* bottom: room for the floating CTA bar */
+    background: linear-gradient(90deg, rgba(12,11,9,0.95) 0%, rgba(12,11,9,0.84) 62%, rgba(12,11,9,0) 100%) !important;
+  }
+  .trsk-cine-tools-on .trsk-cine-count { display: flex !important; align-items: baseline !important; gap: 10px !important; margin: 0 0 18px 0 !important; }
+  .trsk-cine-count b { font-family: var(--trsk-display) !important; font-weight: 900 !important; font-size: clamp(56px, 6vw, 84px) !important; line-height: 1 !important; color: #e0b96a !important; min-width: 0.8em !important; }
+  .trsk-cine-count span { font-family: var(--trsk-sans) !important; font-weight: 700 !important; font-size: 16px !important; letter-spacing: 0.12em !important; text-transform: uppercase !important; color: #d4cdc0 !important; }
+  .trsk-cine-tools-on .trsk-cine-beats { display: block !important; position: relative !important; min-height: 210px !important; }
+  .trsk-cine-tools-on .trsk-cine-beat { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; }
+  .trsk-cine-tools-on .trsk-cine-beat-h { font-size: clamp(30px, 3.4vw, 46px) !important; margin-bottom: 12px !important; }
+  .trsk-cine-tools-on .trsk-cine-beat p { font-size: clamp(18px, 1.6vw, 21px) !important; color: #e9e3d7 !important; }
+  .trsk-cine-tools-on .trsk-cine-bar { display: block !important; height: 3px !important; background: rgba(255,255,255,0.14) !important; margin-top: 26px !important; max-width: 320px !important; }
+  .trsk-cine-bar i { display: block !important; height: 100% !important; background: #e0b96a !important; transform: scaleX(0); transform-origin: 0 50% !important; }
+
+  /* ---- ACT 4: real clips ---- */
+  .trsk-sec.trsk-cine-reel { padding: clamp(56px, 8vw, 100px) 0 !important; }
+  .trsk-cine-reel-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: clamp(18px, 2.6vw, 32px) !important; }
+  .trsk-sec figure.trsk-cine-clip { margin: 0 !important; display: flex !important; flex-direction: column !important; gap: 14px !important; }
+  .trsk-cine-clip img {
+    width: 100% !important; aspect-ratio: 16 / 9 !important; object-fit: cover !important; object-position: 50% 50% !important;
+    border-radius: var(--trsk-r-lg) !important; background: #1d1b18 !important; box-shadow: 0 18px 40px rgba(0,0,0,0.5) !important;
+  }
+  .trsk-cine-clip-tall img { aspect-ratio: 4 / 5 !important; max-width: 440px !important; margin: 0 auto !important; }
+  .trsk-sec .trsk-cine-clip figcaption { font-size: clamp(17px, 1.6vw, 19px) !important; line-height: 1.6 !important; color: #d4cdc0 !important; max-width: 440px !important; margin: 0 auto !important; }
+  .trsk-cine-clip figcaption b { color: #ffffff !important; }
+
+  /* ---- ACT 5: value ---- */
+  .trsk-sec.trsk-cine-value { padding: clamp(64px, 9vw, 120px) 0 !important; }
+  .trsk-cine-price { display: flex !important; align-items: center !important; justify-content: center !important; flex-wrap: wrap !important; gap: 10px clamp(24px, 4vw, 56px) !important; margin: 18px 0 26px 0 !important; }
+  .trsk-cine-was { position: relative !important; display: inline-block !important; font-family: var(--trsk-display) !important; font-weight: 900 !important; font-size: clamp(72px, 11vw, 150px) !important; line-height: 1 !important; color: #7c766b !important; }
+  .trsk-cine-was i { position: absolute !important; left: -6% !important; right: -6% !important; top: 50% !important; height: clamp(6px, 0.8vw, 11px) !important; margin-top: -4px !important; background: #c3201a !important; border-radius: 4px !important; transform: rotate(-9deg); transform-origin: 0 50% !important; }
+  .trsk-cine-free { display: inline-block !important; font-family: var(--trsk-display) !important; font-weight: 900 !important; font-size: clamp(76px, 12vw, 164px) !important; line-height: 1 !important; color: #e0b96a !important; text-shadow: 0 0 40px rgba(224,185,106,0.35) !important; }
+  .trsk-cine-value .trsk-cine-hero-cta { margin-left: auto !important; margin-right: auto !important; }
+
+  /* ---- ACT 3 / 6 / 9: full-bleed photos with parallax ---- */
+  .trsk-sec.trsk-cine-bleed { min-height: 82vh !important; min-height: 82svh !important; padding: clamp(70px, 10vw, 120px) 0 !important; display: flex !important; align-items: center !important; background: #0c0b09 !important; }
+  .trsk-cine-bleed-media { position: absolute !important; top: -10% !important; bottom: -10% !important; left: 0 !important; right: 0 !important; }
+  .trsk-cine-bleed-media img { width: 100% !important; height: 100% !important; max-width: none !important; object-fit: cover !important; object-position: 50% 50% !important; will-change: transform; }
+  .trsk-cine-bleed-shade { position: absolute !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; background: linear-gradient(90deg, rgba(12,11,9,0.92) 0%, rgba(12,11,9,0.7) 45%, rgba(12,11,9,0.2) 80%) !important; }
+  .trsk-cine-final .trsk-cine-bleed-shade { background: radial-gradient(ellipse at 50% 55%, rgba(12,11,9,0.62) 0%, rgba(12,11,9,0.9) 70%) !important; }
+  .trsk-cine-bleed-copy { position: relative !important; z-index: 2 !important; }
+  .trsk-cine-bleed-copy > .trsk-h2, .trsk-cine-bleed-copy > p.trsk-copy, .trsk-cine-bleed-copy > p.trsk-kicker { max-width: 600px !important; text-align: left !important; }
+  .trsk-cine-final .trsk-cine-bleed-copy > p.trsk-copy { max-width: 62ch !important; text-align: center !important; }
+  .trsk-cine-final .trsk-cine-line { text-align: center !important; }
+
+  /* ---- Floating CTA (moved to <body> by the payload; scoped by its own class) ---- */
+  .trsk-cine-fbar {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important; z-index: 99990 !important;
+    display: flex !important; align-items: center !important; justify-content: center !important; gap: 16px !important;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 16px !important;
+    background: rgba(13,12,10,0.96) !important; border-top: 2px solid #e0b96a !important;
+    box-shadow: 0 -10px 30px rgba(0,0,0,0.45) !important;
+    transform: translateY(110%) !important; transition: transform .35s ease !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    box-sizing: border-box !important;
+  }
+  .trsk-cine-fbar.trsk-cine-fbar-on { transform: translateY(0) !important; }
+  .trsk-cine-fbar-txt { font-size: 17px !important; line-height: 1.3 !important; color: #e9e3d7 !important; }
+  .trsk-cine-fbar-txt b { color: #ffffff !important; }
+  a.trsk-cine-fbar-btn {
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    min-height: 50px !important; padding: 0 26px !important; border-radius: 8px !important;
+    background: #c3201a !important; border-bottom: 4px solid #74110d !important; color: #ffffff !important;
+    font-size: 19px !important; font-weight: 900 !important; text-decoration: none !important; white-space: nowrap !important;
+  }
+  @media (prefers-reduced-motion: reduce) { .trsk-cine-fbar { transition: none !important; } }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 899px) {
+    /* Phone: the photo owns the top of the screen, the copy sits below it. */
+    .trsk-cine-hero-media { bottom: auto !important; height: 60vh !important; height: 60svh !important; }
+    .trsk-cine-hero-shade { background: linear-gradient(0deg, #0c0b09 0%, #0c0b09 calc(100% - 60svh), rgba(12,11,9,0.55) calc(100% - 52svh), rgba(12,11,9,0) calc(100% - 36svh)) !important; }
+    .trsk-cine-hero-copy { padding-top: 50vh !important; padding-top: 50svh !important; }
+    .trsk-cine-tools-on .trsk-cine-shots { bottom: auto !important; height: 58% !important; }
+    .trsk-cine-tools-on .trsk-cine-panel {
+      top: auto !important; bottom: 0 !important; right: 0 !important; width: 100% !important; justify-content: flex-end !important;
+      padding: 40px 18px 96px 18px !important;   /* bottom: the floating CTA bar (~74px) sits over this */
+      background: linear-gradient(0deg, #0c0b09 0%, #0c0b09 70%, rgba(12,11,9,0) 100%) !important;
+    }
+    .trsk-cine-tools-on .trsk-cine-vignette { background: linear-gradient(0deg, rgba(12,11,9,0) 50%, rgba(12,11,9,0.4) 100%) !important; }
+    .trsk-cine-tools-on .trsk-cine-count { margin-bottom: 8px !important; }
+    .trsk-cine-count b { font-size: 48px !important; }
+    .trsk-cine-tools-on .trsk-cine-beats { min-height: 180px !important; }
+    .trsk-cine-tools-on .trsk-cine-beat-h { font-size: 28px !important; margin-bottom: 8px !important; }
+    .trsk-cine-tools-on .trsk-cine-bar { margin-top: 14px !important; max-width: none !important; }
+    .trsk-cine-bleed-shade { background: linear-gradient(0deg, rgba(12,11,9,0.95) 0%, rgba(12,11,9,0.82) 38%, rgba(12,11,9,0.2) 70%, rgba(12,11,9,0.05) 100%) !important; }
+    .trsk-sec.trsk-cine-bleed { align-items: flex-end !important; }
+  }
+  @media (max-width: 768px) {
+    .trsk-cine-beats, .trsk-cine-reel-grid { grid-template-columns: 1fr !important; }
+    .trsk-cine-fbar-txt { display: none !important; }
+    a.trsk-cine-fbar-btn { width: 100% !important; }
+  }
+</style>
+<!-- ======================= CINEMATIC ROOT (one per page; multi-instance safe) ======================= -->
+<div class="trsk-cine" data-trsk-cine>
+
+<!-- ======================= TRUST BAR ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-tagbar">
+  <div class="trsk-tagbar-inner">
+    <span class="trsk-tagbar-item">Free + Shipping</span>
+    <span class="trsk-tagbar-item">Ships To U.S. Addresses</span>
+    <span class="trsk-tagbar-item">30-Day Money Back</span>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 1 -- FULL-SCREEN HERO ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-cine-hero" data-cine-hero>
+  <div class="trsk-cine-hero-media">
+    <img class="trsk-cine-hero-img" data-cine-hero-img
+         src="https://mtp-images.com/pr-tacrightsandstormknife-photo-001.webp"
+         width="2048" height="2048" loading="eager" decoding="async"
+         alt="Illustration: a gloved hand gripping the Sandstorm in the desert, its black tanto blade out">
+  </div>
+  <div class="trsk-cine-hero-shade"></div>
+  <div class="trsk-cine-hero-copy">
+    <span class="trsk-badge" data-fx="hero">Free + Shipping</span>
+    <h1 class="trsk-h1 trsk-cine-h1">
+      <span class="trsk-cine-line"><span class="trsk-cine-line-in" data-fx="line">Cut The Belt. Break The Glass.</span></span>
+      <span class="trsk-cine-line"><span class="trsk-cine-line-in" data-fx="line">Fold It Into Your Pocket.</span></span>
+      <span class="trsk-cine-line"><span class="trsk-cine-line-in trsk-hi-txt" data-fx="line">Yours Free Today.</span></span>
+    </h1>
+    <p class="trsk-cine-hero-sub" data-fx="hero">The Sandstorm: a black tanto blade, a seatbelt cutter and a glass-breaker tip in one desert-camo folding knife that clips to your pocket. A $79 retail value. Free today &mdash; you only cover the shipping.</p>
+    <div class="trsk-cine-hero-cta" data-fx="hero">
+      <a class="trsk-cta" href="#" data-cine-cta onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="trsk-cta-main">Claim My Free Knife</span>
+        <span class="trsk-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+  <div class="trsk-cine-cue" aria-hidden="true"><span>Scroll to see all four</span><i></i></div>
+</section>
+
+
+<!-- ======================= ACT 2 -- FOUR TOOLS (pinned, one shot per tool) =======================
+     Static / no-JS / reduced motion: each tool as a photo + caption, in a grid.
+     With JS: the stage pins full-screen and steps through the tools -- the shot
+     crossfades in with a slow push, the caption swaps, the counter ticks 1..4. -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-cine-tools" data-cine-tools>
+  <div class="trsk-cine-stage" data-cine-stage>
+    <div class="trsk-cine-shots" aria-hidden="true">
+      <img class="trsk-cine-shot" data-cine-shot src="https://mtp-images.com/pr-tacrightsandstormknife-photo-004.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+      <img class="trsk-cine-shot" data-cine-shot src="https://mtp-images.com/pr-tacrightsandstormknife-photo-006.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+      <img class="trsk-cine-shot" data-cine-shot src="https://mtp-images.com/pr-tacrightsandstormknife-photo-007.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+      <img class="trsk-cine-shot" data-cine-shot src="https://mtp-images.com/pr-tacrightsandstormknife-photo-008.webp" width="1536" height="1024" loading="lazy" decoding="async" alt="">
+      <img class="trsk-cine-shot" data-cine-shot src="https://mtp-images.com/pr-tacrightsandstormknife-photo-003.webp" width="1254" height="1254" loading="lazy" decoding="async" alt="">
+    </div>
+    <div class="trsk-cine-vignette" aria-hidden="true"></div>
+
+    <div class="trsk-cine-panel">
+      <p class="trsk-kicker trsk-cine-kicker">Built Into Every Sandstorm</p>
+      <div class="trsk-cine-count" aria-hidden="true"><b data-cine-count>1</b><span>of 4 tools</span></div>
+      <ol class="trsk-cine-beats">
+        <li class="trsk-cine-beat">
+          <img class="trsk-cine-beat-img" src="https://mtp-images.com/pr-tacrightsandstormknife-photo-004.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="The Sandstorm open on a wet rock, its black tanto blade and desert-camo handle up close">
+          <h3 class="trsk-cine-beat-h">Black Tanto Blade</h3>
+          <p>An angled tanto point with a black finish. Opens up the boxes, the cord, the zip ties &mdash; the everyday jobs and the hard ones.</p>
+        </li>
+        <li class="trsk-cine-beat">
+          <img class="trsk-cine-beat-img" src="https://mtp-images.com/pr-tacrightsandstormknife-photo-006.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="The Sandstorm's handle on a rock, an inset showing its hooked seatbelt cutter slicing a strap">
+          <h3 class="trsk-cine-beat-h">Seatbelt Cutter</h3>
+          <p>A hooked cutter built into the handle. A jammed seatbelt slides into the hook and you pull &mdash; no need to open the blade.</p>
+        </li>
+        <li class="trsk-cine-beat">
+          <img class="trsk-cine-beat-img" src="https://mtp-images.com/pr-tacrightsandstormknife-photo-007.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="A gloved hand holding the Sandstorm against a shattered car window, an inset showing the glass-breaker tip">
+          <h3 class="trsk-cine-beat-h">Glass-Breaker Tip</h3>
+          <p>A pointed tip on the butt of the handle, for the moment a car window is the only way out.</p>
+        </li>
+        <li class="trsk-cine-beat">
+          <img class="trsk-cine-beat-img" src="https://mtp-images.com/pr-tacrightsandstormknife-photo-008.webp" width="1536" height="1024" loading="lazy" decoding="async"
+               alt="The folded Sandstorm clipped inside a pants pocket, an inset showing its pocket clip">
+          <h3 class="trsk-cine-beat-h">Pocket Clip</h3>
+          <p>It folds shut and clips inside your pocket, so the knife is on you &mdash; not in the glove box you can't reach.</p>
+        </li>
+        <li class="trsk-cine-beat" data-final>
+          <h3 class="trsk-cine-beat-h">All Four. One Knife.</h3>
+          <p>Blade, belt cutter, glass breaker and clip in a desert-camo folding knife. Free today &mdash; you only cover the shipping.</p>
+        </li>
+      </ol>
+      <div class="trsk-cine-bar" aria-hidden="true"><i data-cine-bar></i></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 3 -- VALUE (strike, then FREE) ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-cine-value" data-cine-value>
+  <div class="trsk-wrap trsk-center">
+    <p class="trsk-value-label" data-fx="up">Each Sandstorm Carries A $79 Retail Value</p>
+    <div class="trsk-cine-price" aria-label="Retails for 79 dollars, yours free today">
+      <span class="trsk-cine-was"><span>$79</span><i data-cine-strike></i></span>
+      <span class="trsk-cine-free" data-cine-free>FREE</span>
+    </div>
+    <p class="trsk-copy trsk-center" data-fx="up" style="margin:0 auto !important;">
+      We cover the knife. You cover the shipping. Order more than one and
+      your shipping per knife drops &mdash; choose how many on the order form below.
+    </p>
+    <div class="trsk-cine-hero-cta" data-fx="up" style="margin-top:28px !important;">
+      <a class="trsk-cta" href="#" onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="trsk-cta-main">Claim My Free Knife</span>
+        <span class="trsk-cta-sub">Just cover the shipping</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 4 -- STOCK UP ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-band">
+  <div class="trsk-wrap">
+    <div class="trsk-guar-grid">
+      <figure class="trsk-cine-clip" data-fx="wipe">
+        <img src="https://mtp-images.com/pr-tacrightsandstormknife-photo-005.webp" width="1448" height="1086" loading="lazy" decoding="async"
+             alt="Three Sandstorm knives &mdash; one closed, one half open, one fully open &mdash; showing the desert-camo handles">
+      </figure>
+      <div data-fx="up">
+        <p class="trsk-kicker">Stock Up</p>
+        <h2 class="trsk-h2">The Pocket, The Truck &amp; The Go-Bag</h2>
+        <p class="trsk-copy" style="margin-top:18px !important;">
+          Clip one in your pocket, keep one in the door of the truck and drop
+          one in the go-bag. Hand the rest to the drivers, hunters and campers
+          in your family.
+        </p>
+        <p class="trsk-copy">The more you order, the less you pay in shipping for each one.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 5 -- GUARANTEE ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-band trsk-cine-guar">
+  <div class="trsk-wrap">
+    <div class="trsk-guar-grid">
+      <img class="trsk-guar-fig trsk-frame trsk-shot trsk-shot-square" data-fx="wipe"
+           src="https://mtp-images.com/pr-tacrightsandstormknife-photo-002.webp"
+           width="1254" height="1254" loading="lazy" decoding="async"
+           alt="The Sandstorm open on a light background: black tanto blade, desert-camo handle, belt-cutter hook">
+      <div data-fx="up">
+        <span class="trsk-plate trsk-guar-seal">30-Day Money-Back Guarantee</span>
+        <h2 class="trsk-h2">You Take No Risk</h2>
+        <p class="trsk-copy" style="margin-top:18px !important;">
+          Get the knife in your hand first. Open it. Find the belt cutter and
+          the glass-breaker tip. Clip it in your pocket.
+        </p>
+        <p class="trsk-copy">
+          If you are not happy with it, tell us within 30 days and we will
+          refund you in full. The knife itself is free, so the shipping is
+          the only thing you paid, and the only thing there is to refund.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= ACT 6 -- FINAL CTA (full-bleed) ======================= -->
+<section class="trsk-sec trsk-breakout trsk-dark trsk-cine-bleed trsk-cine-final" data-cine-bleed data-title="_ORDERFORM">
+  <div class="trsk-cine-bleed-media">
+    <img data-cine-par src="https://mtp-images.com/pr-tacrightsandstormknife-photo-004.webp" width="1536" height="1024" loading="lazy" decoding="async"
+         alt="Illustration: the Sandstorm open on a wet rock, black tanto blade and desert-camo handle">
+  </div>
+  <div class="trsk-cine-bleed-shade"></div>
+  <div class="trsk-wrap trsk-center trsk-cine-bleed-copy">
+    <h2 class="trsk-h1">
+      <span class="trsk-cine-line"><span class="trsk-cine-line-in" data-fx="line2">Claim Your Free Sandstorm</span></span>
+      <span class="trsk-cine-line"><span class="trsk-cine-line-in trsk-hi-txt" data-fx="line2">While Supplies Last</span></span>
+    </h2>
+    <p class="trsk-copy trsk-center" data-fx="up" style="margin:20px auto 0 auto !important;">
+      A $79 folding rescue knife, free today. We cover the knife. You cover the shipping.
+    </p>
+    <div class="trsk-cta-block" data-fx="up" style="margin-top:30px !important;">
+      <a class="trsk-cta" href="#" onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">
+        <span class="trsk-cta-main">Yes, Send My Free Knife</span>
+        <span class="trsk-cta-sub">Blade, belt cutter &amp; glass breaker &mdash; just cover the shipping</span>
+      </a>
+      <p class="trsk-cta-note">Secure checkout &middot; Ships to U.S. addresses &middot; 30-day money back</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ======================= DISCLAIMER ======================= -->
+<section class="trsk-sec trsk-breakout trsk-fine">
+  <div class="trsk-wrap">
+    <p>The photos on this page are illustrations of the Sandstorm and its desert digital camo design; the pattern on your knife may sit a little differently. The seatbelt cutter and glass-breaker tip are for emergency use; in an emergency, call 911. Check your state and local laws before carrying a folding knife. Ships to U.S. addresses only.</p>
+  </div>
+</section>
+
+
+<!-- ======================= FLOATING CTA (shown by the script after the hero; hidden over the final call to action) ======================= -->
+<div class="trsk-cine-fbar" data-cine-fbar aria-hidden="true">
+  <span class="trsk-cine-fbar-txt"><b>Blade. Belt cutter. Glass breaker.</b> Free today.</span>
+  <a class="trsk-cine-fbar-btn" href="#" tabindex="-1" onclick="var t=document.querySelector('[data-title=&quot;_ORDERFORM&quot;]')||document.getElementById('form-target')||document.querySelector('.orderformtarget')||document.querySelector('[data-de-type^=&quot;order2step&quot;]');if(t){event.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}">Claim Mine</a>
+</div>
+
+<img data-trsk-cine-boot alt="" aria-hidden="true" width="1" height="1"
+     style="position:absolute;width:1px;height:1px;opacity:0;border:0;pointer-events:none;"
+     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+     onload="this.onload=this.onerror=null;if(!window.__trskCineRan&&!window.__trskCineBoot){window.__trskCineBoot=1;try{var b=atob(this.getAttribute('data-trsk-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[TRSK CINE] boot failed:',e&&e.message);}}"
+     onerror="this.onload=this.onerror=null;if(!window.__trskCineRan&&!window.__trskCineBoot){window.__trskCineBoot=1;try{var b=atob(this.getAttribute('data-trsk-cine-payload'));var u=Uint8Array.from(b,function(c){return c.charCodeAt(0)});var n=document.createElement('script');n.text=new TextDecoder('utf-8').decode(u);(document.head||document.documentElement).appendChild(n);}catch(e){if(window.console)console.log('[TRSK CINE] boot failed:',e&&e.message);}}"
+     data-trsk-cine-payload="LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBTYW5kc3Rvcm0gUmVzY3VlIEtuaWZlIC0tIGNpbmVtYXRpYyBwYWdlIHNjcmlwdCAocmVhZGFibGUgc291cmNlKQogICAtLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAgIFNoaXBzIEJhc2U2NC1lbmNvZGVkIGluIHRoZSBkYXRhLXRyc2stY2luZS1wYXlsb2FkIGF0dHJpYnV0ZSBvZiB0aGUgaGlkZGVuCiAgIDxpbWcgZGF0YS10cnNrLWNpbmUtYm9vdD4gYXQgdGhlIGVuZCBvZiB0aGUgcGFnZTsgdGhlIGltYWdlJ3Mgb25sb2FkIGRlY29kZXMKICAgYW5kIGluamVjdHMgaXQuIFRoYXQga2VlcHMgdGhlIHBhZ2UgYSBzaW5nbGUgc2VsZi1jb250YWluZWQgSFRNTCBibG9jayB0aGF0CiAgIHJ1bnMgb24gaG9zdHMgYW5kIHBhZ2UgYnVpbGRlcnMgd2hpY2ggc3RyaXAgb3IgcmV3cml0ZSBwYXN0ZWQgPHNjcmlwdD4gdGFncy4KCiAgIFBlciBbZGF0YS10cnNrLWNpbmVdIHJvb3QgKG11bHRpLWluc3RhbmNlIHNhZmU7IG5vIGlkcyk6CiAgICAgKiBSZWR1Y2VkIG1vdGlvbiAtPiBub3RoaW5nIGFuaW1hdGVzOyB0aGUgcGFnZSBpcyBhbHJlYWR5IGNvbXBsZXRlLgogICAgICogT3RoZXJ3aXNlIGxvYWRzIEdTQVAgMy4xNC4yICsgU2Nyb2xsVHJpZ2dlciAoanNkZWxpdnIgLT4gY2RuanMgLT4KICAgICAgIHVucGtnKSBhbmQgYnVpbGRzOgogICAgICAgICBBY3QgMSAgaGVybyBsaW5lcyByaXNlIGluOyB0aGUgcGhvdG8gcHVzaGVzIGluIG9uIHNjcm9sbAogICAgICAgICBBY3QgMiAgRk9VUiBUT09MUzogcGlucyB0aGUgc3RhZ2UgKHBpblR5cGUgJ2ZpeGVkJywgd2hpY2ggc3Vydml2ZXMgYW4KICAgICAgICAgICAgICAgIG92ZXJmbG93LWhpZGRlbiBhbmNlc3RvciB3aGVyZSBwb3NpdGlvbjpzdGlja3kgd291bGQgbm90KSBhbmQKICAgICAgICAgICAgICAgIHN0ZXBzIHRocm91Z2ggb25lIHNob3QgcGVyIHRvb2wgLS0gYmxhZGUsIHNlYXRiZWx0IGN1dHRlciwKICAgICAgICAgICAgICAgIGdsYXNzIGJyZWFrZXIsIHBvY2tldCBjbGlwOiB0aGUgc2hvdCBjcm9zc2ZhZGVzIGluIHdpdGggYSBzbG93CiAgICAgICAgICAgICAgICBwdXNoLCB0aGUgY2FwdGlvbiBzd2FwcywgdGhlIGNvdW50ZXIgdGlja3MgMS4uNCwgdGhlbiBhIGNsb3NpbmcKICAgICAgICAgICAgICAgIHNob3Qgb2YgdGhlIHdob2xlIGtuaWZlCiAgICAgICAgIEFjdCAzKyB0aGUgJDc5IHN0cmlrZSAtPiBGUkVFIHB1bmNoLCBsaW5lIHJldmVhbHMsIGltYWdlIHdpcGVzLAogICAgICAgICAgICAgICAgcGFyYWxsYXggb24gdGhlIGZ1bGwtYmxlZWQgcGhvdG8KICAgICAgIGFuZCBhIGZsb2F0aW5nIENUQSBiYXIgKG1vdmVkIHRvIDxib2R5PiBzbyBwb3NpdGlvbjpmaXhlZCBpcyB0aGUKICAgICAgIHZpZXdwb3J0J3MpLCBzaG93biBhZnRlciB0aGUgaGVybyBhbmQgaGlkZGVuIG92ZXIgdGhlIGNoZWNrb3V0IHRhcmdldC4KICAgICAqIElmIEdTQVAgbmV2ZXIgbG9hZHM6IHRoZSBzdGF0aWMgcGFnZSBzdGF5cy4KICAgRGVidWc6IGFkZCA/dHJza2RlYnVnIHRvIHRoZSBVUkwgdG8gbG9nIHRoZSBwaXBlbGluZSB0byB0aGUgY29uc29sZS4KICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwooZnVuY3Rpb24gKCkgewogICJ1c2Ugc3RyaWN0IjsKICBpZiAod2luZG93Ll9fdHJza0NpbmVSYW4pIHJldHVybjsKICB3aW5kb3cuX190cnNrQ2luZVJhbiA9IHRydWU7CiAgdmFyIERCRyA9IC9bPyZddHJza2RlYnVnL2kudGVzdChsb2NhdGlvbi5zZWFyY2gpIHx8IHdpbmRvdy5UUlNLX0RFQlVHOwogIGZ1bmN0aW9uIGxvZygpIHsgaWYgKERCRyAmJiB3aW5kb3cuY29uc29sZSkgY29uc29sZS5sb2cuYXBwbHkoY29uc29sZSwgWydbVFJTSyBDSU5FXSddLmNvbmNhdChbXS5zbGljZS5jYWxsKGFyZ3VtZW50cykpKTsgfQogIGxvZygncGF5bG9hZCBleGVjdXRlZCcpOwoKICB2YXIgUkVEVUNFID0gd2luZG93Lm1hdGNoTWVkaWEgJiYgd2luZG93Lm1hdGNoTWVkaWEoJyhwcmVmZXJzLXJlZHVjZWQtbW90aW9uOiByZWR1Y2UpJykubWF0Y2hlczsKICB2YXIgR1NBUF9VUkxTID0gWwogICAgJ2h0dHBzOi8vY2RuLmpzZGVsaXZyLm5ldC9ucG0vZ3NhcEAzLjE0LjIvZGlzdC9nc2FwLm1pbi5qcycsCiAgICAnaHR0cHM6Ly9jZG5qcy5jbG91ZGZsYXJlLmNvbS9hamF4L2xpYnMvZ3NhcC8zLjE0LjIvZ3NhcC5taW4uanMnLAogICAgJ2h0dHBzOi8vdW5wa2cuY29tL2dzYXBAMy4xNC4yL2Rpc3QvZ3NhcC5taW4uanMnCiAgXTsKICB2YXIgU1RfVVJMUyA9IFsKICAgICdodHRwczovL2Nkbi5qc2RlbGl2ci5uZXQvbnBtL2dzYXBAMy4xNC4yL2Rpc3QvU2Nyb2xsVHJpZ2dlci5taW4uanMnLAogICAgJ2h0dHBzOi8vY2RuanMuY2xvdWRmbGFyZS5jb20vYWpheC9saWJzL2dzYXAvMy4xNC4yL1Njcm9sbFRyaWdnZXIubWluLmpzJywKICAgICdodHRwczovL3VucGtnLmNvbS9nc2FwQDMuMTQuMi9kaXN0L1Njcm9sbFRyaWdnZXIubWluLmpzJwogIF07CgogIGZ1bmN0aW9uIGxvYWRGaXJzdCh1cmxzKSB7CiAgICByZXR1cm4gbmV3IFByb21pc2UoZnVuY3Rpb24gKHJlcywgcmVqKSB7CiAgICAgIHZhciBpID0gMDsKICAgICAgKGZ1bmN0aW9uIG5leHQoKSB7CiAgICAgICAgaWYgKGkgPj0gdXJscy5sZW5ndGgpIHsgcmVqKG5ldyBFcnJvcignYWxsIENETnMgZmFpbGVkJykpOyByZXR1cm47IH0KICAgICAgICB2YXIgdXJsID0gdXJsc1tpKytdLCBzID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnc2NyaXB0Jyk7CiAgICAgICAgcy5zcmMgPSB1cmw7IHMuYXN5bmMgPSB0cnVlOwogICAgICAgIHMub25sb2FkID0gZnVuY3Rpb24gKCkgeyBsb2coJ2xvYWRlZCcsIHVybCk7IHJlcygpOyB9OwogICAgICAgIHMub25lcnJvciA9IGZ1bmN0aW9uICgpIHsgbG9nKCdGQUlMRUQnLCB1cmwpOyBuZXh0KCk7IH07CiAgICAgICAgZG9jdW1lbnQuaGVhZC5hcHBlbmRDaGlsZChzKTsKICAgICAgfSkoKTsKICAgIH0pOwogIH0KICBmdW5jdGlvbiBvcmRlckZvcm0oKSB7CiAgICByZXR1cm4gZG9jdW1lbnQucXVlcnlTZWxlY3RvcignW2RhdGEtdGl0bGU9Il9PUkRFUkZPUk0iXScpIHx8IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWRlLXR5cGVePSJvcmRlcjJzdGVwIl0nKSB8fAogICAgICAgICAgIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoJy5vcmRlcmZvcm10YXJnZXQnKTsKICB9CgogIC8vIC0tLS0gRmxvYXRpbmcgQ1RBOiB3b3JrcyB3aXRob3V0IEdTQVAgKEludGVyc2VjdGlvbk9ic2VydmVyKSwgc28gaXQgcnVucyBmaXJzdC4gLS0tLQogIGZ1bmN0aW9uIGZsb2F0YmFyKHJvb3QpIHsKICAgIHZhciBmYiA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1mYmFyXScpIHx8IHJvb3QuX19mYmFyOwogICAgdmFyIGhlcm8gPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtaGVyb10nKTsKICAgIGlmICghZmIgfHwgIWhlcm8gfHwgISgnSW50ZXJzZWN0aW9uT2JzZXJ2ZXInIGluIHdpbmRvdykpIHJldHVybjsKICAgIHJvb3QuX19mYmFyID0gZmI7CiAgICBpZiAoZmIucGFyZW50Tm9kZSAhPT0gZG9jdW1lbnQuYm9keSkgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChmYik7ICAgLy8gZml4ZWQgPSB0aGUgdmlld3BvcnQncwogICAgdmFyIHBhc3RIZXJvID0gZmFsc2UsIGZvcm1PbiA9IGZhbHNlOwogICAgZnVuY3Rpb24gYXBwbHkoKSB7CiAgICAgIHZhciBvbiA9IHBhc3RIZXJvICYmICFmb3JtT247CiAgICAgIGZiLmNsYXNzTGlzdC50b2dnbGUoJ3Ryc2stY2luZS1mYmFyLW9uJywgb24pOwogICAgICBmYi5zZXRBdHRyaWJ1dGUoJ2FyaWEtaGlkZGVuJywgb24gPyAnZmFsc2UnIDogJ3RydWUnKTsKICAgICAgdmFyIGEgPSBmYi5xdWVyeVNlbGVjdG9yKCdhJyk7IGlmIChhKSBhLnRhYkluZGV4ID0gb24gPyAwIDogLTE7CiAgICB9CiAgICBuZXcgSW50ZXJzZWN0aW9uT2JzZXJ2ZXIoZnVuY3Rpb24gKGVzKSB7IHBhc3RIZXJvID0gIWVzWzBdLmlzSW50ZXJzZWN0aW5nOyBhcHBseSgpOyB9LCB7IHRocmVzaG9sZDogMCB9KS5vYnNlcnZlKGhlcm8pOwogICAgdmFyIGYgPSBvcmRlckZvcm0oKTsKICAgIGlmIChmKSBuZXcgSW50ZXJzZWN0aW9uT2JzZXJ2ZXIoZnVuY3Rpb24gKGVzKSB7IGZvcm1PbiA9IGVzWzBdLmlzSW50ZXJzZWN0aW5nOyBhcHBseSgpOyB9LCB7IHRocmVzaG9sZDogMCB9KS5vYnNlcnZlKGYpOwogIH0KCiAgZnVuY3Rpb24gaW5pdChyb290KSB7CiAgICBpZiAoIXJvb3QgfHwgcm9vdC5fX3Ryc2tDaW5lKSByZXR1cm47CiAgICByb290Ll9fdHJza0NpbmUgPSB0cnVlOwogICAgbG9nKCdpbml0Jyk7CiAgICBmbG9hdGJhcihyb290KTsKICAgIGlmIChSRURVQ0UpIHsgbG9nKCdyZWR1Y2VkIG1vdGlvbjogc3RhdGljIHBhZ2UnKTsgcmV0dXJuOyB9CiAgICByb290LmNsYXNzTGlzdC5hZGQoJ3Ryc2stY2luZS13YWl0Jyk7CiAgICB2YXIgc2FmZXR5ID0gc2V0VGltZW91dChmdW5jdGlvbiAoKSB7IHJvb3QuY2xhc3NMaXN0LnJlbW92ZSgndHJzay1jaW5lLXdhaXQnKTsgbG9nKCdzYWZldHkgdGltZW91dDogc3RhdGljIHBhZ2UnKTsgfSwgNDAwMCk7CiAgICB2YXIgcmVhZHkgPSAod2luZG93LmdzYXAgJiYgd2luZG93LlNjcm9sbFRyaWdnZXIpID8gUHJvbWlzZS5yZXNvbHZlKCkgOgogICAgICBsb2FkRmlyc3QoR1NBUF9VUkxTKS50aGVuKGZ1bmN0aW9uICgpIHsgcmV0dXJuIGxvYWRGaXJzdChTVF9VUkxTKTsgfSk7CiAgICByZWFkeS50aGVuKGZ1bmN0aW9uICgpIHsKICAgICAgY2xlYXJUaW1lb3V0KHNhZmV0eSk7CiAgICAgIGlmICghKHdpbmRvdy5nc2FwICYmIHdpbmRvdy5TY3JvbGxUcmlnZ2VyKSkgdGhyb3cgbmV3IEVycm9yKCdnbG9iYWxzIG1pc3NpbmcnKTsKICAgICAgYnVpbGQocm9vdCk7CiAgICB9KS5jYXRjaChmdW5jdGlvbiAoZSkgewogICAgICBjbGVhclRpbWVvdXQoc2FmZXR5KTsKICAgICAgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCd0cnNrLWNpbmUtd2FpdCcsICd0cnNrLWNpbmUtb24nKTsKICAgICAgbG9nKCdHU0FQIHVuYXZhaWxhYmxlIC0+IHN0YXRpYyBwYWdlOicsIGUgJiYgZS5tZXNzYWdlKTsKICAgIH0pOwogIH0KCiAgZnVuY3Rpb24gYnVpbGQocm9vdCkgewogICAgdmFyIGdzYXAgPSB3aW5kb3cuZ3NhcCwgU1QgPSB3aW5kb3cuU2Nyb2xsVHJpZ2dlcjsKICAgIGdzYXAucmVnaXN0ZXJQbHVnaW4oU1QpOwogICAgdmFyIHEgPSBmdW5jdGlvbiAocykgeyByZXR1cm4gcm9vdC5xdWVyeVNlbGVjdG9yKHMpOyB9OwogICAgdmFyIHFhID0gZnVuY3Rpb24gKHMpIHsgcmV0dXJuIFtdLnNsaWNlLmNhbGwocm9vdC5xdWVyeVNlbGVjdG9yQWxsKHMpKTsgfTsKCiAgICAvLyBJbml0aWFsIHN0YXRlcyBhcmUgc2V0IGhlcmUsIHRoZW4gdGhlIGNsYXNzIHN3YXAgLS0gc28gbm90aGluZyBpcyBoaWRkZW4KICAgIC8vIHVubGVzcyBHU0FQIGlzIHByZXNlbnQgdG8gYnJpbmcgaXQgYmFjay4KICAgIHZhciBsaW5lcyA9IHFhKCdbZGF0YS1meD0ibGluZSJdJyksIGhlcm9GeCA9IHFhKCdbZGF0YS1meD0iaGVybyJdJyk7CiAgICBnc2FwLnNldChsaW5lcywgeyB5UGVyY2VudDogMTEwIH0pOwogICAgZ3NhcC5zZXQoaGVyb0Z4LCB7IGF1dG9BbHBoYTogMCwgeTogMjQgfSk7CiAgICByb290LmNsYXNzTGlzdC5hZGQoJ3Ryc2stY2luZS1vbicpOwogICAgcm9vdC5jbGFzc0xpc3QucmVtb3ZlKCd0cnNrLWNpbmUtd2FpdCcpOwoKICAgIC8vIC0tLS0gQUNUIDE6IGhlcm8gZW50cmFuY2UgKyBzY3JvbGwgcHVzaC1pbiAtLS0tCiAgICBnc2FwLnRpbWVsaW5lKHsgZGVsYXk6IDAuMTUgfSkKICAgICAgLnRvKGxpbmVzLCB7IHlQZXJjZW50OiAwLCBkdXJhdGlvbjogMC45LCBzdGFnZ2VyOiAwLjE2LCBlYXNlOiAncG93ZXIzLm91dCcgfSkKICAgICAgLnRvKGhlcm9GeCwgeyBhdXRvQWxwaGE6IDEsIHk6IDAsIGR1cmF0aW9uOiAwLjcsIHN0YWdnZXI6IDAuMTIsIGVhc2U6ICdwb3dlcjIub3V0JyB9LCAnLT0wLjQ1Jyk7CiAgICB2YXIgaGVybyA9IHEoJ1tkYXRhLWNpbmUtaGVyb10nKSwgaGVyb0ltZyA9IHEoJ1tkYXRhLWNpbmUtaGVyby1pbWddJyk7CiAgICBpZiAoaGVybyAmJiBoZXJvSW1nKSB7CiAgICAgIGdzYXAuZnJvbVRvKGhlcm9JbWcsIHsgc2NhbGU6IDEuMDIgfSwgeyBzY2FsZTogMS4xNCwgZWFzZTogJ25vbmUnLAogICAgICAgIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogaGVybywgc3RhcnQ6ICd0b3AgdG9wJywgZW5kOiAnYm90dG9tIHRvcCcsIHNjcnViOiB0cnVlIH0gfSk7CiAgICAgIGdzYXAudG8ocSgnLnRyc2stY2luZS1jdWUnKSwgeyBhdXRvQWxwaGE6IDAsIGVhc2U6ICdub25lJywKICAgICAgICBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IGhlcm8sIHN0YXJ0OiAndG9wIHRvcCcsIGVuZDogJzIwJSB0b3AnLCBzY3J1YjogdHJ1ZSB9IH0pOwogICAgfQoKICAgIC8vIC0tLS0gQUNUIDI6IGZpdmUgdG9vbHMgLS0tLQogICAgYnVpbGRUb29scyhyb290LCBnc2FwLCBTVCk7CgogICAgLy8gLS0tLSBSZXZlYWxzIC0tLS0KICAgIHFhKCdbZGF0YS1meD0idXAiXScpLmZvckVhY2goZnVuY3Rpb24gKGVsKSB7CiAgICAgIGdzYXAuZnJvbShlbCwgeyBhdXRvQWxwaGE6IDAsIHk6IDM0LCBkdXJhdGlvbjogMC44LCBlYXNlOiAncG93ZXIyLm91dCcsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBlbCwgc3RhcnQ6ICd0b3AgODYlJywgb25jZTogdHJ1ZSB9IH0pOwogICAgfSk7CiAgICBxYSgnW2RhdGEtZng9IndpcGUiXScpLmZvckVhY2goZnVuY3Rpb24gKGVsLCBpKSB7CiAgICAgIGdzYXAuZnJvbVRvKGVsLCB7IGNsaXBQYXRoOiAnaW5zZXQoMCAwIDEwMCUgMCknIH0sIHsgY2xpcFBhdGg6ICdpbnNldCgwIDAgMCUgMCknLCBkdXJhdGlvbjogMS4xLCBlYXNlOiAncG93ZXIzLmluT3V0JywKICAgICAgICBkZWxheTogKGkgJSAyKSAqIDAuMTIsIHNjcm9sbFRyaWdnZXI6IHsgdHJpZ2dlcjogZWwsIHN0YXJ0OiAndG9wIDg4JScsIG9uY2U6IHRydWUgfSB9KTsKICAgIH0pOwogICAgcWEoJ1tkYXRhLWZ4PSJsaW5lMiJdJykuZm9yRWFjaChmdW5jdGlvbiAoZWwpIHsKICAgICAgZ3NhcC5mcm9tKGVsLCB7IHlQZXJjZW50OiAxMTAsIGR1cmF0aW9uOiAwLjksIGVhc2U6ICdwb3dlcjMub3V0JywKICAgICAgICBzY3JvbGxUcmlnZ2VyOiB7IHRyaWdnZXI6IGVsLCBzdGFydDogJ3RvcCA4OCUnLCBvbmNlOiB0cnVlIH0gfSk7CiAgICB9KTsKCiAgICAvLyAtLS0tIEFDVCA1OiAkMTkgc3RydWNrIHRocm91Z2gsIHRoZW4gRlJFRSAtLS0tCiAgICB2YXIgdmFsID0gcSgnW2RhdGEtY2luZS12YWx1ZV0nKSwgc3RyaWtlID0gcSgnW2RhdGEtY2luZS1zdHJpa2VdJyksIGZyZWUgPSBxKCdbZGF0YS1jaW5lLWZyZWVdJyk7CiAgICBpZiAodmFsICYmIHN0cmlrZSAmJiBmcmVlKSB7CiAgICAgIGdzYXAuc2V0KHN0cmlrZSwgeyBzY2FsZVg6IDAgfSk7CiAgICAgIGdzYXAuc2V0KGZyZWUsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMC42IH0pOwogICAgICBnc2FwLnRpbWVsaW5lKHsgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiB2YWwsIHN0YXJ0OiAndG9wIDcwJScsIG9uY2U6IHRydWUgfSB9KQogICAgICAgIC50byhzdHJpa2UsIHsgc2NhbGVYOiAxLCBkdXJhdGlvbjogMC41NSwgZWFzZTogJ3Bvd2VyMi5pbk91dCcgfSkKICAgICAgICAudG8oZnJlZSwgeyBhdXRvQWxwaGE6IDEsIHNjYWxlOiAxLCBkdXJhdGlvbjogMC42LCBlYXNlOiAnYmFjay5vdXQoMi4yKScgfSwgJys9MC4xJyk7CiAgICB9CgogICAgLy8gLS0tLSBQYXJhbGxheCBvbiBmdWxsLWJsZWVkIHBob3RvcyAtLS0tCiAgICBxYSgnW2RhdGEtY2luZS1ibGVlZF0nKS5mb3JFYWNoKGZ1bmN0aW9uIChzZWMpIHsKICAgICAgdmFyIGltZyA9IHNlYy5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jaW5lLXBhcl0nKTsKICAgICAgaWYgKGltZykgZ3NhcC5mcm9tVG8oaW1nLCB7IHlQZXJjZW50OiAtOCB9LCB7IHlQZXJjZW50OiA4LCBlYXNlOiAnbm9uZScsCiAgICAgICAgc2Nyb2xsVHJpZ2dlcjogeyB0cmlnZ2VyOiBzZWMsIHN0YXJ0OiAndG9wIGJvdHRvbScsIGVuZDogJ2JvdHRvbSB0b3AnLCBzY3J1YjogdHJ1ZSB9IH0pOwogICAgfSk7CgogICAgdmFyIHJlZnJlc2ggPSBmdW5jdGlvbiAoKSB7IFNULnJlZnJlc2goKTsgfTsKICAgIHdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCdsb2FkJywgcmVmcmVzaCk7CiAgICBzZXRUaW1lb3V0KHJlZnJlc2gsIDE1MDApOwogICAgcm9vdC5fX3Ryc2tDaW5lQnVpbHQgPSB0cnVlOwogICAgd2luZG93Ll9fdHJza0NpbmVCdWlsdCA9ICh3aW5kb3cuX190cnNrQ2luZUJ1aWx0IHx8IDApICsgMTsKICAgIGxvZygnYnVpbHQ7IFNjcm9sbFRyaWdnZXJzID0nLCBTVC5nZXRBbGwoKS5sZW5ndGgpOwogIH0KCiAgZnVuY3Rpb24gYnVpbGRUb29scyhyb290LCBnc2FwLCBTVCkgewogICAgdmFyIHN0YWdlID0gcm9vdC5xdWVyeVNlbGVjdG9yKCdbZGF0YS1jaW5lLXN0YWdlXScpLAogICAgICAgIHNob3RzID0gW10uc2xpY2UuY2FsbChyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJ1tkYXRhLWNpbmUtc2hvdF0nKSksCiAgICAgICAgYmVhdHMgPSBbXS5zbGljZS5jYWxsKHJvb3QucXVlcnlTZWxlY3RvckFsbCgnLnRyc2stY2luZS1iZWF0Om5vdChbZGF0YS1maW5hbF0pJykpLAogICAgICAgIGZpbiA9IHJvb3QucXVlcnlTZWxlY3RvcignLnRyc2stY2luZS1iZWF0W2RhdGEtZmluYWxdJyksCiAgICAgICAgY291bnQgPSByb290LnF1ZXJ5U2VsZWN0b3IoJ1tkYXRhLWNpbmUtY291bnRdJyksIGNvdW50V3JhcCA9IHJvb3QucXVlcnlTZWxlY3RvcignLnRyc2stY2luZS1jb3VudCcpLAogICAgICAgIGJhciA9IHJvb3QucXVlcnlTZWxlY3RvcignW2RhdGEtY2luZS1iYXJdJyk7CiAgICBpZiAoIXN0YWdlIHx8ICFzaG90cy5sZW5ndGggfHwgIWJlYXRzLmxlbmd0aCkgcmV0dXJuOwogICAgc2hvdHMuZm9yRWFjaChmdW5jdGlvbiAocykgeyBzLmxvYWRpbmcgPSAnZWFnZXInOyB9KTsgICAvLyB0aGUgcGlubmVkIHNjZW5lIG11c3Qgbm90IHdhaXQgb24gbGF6eS1sb2FkCiAgICByb290LmNsYXNzTGlzdC5hZGQoJ3Ryc2stY2luZS10b29scy1vbicpOyAgICAgICAgICAgICAgIC8vIHN0YWNrZWQgZnVsbC1zY3JlZW4gc3RhZ2UKCiAgICAvLyBzdGF0ZXM6IDAuLm4tMSA9IGEgdG9vbCwgJ2VuZCcgPSBhbGwgb2YgdGhlbSAodGhlIGNsb3Npbmcgc2hvdCkKICAgIHZhciBjYXBzID0gYmVhdHMuY29uY2F0KGZpbiA/IFtmaW5dIDogW10pOwogICAgZ3NhcC5zZXQoY2FwcywgeyBhdXRvQWxwaGE6IDAsIHk6IDI2IH0pOwogICAgZ3NhcC5zZXQoc2hvdHMsIHsgYXV0b0FscGhhOiAwLCBzY2FsZTogMS4wNCB9KTsKICAgIGdzYXAuc2V0KHNob3RzWzBdLCB7IGF1dG9BbHBoYTogMSB9KTsKICAgIGlmIChjb3VudCkgY291bnQudGV4dENvbnRlbnQgPSAnMSc7CiAgICB2YXIgY3VycmVudCA9IG51bGwsIG4gPSBiZWF0cy5sZW5ndGg7CiAgICBmdW5jdGlvbiBzaG90Rm9yKGkpIHsgcmV0dXJuIGkgPT09ICdlbmQnID8gc2hvdHNbc2hvdHMubGVuZ3RoIC0gMV0gOiBzaG90c1tNYXRoLm1pbihpLCBzaG90cy5sZW5ndGggLSAxKV07IH0KICAgIGZ1bmN0aW9uIGNhcEZvcihpKSB7IHJldHVybiBpID09PSAnZW5kJyA/IGZpbiA6IGJlYXRzW2ldOyB9CiAgICBmdW5jdGlvbiBzaG93KGkpIHsKICAgICAgaWYgKGkgPT09IGN1cnJlbnQpIHJldHVybjsKICAgICAgdmFyIHByZXZDYXAgPSBjdXJyZW50ID09PSBudWxsID8gbnVsbCA6IGNhcEZvcihjdXJyZW50KSwgcHJldlNob3QgPSBjdXJyZW50ID09PSBudWxsID8gbnVsbCA6IHNob3RGb3IoY3VycmVudCk7CiAgICAgIGN1cnJlbnQgPSBpOwogICAgICB2YXIgbmV4dENhcCA9IGNhcEZvcihpKSwgbmV4dFNob3QgPSBzaG90Rm9yKGkpOwogICAgICBpZiAocHJldkNhcCkgZ3NhcC50byhwcmV2Q2FwLCB7IGF1dG9BbHBoYTogMCwgeTogLTE4LCBkdXJhdGlvbjogMC4zLCBvdmVyd3JpdGU6IHRydWUgfSk7CiAgICAgIGlmIChuZXh0Q2FwKSBnc2FwLmZyb21UbyhuZXh0Q2FwLCB7IGF1dG9BbHBoYTogMCwgeTogMjYgfSwgeyBhdXRvQWxwaGE6IDEsIHk6IDAsIGR1cmF0aW9uOiAwLjUsIGRlbGF5OiAwLjEsIG92ZXJ3cml0ZTogdHJ1ZSB9KTsKICAgICAgaWYgKHByZXZTaG90ICYmIHByZXZTaG90ICE9PSBuZXh0U2hvdCkgZ3NhcC50byhwcmV2U2hvdCwgeyBhdXRvQWxwaGE6IDAsIGR1cmF0aW9uOiAwLjYsIG92ZXJ3cml0ZTogJ2F1dG8nIH0pOwogICAgICAvLyBzbG93IHB1c2ggb24gdGhlIGluY29taW5nIGNsb3NlLXVwICh0aGUgc2hvdCBzdGF5cyBzaGFycDogMTYwMHB4IHNvdXJjZSwgbWF4IDEuMTJ4KQogICAgICBnc2FwLmZyb21UbyhuZXh0U2hvdCwgeyBhdXRvQWxwaGE6IHByZXZTaG90ID09PSBuZXh0U2hvdCA/IDEgOiAwLCBzY2FsZTogMS4wNCB9LAogICAgICAgIHsgYXV0b0FscGhhOiAxLCBzY2FsZTogMS4xMiwgZHVyYXRpb246IDAuNiwgb3ZlcndyaXRlOiAnYXV0bycsCiAgICAgICAgICBvbkNvbXBsZXRlOiBmdW5jdGlvbiAoKSB7IGdzYXAudG8obmV4dFNob3QsIHsgc2NhbGU6IDEuMTYsIGR1cmF0aW9uOiA2LCBlYXNlOiAnbm9uZScgfSk7IH0gfSk7CiAgICAgIGlmIChjb3VudFdyYXApIGdzYXAudG8oY291bnRXcmFwLCB7IGF1dG9BbHBoYTogaSA9PT0gJ2VuZCcgPyAwIDogMSwgZHVyYXRpb246IDAuMywgb3ZlcndyaXRlOiB0cnVlIH0pOwogICAgICBpZiAoY291bnQgJiYgaSAhPT0gJ2VuZCcpIGNvdW50LnRleHRDb250ZW50ID0gU3RyaW5nKGkgKyAxKTsKICAgIH0KCiAgICBTVC5jcmVhdGUoewogICAgICB0cmlnZ2VyOiBzdGFnZSwgc3RhcnQ6ICd0b3AgdG9wJywKICAgICAgZW5kOiBmdW5jdGlvbiAoKSB7IHJldHVybiAnKz0nICsgTWF0aC5yb3VuZCh3aW5kb3cuaW5uZXJIZWlnaHQgKiAwLjkgKiAobiArIDEpKTsgfSwKICAgICAgcGluOiBzdGFnZSwgcGluVHlwZTogJ2ZpeGVkJywgcGluU3BhY2luZzogdHJ1ZSwgYW50aWNpcGF0ZVBpbjogMSwKICAgICAgb25VcGRhdGU6IGZ1bmN0aW9uIChzZWxmKSB7CiAgICAgICAgaWYgKGJhcikgYmFyLnN0eWxlLnRyYW5zZm9ybSA9ICdzY2FsZVgoJyArIHNlbGYucHJvZ3Jlc3MudG9GaXhlZCgzKSArICcpJzsKICAgICAgICB2YXIgc2VnID0gTWF0aC5mbG9vcihzZWxmLnByb2dyZXNzICogKG4gKyAxKSk7CiAgICAgICAgc2hvdyhzZWcgPj0gbiA/ICdlbmQnIDogTWF0aC5tYXgoMCwgc2VnKSk7CiAgICAgIH0sCiAgICAgIG9uRW50ZXI6IGZ1bmN0aW9uICgpIHsgaWYgKGN1cnJlbnQgPT09IG51bGwpIHNob3coMCk7IH0sCiAgICAgIG9uRW50ZXJCYWNrOiBmdW5jdGlvbiAoKSB7IGlmIChjdXJyZW50ID09PSBudWxsKSBzaG93KDApOyB9CiAgICB9KTsKICAgIHNob3coMCk7CiAgfQoKICBmdW5jdGlvbiBib290KCkgewogICAgdmFyIHJvb3RzID0gZG9jdW1lbnQucXVlcnlTZWxlY3RvckFsbCgnW2RhdGEtdHJzay1jaW5lXScpOwogICAgbG9nKCdyb290cycsIHJvb3RzLmxlbmd0aCk7CiAgICBbXS5mb3JFYWNoLmNhbGwocm9vdHMsIGluaXQpOwogIH0KICBpZiAoZG9jdW1lbnQucmVhZHlTdGF0ZSA9PT0gJ2xvYWRpbmcnKSBkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCdET01Db250ZW50TG9hZGVkJywgYm9vdCk7IGVsc2UgYm9vdCgpOwp9KSgpOwo=">
+</div>
+
+</body>
+</html>

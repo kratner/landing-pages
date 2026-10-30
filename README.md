@@ -15,6 +15,7 @@ Portfolio of recent work by Keith Ratner.
 9. <a href="https://kratner.github.io/landing-pages/assets/11-in-1%20Multi%20Tool%20Card.html" target="_blank">11-in-1 Multi Tool Card</a> — demonstrates scroll-triggered storytelling: a pinned camera walks through every tool on the real card
 10. <a href="https://kratner.github.io/landing-pages/assets/Paracord%20Survival%20Bracelet.html" target="_blank">Paracord Survival Bracelet</a> — demonstrates scroll-triggered storytelling: a pinned stage steps through every tool built into the real bracelet
 11. <a href="https://kratner.github.io/landing-pages/assets/Veterans%20Bar.html" target="_blank">Veterans Bar</a> — demonstrates scroll-triggered storytelling: a pinned camera turns the real bar over and moves in on each detail, front and back
+12. <a href="https://kratner.github.io/landing-pages/assets/Sandstorm%20Rescue%20Knife.html" target="_blank">Sandstorm Rescue Knife</a> — demonstrates scroll-triggered storytelling: a pinned stage steps through the blade, seatbelt cutter, glass breaker and pocket clip of a folding rescue knife
 
 ---
 © 2026 Keith Ratner
